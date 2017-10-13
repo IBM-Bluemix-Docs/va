@@ -22,7 +22,6 @@ Vulnerability Advisor checks the security status of container images before depl
 {:shortdesc}
 
 
-
 ## About Vulnerability Advisor 
 {: #about}
 
@@ -141,5 +140,5 @@ SSH server should not be installed.
 ```
 {: screen}
 
-Fix: Instead of using SSH, use `docker attach` or `docker exec` to access your container. Ensure that your Dockerfile does not contain any steps for installing an SSH Server.
+Fix: Instead of using SSH, use `docker attach` or `docker exec` to access the container. Ensure that your Dockerfile does not contain any steps for installing an SSH Server.
 
