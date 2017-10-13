@@ -22,6 +22,7 @@ Vulnerability Advisor checks the security status of container images before depl
 {:shortdesc}
 
 
+
 ## About Vulnerability Advisor 
 {: #about}
 
