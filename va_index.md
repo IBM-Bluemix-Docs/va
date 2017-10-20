@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-10-06"
+lastupdated: "2017-10-19"
 
 ---
 
@@ -46,7 +46,7 @@ Vulnerability Advisor includes the following features:
   |Alpine|[Git - Alpine Linux ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://git.alpinelinux.org/) and [CIRCL CVE Search ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://cve.circl.lu/)|
   |CentOS| [CentOS announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-announce/) and [CentOS CR announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-cr-announce/)|
   |Debian|[Debian security announcements ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.debian.org/debian-security-announce/)|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat RHSA announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.redhat.com/archives/rhsa-announce)|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/)|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.ubuntu.com/usn/)|
   {: caption="Table 1. Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
@@ -140,5 +140,5 @@ SSH server should not be installed.
 ```
 {: screen}
 
-Fix: Instead of using SSH, use `docker attach` or `docker exec` to access the container. Ensure that your Dockerfile does not contain any steps for installing an SSH Server.
+Fix: Instead of using SSH, use `docker attach` or `docker exec` to access your container. Ensure that your Dockerfile does not contain any steps for installing an SSH Server.
 
