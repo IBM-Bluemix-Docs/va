@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-10-19"
+lastupdated: "2017-10-25"
 
 ---
 
@@ -25,7 +25,7 @@ Vulnerability Advisor checks the security status of container images before depl
 ## About Vulnerability Advisor 
 {: #about}
 
-Vulnerability Advisor provides security management for {{site.data.keyword.containerlong}}. Vulnerability Advisor generates a security status report, suggests fixes and best practices, and provides management to restrict nonsecure images from running. Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you secure your {{site.data.keyword.Bluemix_notm}} cloud computing infrastructure.
+Vulnerability Advisor provides security management for {{site.data.keyword.containerlong}}. Vulnerability Advisor generates a security status report, suggests fixes and best practices, and provides management to restrict nonsecure images from running. Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you secure your {{site.data.keyword.Bluemix_notm}} infrastructure.
 {:shortdesc}
 
 Vulnerability Advisor includes the following features:
@@ -69,9 +69,9 @@ When you add an image to {{site.data.keyword.registrylong_notm}}, the image is a
 
 Vulnerability Advisor checks for the following vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability.
 
-To check the vulnerability status of images in your account, complete the following steps.
+To check the vulnerability status of images in your {{site.data.keyword.Bluemix_notm}} account, complete the following steps.
 
-1.  List all images in your account. The following command returns a list of all images independent of the namespace where they are stored.
+1.  List all images in your {{site.data.keyword.Bluemix_notm}} account. The following command returns a list of all images independent of the namespace where they are stored.
 
     ```
     bx cr image-list
