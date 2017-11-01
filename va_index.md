@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-10-26"
+lastupdated: "2017-11-01"
 
 ---
 
@@ -32,9 +32,16 @@ Vulnerability Advisor includes the following features:
 
 -   Scans images for vulnerabilities
 -   Provides an evaluation report based on security standards, such as ISO 27002, as well as security practices specific to {{site.data.keyword.containerlong_notm}}
+
+
+
 -   Detects file-based malware
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions on how to fix a reported vulnerability or configuration issue in its reports
+   
+
+    
+
 
 <dl>
   <dt><strong>Vulnerable Packages</strong></dt>
@@ -50,10 +57,82 @@ Vulnerability Advisor includes the following features:
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.ubuntu.com/usn/)|
   {: caption="Table 1. Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
+**Recommendations**
+
+   In the **Vulnerability Assessment** report, security recommendations are displayed in **Container Settings** for container settings, and **Application Configurations** for application configuration settings.
+
+    Vulnerability Advisor checks for known vulnerabilities in configuration settings for the following types of application:
+
+    Applications
+    -   MySQL
+    -   NGINX
+    -   Apache
+
+    The recommendations that are made by Vulnerability Advisor are never blocked by organizational policies because they might not always be required in your architecture but represent good cloud security practices for {{site.data.keyword.containerlong_notm}}.
+
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image or running container. You can also access a full list of the security and configuration issues that are checked by Vulnerability Advisor. Access the Vulnerability Advisor dashboard in the following ways:
+
+-   Select an image from the {{site.data.keyword.Bluemix_notm}} catalog when you are logged in to {{site.data.keyword.Bluemix_notm}}, and click **View report**.
+-   In your {{site.data.keyword.Bluemix_notm}} dashboard, select a running container. In the Vulnerability Advisor pane, click **View report**.
 
 
 
 
+
+
+## Reviewing an image VA report (OLD UI)
+{: #va_reviewing}
+
+Before you deploy an image, you can review its Vulnerability Advisor report, which details any vulnerable packages, nonsecure container or application settings, and whether the image is compliant with organizational policies.
+{:shortdesc}
+
+Container images are provided by IBM, third parties, or can be added by your organization. If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. Only the organization manager can change the policy to allow a vulnerable image to be deployed. For steps to view and change the organization policy, see [Reviewing organizational policies](#va_managing_policy).
+
+Review potential image security and configuration issues by completing the following steps:
+
+1.  Log in to {{site.data.keyword.Bluemix_notm}}. You must be logged in to see Vulnerability Advisor in the graphical user interface.
+2.  In the **Vulnerability Assessment** section, review the status of your vulnerability assessment. The status is displayed as one of the following conditions:
+
+    -   Safe to Deploy - No security issues were found.
+    -   Deploy with Caution - Security or configuration issues were found and your organizational policy permits deployment of vulnerable images. If you attempt to deploy this image, you see a warning.
+    -   Deployment Blocked - Security or configuration issues were found and must be addressed before the image can be deployed because your organizational policy does not permit deployment of vulnerable images.
+    -   Incomplete - The scan is not complete. The scan might still be running or the image’s operating system might not be compatible. Wait and try the scan again. If the scan still does not complete, push the image again to start a new scan. Images with incomplete scans are not blocked for deployment.
+    Review the detailed report that forms the Vulnerability Advisor security assessment:
+
+3.  Select the image and in the **Vulnerability Assessment** section, click **View report**.
+4.  Review the sections to see the potential security and configuration issues for each package in the image:
+
+    -   **Organizational Policies**
+
+        Lists whether the image adheres to the policy that was set by the organization manager.
+
+    -   **Risk Analysis**
+
+        If the image has one or more vulnerabilities, this section displays the risk rating of the discovered vulnerabilities as calculated by Vulnerability Advisor. The risk is calculated by using the [CVSS ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.first.org/cvss) calculator, and [IBM X-Force® Exchange ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://exchange.xforce.ibmcloud.com/) technology.
+
+    -   **Vulnerable Packages**
+
+        Lists packages with known vulnerability issues, which are updated daily from published security notices for the Docker image types that are listed in [Managing image security with Vulnerability Advisor](va_index.html). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might correct multiple issues. Click the security notice code to review more information on the package and for steps to update the package.
+
+    -   **Container Settings**
+
+        Lists suggestions that you can take to increase the security of the image. The **Corrective Action** column describes how to improve security.
+
+    -   **Application Configurations**
+
+        Lists application settings for the image that are nonsecure. The **Corrective Action** column describes how to improve security.
+
+    -   **Container Instances**
+
+        Lists containers that use this image that are already running in your organization.
+
+    Corrective actions or suggestions are provided for each item that is listed.
+
+5.  Fix the problems that are described in the **Vulnerability Assessment** report, and rebuild the image. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](#va_report).
+
+If vulnerabilities exist and you do not fix them, those issues can impact the usage of the image for a container. You can continue to use an image that has security and configuration issues in a container, unless a specific type of issue is blocked by your organization. Review the deployment settings for your organization to see which problems are blocked, as described in [Reviewing organizational policies](#va_managing_policy).
+
+After you deploy your image, Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
 
 
 
