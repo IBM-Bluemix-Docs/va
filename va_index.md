@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-10-26"
+lastupdated: "2017-11-01"
 
 ---
 
@@ -32,9 +32,16 @@ Vulnerability Advisor includes the following features:
 
 -   Scans images for vulnerabilities
 -   Provides an evaluation report based on security standards, such as ISO 27002, as well as security practices specific to {{site.data.keyword.containerlong_notm}}
+
+
+
 -   Detects file-based malware
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions on how to fix a reported vulnerability or configuration issue in its reports
+   
+
+    
+
 
 <dl>
   <dt><strong>Vulnerable Packages</strong></dt>
@@ -49,6 +56,7 @@ Vulnerability Advisor includes the following features:
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/)|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.ubuntu.com/usn/)|
   {: caption="Table 1. Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
+
 
 
 
