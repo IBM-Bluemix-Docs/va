@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-10-26"
+lastupdated: "2017-11-14"
 
 ---
 
@@ -32,14 +32,24 @@ Vulnerability Advisor includes the following features:
 
 -   Scans images for vulnerabilities
 -   Provides an evaluation report based on security standards, such as ISO 27002, as well as security practices specific to {{site.data.keyword.containerlong_notm}}
+
+
+
 -   Detects file-based malware
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions on how to fix a reported vulnerability or configuration issue in its reports
+   
 
-<dl>
-  <dt><strong>Vulnerable Packages</strong></dt>
-  <dd>Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability. Vulnerability Advisor updates its internal list against these security notices daily. Supported base images are described in the following table.</dd>
-</dl>
+    
+
+
+ **Vulnerable Packages**
+
+Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability. Vulnerability Advisor updates its internal list against these security notices daily.
+
+
+
+Supported base images are described in the following table.
 
   |Docker base image|Source of security notices|
   |-----------------|--------------------------|
@@ -49,6 +59,7 @@ Vulnerability Advisor includes the following features:
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/)|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.ubuntu.com/usn/)|
   {: caption="Table 1. Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
+  
 
 
 
@@ -59,10 +70,14 @@ Vulnerability Advisor includes the following features:
 
 
 
-## Reviewing image security for Docker images that are stored in a namespace in {{site.data.keyword.registrylong_notm}} by using the CLI 
+
+
+
+
+## Reviewing image security for Docker images that are stored in a namespace by using the CLI 
 {: #va_registry_cli}
 
-You can review the security of Docker images that are stored in a namespace to find information about potential vulnerabilities.
+You can review the security of Docker images that are stored in a namespace in {{site.data.keyword.registrylong_notm}} by using the CLI to find information about potential vulnerabilities.
 {:shortdesc}
 
 When you add an image to {{site.data.keyword.registrylong_notm}}, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. Containers that are deployed from vulnerable images might be attacked and compromised. Images are scanned only if they are based on an operating system that is supported by Vulnerability Advisor.
