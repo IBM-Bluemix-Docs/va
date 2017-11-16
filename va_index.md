@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-10-26"
+lastupdated: "2017-11-16"
 
 ---
 
@@ -31,15 +31,22 @@ Vulnerability Advisor provides security management for {{site.data.keyword.conta
 Vulnerability Advisor includes the following features:
 
 -   Scans images for vulnerabilities
--   Provides an evaluation report based on security standards, such as ISO 27002, as well as security practices specific to {{site.data.keyword.containerlong_notm}}
+-   Provides an evaluation report based on security standards, such as ISO 27002, and security practices specific to {{site.data.keyword.containerlong_notm}}
 -   Detects file-based malware
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions on how to fix a reported vulnerability or configuration issue in its reports
+   
 
-<dl>
-  <dt><strong>Vulnerable Packages</strong></dt>
-  <dd>Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability. Vulnerability Advisor updates its internal list against these security notices daily. Supported base images are described in the following table.</dd>
-</dl>
+    
+
+
+**Vulnerable Packages**
+
+Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability. 
+
+
+
+Supported base images are described in the following table.
 
   |Docker base image|Source of security notices|
   |-----------------|--------------------------|
@@ -49,6 +56,7 @@ Vulnerability Advisor includes the following features:
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/)|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.ubuntu.com/usn/)|
   {: caption="Table 1. Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
+  
 
 
 
@@ -59,15 +67,21 @@ Vulnerability Advisor includes the following features:
 
 
 
-## Reviewing image security for Docker images that are stored in a namespace in {{site.data.keyword.registrylong_notm}} by using the CLI 
+
+
+
+
+
+
+## Reviewing image security for Docker images that are stored in a namespace by using the CLI 
 {: #va_registry_cli}
 
-You can review the security of Docker images that are stored in a namespace to find information about potential vulnerabilities.
+You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the CLI to find information about potential vulnerabilities.
 {:shortdesc}
 
-When you add an image to {{site.data.keyword.registrylong_notm}}, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. Containers that are deployed from vulnerable images might be attacked and compromised. Images are scanned only if they are based on an operating system that is supported by Vulnerability Advisor.
+When you add an image to the registry, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. Containers that are deployed from vulnerable images might be attacked and compromised. Images are scanned only if they are based on an operating system that is supported by Vulnerability Advisor.
 
-Vulnerability Advisor checks for the following vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability.
+If security issues are found, instructions are provided to help fix the reported vulnerability.
 
 To check the vulnerability status of images in your {{site.data.keyword.Bluemix_notm}} account, complete the following steps.
 
@@ -78,11 +92,11 @@ To check the vulnerability status of images in your {{site.data.keyword.Bluemix_
     ```
     {: pre}
 
-2.  Check the status in the VULNERABILITY STATUS column. One of the following statuses is displayed:
-    -   OK. This status means that no security issues were found.
-    -   Vulnerable. This status means that a potential security issue or vulnerability was found.
-    -   Unknown. This status is displayed while the image is being scanned until the final vulnerability status can be determined.
-    -   Unsupported OS. This status is displayed if the image is not supported to be scanned by Vulnerability Advisor.
+2.  Check the status in the **VULNERABILITY STATUS** column. One of the following statuses is displayed:
+    -   `OK` This status means that no security issues were found.
+    -   `Vulnerable` This status means that a potential security issue or vulnerability was found.
+    -   `Unknown` This status is displayed while the image is being scanned until the final vulnerability status can be determined.
+    -   `Unsupported OS` This status is displayed if the image is not supported to be scanned by Vulnerability Advisor.
 4.  To find out more about the status, review the Vulnerability Advisor report.
 
     ```
@@ -93,7 +107,7 @@ To check the vulnerability status of images in your {{site.data.keyword.Bluemix_
     In your CLI output, you can find the list of vulnerable packages, a description of the vulnerability that was found, and a link to instructions for how to fix it.
 
 
-## Resolving problems in images 
+## Resolving common problems in images 
 {: #va_report}
 
 Example fixes for common problems that are reported by Vulnerability Advisor.
@@ -104,7 +118,7 @@ Vulnerability Advisor provides corrective actions with reported security or conf
 ### Maximum password age, minimum password days, and minimum password length
 {: #va_password}
 
-Problem: You receive one, or all of the following errors:
+**Problem**: You receive one, or all of the following errors:
 
 ```
 Maximum password age must be set to 90 days.
@@ -121,7 +135,7 @@ Minimum days that must elapse between user-initiated password changes should be 
 ```
 {: screen}
 
-Fix: Set password compliance by adding the following code to your Dockerfile.
+**Fix**: Set password compliance by adding the following code to your Dockerfile.
 
 ```
 RUN \
@@ -133,12 +147,12 @@ RUN \
 ### SSH vulnerability 
 {: #ssh}
 
-Problem: The following error is returned:
+**Problem**: The following error is returned:
 
 ```
 SSH server should not be installed.
 ```
 {: screen}
 
-Fix: Instead of using SSH, use `docker attach` or `docker exec` to access your container. Ensure that your Dockerfile does not contain any steps for installing an SSH Server.
+**Fix**: Instead of using SSH, use `docker attach` or `docker exec` to access your container. Ensure that your Dockerfile does not contain any steps for installing an SSH Server.
 
