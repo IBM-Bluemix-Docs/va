@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-12-05"
+lastupdated: "2017-02-21"
 
 ---
 
@@ -34,15 +34,24 @@ Vulnerability Advisor includes the following features:
 -   Provides an evaluation report based on security standards, such as ISO 27002, [Center of Internet Security ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.cisecurity.org/), and security practices specific to {{site.data.keyword.containerlong_notm}}
 -   Detects file-based malware
 -   Provides recommendations to secure configuration files for a subset of application types
--   Provides instructions on how to fix a reported vulnerability or configuration issue in its reports
-   
-
-    
+-   Provides instructions on how to fix a reported [vulnerabile package](#packages) or [configuration issue](#app_configurations) in its reports
 
 
-**Vulnerable Packages**
+
+In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories.
+
+The report identifies good cloud security practices for your images. You can access a full list of the security and configuration issues that are checked by Vulnerability Advisor.
+
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report ](#va_reviewing).
+
+## Types of vulnerabilities 
+{: #types}
+
+### Vulnerable packages
+{: #packages}
 
 Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability. 
+{:shortdesc}
 
 Packages with known vulnerability issues are displayed. The possible vulnerabilities are updated daily from published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might address multiple vulnerabilities. The information in the **CORRECTIVE ACTION** column describes how to improve security.
 
@@ -60,27 +69,19 @@ Supported base images are described in the following table.
 
 
 
-**Application Configurations**
+### Application configurations
+{: #app_configurations}
 
-Lists application settings for the image that are nonsecure. The information in the **CORRECTIVE ACTION** column describes how to improve security
+Lists application settings for the image that are nonsecure. The information in the **CORRECTIVE ACTION** column describes how to improve security.
+{:shortdesc}
 
-
-
-
-**Security Report**
-
-In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories.
-
-Vulnerability Advisor checks for known vulnerabilities in configuration settings for the following types of application:
+Vulnerability Advisor checks for known vulnerabilities in configuration settings for the following types of applications:
 -   MySQL
 -   NGINX
 -   Apache
 
-The report identifies good cloud security practices for your images. You can access a full list of the security and configuration issues that are checked by Vulnerability Advisor.
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. 
 
-To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report ](#va_reviewing).
 
 
 
