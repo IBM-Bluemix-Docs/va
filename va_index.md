@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-12-05"
+lastupdated: "2017-02-21"
 
 ---
 
@@ -18,8 +18,10 @@ lastupdated: "2017-12-05"
 # Managing image security with Vulnerability Advisor 
 {: #va_index}
 
-Vulnerability Advisor checks the security status of container images before deployment.
+Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added by your organization's registry namespace.
 {:shortdesc}
+
+When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. You can still deploy containers from vulnerable images, but keep in mind that those containers might be attacked or compromised. 
 
 
 ## About Vulnerability Advisor 
@@ -34,19 +36,25 @@ Vulnerability Advisor includes the following features:
 -   Provides an evaluation report based on security standards, such as ISO 27002, [Center of Internet Security ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.cisecurity.org/), and security practices specific to {{site.data.keyword.containerlong_notm}}
 -   Detects file-based malware
 -   Provides recommendations to secure configuration files for a subset of application types
--   Provides instructions on how to fix a reported vulnerability or configuration issue in its reports
-   
-
-    
+-   Provides instructions on how to fix a reported [vulnerabile package](#packages) or [configuration issue](#app_configurations) in its reports
 
 
-**Vulnerable Packages**
+
+In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories. The report identifies good cloud security practices for your images. 
+
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+
+## Types of vulnerabilities 
+{: #types}
+
+### Vulnerable packages
+{: #packages}
 
 Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability. 
+{:shortdesc}
 
-Packages with known vulnerability issues are displayed. The possible vulnerabilities are updated daily from published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might address multiple vulnerabilities. The information in the **CORRECTIVE ACTION** column describes how to improve security.
+Packages with known vulnerability issues are displayed in the scan results. The possible vulnerabilities are updated daily from published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might address multiple vulnerabilities. 
 
-Supported base images are described in the following table.
 
   |Docker base image|Source of security notices|
   |-----------------|--------------------------|
@@ -55,32 +63,24 @@ Supported base images are described in the following table.
   |Debian|[Debian security announcements ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.debian.org/debian-security-announce/)|
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/)|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.ubuntu.com/usn/)|
-  {: caption="Table 1. Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
+  {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
   
 
 
 
-**Application Configurations**
+### Configuration issues
+{: #app_configurations}
 
-Lists application settings for the image that are nonsecure. The information in the **CORRECTIVE ACTION** column describes how to improve security
+Configuration issues are potential security issues that are related to how an app is set up. Many of the reported problems can be fixed by updating your Dockerfile.
+{:shortdesc}
 
-
-
-
-**Security Report**
-
-In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories.
-
-Vulnerability Advisor checks for known vulnerabilities in configuration settings for the following types of application:
+Images are scanned only if they are based on an operating system that is supported by Vulnerability Advisor. Vulnerability Advisor checks the configuration settings for the following types of apps:
 -   MySQL
 -   NGINX
 -   Apache
 
-The report identifies good cloud security practices for your images. You can access a full list of the security and configuration issues that are checked by Vulnerability Advisor.
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. 
 
-To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report ](#va_reviewing).
 
 
 
@@ -89,12 +89,10 @@ To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vul
 ## Reviewing a vulnerability report for your image
 {: #va_reviewing}
 
-Before you deploy an image, you can review its Vulnerability Advisor report, which gives you details about any vulnerable packages and nonsecure application settings.
+Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure app settings.
 {:shortdesc}
 
-Container images are provided by IBM, third parties, or can be added by your organization.
 
-Review potential image security and configuration issues by completing the following steps:
 
 1.  Log in to {{site.data.keyword.Bluemix_notm}}. You must be logged in to see Vulnerability Advisor in the graphical user interface.
 2.  Click **Catalog**.
@@ -108,7 +106,7 @@ Review potential image security and configuration issues by completing the follo
 8.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue. 
 9.  Perform the corrective action for each issue shown in the report, and rebuild the image. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](#va_report).
 
-If vulnerabilities exist and you do not fix them, those issues can impact the use of the image for a container. You can continue to use an image that has security and configuration issues in a container.
+If vulnerabilities exist and you do not fix them, those issues can impact the security of containers that are built with that image. However, you can continue to use an image that has security and configuration issues in a container.
 
  
 
@@ -118,44 +116,36 @@ If vulnerabilities exist and you do not fix them, those issues can impact the us
 ## Reviewing image security for Docker images that are stored in a namespace by using the CLI 
 {: #va_registry_cli}
 
-You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the CLI to find information about potential vulnerabilities.
+You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the CLI.
 {:shortdesc}
 
-When you add an image to the registry, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. Containers that are deployed from vulnerable images might be attacked and compromised. Images are scanned only if they are based on an operating system that is supported by Vulnerability Advisor.
-
-If security issues are found, instructions are provided to help fix the reported vulnerability.
-
-To check the vulnerability status of images in your {{site.data.keyword.Bluemix_notm}} account, complete the following steps.
-
-1.  List all images in your {{site.data.keyword.Bluemix_notm}} account. The following command returns a list of all images independent of the namespace where they are stored.
+1.  List the images in your {{site.data.keyword.Bluemix_notm}} account. A list of all images is returned, independent of the namespace where they are stored.
 
     ```
     bx cr image-list
     ```
     {: pre}
 
-2.  Check the status in the **VULNERABILITY STATUS** column. One of the following statuses is displayed:
-    -   `OK` This status means that no security issues were found.
-    -   `Vulnerable` This status means that a potential security issue or vulnerability was found.
-    -   `Unknown` This status is displayed while the image is being scanned until the final vulnerability status can be determined.
-    -   `Unsupported OS` This status is displayed if the image is not supported to be scanned by Vulnerability Advisor.
-4.  To find out more about the status, review the Vulnerability Advisor report.
+2.  Check the status in the **VULNERABILITY STATUS** column.
+    -   `OK`: No security issues were found
+    -   `Vulnerable`: A potential security issue or vulnerability was found
+    -   `Unknown`: The image is being scanned and the final vulnerability status is not yet determined
+    -   `Unsupported OS`: The image is not supported to be scanned by Vulnerability Advisor
+4.  To view the details for the status, review the Vulnerability Advisor report.
 
     ```
     bx cr va registry.<region>/<my_namespace>/<my_image>:<tag>
     ```
     {: pre}
 
-    In your CLI output, you can find the list of vulnerable packages, a description of the vulnerability that was found, and a link to instructions for how to fix it.
+    In the CLI output, you can view a list of vulnerable packages, a description of the vulnerability that was found, and, if a link exists, a link to instructions for how to fix the vulnerability.
 
 
 ## Resolving common problems in images 
 {: #va_report}
 
-Example fixes for common problems that are reported by Vulnerability Advisor.
+Review the example fixes for common problems that might be reported by Vulnerability Advisor. Some of the reported problems can be fixed by updating your Dockerfile. 
 {:shortdesc}
-
-Vulnerability Advisor provides corrective actions with reported security or configuration issues. Some of the reported problems can be fixed by updating your Dockerfile. To help you resolve common problems more quickly, use the following code examples to implement the solution in your Dockerfile.
 
 ### Maximum password age, minimum password days, and minimum password length
 {: #va_password}
