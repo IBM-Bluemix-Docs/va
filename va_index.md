@@ -152,7 +152,7 @@ Review the example fixes for common problems that might be reported by Vulnerabi
 ### Maximum password age, minimum password days, and minimum password length
 {: #va_password}
 
-**Problem**: You receive one or more of the following errors:
+**Problem**: You receive one or more of the following vulnerabilities:
 
 ```
 Maximum password age must be set to 90 days.
@@ -181,7 +181,7 @@ RUN \
 ### SSH vulnerability 
 {: #ssh}
 
-**Problem**: The following error is returned:
+**Problem**: The following vulnerability is returned:
 
 ```
 SSH server should not be installed.
