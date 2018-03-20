@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-02-26"
+lastupdated: "2017-03-20"
 
 ---
 
@@ -12,19 +12,19 @@ lastupdated: "2017-02-26"
 {:pre: .pre}
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
-{:tip: .tip} 
+{:tip: .tip}
 {:download: .download}
 
-# Managing image security with Vulnerability Advisor 
+# Managing image security with Vulnerability Advisor
 {: #va_index}
 
 Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added to your organization's registry namespace.
 {:shortdesc}
 
-When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. You can still deploy containers from vulnerable images, but keep in mind that those containers might be attacked or compromised. 
+When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. You can still deploy containers from vulnerable images, but keep in mind that those containers might be attacked or compromised.
 
 
-## About Vulnerability Advisor 
+## About Vulnerability Advisor
 {: #about}
 
 Vulnerability Advisor provides security management for {{site.data.keyword.containerlong}}. Vulnerability Advisor generates a security status report, suggests fixes and best practices, and provides management to restrict nonsecure images from running. Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you secure your {{site.data.keyword.cloud_notm}} infrastructure.
@@ -44,16 +44,16 @@ In the Registry dashboard, the **SECURITY REPORT** column displays the status of
 
 The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 
-## Types of vulnerabilities 
+## Types of vulnerabilities
 {: #types}
 
 ### Vulnerable packages
 {: #packages}
 
-Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability. 
+Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability.
 {:shortdesc}
 
-Packages with known vulnerability issues are displayed in the scan results. The possible vulnerabilities are updated daily from published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might address multiple vulnerabilities. 
+Packages with known vulnerability issues are displayed in the scan results. The possible vulnerabilities are updated daily from published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might address multiple vulnerabilities.
 
 
   |Docker base image|Source of security notices|
@@ -64,7 +64,7 @@ Packages with known vulnerability issues are displayed in the scan results. The 
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/)|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.ubuntu.com/usn/)|
   {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
-  
+
 
 
 
@@ -81,7 +81,89 @@ Images are scanned only if they are based on an operating system that is support
 
 
 
+bluemix.net/helm/ibm-incubator
+    ```
+    {: pre}
 
+1.  Save the default configuration settings for the container scanner Helm chart in a local YAML file.
+
+    ```
+    helm inspect values ibmcloud-container-scanner > config.yaml
+    ```
+    {: pre}
+
+1.  Edit the `config.yaml` file.
+
+    ```yaml
+    EmitURL: <regional_emit_URL>
+    IAMURL: <regional_IAM_URL>
+    AccountID: <IBM_Cloud_account_ID>
+    ClusterID: <cluster_ID>
+    APIKey: <service_API_key>
+    ServiceID: <service_ID>
+    ...
+    ```
+
+    <table>
+    <col width="22%">
+    <col width="78%">
+    <caption>Understanding the YAML file components</caption>
+    <thead>
+    <th>Field</th>
+    <th>Value</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>EmitURL</code></td>
+    <td>Enter the Vulnerability Advisor endpoint URL. To get the URL, run <code>bx cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example: <code>https://va.eu-gb.bluemix.net</code></td>
+    </tr>
+    <tr>
+    <td><code>IAMURL</code></td>
+    <td>Repalce with <code>https://iam.bluemix.net</code>.</td>
+    </tr>
+    <tr>
+    <td><code>AccountID</code></td>
+    <td>Replace with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>bx account list</code>.</td>
+    </tr>
+    <tr>
+    <td><code>ClusterID</code></td>
+    <td>Replace with the Kubernetes cluster that you want to install the container scanner to. To list cluster IDs, run <code>bx cs clusters</code>.</td>
+    </tr>
+    <tr>
+    <td><code>APIKey</code></td>
+    <td>Replace with the API key that you created before you began.</td>
+    </tr>
+    <tr>
+    <td><code>ServiceID</code></td>
+    <td>Replace with the service ID **CRN** that you created before you began.</td>
+    </tr>
+    </tbody></table>
+
+1.  Install the Helm chart to your cluster in the `kube-system` namespace with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart.
+
+    ```
+    helm install -f config.yaml --namespace=kube-system --name=<myscanner> ibmcloud-container-scanner
+    ```
+    {: pre}
+
+1.  Check the chart deployment status. When the chart is ready, the **STATUS** field near the top of the output has a value of `DEPLOYED`.
+
+    ```
+    helm status <myscanner>
+    ```
+    {: pre}
+
+1.  After the chart is deployed, verify that the updated settings in the `config.yaml` file were used.
+
+    ```
+    helm get values <myscanner>
+    ```
+    {: pre}
+
+
+IBM Container Scanner is now installed, and the livescan agent is deployed as a [DaemonSet ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. It scans all containers that are assigned to pods in your Kubernetes namespaces, such as `default`. Next, you can [review a container report](#va_reviewing_container).
+
+</staging>
 
 
 
@@ -94,22 +176,21 @@ Before you deploy an image, you can review its Vulnerability Advisor report for 
 
 
 
-1.  Log in to {{site.data.keyword.Bluemix_notm}}. 
+1.  Log in to {{site.data.keyword.Bluemix_notm}}.
 2.  Click **Catalog**.
-3.  Under **Infrastructure**, click **Containers**. 
+3.  Under **Infrastructure**, click **Containers**.
 4.  Click the **Container Registry** tile.
-5.  Expand **Vulnerability Advisor** and click **Scanned Repositories**. 
+5.  Expand **Vulnerability Advisor** and click **Scanned Repositories**.
 6.  To see the report for the image that is tagged `latest`, click the row for that repository. The report shows the total number of issues and whether they are vulnerable packages or configuration issues. If no `latest` tag exists in the repository, the most recent image is used.
 7.  To view information about each vulnerable package for the image you selected, in the **Vulnerable Packages Found** table, click the link in the **VULNERABILITIES** column to open the report.
     1.  To see more information, expand the summary.
     2.  If an operating system distributor's notice is provided, click the link in the **OFFICIAL NOTICE** column.
-8.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue. 
+8.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue.
 9.  Perform the corrective action for each issue shown in the report, and rebuild the image. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](#va_report).
 
 If vulnerabilities exist and you do not fix them, those issues can impact the security of containers that are built with that image. However, you can continue to use an image that has security and configuration issues in a container.
 
  
-
 
 
 
@@ -143,16 +224,16 @@ You can review the security of Docker images that are stored in your namespaces 
       - Corrective action: Details about how to fix the vulnerability
 
 
-## Resolving common problems in images 
+## Resolving common problems in images
 {: #va_report}
 
-Review the example fixes for common problems that might be reported by Vulnerability Advisor. Some of the reported problems can be fixed by updating your Dockerfile. 
+Review the example fixes for common problems that might be reported by Vulnerability Advisor. Some of the reported problems can be fixed by updating your Dockerfile.
 {:shortdesc}
 
 ### Maximum password age, minimum password days, and minimum password length
 {: #va_password}
 
-**Problem**: You receive one or more of the following errors:
+**Problem**: You receive one or more of the following vulnerabilities:
 
 ```
 Maximum password age must be set to 90 days.
@@ -178,10 +259,10 @@ RUN \
     sed -i 's/sha512/sha512 minlen=8/' /etc/pam.d/common-password
 ```
 
-### SSH vulnerability 
+### SSH vulnerability
 {: #ssh}
 
-**Problem**: The following error is returned:
+**Problem**: The following vulnerability is returned:
 
 ```
 SSH server should not be installed.
@@ -189,4 +270,3 @@ SSH server should not be installed.
 {: screen}
 
 **Fix**: Instead of using SSH, use `docker attach` or `docker exec` to access your container. Ensure that your Dockerfile does not contain any steps for installing an SSH Server.
-
