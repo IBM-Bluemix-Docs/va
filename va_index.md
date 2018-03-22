@@ -110,26 +110,19 @@ Before you begin:
 
 To configure the Helm chart:
 
-1.  Install the <a href="https://docs.helm.sh/using_helm/#installing-helm" target="_blank">Helm CLI <img src="../../icons/launch-glyph.svg" alt="External link icon"></a>.
+1.  [Set up Helm in your cluster](../../containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the scanner can watch containers in all namespaces.
 
-1.  Configure Helm in your cluster. Helm installs Tiller into your cluster if it is not installed already.
-
-    ```
-    helm init
-    ```
-    {: pre}
-
-1.  Add the IBM chart repository to your Helm.
+1.  Add the IBM chart repository to your Helm, such as `ibm-incubator`.
 
     ```
     helm repo add ibm-incubator https://registry.bluemix.net/helm/ibm-incubator
     ```
     {: pre}
 
-1.  Save the default configuration settings for the container scanner Helm chart in a local YAML file.
+1.  Save the default configuration settings for the container scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
 
     ```
-    helm inspect values ibmcloud-container-scanner > config.yaml
+    helm inspect values ibm-incubator/ibmcloud-container-scanner > config.yaml
     ```
     {: pre}
 
@@ -180,12 +173,14 @@ To configure the Helm chart:
     </tr>
     </tbody></table>
 
-1.  Install the Helm chart to your cluster in the `kube-system` namespace with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name for your Helm chart.
+1.  Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name for your Helm chart. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
 
     ```
-    helm install -f config.yaml --namespace=kube-system --name=<myscanner> ibmcloud-container-scanner
+    helm install -f config.yaml --name=<myscanner> ibm-incubator/ibmcloud-container-scanner
     ```
     {: pre}
+    
+    **Note**: The container scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
 
 1.  Check the chart deployment status. When the chart is ready, the **STATUS** field near the top of the output has a value of `DEPLOYED`.
 
@@ -202,7 +197,7 @@ To configure the Helm chart:
     {: pre}
 
 
-IBM Container Scanner is now installed, and the livescan agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. It scans all containers that are assigned to pods in your Kubernetes namespaces, such as `default`. 
+IBM Container Scanner is now installed, and the livescan agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
 
 
 
