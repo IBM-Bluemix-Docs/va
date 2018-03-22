@@ -110,14 +110,7 @@ Before you begin:
 
 To configure the Helm chart:
 
-1.  Install the <a href="https://docs.helm.sh/using_helm/#installing-helm" target="_blank">Helm CLI <img src="../../icons/launch-glyph.svg" alt="External link icon"></a>.
-
-1.  Configure Helm in your cluster. Helm installs Tiller into your cluster if it is not installed already.
-
-    ```
-    helm init
-    ```
-    {: pre}
+1.  [Set up Helm in your cluster](../../containers/cs_integrations.html#helm).
 
 1.  Add the IBM chart repository to your Helm.
 
