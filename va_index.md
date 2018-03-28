@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-20"
+lastupdated: "2018-03-28"
 
 ---
 
@@ -33,12 +33,9 @@ Vulnerability Advisor provides security management for {{site.data.keyword.conta
 Vulnerability Advisor includes the following features:
 
 -   Scans images for vulnerabilities
--   Provides an evaluation report based on security standards, such as ISO 27002, [Center of Internet Security ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.cisecurity.org/), and security practices specific to {{site.data.keyword.containerlong_notm}}
--   Detects file-based malware
+-   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
--   Provides instructions on how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
-
-
+-   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
 
 In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories. The report identifies good cloud security practices for your images. 
 
