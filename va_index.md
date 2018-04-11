@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-03-28"
+lastupdated: "2018-04-05"
 
 ---
 
@@ -41,6 +41,9 @@ In the Registry dashboard, the **SECURITY REPORT** column displays the status of
 
 The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 
+
+
+
 ## Types of vulnerabilities
 {: #types}
 
@@ -59,7 +62,7 @@ Packages with known vulnerability issues are displayed in the scan results. The 
   |CentOS| [CentOS announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-announce/) and [CentOS CR announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-cr-announce/)|
   |Debian|[Debian security announcements ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.debian.org/debian-security-announce/)|
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/)|
-  |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://www.ubuntu.com/usn/)|
+  |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://usn.ubuntu.com/)|
   {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
 
