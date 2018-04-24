@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-04-05"
+lastupdated: "2018-4-24"
 
 ---
 
@@ -40,7 +40,22 @@ Vulnerability Advisor includes the following features:
 In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories. The report identifies good cloud security practices for your images. 
 
 The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+	
+	
+**Data protection**
 
+To scan images and containers in your account for security issues, Vulnerability Advisor collects, stores, and processes the following information:
+- free-form text fields, including IDs, descriptions, and image names (registry, namespace, repository name, and image tag)
+- Kubernetes metadata including names of Kubernetes resources such as pod, replicaset, and deployment names
+- metadata about the file modes and creation timestamps of the configuration files
+- the content of system and application configuration files in images and containers
+- installed packages and libraries (including their versions)
+
+Do not put personal information into any field or location that Vulnerability Advisor processes, as identified in the preceding list.
+
+Scan results, aggregated at a data center level, are processed to produce anonymized metrics to operate and improve the service.
+
+Scan results are deleted 30 days after they are generated.
 
 
 
