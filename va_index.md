@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-4-24"
+lastupdated: "2018-4-25"
 
 ---
 
@@ -14,6 +14,7 @@ lastupdated: "2018-4-24"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
@@ -102,54 +103,61 @@ Images are scanned only if they are based on an operating system that is support
 Before you begin:
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI client. If you have a federated account, use `--sso`.
-1.  [Target your `kubectl` CLI](../../containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
-1.  Create a service ID and API key for the container scanner. and give it a name. 		    
-    1.  Create a service ID. Note its **CRN**. 
-        
+2.  [Target your `kubectl` CLI](../../containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
+3.  Create a service ID and API key for the container scanner and give it a name:
+    1.  Create a service ID by running the following command, replacing `<scanner_serviceID>` with a name of your choice for the service ID. Note its **CRN**.
+    
         ```
-		    bx iam service-id-create <scanner_serviceID>
-		    ```
+    	bx iam service-id-create <scanner_serviceID>
+    	```
         {: pre}
-    2.  Create a service API key, where `<scanner_serviceID>` is the service ID that you previously made. Make sure to store your API key safely, as it cannot be retrieved later.
-    	  
+    
+    
+    2.  Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and replacing  `<scanner_APIkey_name>` with a name of your choice for the scanner API key. 
+    
         ```
-    		bx iam service-api-key-create <scanner_APIkey> <scanner_serviceID>
-    		```
+    	bx iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+    	```
         {: pre}
+	
+	The scanner API key is returned.
+	
+	Ensure that you store your scanner API key safely because it cannot be retrieved later.
+	{: tip}
+	
     3.  Create a service policy that grants the `Writer` role.
     		
         ```
-    		bx iam service-policy-create <scanner_serviceID> -r Writer
-    		```
+    	bx iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
+    	```
         {: pre}
 
 To configure the Helm chart:
 
 1.  [Set up Helm in your cluster](../../containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the scanner can watch containers in all namespaces.
 
-1.  Add the IBM chart repository to your Helm, such as `ibm-incubator`.
+2.  Add the IBM chart repository to your Helm, such as `ibm-incubator`.
 
     ```
     helm repo add ibm-incubator https://registry.bluemix.net/helm/ibm-incubator
     ```
     {: pre}
 
-1.  Save the default configuration settings for the container scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
+3.  Save the default configuration settings for the container scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
 
     ```
     helm inspect values ibm-incubator/ibmcloud-container-scanner > config.yaml
     ```
     {: pre}
 
-1.  Edit the `config.yaml` file.
+4.  Edit the `config.yaml` file.
 
     ```yaml
     EmitURL: <regional_emit_URL>
     IAMURL: <regional_IAM_URL>
     AccountID: <IBM_Cloud_account_ID>
     ClusterID: <cluster_ID>
-    APIKey: <service_API_key>
-    ServiceID: <service_ID>
+    APIKey: <scanner_APIkey>
     ...
     ```
 
@@ -179,16 +187,12 @@ To configure the Helm chart:
     <td>Replace with the Kubernetes cluster that you want to install the container scanner in. To list cluster IDs, run <code>bx cs clusters</code>.</td>
     </tr>
     <tr>
-    <td><code>APIKey</code></td>
-    <td>Replace with the API key that you created before you began.</td>
-    </tr>
-    <tr>
-    <td><code>ServiceID</code></td>
-    <td>Replace with the service ID **CRN** that you created before you began.</td>
+    <td><code>APIkey</code></td>
+    <td>Replace with the scanner API key that you created earlier.</td>
     </tr>
     </tbody></table>
 
-1.  Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name for your Helm chart. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
+5.  Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name of your choice for your Helm chart. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
 
     ```
     helm install -f config.yaml --name=<myscanner> ibm-incubator/ibmcloud-container-scanner
@@ -197,14 +201,14 @@ To configure the Helm chart:
     
     **Note**: The container scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
 
-1.  Check the chart deployment status. When the chart is ready, the **STATUS** field near the top of the output has a value of `DEPLOYED`.
+6.  Check the chart deployment status. When the chart is ready, the **STATUS** field near the top of the output has a value of `DEPLOYED`.
 
     ```
     helm status <myscanner>
     ```
     {: pre}
 
-1.  After the chart is deployed, verify that the updated settings in the `config.yaml` file were used.
+7.  After the chart is deployed, verify that the updated settings in the `config.yaml` file were used.
 
     ```
     helm get values <myscanner>
