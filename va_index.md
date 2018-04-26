@@ -119,10 +119,10 @@ Before you begin:
     	```
         {: pre}
 	
-	The scanner API key is returned.
+	    The scanner API key is returned.
 	
-	Ensure that you store your scanner API key safely because it cannot be retrieved later.
-	{: tip}
+	    Ensure that you store your scanner API key safely because it cannot be retrieved later.
+	    {: tip}
 	
     3.  Create a service policy that grants the `Writer` role.
     		
