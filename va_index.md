@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-4-25"
+lastupdated: "2018-4-26"
 
 ---
 
@@ -111,8 +111,7 @@ Before you begin:
     	bx iam service-id-create <scanner_serviceID>
     	```
         {: pre}
-    
-    
+
     2.  Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and replacing  `<scanner_APIkey_name>` with a name of your choice for the scanner API key. 
     
         ```
@@ -187,7 +186,7 @@ To configure the Helm chart:
     <td>Replace with the Kubernetes cluster that you want to install the container scanner in. To list cluster IDs, run <code>bx cs clusters</code>.</td>
     </tr>
     <tr>
-    <td><code>APIkey</code></td>
+    <td><code>APIKey</code></td>
     <td>Replace with the scanner API key that you created earlier.</td>
     </tr>
     </tbody></table>
