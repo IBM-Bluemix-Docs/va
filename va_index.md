@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-4-26"
+lastupdated: "2018-04-27"
 
 ---
 
@@ -110,14 +110,14 @@ Before you begin:
         ```
     	bx iam service-id-create <scanner_serviceID>
     	```
-        {: pre}
+        {: codeblock}
 
     2.  Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and replacing  `<scanner_APIkey_name>` with a name of your choice for the scanner API key. 
     
         ```
     	bx iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
     	```
-        {: pre}
+        {: codeblock}
 	
 	    The scanner API key is returned.
 	
@@ -129,7 +129,7 @@ Before you begin:
         ```
     	bx iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
     	```
-        {: pre}
+        {: codeblock}
 
 To configure the Helm chart:
 
