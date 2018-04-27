@@ -159,6 +159,7 @@ To configure the Helm chart:
     APIKey: <scanner_APIkey>
     ...
     ```
+    {: pre}
 
     <table>
     <col width="22%">
@@ -309,6 +310,7 @@ RUN \
     sed -i 's/^PASS_MIN_DAYS.*/PASS_MIN_DAYS    1/' /etc/login.defs && \
     sed -i 's/sha512/sha512 minlen=8/' /etc/pam.d/common-password
 ```
+{: codeblock}
 
 ### SSH vulnerability
 {: #ssh}
