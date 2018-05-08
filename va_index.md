@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-2"
+lastupdated: "2018-05-4"
 
 ---
 
@@ -146,7 +146,6 @@ To configure the Helm chart:
 
     ```yaml
     EmitURL: <regional_emit_URL>
-    IAMURL: <regional_IAM_URL>
     AccountID: <IBM_Cloud_account_ID>
     ClusterID: <cluster_ID>
     APIKey: <scanner_APIkey>
@@ -165,15 +164,8 @@ To configure the Helm chart:
     <tbody>
     <tr>
     <td><code>EmitURL</code></td>
-    <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>bx cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example: <code>https://va.eu-gb.bluemix.net</code></td>
+    <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>bx cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
     </tr>
-    <tr>
-    <td><code>IAMURL</code></td>
-    <td>Replace with <code>https://iam.bluemix.net</code>.</td>
-    </tr>
-    <tr>
-    <td><code>AccountID</code></td>
-    <td>Replace with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>bx account list</code>.</td>
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
