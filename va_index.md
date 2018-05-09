@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-4"
+lastupdated: "2018-05-09"
 
 ---
 
@@ -166,6 +166,9 @@ To configure the Helm chart:
     <td><code>EmitURL</code></td>
     <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>bx cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
     </tr>
+    <tr>
+    <td><code>AccountID</code></td>
+    <td>Replace with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>bx account list</code>.</td>
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
