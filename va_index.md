@@ -123,6 +123,13 @@ Before you begin:
 	
 	    Ensure that you store your scanner API key safely because it cannot be retrieved later.
 	    {: tip}
+	
+    3.  Create a service policy that grants the `Writer` role.
+    		
+        ```
+    	bx iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
+    	```
+        {: codeblock}
 
 To configure the Helm chart:
 
