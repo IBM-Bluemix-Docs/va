@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-10"
+lastupdated: "2018-05-19"
 
 ---
 
@@ -274,7 +274,7 @@ You can review the security of Docker images that are stored in your namespaces 
 ## Resolving common problems in images
 {: #va_report}
 
-Review the example fixes for common problems that might be reported by Vulnerability Advisor. Some of the reported problems can be fixed by updating your Dockerfile.
+Review the example fixes for common problems that might be reported by Vulnerability Advisor. Some problems can be fixed by updating your Dockerfile.
 {:shortdesc}
 
 ### Maximum password age, minimum password days, and minimum password length
