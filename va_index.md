@@ -22,6 +22,7 @@ lastupdated: "2018-05-30"
 Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added to your organization's registry namespace.
 {:shortdesc}
 
+
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. You can still deploy containers from vulnerable images, but keep in mind that those containers might be attacked or compromised.
 
 
