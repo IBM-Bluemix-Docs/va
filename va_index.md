@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-19"
+lastupdated: "2018-05-31"
 
 ---
 
@@ -21,6 +21,7 @@ lastupdated: "2018-05-19"
 
 Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added to your organization's registry namespace.
 {:shortdesc}
+
 
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. You can still deploy containers from vulnerable images, but keep in mind that those containers might be attacked or compromised.
 
@@ -254,11 +255,10 @@ You can review the security of Docker images that are stored in your namespaces 
     ```
     {: pre}
 
-2.  Check the status in the **VULNERABILITY STATUS** column.
-    -   `OK`: No security issues were found
-    -   `Vulnerable`: A potential security issue or vulnerability was found
-    -   `Unknown`: The image is being scanned and the final vulnerability status is not yet determined
-    -   `Unsupported OS`: The image is not supported to be scanned by Vulnerability Advisor
+2.  Check the status in the **SECURITY STATUS** column.
+    -   `No Issues`: No security issues were found.
+    -   `X Issues`: Potential security issues or vulnerabilities were found.
+    -   `Scanning`: The image is being scanned and the final vulnerability status is not yet determined.
 4.  To view the details for the status, review the Vulnerability Advisor report.
 
     ```
