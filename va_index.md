@@ -255,11 +255,10 @@ You can review the security of Docker images that are stored in your namespaces 
     ```
     {: pre}
 
-2.  Check the status in the **VULNERABILITY STATUS** column.
-    -   `OK`: No security issues were found
-    -   `Vulnerable`: A potential security issue or vulnerability was found
-    -   `Unknown`: The image is being scanned and the final vulnerability status is not yet determined
-    -   `Unsupported OS`: The image is not supported to be scanned by Vulnerability Advisor
+2.  Check the status in the **SECURITY STATUS** column.
+    -   `No Issues`: No security issues were found.
+    -   `X Issues`: Potential security issues or vulnerabilities were found.
+    -   `Scanning`: The image is being scanned and the final vulnerability status is not yet determined.
 4.  To view the details for the status, review the Vulnerability Advisor report.
 
     ```
