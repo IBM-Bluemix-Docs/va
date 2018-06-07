@@ -19,7 +19,7 @@ lastupdated: "2018-06-07"
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
-Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added to your organization's registry namespace.
+Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added to your organization's registry namespace, and, if you've installed the container scanner in each cluster, also checks the status of running containers.
 {:shortdesc}
 
 
@@ -35,13 +35,17 @@ Vulnerability Advisor provides security management for {{site.data.keyword.conta
 Vulnerability Advisor includes the following features:
 
 -   Scans images for vulnerabilities
+-   Scans running containers for vulnerabilities if you've installed the container scanner in each cluster
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
+-   Provides verdicts to the admission controller. Exemptions can be applied at an account, namespace, repository, or tag level to allow deployment of images with specific compliance or vulnerability issues.
+-   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has a container scanner installed.
+
 
 In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories. The report identifies good cloud security practices for your images. 
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and a link to a running container if the container scanner is installed. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 	
 	
 **Data protection**
@@ -81,8 +85,6 @@ Packages with known vulnerability issues are displayed in the scan results. The 
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/)|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://usn.ubuntu.com/)|
   {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
-
-
 
 
 ### Configuration issues
