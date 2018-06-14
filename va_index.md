@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-07"
+lastupdated: "2018-06-14"
 
 ---
 
@@ -29,10 +29,10 @@ When you add an image to a namespace, the image is automatically scanned by Vuln
 ## About Vulnerability Advisor
 {: #about}
 
-Vulnerability Advisor provides security management for {{site.data.keyword.containerlong}}. Vulnerability Advisor generates a security status report, suggests fixes and best practices, and provides management to restrict nonsecure images from running. Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you secure your {{site.data.keyword.cloud_notm}} infrastructure.
+Vulnerability Advisor provides security management for {{site.data.keyword.containerlong}}. Vulnerability Advisor generates a security status report and suggests fixes and best practices. The Vulnerability Advisor verdict can be used by image security enforcement to prevent the deployment of nonsecure images, see [Enforcing container image security](../Registry/registry_security_enforce.html#security_enforce). Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 {:shortdesc}
 
-Vulnerability Advisor includes the following features:
+Vulnerability Advisor provides the following functions:
 
 -   Scans images for vulnerabilities
 -   Scans running containers for vulnerabilities if you've installed the container scanner in each cluster
@@ -43,9 +43,9 @@ Vulnerability Advisor includes the following features:
 -   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has a container scanner installed.
 
 
-In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories. The report identifies good cloud security practices for your images. 
+In the Registry dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images. 
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and a link to a running container if the container scanner is installed. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the container scanner is installed, links to running containers. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 	
 	
 **Data protection**
