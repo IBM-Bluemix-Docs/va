@@ -71,9 +71,9 @@ Scan results, aggregated at a data center level, are processed to produce anonym
 Scan results are deleted 30 days after they are generated.
 
 
-
 ## Types of vulnerabilities
 {: #types}
+
 
 ### Vulnerable packages
 {: #packages}
@@ -104,6 +104,7 @@ Images are scanned only if they are based on an operating system that is support
 -   MySQL
 -   NGINX
 -   Apache
+
 
 
 
@@ -224,8 +225,7 @@ To configure the Helm chart:
 IBM Container Scanner is now installed, and the livescan agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
 
 
-
-## Reviewing a vulnerability report
+## Reviewing a vulnerability report by using the GUI
 {: #va_reviewing}
 
 Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure app settings.
@@ -248,7 +248,6 @@ Before you deploy an image, you can review its Vulnerability Advisor report for 
 If vulnerabilities exist and you do not fix them, those issues can impact the security of containers that are built with that image. However, you can continue to use an image that has security and configuration issues in a container.
 
  
-
 
 
 ## Reviewing a vulnerability report by using the CLI
@@ -286,6 +285,7 @@ You can review the security of Docker images that are stored in your namespaces 
 Review the example fixes for common problems that might be reported by Vulnerability Advisor. Some problems can be fixed by updating your Dockerfile.
 {:shortdesc}
 
+
 ### Maximum password age, minimum password days, and minimum password length
 {: #va_password}
 
@@ -315,6 +315,7 @@ RUN \
     sed -i 's/sha512/sha512 minlen=8/' /etc/pam.d/common-password
 ```
 {: codeblock}
+
 
 ### SSH vulnerability
 {: #ssh}
