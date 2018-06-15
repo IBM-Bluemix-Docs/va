@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-14"
+lastupdated: "2018-06-15"
 
 ---
 
@@ -22,25 +22,32 @@ lastupdated: "2018-06-14"
 Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added to your organization's registry namespace, and, if you've installed the container scanner in each cluster, also checks the status of running containers.
 {:shortdesc}
 
+When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. 
 
-When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. You can still deploy containers from vulnerable images, but keep in mind that those containers might be attacked or compromised.
+Vulnerability Advisor provides security management for {{site.data.keyword.registrylong}}, generating a security status report that includes suggested fixes and best practices. 
+
+Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image might be attacked or compromised. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by image security enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
+
+Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
 
 ## About Vulnerability Advisor
 {: #about}
 
-Vulnerability Advisor provides security management for {{site.data.keyword.containerlong}}. Vulnerability Advisor generates a security status report and suggests fixes and best practices. The Vulnerability Advisor verdict can be used by image security enforcement to prevent the deployment of nonsecure images, see [Enforcing container image security](../Registry/registry_security_enforce.html#security_enforce). Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
+Vulnerability Advisor provides functions to help you to secure your images.
+
 {:shortdesc}
 
-Vulnerability Advisor provides the following functions:
+ The following functions are available:
 
--   Scans images for vulnerabilities
--   Scans running containers for vulnerabilities if you've installed the container scanner in each cluster
+-   Scans images for issues
+-   Scans running containers for issues if you've [installed the container scanner](#va_install_livescan) in each cluster
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
--   Provides verdicts to the admission controller. Exemptions can be applied at an account, namespace, repository, or tag level to allow deployment of images with specific compliance or vulnerability issues.
--   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has a container scanner installed.
+-   Provides verdicts to [image security enforcement](../Registry/registry_security_enforce.html#security_enforce)
+-   Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
+-   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the container scanner installed.
 
 
 In the Registry dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images. 
