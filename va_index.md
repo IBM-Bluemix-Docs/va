@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-31"
+lastupdated: "2018-06-19"
 
 ---
 
@@ -19,29 +19,40 @@ lastupdated: "2018-05-31"
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
-Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added to your organization's registry namespace.
+Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace, and, if you've installed the container scanner in each cluster, also checks the status of running containers.
 {:shortdesc}
 
+When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. 
 
-When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. You can still deploy containers from vulnerable images, but keep in mind that those containers might be attacked or compromised.
+Vulnerability Advisor provides security management for {{site.data.keyword.registrylong_notm}}, generating a security status report that includes suggested fixes and best practices. 
+
+Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image have known issues that might be used to attack or otherwise compromise the container. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by image security enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
+
+Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
 
 ## About Vulnerability Advisor
 {: #about}
 
-Vulnerability Advisor provides security management for {{site.data.keyword.containerlong}}. Vulnerability Advisor generates a security status report, suggests fixes and best practices, and provides management to restrict nonsecure images from running. Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you secure your {{site.data.keyword.cloud_notm}} infrastructure.
+Vulnerability Advisor provides functions to help you to secure your images.
+
 {:shortdesc}
 
-Vulnerability Advisor includes the following features:
+ The following functions are available:
 
--   Scans images for vulnerabilities
+-   Scans images for issues
+-   Scans running containers for issues if you've [installed the container scanner](#va_install_livescan) in each cluster
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
+-   Provides verdicts to [image security enforcement](../Registry/registry_security_enforce.html#security_enforce)
+-   Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
+-   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the container scanner installed.
 
-In the Registry dashboard, the **SECURITY REPORT** column displays the status of your repositories. The report identifies good cloud security practices for your images. 
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. To find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+In the Registry dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images. 
+
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the container scanner is installed, links to running containers. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 	
 	
 **Data protection**
@@ -60,9 +71,9 @@ Scan results, aggregated at a data center level, are processed to produce anonym
 Scan results are deleted 30 days after they are generated.
 
 
-
 ## Types of vulnerabilities
 {: #types}
+
 
 ### Vulnerable packages
 {: #packages}
@@ -83,8 +94,6 @@ Packages with known vulnerability issues are displayed in the scan results. The 
   {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
 
-
-
 ### Configuration issues
 {: #app_configurations}
 
@@ -95,6 +104,7 @@ Images are scanned only if they are based on an operating system that is support
 -   MySQL
 -   NGINX
 -   Apache
+
 
 
 
@@ -215,8 +225,7 @@ To configure the Helm chart:
 IBM Container Scanner is now installed, and the livescan agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
 
 
-
-## Reviewing a vulnerability report
+## Reviewing a vulnerability report by using the GUI
 {: #va_reviewing}
 
 Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure app settings.
@@ -239,7 +248,6 @@ Before you deploy an image, you can review its Vulnerability Advisor report for 
 If vulnerabilities exist and you do not fix them, those issues can impact the security of containers that are built with that image. However, you can continue to use an image that has security and configuration issues in a container.
 
  
-
 
 
 ## Reviewing a vulnerability report by using the CLI
@@ -277,6 +285,7 @@ You can review the security of Docker images that are stored in your namespaces 
 Review the example fixes for common problems that might be reported by Vulnerability Advisor. Some problems can be fixed by updating your Dockerfile.
 {:shortdesc}
 
+
 ### Maximum password age, minimum password days, and minimum password length
 {: #va_password}
 
@@ -306,6 +315,7 @@ RUN \
     sed -i 's/sha512/sha512 minlen=8/' /etc/pam.d/common-password
 ```
 {: codeblock}
+
 
 ### SSH vulnerability
 {: #ssh}
