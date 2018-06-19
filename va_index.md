@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-15"
+lastupdated: "2018-06-19"
 
 ---
 
@@ -19,14 +19,14 @@ lastupdated: "2018-06-15"
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
-Vulnerability Advisor checks the security status of container images that are provided by IBM, third parties, or added to your organization's registry namespace, and, if you've installed the container scanner in each cluster, also checks the status of running containers.
+Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace, and, if you've installed the container scanner in each cluster, also checks the status of running containers.
 {:shortdesc}
 
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. 
 
-Vulnerability Advisor provides security management for {{site.data.keyword.registrylong}}, generating a security status report that includes suggested fixes and best practices. 
+Vulnerability Advisor provides security management for {{site.data.keyword.registrylong_notm}}, generating a security status report that includes suggested fixes and best practices. 
 
-Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image might be attacked or compromised. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by image security enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
+Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image have known issues that might be used to attack or otherwise compromise the container. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by image security enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
 
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
