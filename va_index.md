@@ -41,7 +41,7 @@ Vulnerability Advisor provides functions to help you to secure your images.
  The following functions are available:
 
 -   Scans images for issues
--   Scans running containers for issues if you've [installed the container scanner](#va_install_livescan) in each cluster
+-   Scans running containers for issues if you've [installed the container scanner](#va_install_container_scanner) in each cluster
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
@@ -109,7 +109,7 @@ Images are scanned only if they are based on an operating system that is support
 
 
 ## Installing the container scanner
-{: #va_install_livescan}
+{: #va_install_container_scanner}
 
 Before you begin:
 
@@ -222,7 +222,7 @@ To configure the Helm chart:
     {: pre}
 
 
-IBM Container Scanner is now installed, and the livescan agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
+IBM Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
 
 
 ## Reviewing a vulnerability report by using the GUI
