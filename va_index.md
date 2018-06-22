@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-20"
+lastupdated: "2018-06-22"
 
 ---
 
@@ -277,6 +277,48 @@ You can review the security of Docker images that are stored in your namespaces 
     In the CLI output, you can view the following information about the configuration issues.
       - Security practice: A description of the vulnerability that was found
       - Corrective action: Details about how to fix the vulnerability
+
+
+## Reviewing a container report
+{: #va_reviewing_container}
+
+In your dashboard, you can see the status of a container to determine whether its security complies with your organization's policy. You can also review a container's Security report, which details any vulnerable packages and nonsecure container or application settings, and whether the container is compliant with organizational policies.
+{:shortdesc}
+
+Check that your container is as secure as possible by viewing its Security report and act on any reported security or configuration issues, by completing the following steps:
+
+1.  Select the container that you want to view a report for:
+    1.  From the Catalog, select **Containers**, click **Container Registry**.
+    2.  Select the **Private Repositories** tab and select the row for the repository that you want.
+    3.  Select the row for the image tag that you want.
+    4.  Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
+2.  Review the sections to see the potential security and configuration issues for each package in the image:
+
+      -   **Vulnerabilities**: Lists packages with known vulnerability issues, which are updated daily from published security notices for the Docker image types that are listed in [Managing image security with Vulnerability Advisor](va_index.html). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might correct multiple issues. Click the security notice code to review more information on the package and for steps to update the package.
+
+    -   **Configuration Issues**: Lists suggestions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
+
+   Corrective actions or suggestions are provided for each item that is listed.
+   
+3.  Review the policy status for each security issue. The policy status indicates whether this issue is exempt.
+
+    -  **Active**: You have an issue that is not exempted and the issue is affecting your security status.
+    -  **Exempt**: This issue has been exempted by your policy settings.
+    -  **Partially exempt**: This issue is associated with more than one security notice. The security notices are not all exempt.
+
+4.  Decide how to update the container so that you can resolve the problems.
+
+    **Important:** To fix problems with the container image, you must delete the old instance and redeploy, which means losing any data within the existing container. Ensure that you have a good understanding of your container architecture to choose the appropriate method of redeploying the container.
+
+    For example:
+
+    -   If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with minimal data loss.
+    -   You can use an {{site.data.keyword.Bluemix_notm}} service to assist, such as [Delivery Pipeline](../ContinuousDelivery/pipeline_about.html), with updating the vulnerable container instance.
+    -   In a microservices architecture, you might route traffic to another container instance while you fix security or configuration issues, and push the new image in a red/black deployment.
+
+5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **Dots** menu and click **Create Exemption**.
+
+6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](/docs/services/va/va_index.html#va_report).
 
 
 ## Resolving common problems in images
