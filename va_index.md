@@ -276,7 +276,10 @@ You can review the security of Docker images that are stored in your namespaces 
 
     In the CLI output, you can view the following information about the configuration issues.
       - Security practice: A description of the vulnerability that was found
-      - Corrective action: Details about how to fix the vulnerability
+      - Corrective action: Details about how to fix the vulnerability.
+
+6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](/docs/services/va/va_index.html#va_report).
+</staging>
 
 
 ## Resolving common problems in images
