@@ -312,7 +312,7 @@ Check that your container is as secure as possible by viewing its Security repor
 
     For example:
 
-    -   If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with minimal data loss.
+    -   If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with no data loss.
     -   You can use an {{site.data.keyword.Bluemix_notm}} service to assist, such as [Delivery Pipeline](../ContinuousDelivery/pipeline_about.html), with updating the vulnerable container instance.
     -   In a microservices architecture, you might route traffic to another container instance while you fix security or configuration issues, and push the new image in a red/black deployment.
 
