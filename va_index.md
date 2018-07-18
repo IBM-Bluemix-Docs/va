@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-06-22"
+lastupdated: "2018-07-18"
 
 ---
 
@@ -190,7 +190,8 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
-    <td>Replace with the Kubernetes cluster that you want to install the container scanner in. To list cluster IDs, run <code>bx cs clusters</code>.</td>
+    <td>Replace with the Kubernetes cluster that you want to install the container scanner in. To list cluster IDs, run <code>bx cs clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
+    </td>
     </tr>
     <tr>
     <td><code>APIKey</code></td>
