@@ -228,7 +228,6 @@ IBM Container Scanner is now installed, and the agent is deployed as a [DaemonSe
       </tbody>
     </table>
 </p>
-
 </staging>
 
 
