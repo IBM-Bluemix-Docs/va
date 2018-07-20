@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-18"
+lastupdated: "2018-07-20"
 
 ---
 
@@ -224,6 +224,51 @@ To configure the Helm chart:
 
 
 IBM Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
+
+
+## Running the container scanner from behind a firewall
+{: #va_firewall}
+
+If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the container scanner on TCP port <code>443</code> on the IP addresses in the following table.
+{:shortdesc}
+
+ 
+
+<p>
+  <table summary=" The rows should be read left to right, with the server zone in column one and IP addresses to match in column two.">
+  <caption>IP addresses to open for outgoing traffic</caption>
+      <thead>
+      <th>Region</th>
+      <th>IP address</th>
+      </thead>
+    <tbody>
+      <tr>
+         <td>AP South</td>
+         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
+      </tr>
+      <tr>
+         <td>EU Central</td>
+         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
+        </tr>
+      <tr>
+        <td>UK South</td>
+        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
+      </tr>
+      <tr>
+        <td>US East</td>
+         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
+      </tr>
+      <tr>
+        <td>US South</td>
+        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
+      </tr>
+      </tbody>
+    </table>
+</p></td>
+      </tr>
+      </tbody>
+    </table>
+</p></staging>
 
 
 ## Reviewing a vulnerability report by using the GUI
