@@ -264,11 +264,7 @@ If your firewall blocks outgoing connections, you must configure your firewall t
       </tr>
       </tbody>
     </table>
-</p></td>
-      </tr>
-      </tbody>
-    </table>
-</p></staging>
+</p>
 
 
 ## Reviewing a vulnerability report by using the GUI
