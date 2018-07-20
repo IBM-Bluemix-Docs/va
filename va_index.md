@@ -229,7 +229,7 @@ IBM Container Scanner is now installed, and the agent is deployed as a [DaemonSe
 ## Running the container scanner from behind a firewall
 {: #va_firewall}
 
-If your firewall blocks outgoing connections, you must allow worker nodes to access the container scanner on TCP port <code>443</code> on the IP addresses in the following table.
+If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the container scanner on TCP port <code>443</code> on the IP addresses in the following table.
 {:shortdesc}
 
  
