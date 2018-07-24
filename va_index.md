@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-23"
+lastupdated: "2018-07-24"
 
 ---
 
@@ -359,7 +359,7 @@ Check that your container is as secure as possible by viewing its Security repor
     -   You can use an {{site.data.keyword.Bluemix_notm}} service to assist, such as [Delivery Pipeline](../ContinuousDelivery/pipeline_about.html), with updating the vulnerable container instance.
     -   In a microservices architecture, you might route traffic to another container instance while you fix security or configuration issues, and push the new image in a red/black deployment.
 
-5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **Dots** menu and click **Create Exemption**.
+5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**.
 
 6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](/docs/services/va/va_index.html#va_report).
 
