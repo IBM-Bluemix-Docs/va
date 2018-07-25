@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-20"
+lastupdated: "2018-07-24"
 
 ---
 
@@ -119,14 +119,14 @@ Before you begin:
     1.  Create a service ID by running the following command, replacing `<scanner_serviceID>` with a name of your choice for the service ID. Note its **CRN**.
     
         ```
-    	bx iam service-id-create <scanner_serviceID>
+    	ibmcloud iam service-id-create <scanner_serviceID>
     	```
         {: codeblock}
 
     2.  Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and replacing  `<scanner_APIkey_name>` with a name of your choice for the scanner API key. 
     
         ```
-    	bx iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+    	ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
     	```
         {: codeblock}
 	
@@ -138,7 +138,7 @@ Before you begin:
     3.  Create a service policy that grants the `Writer` role.
     		
         ```
-    	bx iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
+    	ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
     	```
         {: codeblock}
 
@@ -182,15 +182,15 @@ To configure the Helm chart:
     <tbody>
     <tr>
     <td><code>EmitURL</code></td>
-    <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>bx cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+    <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
     </tr>
     <tr>
     <td><code>AccountID</code></td>
-    <td>Replace with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>bx account list</code>.</td>
+    <td>Replace with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>ibmcloud account list</code>.</td>
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
-    <td>Replace with the Kubernetes cluster that you want to install the container scanner in. To list cluster IDs, run <code>bx cs clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
+    <td>Replace with the Kubernetes cluster that you want to install the container scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
     </td>
     </tr>
     <tr>
@@ -206,7 +206,8 @@ To configure the Helm chart:
     ```
     {: pre}
     
-    **Note**: The container scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
+    The container scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
+    {:tip}
 
 6.  Check the chart deployment status. When the chart is ready, the **STATUS** field near the top of the output has a value of `DEPLOYED`.
 
@@ -301,7 +302,7 @@ You can review the security of Docker images that are stored in your namespaces 
 1.  List the images in your {{site.data.keyword.Bluemix_notm}} account. A list of all images is returned, independent of the namespace where they are stored.
 
     ```
-    bx cr image-list
+    ibmcloud cr image-list
     ```
     {: pre}
 
@@ -312,7 +313,7 @@ You can review the security of Docker images that are stored in your namespaces 
 4.  To view the details for the status, review the Vulnerability Advisor report.
 
     ```
-    bx cr va registry.<region>/<my_namespace>/<my_image>:<tag>
+    ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
     ```
     {: pre}
 
@@ -358,7 +359,7 @@ Check that your container is as secure as possible by viewing its Security repor
     -   You can use an {{site.data.keyword.Bluemix_notm}} service to assist, such as [Delivery Pipeline](../ContinuousDelivery/pipeline_about.html), with updating the vulnerable container instance.
     -   In a microservices architecture, you might route traffic to another container instance while you fix security or configuration issues, and push the new image in a red/black deployment.
 
-5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **Dots** menu and click **Create Exemption**.
+5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**.
 
 6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](/docs/services/va/va_index.html#va_report).
 
