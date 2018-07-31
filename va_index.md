@@ -316,7 +316,8 @@ You can review the security of Docker images that are stored in your namespaces 
     -   `No Issues`: No security issues were found.
     -   `X Issues`: Potential security issues or vulnerabilities were found.
     -   `Scanning`: The image is being scanned and the final vulnerability status is not yet determined.
-4.  To view the details for the status, review the Vulnerability Advisor report.
+    
+3.  To view the details for the status, review the Vulnerability Advisor report.
 
     ```
     ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
