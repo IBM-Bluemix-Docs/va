@@ -268,13 +268,23 @@ If your firewall blocks outgoing connections, you must configure your firewall t
 </p>
 
 
-## Reviewing a vulnerability report by using the GUI
+## Reviewing a vulnerability report
 {: #va_reviewing}
 
 Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure app settings.
 {:shortdesc}
 
 
+
+If vulnerabilities exist and you do not fix them, those issues can impact the security of containers that are built with that image. However, you can continue to use an image that has security and configuration issues in a container.
+
+ 
+
+### Reviewing a vulnerability report by using the GUI
+{: #va_reviewing_gui}
+
+You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the GUI.
+{:shortdesc}
 
 1.  Log in to {{site.data.keyword.Bluemix_notm}}.
 2.  Click **Catalog**.
@@ -288,12 +298,8 @@ Before you deploy an image, you can review its Vulnerability Advisor report for 
 8.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue.
 9.  Perform the corrective action for each issue shown in the report, and rebuild the image. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](#va_report).
 
-If vulnerabilities exist and you do not fix them, those issues can impact the security of containers that are built with that image. However, you can continue to use an image that has security and configuration issues in a container.
 
- 
-
-
-## Reviewing a vulnerability report by using the CLI
+### Reviewing a vulnerability report by using the CLI
 {: #va_registry_cli}
 
 You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the CLI.
