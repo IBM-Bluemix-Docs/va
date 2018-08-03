@@ -26,7 +26,7 @@ When you add an image to a namespace, the image is automatically scanned by Vuln
 
 Vulnerability Advisor provides security management for {{site.data.keyword.registrylong_notm}}, generating a security status report that includes suggested fixes and best practices. 
 
-Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image have known issues that might be used to attack or otherwise compromise the container. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by image security enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
+Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image have known issues that might be used to attack or otherwise compromise the container. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
 
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
