@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-07-31"
+lastupdated: "2018-08-03"
 
 ---
 
@@ -19,7 +19,7 @@ lastupdated: "2018-07-31"
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
-Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If you've installed the container scanner in each cluster, Vulnerability Advisor also checks the status of containers that are running.
+Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If you've installed the Container Scanner in each cluster, Vulnerability Advisor also checks the status of containers that are running.
 {:shortdesc}
 
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. 
@@ -41,18 +41,18 @@ Vulnerability Advisor provides functions to help you to secure your images.
  The following functions are available:
 
 -   Scans images for issues
--   Scans running containers for issues if you've [installed the container scanner](#va_install_container_scanner) in each cluster
+-   Scans running containers for issues if you've [installed the Container Scanner](#va_install_container_scanner) in each cluster
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
 -   Provides verdicts to [image security enforcement](../Registry/registry_security_enforce.html#security_enforce)
 -   Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
--   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the container scanner installed.
+-   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the Container Scanner installed.
 
 
 In the Registry dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images. 
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the container scanner is installed, links to running containers. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the Container Scanner is installed, links to running containers. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 	
 	
 **Data protection**
@@ -108,14 +108,14 @@ Images are scanned only if they are based on an operating system that is support
 
 
 
-## Installing the container scanner
+## Installing the Container Scanner
 {: #va_install_container_scanner}
 
 Before you begin:
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI client. If you have a federated account, use `--sso`.
 2.  [Target your `kubectl` CLI](../../containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
-3.  Create a service ID and API key for the container scanner and give it a name:
+3.  Create a service ID and API key for the Container Scanner and give it a name:
     1.  Create a service ID by running the following command, replacing `<scanner_serviceID>` with a name of your choice for the service ID. Note its **CRN**.
     
         ```
@@ -153,7 +153,7 @@ To configure the Helm chart:
     ```
     {: pre}
 
-3.  Save the default configuration settings for the container scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
+3.  Save the default configuration settings for the Container Scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
 
     ```
     helm inspect values ibm-incubator/ibmcloud-container-scanner > config.yaml
@@ -190,7 +190,7 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
-    <td>Replace with the Kubernetes cluster that you want to install the container scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
+    <td>Replace with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
     </td>
     </tr>
     <tr>
@@ -224,13 +224,13 @@ To configure the Helm chart:
     {: pre}
 
 
-IBM Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
+The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
 
 
-## Running the container scanner from behind a firewall
+## Running the Container Scanner from behind a firewall
 {: #va_firewall}
 
-If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the container scanner on TCP port <code>443</code> on the IP addresses in the following table.
+If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the Container Scanner on TCP port <code>443</code> on the IP addresses in the following table.
 {:shortdesc}
 
  
