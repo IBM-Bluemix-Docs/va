@@ -45,7 +45,7 @@ Vulnerability Advisor provides functions to help you to secure your images.
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
--   Provides verdicts to [image security enforcement](../Registry/registry_security_enforce.html#security_enforce)
+-   Provides verdicts to [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce)
 -   Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
 -   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the Container Scanner installed.
 
@@ -58,11 +58,11 @@ The Vulnerability Advisor dashboard provides an overview and assessment of the s
 **Data protection**
 
 To scan images and containers in your account for security issues, Vulnerability Advisor collects, stores, and processes the following information:
-- free-form text fields, including IDs, descriptions, and image names (registry, namespace, repository name, and image tag)
+- Free-form text fields, including IDs, descriptions, and image names (registry, namespace, repository name, and image tag)
 - Kubernetes metadata including names of Kubernetes resources such as pod, replicaset, and deployment names
-- metadata about the file modes and creation timestamps of the configuration files
-- the content of system and application configuration files in images and containers
-- installed packages and libraries (including their versions)
+- Metadata about the file modes and creation timestamps of the configuration files
+- The content of system and application configuration files in images and containers
+- Installed packages and libraries (including their versions)
 
 Do not put personal information into any field or location that Vulnerability Advisor processes, as identified in the preceding list.
 
@@ -105,16 +105,13 @@ Images are scanned only if they are based on an operating system that is support
 -   NGINX
 -   Apache
 
-
-
-
 ## Installing the Container Scanner
 {: #va_install_container_scanner}
 
 Before you begin:
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI client. If you have a federated account, use `--sso`.
-2.  [Target your `kubectl` CLI](../../containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
+2.  [Target your `kubectl` CLI](/docs/containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
 3.  Create a service ID and API key for the Container Scanner and give it a name:
     1.  Create a service ID by running the following command, replacing `<scanner_serviceID>` with a name of your choice for the service ID. Note its **CRN**.
     
@@ -144,7 +141,7 @@ Before you begin:
 
 To configure the Helm chart:
 
-1.  [Set up Helm in your cluster](../../containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the scanner can watch containers in all namespaces.
+1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the scanner can watch containers in all namespaces.
 
 2.  Add the IBM chart repository to your Helm, such as `ibm-incubator`.
 
@@ -224,7 +221,7 @@ To configure the Helm chart:
     {: pre}
 
 
-The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`. 
+The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`.
 
 
 ## Running the Container Scanner from behind a firewall
@@ -268,17 +265,60 @@ If your firewall blocks outgoing connections, you must configure your firewall t
 </p>
 
 
+## Setting organizational exemption policies
+{: #va_managing_policy}
+
+If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether a given issue is exempt or not. You can also choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues, after discounting those issues that are exempted by your policy.
+{:shortdesc}
+
+You can deploy containers from any image regardless of security status, unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+
+When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
+
+### Setting organizational exemption policies by using the GUI
+{: #va_managing_policy_gui}
+
+If you want to set exemptions to the policy by using the GUI, complete the following steps:
+
+1.  Log in to {{site.data.keyword.Bluemix_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
+2.  Click **Menu > Containers**.
+3.  Under **Vulnerability Advisor**, click **Policy Settings**.
+4.  Click **Create Exemption**.
+5.  Select the issue type.
+6.  Enter the issue ID. You can find this information in your [vulnerability report](#va_reviewing). The **Vulnerbility ID** column contains the CVE or security notice issues; the **Configuration Issue ID** column contains the configuration issues. 
+7.  Select the registry namespace, repository, and tag that you want the exemption to apply to.
+8.  Click **Save**.
+
+You can also edit and remove exemptions by hovering over the relevant row and clicking the **open and close list of options** icon.
+
+### Setting organizational exemption policies by using the CLI
+{: #va_managing_policy_cli}
+
+If you want to set exemptions to the policy by using the CLI, you can run the following commands:
+
+-  To create an exemption for a security issue, run the [ibmcloud cr exemption-add](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) command.
+-  To list your exemptions for security issues, run the [ibmcloud cr exemption-list](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) command.
+-  To list the types of security issues that you can exempt, run the [ibmcloud cr exemption-types](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) command.
+-  To delete an exemption for a security issue, run the [ibmcloud cr exemption-rm](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) command.
+
+For more information about the commands, you can use the `--help` flag when you run the command.
+
+
 ## Reviewing a vulnerability report
 {: #va_reviewing}
 
-Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure app settings.
+Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure container or app settings, and whether the image is compliant with organizational policies.
 {:shortdesc}
 
+If you do not address any discovered issues, those issues can impact the security of containers that are built with that image. If you haven't deployed Container Image Security Enforcement, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and enforced for the image, all issues discovered must be exempt by your policy for containers to be deployable from this image. 
 
+To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/services/Registry/registry_security_enforce.html#customize_policies).
+{:tip}
 
-If vulnerabilities exist and you do not fix them, those issues can impact the security of containers that are built with that image. However, you can continue to use an image that has security and configuration issues in a container.
+If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
+{:tip}
 
- 
+After you deploy your image, if you have deployed Container Scanner, Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
 
 ### Reviewing a vulnerability report by using the GUI
 {: #va_reviewing_gui}
@@ -296,7 +336,7 @@ You can review the security of Docker images that are stored in your namespaces 
     1.  To see more information, expand the summary.
     2.  If an operating system distributor's notice is provided, click the link in the **OFFICIAL NOTICE** column.
 8.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue.
-9.  Perform the corrective action for each issue shown in the report, and rebuild the image. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](#va_report).
+9.  Perform the corrective action for each issue shown in the report, and rebuild the image. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving common problems in images](#va_report).
 
 
 ### Reviewing a vulnerability report by using the CLI
@@ -363,12 +403,12 @@ Check that your container is as secure as possible by viewing its Security repor
     For example:
 
     -   If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with no data loss.
-    -   You can use an {{site.data.keyword.Bluemix_notm}} service to assist, such as [Delivery Pipeline](../ContinuousDelivery/pipeline_about.html), with updating the vulnerable container instance.
+    -   You can use an {{site.data.keyword.Bluemix_notm}} service to assist, such as [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), with updating the vulnerable container instance.
     -   In a microservices architecture, you might route traffic to another container instance while you fix security or configuration issues, and push the new image in a red/black deployment.
 
-5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**.
+5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
 
-6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving problems in images](/docs/services/va/va_index.html#va_report).
+6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving common problems in images](#va_report).
 
 
 ## Resolving common problems in images
