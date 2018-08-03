@@ -203,7 +203,7 @@ To configure the Helm chart:
     ```
     {: pre}
     
-    The container scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
+    The Container Scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
     {:tip}
 
 6.  Check the chart deployment status. When the chart is ready, the **STATUS** field near the top of the output has a value of `DEPLOYED`.
