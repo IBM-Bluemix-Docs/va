@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-08-03"
+lastupdated: "2018-08-06"
 
 ---
 
@@ -384,7 +384,7 @@ Check that your container is as secure as possible by viewing its Security repor
     4.  Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
 2.  Review the sections to see the potential security and configuration issues for each package in the image:
 
-      -   **Vulnerabilities**: Lists packages with known vulnerability issues, which are updated daily from published security notices for the Docker image types that are listed in [Managing image security with Vulnerability Advisor](va_index.html). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might correct multiple issues. Click the security notice code to review more information on the package and for steps to update the package.
+      -   **Vulnerabilities**: Lists packages with known vulnerability issues, which are updated daily from published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might correct multiple issues. Click the security notice code to review more information on the package and for steps to update the package.
 
     -   **Configuration Issues**: Lists suggestions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
 
