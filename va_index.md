@@ -285,7 +285,12 @@ If you want to set exemptions to the policy by using the GUI, complete the follo
 3.  Under **Vulnerability Advisor**, click **Policy Settings**.
 4.  Click **Create Exemption**.
 5.  Select the issue type.
-6.  Enter the issue ID. You can find this information in your [vulnerability report](#va_reviewing). The **Vulnerbility ID** column contains the CVE or security notice issues; the **Configuration Issue ID** column contains the configuration issues. 
+6.  Enter the issue ID. 
+
+    You can find this information in your [vulnerability report](#va_reviewing). The **Vulnerbility ID** column contains the CVE or security notice issues; the **Configuration Issue ID** column contains the configuration issues.
+    {: tip}
+
+
 7.  Select the registry namespace, repository, and tag that you want the exemption to apply to.
 8.  Click **Save**.
 
