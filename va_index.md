@@ -141,7 +141,7 @@ Before you begin:
 
 To configure the Helm chart:
 
-1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the scanner can watch containers in all namespaces.
+1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the Container Scanner can watch containers in all namespaces.
 
 2.  Add the IBM chart repository to your Helm, such as `ibm-incubator`.
 
@@ -221,7 +221,7 @@ To configure the Helm chart:
     {: pre}
 
 
-The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`.
+The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the Container Scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`.
 
 
 ## Running the Container Scanner from behind a firewall
@@ -420,54 +420,3 @@ Check that your container is as secure as possible by viewing its Security repor
 5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
 
 6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving common problems in images](#va_report).
-
-
-## Resolving common problems in images
-{: #va_report}
-
-Review the example fixes for common problems that might be reported by Vulnerability Advisor. Some problems can be fixed by updating your Dockerfile.
-{:shortdesc}
-
-
-### Maximum password age, minimum password days, and minimum password length
-{: #va_password}
-
-**Problem**: You receive one or more of the following vulnerabilities:
-
-```
-Maximum password age must be set to 90 days.
-```
-{: screen}
-
-```
-Minimum password length must be 8.
-```
-{: screen}
-
-```
-Minimum days that must elapse between user-initiated password changes should be 1.
-```
-{: screen}
-
-**Fix**: Set password compliance by adding the following code to your Dockerfile.
-
-```
-RUN \
-    sed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS    90/' /etc/login.defs && \
-    sed -i 's/^PASS_MIN_DAYS.*/PASS_MIN_DAYS    1/' /etc/login.defs && \
-    sed -i 's/sha512/sha512 minlen=8/' /etc/pam.d/common-password
-```
-{: codeblock}
-
-
-### SSH vulnerability
-{: #ssh}
-
-**Problem**: The following vulnerability is returned:
-
-```
-SSH server should not be installed.
-```
-{: screen}
-
-**Fix**: Instead of using SSH, use `docker attach` or `docker exec` to access your container. Ensure that your Dockerfile does not contain any steps for installing an SSH Server.
