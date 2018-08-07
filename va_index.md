@@ -359,7 +359,7 @@ You can review the security of Docker images that are stored in your namespaces 
 
 2.  Check the status in the **SECURITY STATUS** column.
     -   `No Issues`: No security issues were found.
-    -   `X Issues`: Potential security issues or vulnerabilities were found.
+    -   `<X> Issues`: `<X>` potential security issues or vulnerabilities were found, where `<X>` is the number of issues.
     -   `Scanning`: The image is being scanned and the final vulnerability status is not yet determined.
     
 3.  To view the details for the status, review the Vulnerability Advisor report.
