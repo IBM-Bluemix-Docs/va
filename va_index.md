@@ -281,7 +281,7 @@ When you use Container Image Security Enforcement, any security issue that is de
 If you want to set exemptions to the policy by using the GUI, complete the following steps:
 
 1.  Log in to {{site.data.keyword.Bluemix_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
-2.  Click **Menu > Containers**.
+2.  Click  the **Menu** icon and then click **Containers**.
 3.  Under **Vulnerability Advisor**, click **Policy Settings**.
 4.  Click **Create Exemption**.
 5.  Select the issue type.
