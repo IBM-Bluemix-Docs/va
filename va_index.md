@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-08-06"
+lastupdated: "2018-08-07"
 
 ---
 
@@ -287,7 +287,7 @@ If you want to set exemptions to the policy by using the GUI, complete the follo
 5.  Select the issue type.
 6.  Enter the issue ID. 
 
-    You can find this information in your [vulnerability report](#va_reviewing). The **Vulnerbility ID** column contains the CVE or security notice issues; the **Configuration Issue ID** column contains the configuration issues.
+    You can find this information in your [vulnerability report](#va_reviewing). The **Vulnerbility ID** column contains the ID to use for CVE or security notice issues; the **Configuration Issue ID** column contains the ID to use for configuration issues.
     {: tip}
 
 
