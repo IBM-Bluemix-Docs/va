@@ -287,7 +287,7 @@ If you want to set exemptions to the policy by using the GUI, complete the follo
 5.  Select the issue type.
 6.  Enter the issue ID. 
 
-    You can find this information in your [vulnerability report](#va_reviewing). The **Vulnerbility ID** column contains the ID to use for CVE or security notice issues; the **Configuration Issue ID** column contains the ID to use for configuration issues.
+    You can find this information in your [vulnerability report](#va_reviewing). The **Vulnerability ID** column contains the ID to use for CVE or security notice issues; the **Configuration Issue ID** column contains the ID to use for configuration issues.
     {: tip}
 
 
@@ -315,7 +315,7 @@ For more information about the commands, you can use the `--help` flag when you 
 Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure container or app settings, and whether the image is compliant with organizational policies.
 {:shortdesc}
 
-If you do not address any discovered issues, those issues can impact the security of containers that are built with that image. If you haven't deployed Container Image Security Enforcement, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and enforced for the image, all issues discovered must be exempt by your policy for containers to be deployable from this image. 
+If you do not address any discovered issues, those issues can impact the security of containers that are built with that image. If you haven't deployed Container Image Security Enforcement, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues discovered must be exempt by your policy for containers to be deployable from this image. 
 
 To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/services/Registry/registry_security_enforce.html#customize_policies).
 {:tip}
