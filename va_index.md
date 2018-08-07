@@ -380,6 +380,12 @@ You can review the security of Docker images that are stored in your namespaces 
 In your dashboard, you can see the status of a container to determine whether its security complies with your organization's policy. You can also review a container's Security report, which details any vulnerable packages and nonsecure container or application settings, and whether the container is compliant with organizational policies.
 {:shortdesc}
 
+Check that containers that are running in your space continue to be compliant with organizational policy by reviewing the **Policy Status** field. The status is displayed as one of the following conditions:
+
+-   Compliant with Policy - No security or configuration issues were found.
+-   Not Compliant with Policy - Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits deployment of vulnerable images, the image might have been deployed in the state Deploy with Caution, and a warning was sent to the user that deployed it.
+-   Incomplete Assessment - The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
+
 Check that your container is as secure as possible by viewing its Security report and act on any reported security or configuration issues, by completing the following steps:
 
 1.  Select the container that you want to view a report for:
