@@ -141,7 +141,7 @@ Before you begin:
 
 To configure the Helm chart:
 
-1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the scanner can watch containers in all namespaces.
+1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the Container Scanner can watch containers in all namespaces.
 
 2.  Add the IBM chart repository to your Helm, such as `ibm-incubator`.
 
@@ -221,7 +221,7 @@ To configure the Helm chart:
     {: pre}
 
 
-The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`.
+The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the Container Scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`.
 
 
 ## Running the Container Scanner from behind a firewall
