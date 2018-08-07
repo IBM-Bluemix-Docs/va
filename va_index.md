@@ -271,7 +271,7 @@ If your firewall blocks outgoing connections, you must configure your firewall t
 If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether a given issue is exempt or not. You can also choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues, after discounting those issues that are exempted by your policy.
 {:shortdesc}
 
-You can deploy containers from any image regardless of security status, unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
 
 When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
 
