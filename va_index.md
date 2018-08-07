@@ -341,7 +341,7 @@ You can review the security of Docker images that are stored in your namespaces 
     1.  To see more information, expand the summary.
     2.  If an operating system distributor's notice is provided, click the link in the **OFFICIAL NOTICE** column.
 8.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue.
-9.  Perform the corrective action for each issue shown in the report, and rebuild the image. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving common problems in images](#va_report).
+9.  Perform the corrective action for each issue shown in the report, and rebuild the image.
 
 
 ### Reviewing a vulnerability report by using the CLI
@@ -419,4 +419,4 @@ Check that your container is as secure as possible by viewing its Security repor
 
 5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
 
-6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose. Some issues in the Dockerfile can be resolved by using the code that is provided in [Resolving common problems in images](#va_report).
+6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose.
