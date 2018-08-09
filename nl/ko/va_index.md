@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-31"
+lastupdated: "2018-07-24"
 
 ---
 
@@ -19,34 +19,46 @@ lastupdated: "2018-05-31"
 # 취약성 어드바이저로 이미지 보안 관리
 {: #va_index}
 
-취약성 어드바이저는 IBM 또는 써드파티에서 제공하거나 조직의 레지스트리 네임스페이스에 추가된 컨테이너 이미지의 보안 상태를 검사합니다.
+취약성 어드바이저는 {{site.data.keyword.IBM}} 또는 써드파티에서 제공하거나 조직의 레지스트리 네임스페이스에 추가된 컨테이너 이미지의 보안 상태를 검사하고, 각 클러스터에 컨테이너 스캐너를 설치한 경우 실행 중인 컨테이너의 상태도 확인하십시오.
 {:shortdesc}
 
+네임스페이스에 이미지를 추가하면 취약성 어드바이저에서 보안 문제와 잠재적 취약성을 발견하기 위해 자동으로 이미지를 스캔합니다. 보안 문제가 발견되면 보고된 취약성을 수정하는 데 유용한 지시사항이 제공됩니다. 
 
-네임스페이스에 이미지를 추가하면 취약성 어드바이저에서 보안 문제와 잠재적 취약성을 발견하기 위해 자동으로 이미지를 스캔합니다. 보안 문제가 발견되면 보고된 취약성을 수정하는 데 유용한 지시사항이 제공됩니다. 여전히 취약한 이미지에서 컨테이너를 배치할 수 있지만 이 컨테이너가 공격받거나 손상될 수 있습니다.
+취약성 어드바이저는 제안되는 수정사항 및 우수 사례가 포함된 심각도 상태 보고서를 생성하여 {{site.data.keyword.registrylong_notm}}를 위한 보안 관리를 제공합니다. 
+
+발견된 문제는 이 이미지를 배치하는 데 권장되지 않음을 표시하는 결과를 나타냅니다. 이미지를 배치하도록 선택한 경우 이미지에서 배치된 컨테이너는 컨테이너를 공격하거나 손상시키는 데 사용될 수 있는 문제를 알고 있습니다. 취약성 어드바이저는 지정한 면제를 기반으로 결과를 조정합니다. 이 결과는 {{site.data.keyword.containerlong_notm}}에서 비보안 이미지의 배치를 방지하기 위해 이미지 보안 적용으로 사용될 수 있습니다.  
+
+취약성 어드바이저에서 보고한 보안 및 구성 문제를 수정하면 {{site.data.keyword.cloud_notm}} 인프라를 보호할 수 있습니다.
+
 
 
 ## 취약성 어드바이저 정보
 {: #about}
 
-취약성 어드바이저에서는 {{site.data.keyword.containerlong}}의 보안 관리를 제공합니다. 취약성 어드바이저에서는 보안 상태 보고서를 생성하고 수정사항과 우수 사례를 제안하며 안전하지 않은 이미지가 실행되지 않게 제한하는 관리 기능을 제공합니다. 취약성 어드바이저에서 보고한 보안 및 구성 문제를 수정하면 {{site.data.keyword.cloud_notm}} 인프라를 보호할 수 있습니다.
+취약성 어드바이저는 이미지를 보호할 수 있는 기능을 제공합니다.
+
 {:shortdesc}
 
-취약성 어드바이저에는 다음 기능이 포함되어 있습니다.
+ 사용할 수 있는 기능은 다음과 같습니다.
 
--   취약성을 확인하기 위해 이미지 스캔
+-   문제를 확인하기 위한 이미지 스캔
+-   각 클러스터에 [컨테이너 스캐너를 설치한](#va_install_container_scanner) 경우 문제에 대해 실행 중인 컨테이너 스캔
 -   {{site.data.keyword.containerlong_notm}}에 대한 보안 사례를 기반으로 한 평가 보고서 제공
 -   애플리케이션 유형의 서브세트에 대한 구성 파일을 보호하기 위한 권장사항 제공
 -   보고된 [취약한 패키지](#packages) 또는 이 보고서의 [구성 문제](#app_configurations)를 수정하는 방법에 대한 지시사항 제공
+-   결과를 [이미지 보안 적용](../Registry/registry_security_enforce.html#security_enforce)에 제공
+-   플래그 지정된 문제가 유스 케이스에 적용되지 않을 때 표시할 계정, 네임스페이스, 저장소 또는 태그 레벨에서 면제를 보고서에 적용
+-   {{site.data.keyword.registrylong_notm}} 그래픽 사용자 인터페이스의 **태그** 보기에서 연관된 컨테이너에 대한 링크 제공. 컨테이너 스캐너가 설치된 클러스터에서 해당 이미지를 실행 중이고 사용 중인 컨테이너를 나열할 수 있습니다.
 
-레지스트리 대시보드의 **보안 보고서** 열에는 저장소의 상태가 표시됩니다. 보고서는 사용자의 이미지에 대한 양호한 클라우드 보안 사례를 식별합니다. 
 
-취약성 어드바이저 대시보드는 이미지에 대한 보안의 개요 및 평가를 제공합니다. 취약성 어드바이저 대시보드에 대한 자세한 정보는 [취약성 보고서 검토](#va_reviewing)를 참조하십시오.
+레지스트리 대시보드의 **정책 상태** 열에는 저장소의 상태가 표시됩니다. 연결된 보고서는 사용자의 이미지에 대해 양호한 클라우드 보안 사례를 식별합니다. 
+
+취약성 어드바이저 대시보드는 이미지에 대한 보안의 개요 및 평가를 제공하고 컨테이너 스캐너가 설치된 경우 실행 중인 컨테이너에 연결합니다. 취약성 어드바이저 대시보드에 대한 자세한 정보는 [취약성 보고서 검토](#va_reviewing)를 참조하십시오.
 	
 	
 **데이터 보호**
 
-보안 문제에 대한 계정에서 이미지 및 컨테이너를 스캔하려면 취약성 어드바이저가 다음 정보를 수집하고 저장하고 처리합니다.
+보안 문제에 대한 계정에서 이미지 및 컨테이너를 스캔하면 취약성 어드바이저가 다음 정보를 수집하고 저장하고 처리합니다.
 - ID, 설명 및 이미지 이름을 포함한 자유 양식 텍스트 필드(레지스트리, 네임스페이스, 저장소 이름 및 이미지 태그)
 - 팟(Pod), 복제 세트 및 배치 이름과 같은 Kubernetes 리소스의 이름이 포함된 Kubernetes 메타데이터
 - 구성 파일의 작성 시간소인 및 파일 모드에 대한 메타데이터
@@ -60,9 +72,9 @@ lastupdated: "2018-05-31"
 스캔 결과는 생성되고 30일 후에 삭제됩니다.
 
 
-
 ## 취약성 유형
 {: #types}
+
 
 ### 취약한 패키지
 {: #packages}
@@ -83,8 +95,6 @@ lastupdated: "2018-05-31"
   {: caption="표 1. 취약성 어드바이저에서 취약한 패키지를 검사하는 지원되는 Docker 기본 이미지" caption-side="top"}
 
 
-
-
 ### 구성 문제
 {: #app_configurations}
 
@@ -98,8 +108,9 @@ lastupdated: "2018-05-31"
 
 
 
+
 ## 컨테이너 스캐너 설치
-{: #va_install_livescan}
+{: #va_install_container_scanner}
 
 시작하기 전에 다음을 수행하십시오.
 
@@ -109,14 +120,14 @@ lastupdated: "2018-05-31"
     1.  다음 명령을 실행하여 서비스 ID를 작성하십시오. `<scanner_serviceID>`는 서비스 ID에 대해 선택한 이름으로 바꾸십시오. 해당 **CRN**을 기록하십시오.
     
         ```
-    	bx iam service-id-create <scanner_serviceID>
+    	ibmcloud iam service-id-create <scanner_serviceID>
     	```
         {: codeblock}
 
     2.  서비스 API 키를 작성하십시오. 여기서 `<scanner_serviceID>`는 이전 단계에서 작성한 서비스 ID이며 `<scanner_APIkey_name>`을 스캐너 API 키에 대해 선택한 이름으로 바꾸십시오. 
     
         ```
-    	bx iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+    	ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
     	```
         {: codeblock}
 	
@@ -128,7 +139,7 @@ lastupdated: "2018-05-31"
     3.  `작성자` 역할을 부여하는 서비스 정책을 작성하십시오.
     		
         ```
-    	bx iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
+    	ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
     	```
         {: codeblock}
 
@@ -139,14 +150,14 @@ Helm 차트를 구성하려면 다음을 수행하십시오.
 2.  Helm에 IBM 차트 저장소를 추가하십시오(예: `ibm-incubator`).
 
     ```
-    helm repo add ibm-incubator https://registry.bluemix.net/helm/ibm-incubator
+helm repo add ibm-incubator https://registry.bluemix.net/helm/ibm-incubator
     ```
     {: pre}
 
 3.  로컬 YAML 파일에 컨테이너 스캐너 Helm 차트에 대한 기본 구성 설정을 저장하십시오. Helm 차트 경로에 차트 저장소(예: `ibm-incubator`)를 포함하십시오.
 
     ```
-    helm inspect values ibm-incubator/ibmcloud-container-scanner > config.yaml
+helm inspect values ibm-incubator/ibmcloud-container-scanner > config.yaml
     ```
     {: pre}
 
@@ -172,15 +183,15 @@ Helm 차트를 구성하려면 다음을 수행하십시오.
     <tbody>
     <tr>
     <td><code>EmitURL</code></td>
-    <td>취약성 어드바이저 지역 엔드포인트 URL을 입력하십시오. URL을 확보하려면 <code>bx cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. <code>registry</code>를 <code>va</code>로 바꾸십시오. 예: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+    <td>취약성 어드바이저 지역 엔드포인트 URL을 입력하십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. <code>registry</code>를 <code>va</code>로 바꾸십시오. 예: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
     </tr>
     <tr>
     <td><code>AccountID</code></td>
-    <td>클러스터가 있는 {{site.data.keyword.Bluemix_notm}} 계정 ID로 바꾸십시오. 계정 ID를 확보하려면 <code>bx account list</code>를 실행하십시오.</td>
+    <td>클러스터가 있는 {{site.data.keyword.Bluemix_notm}} 계정 ID로 바꾸십시오. 계정 ID를 가져오려면 <code>ibmcloud account list</code>를 실행하십시오.</td>
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
-    <td>컨테이너 스캐너를 설치할 Kubernetes 클러스터로 바꾸십시오. 클러스터 ID를 나열하려면 <code>bx cs clusters</code>를 실행하십시오.</td>
+    <td>컨테이너 스캐너를 설치할 Kubernetes 클러스터로 바꾸십시오. 클러스터 ID를 나열하려면 <code>ibmcloud ks clusters</code>를 실행하십시오.<br> **팁**: 이름이 아닌 클러스터의 ID를 사용하십시오.</td>
     </tr>
     <tr>
     <td><code>APIKey</code></td>
@@ -191,32 +202,73 @@ Helm 차트를 구성하려면 다음을 수행하십시오.
 5.  업데이트한 `config.yaml` 파일과 함께 Helm 차트를 클러스터에 설치하십시오. 업데이트한 특성은 차트의 구성 맵에 저장됩니다. `<myscanner>`를 Helm 차트에 대해 선택한 이름으로 바꾸십시오. Helm 차트 경로에 차트 저장소(예: `ibm-incubator`)를 포함하십시오.
 
     ```
-    helm install -f config.yaml --name=<myscanner> ibm-incubator/ibmcloud-container-scanner
+helm install -f config.yaml --name=<myscanner> ibm-incubator/ibmcloud-container-scanner
     ```
     {: pre}
     
-    **참고**: 컨테이너 스캐너가 `kube-system` 네임스페이스에 설치되지만 모든 네임스페이스에서 컨테이너를 스캔합니다.
+    컨테이너 스캐너가 `kube-system` 네임스페이스에 설치되지만 모든 네임스페이스에서 컨테이너를 스캔합니다.
+    {:tip}
 
 6.  차트 배치 상태를 확인하십시오. 차트가 준비되면 출력의 상단에 있는 **STATUS** 필드는 `DEPLOYED` 값을 가집니다.
 
     ```
-    helm status <myscanner>
+helm status <myscanner>
     ```
     {: pre}
 
 7.  차트가 배치되면 `config.yaml` 파일의 업데이트된 설정이 사용되었는지 확인하십시오.
 
     ```
-    helm get values <myscanner>
+helm get values <myscanner>
     ```
     {: pre}
 
 
-이제 IBM Container Scanner가 설치되었으며 livescan 에이전트가 [DaemonSet ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)로 클러스터에 배치됩니다. 스캐너가 `kube-system` 네임스페이스에 배치되지만, 모든 Kubernetes 네임스페이스에서 팟(Pod)에 지정된 모든 컨테이너를 스캔합니다(예: `default`). 
+이제 IBM Container Scanner가 설치되었으며 에이전트가 [DaemonSet ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)으로 클러스터에 배치됩니다. 스캐너가 `kube-system` 네임스페이스에 배치되지만, 모든 Kubernetes 네임스페이스에서 팟(Pod)에 지정된 모든 컨테이너를 스캔합니다(예: `default`). 
 
 
+## 방화벽 뒤에서 컨테이너 스캐너 실행
+{: #va_firewall}
 
-## 취약성 보고서 검토
+방화벽이 발신 연결을 차단하는 경우 작업자 노드가 다음 표에 있는 IP 주소의 TCP 포트 <code>443</code>에서 컨테이너 스캐너에 액세스할 수 있도록 방화벽을 구성해야 합니다.
+{:shortdesc}
+
+ 
+
+<p>
+  <table summary=" 행은 왼쪽에서 오른쪽으로 읽어야 하며 첫 번째 열에는 서버 구역, 두 번째 열에는 일치하는 IP 주소가 표시됩니다.">
+  <caption>발신 트래픽을 위해 열린 IP 주소</caption>
+      <thead>
+      <th>지역</th>
+      <th>IP 주소</th>
+      </thead>
+    <tbody>
+      <tr>
+         <td>아시아 태평양 남부</td>
+         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
+      </tr>
+      <tr>
+         <td>유럽 중앙</td>
+         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
+        </tr>
+      <tr>
+        <td>영국 남부</td>
+        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
+      </tr>
+      <tr>
+        <td>미국 동부</td>
+         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
+      </tr>
+      <tr>
+        <td>미국 남부</td>
+        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
+      </tr>
+      </tbody>
+    </table>
+</p>
+
+
+## GUI를 사용하여 취약성 보고서 검토
 {: #va_reviewing}
 
 이미지를 배치하기 전에 취약한 패키지 및 비보안 앱 설정의 세부사항에 대해 취약성 어드바이저 보고서를 검토할 수 있습니다.
@@ -241,7 +293,6 @@ Helm 차트를 구성하려면 다음을 수행하십시오.
  
 
 
-
 ## CLI를 사용하여 취약성 보고서 검토
 {: #va_registry_cli}
 
@@ -251,7 +302,7 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 1.  {{site.data.keyword.Bluemix_notm}} 계정에 이미지를 나열하십시오. 저장된 네임스페이스와 관계없이 모든 이미지의 목록이 리턴됩니다.
 
     ```
-        bx cr image-list
+    ibmcloud cr image-list
     ```
     {: pre}
 
@@ -262,7 +313,7 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 4.  상태의 세부사항을 보려면 취약성 어드바이저 보고서를 검토하십시오.
 
     ```
-        bx cr va registry.<region>/<my_namespace>/<my_image>:<tag>
+    ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
     ```
     {: pre}
 
@@ -271,11 +322,54 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
       - 정정 조치: 취약성 수정 방법에 대한 세부사항
 
 
+## 컨테이너 보고서 검토
+{: #va_reviewing_container}
+
+대시보드에서 보안이 조직의 정책을 준수하는지 여부를 판별하기 위해 컨테이너의 상태를 볼 수 있습니다. 또한 취약한 패키지와 비보안 컨테이너 또는 애플리케이션 설정에 대해 자세하게 설명되어 있으며 컨테이너가 조직의 정책을 준수하는지 여부를 표시하는 컨테이너의 보안 보고서를 검토할 수도 있습니다.
+{:shortdesc}
+
+보고된 보안 또는 구성 문제에 대한 보안 보고서 및 법령을 보고 다음 단계를 완료하여 컨테이너가 최대한 안전한지 확인하십시오.
+
+1.  보고서를 보려는 컨테이너를 선택하십시오. 
+    1.  카탈로그에서 **컨테이너**를 선택하고 **컨테이너 레지스트리**를 클릭하십시오.
+    2.  **개인용 저장소** 탭을 선택하고 원하는 저장소의 행을 선택하십시오.
+    3.  원하는 이미지 태그의 행을 선택하십시오.
+    4.  **연관된 컨테이너** 탭을 선택한 후 원하는 컨테이너의 행을 선택하십시오. 보안 보고서가 열립니다.
+2.  이미지에서 각 패키지에 대해 잠재적 보안 및 구성 문제를 보기 위한 섹션을 검토하십시오.
+
+      -   **취약성**: 알려진 취약성 문제가 있는 패키지를 나열하며, [취약성 어드바이저로 이미지 보안 관리](va_index.html)에 나열된 Docker 이미지 유형이 공개된 보안 공지사항을 통해 매일 업데이트됩니다. 일반적으로 취약한 패키지의 스캔을 통과하려면 취약성에 대한 수정사항을 포함한 이후 버전의 패키지가 필요합니다. 동일한 패키지에는 다중 취약성이 나열될 수 있습니다. 이 경우 단일 패키지 업그레이드 시 여러 문제가 정정될 수 있습니다. 보안 공지사항 코드를 클릭하여 패키지에 대한 자세한 정보와 패키지를 업데이트하는 단계를 검토하십시오.
+
+    -   **구성 문제**: 컨테이너와 비보안 컨테이너에 대한 애플리케이션 설정의 보안을 강화하기 위해 제안할 수 있는 사항을 나열합니다. 문제를 해결하는 방법을 보려면 행을 펼치십시오.
+
+   나열된 각 항목에 정정 조치 또는 제안이 제공됩니다.
+   
+3.  각 보안 문제마다 정책 상태를 검토하십시오. 정책 상태는 이 문제가 면제되는지 여부를 표시합니다.
+
+    -  **활성**: 면제되지 않는 문제가 있으며 문제는 보안 상태에 영향을 줍니다.
+    -  **면제**: 이 문제는 정책 설정으로 면제됩니다.
+    -  **부분 면제**: 이 문제는 하나 이상의 보안 공지사항과 연관됩니다. 보안 공지사항은 모두 면제되지 않습니다.
+
+4.  문제점을 해결할 수 있도록 컨테이너를 업데이트하는 방법을 결정하십시오.
+
+    **중요:** 컨테이너 이미지에 대한 문제점을 해결하려면 이전 인스턴스를 삭제한 후 다시 배치해야 합니다. 이는 기존 컨테이너 내의 데이터가 유실됨을 의미합니다. 컨테이너를 다시 배치하는 데 적합한 방법을 선택하기 위해 컨테이너 아키텍처에 대해 잘 이해하고 있어야 합니다.
+
+    예:
+
+    -   컨테이너가 컴퓨팅하는 데이터와 분리되는 경우 데이터 유실 없이 컨테이너를 중지하여 삭제하고, 이미지에 필요한 변경사항을 수행하고, 다시 배치할 수 있습니다.
+    -   취약한 컨테이너 인스턴스를 업데이트하여 지원할 {{site.data.keyword.Bluemix_notm}} 서비스(예: [Delivery Pipeline](../ContinuousDelivery/pipeline_about.html))를 사용할 수 있습니다. 
+    -   마이크로서비스 아키텍처에서 보안 또는 구성 문제를 수정하는 동안 트래픽을 다른 컨테이너 인스턴스로 라우트하고 빨간색/검정색으로 된 배치에 새 이미지를 푸시할 수 있습니다.
+
+5.  아직 문제를 수정할 수 없으면 정책 설정에서 문제를 면제할 수 있으며, 이를 통해 컨테이너의 배치를 차단하는 문제가 발생하지 않습니다. 문제를 면제하려면 **옵션 목록 열기 및 닫기** 아이콘을 클릭하고 **면제 작성**을 클릭하십시오.
+
+6.  **보안** 보고서에 설명된 문제를 수정하고 선택한 방법에 따라 이미지를 다시 빌드하거나 컨테이너를 다시 배치하십시오. Dockerfile의 일부 문제는 [이미지의 문제점 해결](/docs/services/va/va_index.html#va_report)에 제공된 코드를 사용하여 해결할 수 있습니다.
+
+
 ## 이미지의 공통 문제점 해결
 {: #va_report}
 
 취약성 어드바이저가 보고할 수 있는 공통 문제점에 대한 수정사항 예를 검토하십시오. Dockerfile을 업데이트하여 일부 문제점을 수정할 수 있습니다.
 {:shortdesc}
+
 
 ### 최대 비밀번호 사용 기간, 최소 비밀번호 사용 기간(일) 및 최소 비밀번호 길이
 {: #va_password}
@@ -306,6 +400,7 @@ RUN \
     sed -i 's/sha512/sha512 minlen=8/' /etc/pam.d/common-password
 ```
 {: codeblock}
+
 
 ### SSH 취약성
 {: #ssh}

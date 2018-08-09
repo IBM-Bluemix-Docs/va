@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-05-31"
+lastupdated: "2018-07-24"
 
 ---
 
@@ -19,29 +19,41 @@ lastupdated: "2018-05-31"
 # 使用漏洞警告器管理映像檔安全
 {: #va_index}
 
-「漏洞警告器」會針對由 IBM、協力廠商所提供的容器映像檔，或者新增至您組織登錄名稱空間的容器映像檔，檢查其安全狀態。
+「漏洞警告器」會針對由 {{site.data.keyword.IBM}}、協力廠商所提供的容器映像檔，或者新增至您組織登錄名稱空間的容器映像檔，檢查其安全狀態。而且，如果您已在每個叢集安裝安全掃描器，則也會檢查執行中容器的狀態。
 {:shortdesc}
 
+當您將映像檔新增至名稱空間時，「漏洞警告器」會自動掃描映像檔，以偵測安全問題及潛在漏洞。如果找到安全問題，會提供指示以協助修正報告的漏洞。 
 
-當您將映像檔新增至名稱空間時，「漏洞警告器」會自動掃描映像檔，以偵測安全問題及潛在漏洞。如果找到安全問題，會提供指示以協助修正報告的漏洞。您仍然可以從有漏洞的映像檔中部署容器，但是請記住，那些容器可能會遭受攻擊或洩漏。
+「漏洞警告器」提供 {{site.data.keyword.registrylong_notm}} 的安全管理，並產生包含建議修正程式與最佳作法的安全狀態報告。 
+
+發現的任何問題都會導致裁決，指出不建議部署此映像檔。如果您選擇部署映像檔，從該映像檔部署的任何容器都具有已知問題，這些已知問題可能會被用來攻擊或以其他方式洩漏容器機密。「漏洞警告器」會根據您指定的任何豁免來調整裁決。這項裁決可以由安全強制執行用來避免在 {{site.data.keyword.containerlong_notm}} 部署未受保護的映像檔。 
+
+修正「漏洞警告器」所報告的安全及配置問題，有助於您保護 {{site.data.keyword.cloud_notm}} 基礎架構。
+
 
 
 ## 關於漏洞警告器
 {: #about}
 
-「漏洞警告器」為 {{site.data.keyword.containerlong}} 提供安全管理。「漏洞警告器」會產生安全狀態報告、建議修正程式及最佳作法，以及提供管理以限制不安全的映像檔執行。修正「漏洞警告器」所報告的安全及配置問題，有助於您保護 {{site.data.keyword.cloud_notm}} 基礎架構。
+「漏洞警告器」提供功能來協助保護映像檔。
+
 {:shortdesc}
 
-「漏洞警告器」包含下列特性：
+ 可用的功能如下：
 
--   掃描映像檔是否有漏洞
+-   掃描映像檔是否有問題
+-   掃描執行中的容器是否有問題，如果您已在每個叢集[安裝容器掃描器](#va_install_container_scanner)的話
 -   提供評估報告，該報告根據 {{site.data.keyword.containerlong_notm}} 特定的安全作法。
 -   提供建議以保護部分應用程式類型的配置檔
 -   提供指示，告知如何修正已報告的[有漏洞套件](#packages)，或其報告中的[配置問題](#app_configurations)
+-   提供裁決以便[強制執行映像檔安全](../Registry/registry_security_enforce.html#security_enforce)
+-   在帳戶、名稱空間、儲存庫或標籤層次套用報告的豁免，以註記所標示的問題在何時不適用於您的使用案例
+-   從 {{site.data.keyword.registrylong_notm}} 圖形使用者介面的**標籤**視圖提供相關聯容器的鏈結。您可以列出執行中且在已安裝容器掃描器的叢集內使用該映像檔的容器。
 
-在「登錄」儀表板中，**安全報告**直欄會顯示儲存庫的狀態。此報告會識別映像檔的良好雲端安全作法。 
 
-「漏洞警告器」儀表板提供映像檔的安全概觀與評量。若要找出「漏洞警告器」儀表板的相關資訊，請參閱[檢閱漏洞報告](#va_reviewing)。
+在「登錄」儀表板中，**原則狀態**直欄會顯示儲存庫的狀態。鏈結的報告會識別映像檔的良好雲端安全作法。 
+
+「漏洞警告器」儀表板提供映像檔的安全概觀與評量，以及執行中容器的鏈結（如果已安裝容器掃描器的話）。如果您想要找出「漏洞警告器」儀表板的相關資訊，請參閱[檢閱漏洞報告](#va_reviewing)。
 	
 	
 **資料保護**
@@ -60,14 +72,15 @@ lastupdated: "2018-05-31"
 掃描結果會在產生 30 天之後刪除。
 
 
-
 ## 漏洞類型
 {: #types}
+
 
 ### 有漏洞的套件
 {: #packages}
 
-「漏洞警告器」會檢查以支援作業系統為基礎的映像檔中有漏洞的套件，並提供關於漏洞之任何相關安全注意事項的鏈結。{:shortdesc}
+「漏洞警告器」會檢查以支援作業系統為基礎的映像檔中有漏洞的套件，並提供關於漏洞之任何相關安全注意事項的鏈結。
+{:shortdesc}
 
 掃描結果中會顯示具有已知漏洞問題的套件。潛在漏洞會根據下表所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件升級可能會解決多個漏洞。
 
@@ -82,12 +95,11 @@ lastupdated: "2018-05-31"
   {: caption="表 1. 「漏洞警告器」檢查套件是否有漏洞的受支援 Docker 基礎映像檔" caption-side="top"}
 
 
-
-
 ### 配置問題
 {: #app_configurations}
 
-配置問題是指與應用程式設定方式有關的潛在安全問題。許多已報告的問題可以藉由更新 Dockerfile 而修正。{:shortdesc}
+配置問題是指與應用程式設定方式有關的潛在安全問題。許多已報告的問題可以藉由更新 Dockerfile 而修正。
+{:shortdesc}
 
 只有在映像檔是以「漏洞警告器」所支援之作業系統為基礎時才會掃描映像檔。「漏洞警告器」會檢查下列應用程式類型的配置設定：
 -   MySQL
@@ -96,8 +108,9 @@ lastupdated: "2018-05-31"
 
 
 
+
 ## 安裝容器掃描器
-{: #va_install_livescan}
+{: #va_install_container_scanner}
 
 開始之前：
 
@@ -107,14 +120,14 @@ lastupdated: "2018-05-31"
     1.  執行下列指令以建立服務 ID，將 `<scanner_serviceID>` 取代為您所選的服務 ID 名稱。請注意其 **CRN**。
     
         ```
-    	bx iam service-id-create <scanner_serviceID>
+    	ibmcloud iam service-id-create <scanner_serviceID>
     	```
         {: codeblock}
 
     2.  建立服務 API 金鑰，其中 `<scanner_serviceID>` 是您在前一個步驟中所建立的服務 ID，並將 `<scanner_APIkey_name>` 取代為您所選的掃描器 API 金鑰名稱。 
     
         ```
-    	bx iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+    	ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
     	```
         {: codeblock}
 	
@@ -126,7 +139,7 @@ lastupdated: "2018-05-31"
     3.  建立授予 `Writer` 角色的服務原則。
     		
         ```
-    	bx iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
+    	ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
     	```
         {: codeblock}
 
@@ -170,15 +183,16 @@ lastupdated: "2018-05-31"
     <tbody>
     <tr>
     <td><code>EmitURL</code></td>
-    <td>輸入「漏洞警告器」區域端點 URL。若要取得 URL，請執行 <code>bx cr info</code>，並擷取 <strong>Container Registry</strong> 位址。將 <code>registry</code> 取代為 <code>va</code>。例如：<code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+    <td>輸入「漏洞警告器」區域端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。將 <code>registry</code> 取代為 <code>va</code>。例如：<code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
     </tr>
     <tr>
     <td><code>AccountID</code></td>
-    <td>取代為您叢集所在的 {{site.data.keyword.Bluemix_notm}} 帳戶 ID。若要取得帳戶 ID，請執行 <code>bx account list</code>。</td>
+    <td>取代為您叢集所在的 {{site.data.keyword.Bluemix_notm}} 帳戶 ID。若要取得帳戶 ID，請執行 <code>ibmcloud account list</code>。</td>
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
-    <td>取代為您要在其中安裝容器掃描器的 Kubernetes 叢集。若要列出叢集 ID，請執行 <code>bx cs clusters</code>。</td>
+    <td>取代為您要在其中安裝容器掃描器的 Kubernetes 叢集。若要列出叢集 ID，請執行 <code>ibmcloud ks clusters</code>。<br> **提示**：請使用叢集的 ID，而不要使用名稱。
+    </td>
     </tr>
     <tr>
     <td><code>APIKey</code></td>
@@ -193,7 +207,8 @@ lastupdated: "2018-05-31"
     ```
     {: pre}
     
-    **附註**：容器掃描器已安裝至 `kube-system` 名稱空間，但會掃描所有名稱空間中的容器。
+    容器掃描器已安裝至 `kube-system` 名稱空間，但會掃描所有名稱空間中的容器。
+    {:tip}
 
 6.  檢查圖表部署狀態。圖表已備妥時，位於輸出頂端附近的**狀態**欄位，會有 `DEPLOYED` 值。
 
@@ -210,11 +225,51 @@ lastupdated: "2018-05-31"
     {: pre}
 
 
-現在，已安裝 IBM Container Scanner，且 livescan 代理程式已部署為您叢集中的 [DaemonSet ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)。雖然掃描器已部署至 `kube-system` 名稱空間，但是它仍會掃描指派至所有 Kubernetes 名稱空間中 Pod 的所有容器，例如，`default`。 
+現在，已安裝 IBM Container Scanner，且代理程式已部署為您叢集中的 [DaemonSet ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)。雖然掃描器已部署至 `kube-system` 名稱空間，但是它仍會掃描指派至所有 Kubernetes 名稱空間中 Pod 的所有容器，例如，`default`。 
 
 
+## 從防火牆背後執行容器掃描器
+{: #va_firewall}
 
-## 檢閱漏洞報告
+如果您的防火牆會封鎖送出的連線，您必須配置防火牆，以容許工作者節點存取下表 IP 位址的 TCP 埠 <code>443</code> 上的容器掃描器。
+{:shortdesc}
+
+ 
+
+<p>
+  <table summary=" 列應該從左到右閱讀，第一欄為伺服器區域，第二欄為配對的 IP 位址。">
+  <caption>針對送出資料流量開啟的 IP 位址</caption>
+      <thead>
+      <th>地區</th>
+      <th>IP 位址</th>
+      </thead>
+    <tbody>
+      <tr>
+         <td>亞太地區南部</td>
+         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
+      </tr>
+      <tr>
+         <td>歐盟中部</td>
+         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
+        </tr>
+      <tr>
+        <td>英國南部</td>
+        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
+      </tr>
+      <tr>
+        <td>美國東部</td>
+         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
+      </tr>
+      <tr>
+        <td>美國南部</td>
+        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
+      </tr>
+      </tbody>
+    </table>
+</p>
+
+
+## 使用 GUI 檢閱漏洞報告
 {: #va_reviewing}
 
 部署映像檔之前，您可以檢閱其「漏洞警告器」報告中，有關所有有漏洞套件及不安全應用程式設定的詳細資料。
@@ -239,7 +294,6 @@ lastupdated: "2018-05-31"
  
 
 
-
 ## 使用 CLI 檢閱漏洞報告
 {: #va_registry_cli}
 
@@ -249,7 +303,7 @@ lastupdated: "2018-05-31"
 1.  列出 {{site.data.keyword.Bluemix_notm}} 帳戶中的映像檔。系統會傳回所有映像檔的清單，與其儲存所在的名稱空間無關。
 
     ```
-        bx cr image-list
+    ibmcloud cr image-list
     ```
     {: pre}
 
@@ -260,7 +314,7 @@ lastupdated: "2018-05-31"
 4.  若要檢視狀態的詳細資料，請檢閱「漏洞警告器」報告。
 
     ```
-        bx cr va registry.<region>/<my_namespace>/<my_image>:<tag>
+    ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
     ```
     {: pre}
 
@@ -269,10 +323,54 @@ lastupdated: "2018-05-31"
       - 更正動作：有關如何修正漏洞的詳細資料
 
 
+## 檢閱容器報告
+{: #va_reviewing_container}
+
+在儀表板中，您可以查看容器的狀態，來判斷其安全是否符合組織的原則。您也可以檢閱容器的安全報告，其中會詳述任何有漏洞的套件及未受保護的容器或應用程式設定，以及容器是否遵循組織原則。
+{:shortdesc}
+
+確認您的容器盡可能安全，方法是完成下列步驟以檢視其安全報告，並處理任何已報告的安全或配置問題：
+
+1.  選取您要檢視其報告的容器：
+    1.  從型錄選取**容器**，然後按一下 **Container Registry**。
+    2.  選取**專用儲存庫**標籤，然後選取您要的儲存庫列。
+    3.  選取您要的映像檔標籤列。
+    4.  選取**相關聯的容器**標籤，然後選取您要的容器列。安全報告會開啟。
+2.  檢閱各區段以查看映像檔中每個套件的可能安全及配置問題：
+
+      -   **漏洞**：列出具有已知漏洞問題的套件，這些會從針對 Docker 映像檔類型（如[使用漏洞警告器管理映像檔安全](va_index.html)中所列）發佈的安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件升級可能會更正多個問題。按一下安全注意事項代碼，以檢閱套件的相關資訊，以及更新套件的步驟。
+
+    -   **配置問題**：列出建議，以便您可以採用以提高容器安全和任何未受保護之應用程式設定的安全。展開某一列即可檢視如何解決問題。
+
+   會針對每一個列出的項目，提供更正動作或建議。
+   
+3.  檢閱每個安全問題的原則狀態。原則狀態指出此問題是否得到豁免。
+
+    -  **作用中**：您的問題未得到豁免，問題會影響您的安全狀態。
+    -  **豁免**：此問題已由原則設定豁免。
+    -  **局部豁免**：此問題與多個安全注意事項相關聯。安全注意事項未全部得到豁免。
+
+4.  決定如何更新容器，以解決問題。
+
+    **重要事項：**若要修正容器映像檔的問題，您必須刪除舊實例然後重新部署，這表示會遺失現有容器內的任何資料。請確定您已充份瞭解容器架構，以選擇適當的容器重新部署方法。
+
+    例如：
+
+    -   如果您的容器與它運算的資料分開，您可以停止容器並刪除它、對映像檔進行必要的變更，然後重新部署，而不會流失任何資料。
+    -   您可以使用 {{site.data.keyword.Bluemix_notm}} 服務進行協助，例如 [Delivery Pipeline](../ContinuousDelivery/pipeline_about.html)，並更新有漏洞的容器實例。
+    -   在微服務架構中，您可能會在修正安全或配置問題時將資料流量遞送到另一個容器實例，然後以紅黑部署方式推送新的映像檔。
+
+5.  如果現在不可能修正問題，您可以在原則設定中豁免該問題，如此可避免問題阻擋容器的部署。若要豁免問題，請按一下**開啟及關閉選項清單**圖示，然後按一下**建立豁免**。
+
+6.  修正**安全**報告中說明的問題，然後根據您選擇的方法重建映像檔或重新部署容器。藉由使用[解決映像檔中的問題](/docs/services/va/va_index.html#va_report)中所提供的程式碼，可以解決 Dockerfile 中的一些問題。
+
+
 ## 解決映像檔中的一般問題
 {: #va_report}
 
-檢閱「漏洞警告器」可能會報告之一般問題的修正範例。部分問題可以藉由更新 Dockerfile 而修正。{:shortdesc}
+檢閱「漏洞警告器」可能會報告之一般問題的修正範例。部分問題可以藉由更新 Dockerfile 而修正。
+{:shortdesc}
+
 
 ### 密碼有效期上限、密碼有效期下限，及密碼長度下限
 {: #va_password}
@@ -303,6 +401,7 @@ RUN \
     sed -i 's/sha512/sha512 minlen=8/' /etc/pam.d/common-password
 ```
 {: codeblock}
+
 
 ### SSH 漏洞
 {: #ssh}
