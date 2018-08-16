@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-08-07"
+lastupdated: "2018-08-16"
 
 ---
 
@@ -19,14 +19,14 @@ lastupdated: "2018-08-07"
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
-Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If you've installed the Container Scanner in each cluster, Vulnerability Advisor also checks the status of containers that are running.
+Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If the Container Scanner is installed in each cluster, Vulnerability Advisor also checks the status of containers that are running.
 {:shortdesc}
 
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability. 
 
 Vulnerability Advisor provides security management for {{site.data.keyword.registrylong_notm}}, generating a security status report that includes suggested fixes and best practices. 
 
-Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image have known issues that might be used to attack or otherwise compromise the container. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
+Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
 
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
@@ -41,7 +41,7 @@ Vulnerability Advisor provides functions to help you to secure your images.
  The following functions are available:
 
 -   Scans images for issues
--   Scans running containers for issues if you've [installed the Container Scanner](#va_install_container_scanner) in each cluster
+-   Scans containers that are running for issues if you've [installed the Container Scanner](#va_install_container_scanner) in each cluster
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
@@ -52,7 +52,7 @@ Vulnerability Advisor provides functions to help you to secure your images.
 
 In the Registry dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images. 
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the Container Scanner is installed, links to running containers. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the Container Scanner is installed, links to containers that are running. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 	
 	
 **Data protection**
@@ -139,7 +139,7 @@ Before you begin:
     	```
         {: codeblock}
 
-To configure the Helm chart:
+To configure the Helm chart, complete the following steps:
 
 1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the Container Scanner can watch containers in all namespaces.
 
@@ -206,7 +206,7 @@ To configure the Helm chart:
     The Container Scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
     {:tip}
 
-6.  Check the chart deployment status. When the chart is ready, the **STATUS** field near the top of the output has a value of `DEPLOYED`.
+6.  Check the chart deployment status. When the chart is ready, the **STATUS** field has a value of `DEPLOYED`.
 
     ```
     helm status <myscanner>
@@ -268,12 +268,12 @@ If your firewall blocks outgoing connections, you must configure your firewall t
 ## Setting organizational exemption policies
 {: #va_managing_policy}
 
-If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether a given issue is exempt or not. You can also choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues, after discounting those issues that are exempted by your policy.
+If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can also choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after discounting those issues that are exempted by your policy.
 {:shortdesc}
 
-You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
 
-When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
+When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container from being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
 
 ### Setting organizational exemption policies by using the GUI
 {: #va_managing_policy_gui}
@@ -315,15 +315,15 @@ For more information about the commands, you can use the `--help` flag when you 
 Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure container or app settings, and whether the image is compliant with organizational policies.
 {:shortdesc}
 
-If you do not address any discovered issues, those issues can impact the security of containers that are built with that image. If you haven't deployed Container Image Security Enforcement, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues discovered must be exempt by your policy for containers to be deployable from this image. 
+If you do not address any discovered issues, those issues can impact the security of containers that are built with that image. If Container Image Security Enforcement is not deployed, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues that are discovered must be exempt by your policy for containers to be deployable from this image. 
 
 To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/services/Registry/registry_security_enforce.html#customize_policies).
 {:tip}
 
-If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
+If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
 {:tip}
 
-After you deploy your image, if you have deployed Container Scanner, Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
+After you deploy your image, if Container Scanner is deployed, Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
 
 ### Reviewing a vulnerability report by using the GUI
 {: #va_reviewing_gui}
@@ -383,7 +383,7 @@ In your dashboard, you can see the status of a container to determine whether it
 Check that containers that are running in your space continue to be compliant with organizational policy by reviewing the **Policy Status** field. The status is displayed as one of the following conditions:
 
 -   Compliant with Policy - No security or configuration issues were found.
--   Not Compliant with Policy - Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits deployment of vulnerable images, the image might have been deployed in the state Deploy with Caution, and a warning was sent to the user that deployed it.
+-   Not Compliant with Policy - Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
 -   Incomplete Assessment - The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
 
 Check that your container is as secure as possible by viewing its Security report and act on any reported security or configuration issues, by completing the following steps:
@@ -404,7 +404,7 @@ Check that your container is as secure as possible by viewing its Security repor
 3.  Review the policy status for each security issue. The policy status indicates whether this issue is exempt.
 
     -  **Active**: You have an issue that is not exempted and the issue is affecting your security status.
-    -  **Exempt**: This issue has been exempted by your policy settings.
+    -  **Exempt**: This issue is exempted by your policy settings.
     -  **Partially exempt**: This issue is associated with more than one security notice. The security notices are not all exempt.
 
 4.  Decide how to update the container so that you can resolve the problems.
