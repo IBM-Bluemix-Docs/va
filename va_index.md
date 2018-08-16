@@ -139,7 +139,7 @@ Before you begin:
     	```
         {: codeblock}
 
-To configure the Helm chart:
+To configure the Helm chart, complete the following steps:
 
 1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the Container Scanner can watch containers in all namespaces.
 
