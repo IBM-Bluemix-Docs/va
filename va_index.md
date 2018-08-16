@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-08-07"
+lastupdated: "2018-08-16"
 
 ---
 
@@ -323,7 +323,7 @@ To configure the scope of enforcement of Vulnerability Advisor issues in Contain
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
 {:tip}
 
-After you deploy your image, if you have deployed Container Scanner, Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
+After you deploy your image, if Container Scanner is deployed, Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
 
 ### Reviewing a vulnerability report by using the GUI
 {: #va_reviewing_gui}
