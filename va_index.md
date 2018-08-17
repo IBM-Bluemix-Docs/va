@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-08-16"
+lastupdated: "2018-08-17"
 
 ---
 
@@ -58,7 +58,7 @@ The Vulnerability Advisor dashboard provides an overview and assessment of the s
 **Data protection**
 
 To scan images and containers in your account for security issues, Vulnerability Advisor collects, stores, and processes the following information:
-- Free-form text fields, including IDs, descriptions, and image names (registry, namespace, repository name, and image tag)
+- Free-form fields, including IDs, descriptions, and image names (registry, namespace, repository name, and image tag)
 - Kubernetes metadata including names of Kubernetes resources such as pod, replicaset, and deployment names
 - Metadata about the file modes and creation timestamps of the configuration files
 - The content of system and application configuration files in images and containers
@@ -341,7 +341,7 @@ You can review the security of Docker images that are stored in your namespaces 
     1.  To see more information, expand the summary.
     2.  If an operating system distributor's notice is provided, click the link in the **OFFICIAL NOTICE** column.
 8.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue.
-9.  Perform the corrective action for each issue shown in the report, and rebuild the image.
+9.  Complete the corrective action for each issue shown in the report, and rebuild the image.
 
 
 ### Reviewing a vulnerability report by using the CLI
