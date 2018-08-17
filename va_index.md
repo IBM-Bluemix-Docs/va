@@ -26,7 +26,7 @@ When you add an image to a namespace, the image is automatically scanned by Vuln
 
 Vulnerability Advisor provides security management for {{site.data.keyword.registrylong_notm}}, generating a security status report that includes suggested fixes and best practices. 
 
-Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. Vulnerability Advisor adjusts its verdict based on any exemptions that you've specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
+Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict that is provided by Vulnerability Advisor is adjusted based on any exemptions that you've specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
 
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
@@ -41,7 +41,7 @@ Vulnerability Advisor provides functions to help you to secure your images.
  The following functions are available:
 
 -   Scans images for issues
--   Scans containers that are running for issues if you've [installed the Container Scanner](#va_install_container_scanner) in each cluster
+-   Scans containers that are running for issues (if you've [installed the Container Scanner](#va_install_container_scanner) in each cluster)
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
@@ -179,7 +179,7 @@ To configure the Helm chart, complete the following steps:
     <tbody>
     <tr>
     <td><code>EmitURL</code></td>
-    <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+    <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
     </tr>
     <tr>
     <td><code>AccountID</code></td>
@@ -411,7 +411,7 @@ Check that your container is as secure as possible by viewing its Security repor
 
     **Important:** To fix problems with the container image, you must delete the old instance and redeploy, which means losing any data within the existing container. Ensure that you have a good understanding of your container architecture to choose the appropriate method of redeploying the container.
 
-    For example:
+    **Example**
 
     -   If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with no data loss.
     -   You can use an {{site.data.keyword.Bluemix_notm}} service to assist, such as [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), with updating the vulnerable container instance.
