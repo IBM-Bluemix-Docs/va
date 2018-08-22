@@ -16,7 +16,7 @@ lastupdated: "2018-08-22"
 {:download: .download}
 
 
-# Managing image security with Vulnerability Advisor
+# Managing image security by using Vulnerability Advisor
 {: #va_index}
 
 Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If the Container Scanner is installed in each cluster, Vulnerability Advisor also checks the status of containers that are running.
@@ -269,12 +269,12 @@ If your firewall blocks outgoing connections, you must configure your firewall t
 ## Setting organizational exemption policies
 {: #va_managing_policy}
 
-If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can also choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after any issues that are exempted by your policy are discounted.
+If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after accounting for any issues that are exempted by your policy.
 {:shortdesc}
 
 You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
 
-When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
+When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container from being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
 
 ### Setting organizational exemption policies by using the GUI
 {: #va_managing_policy_gui}
@@ -418,6 +418,6 @@ Check that your container is as secure as possible by viewing its Security repor
     -   You can use an {{site.data.keyword.Bluemix_notm}} service, such as [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), to assist with updating the vulnerable container instance.
     -   In a microservices architecture, you can route traffic to another container instance while you fix security or configuration issues, and push the new image in a red/black deployment.
 
-5.  If you can't fix the issue now, you can exempt the issue in your policy settings, which prevents the issue blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
+5.  If you can't fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
 
 6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose.
