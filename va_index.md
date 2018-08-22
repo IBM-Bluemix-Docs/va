@@ -47,7 +47,7 @@ Vulnerability Advisor provides functions to help you to secure your images.
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
 -   Provides verdicts to [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce)
 -   Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
--   Provides links to associated containers from the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the Container Scanner installed.
+-   Provides links to associated containers in the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the Container Scanner installed.
 
 
 In the Registry dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images. 
@@ -78,10 +78,10 @@ Scan results are deleted 30 days after they are generated.
 ### Vulnerable packages
 {: #packages}
 
-Vulnerability Advisor checks for vulnerable packages in images that are based on supported operating systems and provides a link to any relevant security notices about the vulnerability.
+Vulnerability Advisor checks for vulnerable packages in images that are using supported operating systems and provides a link to any relevant security notices about the vulnerability.
 {:shortdesc}
 
-Packages with known vulnerability issues are displayed in the scan results. The possible vulnerabilities are updated daily from published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might address multiple vulnerabilities.
+Packages that have known vulnerability issues are displayed in the scan results. The possible vulnerabilities are updated daily by using the published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can address multiple vulnerabilities.
 
 
   |Docker base image|Source of security notices|
@@ -100,7 +100,7 @@ Packages with known vulnerability issues are displayed in the scan results. The 
 Configuration issues are potential security issues that are related to how an app is set up. Many of the reported problems can be fixed by updating your Dockerfile.
 {:shortdesc}
 
-Images are scanned only if they are based on an operating system that is supported by Vulnerability Advisor. Vulnerability Advisor checks the configuration settings for the following types of apps:
+Images are scanned only if they are using an operating system that is supported by Vulnerability Advisor. Vulnerability Advisor checks the configuration settings for the following types of apps:
 -   MySQL
 -   NGINX
 -   Apache
@@ -114,14 +114,14 @@ Images are scanned only if they are based on an operating system that is support
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI client. If you have a federated account, use `--sso`.
 2.  [Target your `kubectl` CLI](/docs/containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
 3.  Create a service ID and API key for the Container Scanner and give it a name:
-    1.  Create a service ID by running the following command, replacing `<scanner_serviceID>` with a name of your choice for the service ID. Note its **CRN**.
+    1.  To create a service ID, run the following command, where `<scanner_serviceID>` is a name of your choice for the service ID. Note its **CRN**.
     
         ```
     	ibmcloud iam service-id-create <scanner_serviceID>
     	```
         {: codeblock}
 
-    2.  Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and replacing  `<scanner_APIkey_name>` with a name of your choice for the scanner API key. 
+    2.  Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and  `<scanner_APIkey_name>` is a name of your choice for the scanner API key. 
     
         ```
     	ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
@@ -184,16 +184,16 @@ To configure the Helm chart, complete the following steps:
     </tr>
     <tr>
     <td><code>AccountID</code></td>
-    <td>Replace with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>ibmcloud account list</code>.</td>
+    <td>Replace <code>AccountID</code> with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>ibmcloud account list</code>.</td>
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
-    <td>Replace with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
+    <td>Replace <code>ClusterID</code> with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
     </td>
     </tr>
     <tr>
     <td><code>APIKey</code></td>
-    <td>Replace with the scanner API key that you created earlier.</td>
+    <td>Replace <code>APIKey</code> with the scanner API key that you created earlier.</td>
     </tr>
     </tbody></table>
 
@@ -274,7 +274,7 @@ If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} orga
 
 You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
 
-When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container from being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
+When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
 
 ### Setting organizational exemption policies by using the GUI
 {: #va_managing_policy_gui}
@@ -316,7 +316,7 @@ For more information about the commands, you can use the `--help` flag when you 
 Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure container or app settings. You can also check whether the image is compliant with organizational policies.
 {:shortdesc}
 
-If you do not address any discovered issues, those issues can impact the security of containers that are built with that image. If Container Image Security Enforcement is not deployed, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues that are discovered must be exempt by your policy for containers to be deployable from this image. 
+If you do not address any discovered issues, those issues can impact the security of containers that are built by using that image. If Container Image Security Enforcement is not deployed, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues that are discovered must be exempt by your policy for containers to be deployable from this image. 
 
 To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/services/Registry/registry_security_enforce.html#customize_policies).
 {:tip}
@@ -324,7 +324,7 @@ To configure the scope of enforcement of Vulnerability Advisor issues in Contain
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
 {:tip}
 
-After you deploy your image, if Container Scanner is deployed, Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
+If Container Scanner is deployed, after you deploy your image Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
 
 ### Reviewing a vulnerability report by using the GUI
 {: #va_reviewing_gui}
@@ -390,13 +390,13 @@ Check that containers that are running in your space continue to be compliant wi
 Check that your container is as secure as possible by viewing its Security report and act on any reported security or configuration issues, by completing the following steps:
 
 1.  Select the container that you want to view a report for:
-    1.  From the Catalog, select **Containers**, click **Container Registry**.
+    1.  In the **Catalog**, select **Containers**, click **Container Registry**.
     2.  Select the **Private Repositories** tab and select the row for the repository that you want.
     3.  Select the row for the image tag that you want.
     4.  Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
 2.  Review the sections to see the potential security and configuration issues for each package in the image:
 
-      -   **Vulnerabilities**: Lists packages with known vulnerability issues, which are updated daily from published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package might list multiple vulnerabilities, and in this case, a single package upgrade might correct multiple issues. Click the security notice code to review more information on the package and for steps to update the package.
+      -   **Vulnerabilities**: Lists packages that have known vulnerability issues, which are updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
 
     -   **Configuration Issues**: Lists suggestions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
 
@@ -415,9 +415,9 @@ Check that your container is as secure as possible by viewing its Security repor
     **Example**
 
     -   If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with no data loss.
-    -   You can use an {{site.data.keyword.Bluemix_notm}} service to assist, such as [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), with updating the vulnerable container instance.
-    -   In a microservices architecture, you might route traffic to another container instance while you fix security or configuration issues, and push the new image in a red/black deployment.
+    -   You can use an {{site.data.keyword.Bluemix_notm}} service, such as [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), to assist with updating the vulnerable container instance.
+    -   In a microservices architecture, you can route traffic to another container instance while you fix security or configuration issues, and push the new image in a red/black deployment.
 
-5.  If it's not possible to fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
+5.  If you can't fix the issue now, you can exempt the issue in your policy settings, which prevents the issue blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
 
 6.  Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose.
