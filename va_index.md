@@ -26,7 +26,7 @@ When you add an image to a namespace, the image is automatically scanned by Vuln
 
 Vulnerability Advisor provides security management for {{site.data.keyword.registrylong_notm}}, generating a security status report that includes suggested fixes and best practices. 
 
-Any issues that are found by Vulnerability Advisor result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict is adjusted based on any exemptions that you've specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
+Any issues that are found by Vulnerability Advisor result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict is adjusted based on any exemptions that you have specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
 
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
@@ -142,7 +142,7 @@ Images are scanned only if they are based on an operating system that is support
 
 To configure the Helm chart, complete the following steps:
 
-1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, make sure that the tiller role has access to all namespaces so that the Container Scanner can watch containers in all namespaces.
+1.  [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, ensure that the tiller role has access to all namespaces, which ensures that the Container Scanner can watch containers in all namespaces.
 
 2.  Add the IBM chart repository to your Helm, such as `ibm-incubator`.
 
@@ -313,7 +313,7 @@ For more information about the commands, you can use the `--help` flag when you 
 ## Reviewing a vulnerability report
 {: #va_reviewing}
 
-Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure container or app settings, and whether the image is compliant with organizational policies.
+Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure container or app settings. You can also check whether the image is compliant with organizational policies.
 {:shortdesc}
 
 If you do not address any discovered issues, those issues can impact the security of containers that are built with that image. If Container Image Security Enforcement is not deployed, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues that are discovered must be exempt by your policy for containers to be deployable from this image. 
