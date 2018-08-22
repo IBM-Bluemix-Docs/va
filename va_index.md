@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-08-17"
+lastupdated: "2018-08-22"
 
 ---
 
@@ -26,7 +26,7 @@ When you add an image to a namespace, the image is automatically scanned by Vuln
 
 Vulnerability Advisor provides security management for {{site.data.keyword.registrylong_notm}}, generating a security status report that includes suggested fixes and best practices. 
 
-Any issues that are found result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict that is provided by Vulnerability Advisor is adjusted based on any exemptions that you've specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
+Any issues that are found by Vulnerability Advisor result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict is adjusted based on any exemptions that you've specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}. 
 
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
@@ -41,7 +41,7 @@ Vulnerability Advisor provides functions to help you to secure your images.
  The following functions are available:
 
 -   Scans images for issues
--   Scans containers that are running for issues (if you've [installed the Container Scanner](#va_install_container_scanner) in each cluster)
+-   Scans for issues in containers that are running if a [Container Scanner](#va_install_container_scanner) is installed in each cluster
 -   Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 -   Provides recommendations to secure configuration files for a subset of application types
 -   Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
@@ -59,7 +59,7 @@ The Vulnerability Advisor dashboard provides an overview and assessment of the s
 
 To scan images and containers in your account for security issues, Vulnerability Advisor collects, stores, and processes the following information:
 - Free-form fields, including IDs, descriptions, and image names (registry, namespace, repository name, and image tag)
-- Kubernetes metadata including names of Kubernetes resources such as pod, replicaset, and deployment names
+- Kubernetes metadata including names of Kubernetes resources such as pod, ReplicaSet, and deployment names
 - Metadata about the file modes and creation timestamps of the configuration files
 - The content of system and application configuration files in images and containers
 - Installed packages and libraries (including their versions)
@@ -105,10 +105,11 @@ Images are scanned only if they are based on an operating system that is support
 -   NGINX
 -   Apache
 
+
 ## Installing the Container Scanner
 {: #va_install_container_scanner}
 
-Before you begin:
+**Before you begin**
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI client. If you have a federated account, use `--sso`.
 2.  [Target your `kubectl` CLI](/docs/containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
@@ -127,10 +128,10 @@ Before you begin:
     	```
         {: codeblock}
 	
-	    The scanner API key is returned.
+	The scanner API key is returned.
 	
-	    Ensure that you store your scanner API key safely because it cannot be retrieved later.
-	    {: tip}
+	Ensure that you store your scanner API key safely because it cannot be retrieved later.
+	{: tip}
 	
     3.  Create a service policy that grants the `Writer` role.
     		
@@ -268,7 +269,7 @@ If your firewall blocks outgoing connections, you must configure your firewall t
 ## Setting organizational exemption policies
 {: #va_managing_policy}
 
-If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can also choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after discounting those issues that are exempted by your policy.
+If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can also choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after any issues that are exempted by your policy are discounted.
 {:shortdesc}
 
 You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
@@ -301,10 +302,10 @@ You can also edit and remove exemptions by hovering over the relevant row and cl
 
 If you want to set exemptions to the policy by using the CLI, you can run the following commands:
 
--  To create an exemption for a security issue, run the [ibmcloud cr exemption-add](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) command.
--  To list your exemptions for security issues, run the [ibmcloud cr exemption-list](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) command.
--  To list the types of security issues that you can exempt, run the [ibmcloud cr exemption-types](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) command.
--  To delete an exemption for a security issue, run the [ibmcloud cr exemption-rm](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) command.
+-  To create an exemption for a security issue, run the [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) command.
+-  To list your exemptions for security issues, run the [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) command.
+-  To list the types of security issues that you can exempt, run the [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) command.
+-  To delete an exemption for a security issue, run the [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) command.
 
 For more information about the commands, you can use the `--help` flag when you run the command.
 
@@ -383,7 +384,7 @@ In your dashboard, you can see the status of a container to determine whether it
 Check that containers that are running in your space continue to be compliant with organizational policy by reviewing the **Policy Status** field. The status is displayed as one of the following conditions:
 
 -   Compliant with Policy - No security or configuration issues were found.
--   Not Compliant with Policy - Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
+-   Not Compliant with Policy - Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits the deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
 -   Incomplete Assessment - The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
 
 Check that your container is as secure as possible by viewing its Security report and act on any reported security or configuration issues, by completing the following steps:
@@ -409,7 +410,7 @@ Check that your container is as secure as possible by viewing its Security repor
 
 4.  Decide how to update the container so that you can resolve the problems.
 
-    **Important:** To fix problems with the container image, you must delete the old instance and redeploy, which means losing any data within the existing container. Ensure that you have a good understanding of your container architecture to choose the appropriate method of redeploying the container.
+    **Important**: To fix problems with the container image, you must delete the old instance and redeploy, which means losing any data within the existing container. Ensure that you have a good understanding of your container architecture to choose the appropriate method of redeploying the container.
 
     **Example**
 
