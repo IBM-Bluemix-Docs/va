@@ -333,16 +333,15 @@ You can review the security of Docker images that are stored in your namespaces 
 {:shortdesc}
 
 1.  Log in to {{site.data.keyword.Bluemix_notm}}.
-2.  Click **Catalog**.
-3.  Under **Infrastructure**, click **Containers**.
-4.  Click the **Container Registry** tile.
-5.  Expand **Vulnerability Advisor** and click **Scanned Repositories**.
-6.  To see the report for the image that is tagged `latest`, click the row for that repository. The report shows the total number of issues and whether they are vulnerable packages or configuration issues. If no `latest` tag exists in the repository, the most recent image is used.
-7.  To view information about each vulnerable package for the image you selected, in the **Vulnerable Packages Found** table, click the link in the **VULNERABILITIES** column to open the report.
+2.  In the catalog, under **Infrastructure**, click **Containers**.
+3.  Click the **Container Registry** tile.
+4.  Expand **Vulnerability Advisor** and click **Scanned Repositories**.
+5.  To see the report for the image that is tagged `latest`, click the row for that repository. The report shows the total number of issues and whether they are vulnerable packages or configuration issues. If no `latest` tag exists in the repository, the most recent image is used.
+6.  To view information about each vulnerable package for the image you selected, in the **Vulnerable Packages Found** table, click the link in the **VULNERABILITIES** column to open the report.
     1.  To see more information, expand the summary.
     2.  If an operating system distributor's notice is provided, click the link in the **OFFICIAL NOTICE** column.
-8.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue.
-9.  Complete the corrective action for each issue shown in the report, and rebuild the image.
+7.  To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue.
+8.  Complete the corrective action for each issue shown in the report, and rebuild the image.
 
 
 ### Reviewing a vulnerability report by using the CLI
@@ -390,7 +389,7 @@ Check that containers that are running in your space continue to be compliant wi
 Check that your container is as secure as possible by viewing its Security report and act on any reported security or configuration issues, by completing the following steps:
 
 1.  Select the container that you want to view a report for:
-    1.  In the **Catalog**, select **Containers**, click **Container Registry**.
+    1.  In the catalog, select **Containers**, click **Container Registry**.
     2.  Select the **Private Repositories** tab and select the row for the repository that you want.
     3.  Select the row for the image tag that you want.
     4.  Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
