@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-08-16"
+lastupdated: "2018-08-23"
 
 ---
 
@@ -26,7 +26,7 @@ Cuando añade una imagen a un espacio de nombres, Vulnerability Advisor la explo
 
 Vulnerability Advisor proporciona funciones de gestión de la seguridad para {{site.data.keyword.registrylong_notm}} y genera un informe sobre el estado de la seguridad que incluye correcciones sugeridas y procedimientos recomendados. 
 
-Todos los problemas que se encuentran dan lugar a un veredicto que indica que no es recomendable desplegar esta imagen. Si elige desplegar la imagen, todos los contenedores que se despliegan de la imagen incluirán problemas conocidos que podrían utilizarse en un ataque o bien comprometer el contenedor. Vulnerability Advisor ajusta su veredicto con base a las exenciones que haya especificado. Este veredicto lo puede utilizar Container Image Security Enforcement para evitar el despliegue de imágenes no seguras en {{site.data.keyword.containerlong_notm}}. 
+Todos los problemas que encuentra Vulnerability Advisor dan lugar a un veredicto que indica que no es recomendable desplegar esta imagen. Si elige desplegar la imagen, todos los contenedores que se despliegan de la imagen incluirán problemas conocidos que podrían utilizarse en un ataque o bien comprometer el contenedor. El veredicto se ajusta en función de las exenciones que ha especificado. Este veredicto lo puede utilizar Container Image Security Enforcement para evitar el despliegue de imágenes no seguras en {{site.data.keyword.containerlong_notm}}. 
 
 Corregir los problemas de seguridad y configuración de los que informa Vulnerability Advisor le ayudará a proteger la infraestructura de {{site.data.keyword.cloud_notm}}.
 
@@ -41,13 +41,13 @@ Vulnerability Advisor proporciona varias funciones que le ayudarán a proteger s
  Están disponibles las siguientes funciones:
 
 -   Explora imágenes para encontrar problemas
--   Explora contenedores que están en ejecución para encontrar problemas si ha [instalado el Container Scanner](#va_install_container_scanner) en cada clúster
+-   Explora problemas en los contenedores que se están ejecutando si se instala un [Container Scanner](#va_install_container_scanner) en cada clúster
 -   Proporciona un informe de evaluación basado en prácticas de seguridad específicas de {{site.data.keyword.containerlong_notm}}
 -   Ofrece recomendaciones para proteger los archivos de configuración de un subconjunto de tipos de aplicación
 -   Proporciona instrucciones sobre cómo solucionar un [paquete vulnerable](#packages) o un [problema de configuración](#app_configurations) notificado en sus informes
 -   Proporciona un veredicto a [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce)
 -   Aplica exenciones a los informes de una cuenta, espacio de nombres o repositorio, o a nivel de etiqueta para saber qué problemas no se aplican a su caso
--   Proporciona enlaces para los contenedores asociados desde la vista de **Etiqueta** de la interfaz gráfica de usuario de {{site.data.keyword.registrylong_notm}}. Puede obtener una lista de contenedores en ejecución que están utilizando dicha imagen en un clúster donde tenga instalado el Container Scanner.
+-   Proporciona enlaces para los contenedores asociados en la vista de **Etiqueta** de la interfaz gráfica de usuario de {{site.data.keyword.registrylong_notm}}. Puede obtener una lista de contenedores en ejecución que están utilizando dicha imagen en un clúster donde tenga instalado el Container Scanner.
 
 
 En el panel de control Registro, la columna **Estado de política** muestra el estado de sus repositorios. El informe enlazado identifica prácticas recomendadas de seguridad en la nube para sus imágenes. 
@@ -58,8 +58,8 @@ El panel de control de Vulnerability Advisor muestra una visión general y una e
 **Protección de los datos**
 
 Para escanear imágenes y contenedores en su cuenta por motivos de seguridad, Vulnerability Advisor recopila, almacena y procesa la información siguiente:
-- Campos de texto de formato libre, incluidos ID, descripciones y nombres de imágenes (etiqueta de registro, de espacio de nombres, de nombre de repositorio y de imagen)
-- Metadatos de Kubernetes, incluidos nombres de recursos de Kubernetes como por ejemplo pod, conjunto de réplicas y nombres de despliegue
+- Campos de formato libre, incluidos ID, descripciones y nombres de imágenes (etiqueta de registro, de espacio de nombres, de nombre de repositorio y de imagen)
+- Metadatos de Kubernetes, incluidos nombres de recursos de Kubernetes como, por ejemplo, pod, ReplicaSet y nombres de despliegue
 - Metadatos sobre las modalidades de archivos y la creación de indicaciones de fecha y hora de los archivos de configuración
 - El contenido del sistema y de los archivos de configuración de aplicación en imágenes y contenedores
 - Paquetes y bibliotecas instalados (incluidas sus versiones)
@@ -78,10 +78,10 @@ Los resultados del escaneo se suprimen a los 30 días una vez generados.
 ### Paquetes vulnerables
 {: #packages}
 
-Vulnerability Advisor comprueba si hay paquetes vulnerables en imágenes basadas en sistemas operativos soportados y proporciona un enlace con los avisos de seguridad relevantes acerca de la vulnerabilidad.
+Vulnerability Advisor comprueba si hay paquetes vulnerables en imágenes que utilizan sistemas operativos soportados y proporciona un enlace con los avisos de seguridad relevantes acerca de la vulnerabilidad.
 {:shortdesc}
 
-Se muestran los paquetes con problemas de vulnerabilidad conocidos en los resultados del escaneo. Las posibles vulnerabilidades se actualizan a diario a partir de avisos de seguridad publicados para los tipos de imagen de Docker que se muestran en la tabla siguiente. Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades.
+Se muestran los paquetes que contienen problemas de vulnerabilidad conocidos en los resultados del escaneo. Las posibles vulnerabilidades se actualizan a diario utilizando los avisos de seguridad publicados para los tipos de imagen de Docker que se muestran en la tabla siguiente. Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades.
 
 
   |Imagen base de Docker|Origen de los avisos de seguridad|
@@ -100,37 +100,38 @@ Se muestran los paquetes con problemas de vulnerabilidad conocidos en los result
 Los problemas de configuración son problemas de seguridad potenciales relacionados con cómo se configura una app. Muchos de los problemas notificados pueden arreglarse actualizando Dockerfile.
 {:shortdesc}
 
-Las imágenes solo se exploran si se basan en un sistema operativo que recibe soporte de Vulnerability Advisor. Vulnerability Advisor comprueba los valores de configuración para los siguientes tipos de apps:
+Las imágenes solo se exploran si utilizan un sistema operativo que recibe soporte de Vulnerability Advisor. Vulnerability Advisor comprueba los valores de configuración para los siguientes tipos de apps:
 -   MySQL
 -   NGINX
 -   Apache
 
+
 ## Instalación del Container Scanner
 {: #va_install_container_scanner}
 
-Antes de empezar:
+**Antes de empezar**
 
 1.  Inicie una sesión en el cliente de CLI de {{site.data.keyword.Bluemix_notm}}. Si tiene una cuenta federada, utilice `--sso`.
 2.  [Apunte la CLI de `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) al clúster donde desea utilizar una gráfica de Helm.
 3.  Cree un ID de servicio y una clave de API para el Container Scanner y proporcióneles un nombre:
-    1.  Cree un ID de servicio ejecutando el mandato siguiente, sustituyendo `<scanner_serviceID>` por un nombre de su elección para el ID de servicio. Anote su **CRN**.
+    1.  Para crear un ID de servicio, ejecute el siguiente mandato, donde `<scanner_serviceID>` es un nombre de su elección para el ID de servicio. Anote su **CRN**.
     
         ```
     	ibmcloud iam service-id-create <scanner_serviceID>
     	```
         {: codeblock}
 
-    2.  Cree una clave de API de servicio, donde `<scanner_serviceID>` es el ID de servicio que creó en el paso anterior y sustituya `<scanner_APIkey_name>` con el nombre que desee para la clave de API del escáner. 
+    2.  Cree una clave de API de servicio, donde `<scanner_serviceID>` es el ID de servicio que creó en el paso anterior y `<scanner_APIkey_name>` es un nombre de su elección para la clave de API del escáner. 
     
         ```
     	ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
     	```
         {: codeblock}
 	
-	    Se devuelve la clave de API del escáner.
+	Se devuelve la clave de API del escáner.
 	
-	    Asegúrese de almacenar la clave de API del escáner de forma segura porque no se puede recuperar más tarde.
-	    {: tip}
+	Asegúrese de almacenar la clave de API del escáner de forma segura porque no se puede recuperar más tarde.
+	{: tip}
 	
     3.  Cree una política de servicios que otorgue el rol `Writer`.
     		
@@ -141,7 +142,7 @@ Antes de empezar:
 
 Para configurar la gráfica de Helm, realice los pasos siguientes:
 
-1.  [Configure Helm en su clúster](/docs/containers/cs_integrations.html#helm). Si utiliza una política de RBAC para otorgar acceso al tiller de Helm, asegúrese de que el rol del tiller tenga acceso a todos los espacios de nombres para que el Container Scanner pueda ver contenedores en todos los espacios de nombres.
+1.  [Configure Helm en su clúster](/docs/containers/cs_integrations.html#helm). Si utiliza una política de RBAC para otorgar acceso al tiller de Helm, asegúrese de que el rol del tiller tenga acceso a todos los espacios de nombres. Otorgar acceso de rol al tiller garantiza que el Container Scanner pueda ver los contenedores en todos los espacios de nombres.
 
 2.  Añada el repositorio de gráficas de IBM al Helm, como por ejemplo `ibm-incubator`.
 
@@ -179,20 +180,20 @@ Para configurar la gráfica de Helm, realice los pasos siguientes:
     <tbody>
     <tr>
     <td><code>EmitURL</code></td>
-    <td>Especifique el URL de punto final regional de Vulnerability Advisor. Para obtener el URL, ejecute <code>ibmcloud cr info</code> y recupere la dirección <strong>Registro de contenedores</strong>. Sustituya <code>registry</code> por <code>va</code>. Por ejemplo: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+    <td>Especifique el URL de punto final regional de Vulnerability Advisor. Para obtener el URL, ejecute <code>ibmcloud cr info</code> y recupere la dirección <strong>Registro de contenedores</strong>. Sustituya <code>registry</code> por <code>va</code>. Por ejemplo, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
     </tr>
     <tr>
     <td><code>AccountID</code></td>
-    <td>Sustituya por el ID de cuenta de {{site.data.keyword.Bluemix_notm}} en el que se encuentre el clúster. Para obtener el ID de cuenta, ejecute <code>ibmcloud account list</code>.</td>
+    <td>Sustituya <code>AccountID</code> por el ID de cuenta de {{site.data.keyword.Bluemix_notm}} en el que se encuentre el clúster. Para obtener el ID de cuenta, ejecute <code>ibmcloud account list</code>.</td>
     </tr>
     <tr>
     <td><code>ClusterID</code></td>
-    <td>Sustituya por el clúster de Kubernetes en el que desee instalar el Container Scanner. Para listar ID de clúster, ejecute <code>ibmcloud ks clusters</code>. <br> **Sugerencia**: Utilice el ID del clúster y no el nombre.
+    <td>Sustituya <code>ClusterID</code> por el clúster de Kubernetes en el que desee instalar el Container Scanner. Para listar ID de clúster, ejecute <code>ibmcloud ks clusters</code>. <br> **Sugerencia**: Utilice el ID del clúster y no el nombre.
     </td>
     </tr>
     <tr>
     <td><code>APIKey</code></td>
-    <td>Sustituya por la clave de API de escáner que ha creado anteriormente.</td>
+    <td>Sustituya <code>APIKey</code> por la clave de API de escáner que ha creado anteriormente.</td>
     </tr>
     </tbody></table>
 
@@ -241,15 +242,15 @@ Si su cortafuegos bloquea conexiones salientes, debe configurarlo para permitir 
       </thead>
     <tbody>
       <tr>
-         <td>AP Sur</td>
+         <td>AP sur</td>
          <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
       </tr>
       <tr>
-         <td>UE Central</td>
+         <td>UE central</td>
          <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
         </tr>
       <tr>
-        <td>UK Sur</td>
+        <td>RU sur</td>
         <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
       </tr>
       <tr>
@@ -268,7 +269,7 @@ Si su cortafuegos bloquea conexiones salientes, debe configurarlo para permitir 
 ## Establecimiento de políticas de exención organizativas
 {: #va_managing_policy}
 
-Si desea gestionar la seguridad de una organización de {{site.data.keyword.Bluemix_notm}}, puede utilizar el valor de política para determinar si un problema está exento o no. También puede elegir utilizar Container Image Security Enforcement para asegurarse de que el despliegue solo se permita desde imágenes que no tengan problemas de seguridad después de descontar los problemas exentos mediante la política.
+Si desea gestionar la seguridad de una organización de {{site.data.keyword.Bluemix_notm}}, puede utilizar el valor de política para determinar si un problema está exento o no. Puede elegir utilizar Container Image Security Enforcement para asegurarse de que el despliegue solo se permita desde imágenes que no tengan problemas de seguridad después de justificar los problemas exentos por su política.
 {:shortdesc}
 
 Puede desplegar contenedores desde cualquier imagen, independientemente del estado de seguridad, a menos que Container Image Security Enforcement esté desplegado en el clúster. Para saber cómo desplegar Container Image Security Enforcement, consulte [Instalación de la obligatoriedad de seguridad](/docs/services/Registry/registry_security_enforce.html#security_enforce).
@@ -301,10 +302,10 @@ También puede editar y eliminar exenciones pasando el ratón por encima de la f
 
 Si desea establecer exenciones a la política utilizando la CLI, puede ejecutar los mandatos siguientes:
 
--  Para crear una exención para un problema de seguridad, ejecute el mandato [ibmcloud cr exemption-add](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add).
--  Para listar las exenciones para problemas de seguridad, ejecute el mandato [ibmcloud cr exemption-list](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list).
--  Para listar los tipos de problemas de seguridad que puede eximir, ejecute el mandato [ibmcloud cr exemption-types](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types).
--  Para suprimir una exención para un problema de seguridad, ejecute el mandato [ibmcloud cr exemption-rm](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm).
+-  Para crear una exención para un problema de seguridad, ejecute el mandato [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add).
+-  Para listar las exenciones para problemas de seguridad, ejecute el mandato [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list).
+-  Para listar los tipos de problemas de seguridad que puede eximir, ejecute el mandato [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types).
+-  Para suprimir una exención para un problema de seguridad, ejecute el mandato [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm).
 
 Para obtener más información sobre los mandatos, puede utilizar el distintivo `--help` al ejecutar el mandato.
 
@@ -312,10 +313,10 @@ Para obtener más información sobre los mandatos, puede utilizar el distintivo 
 ## Revisión de un informe de vulnerabilidad
 {: #va_reviewing}
 
-Antes de desplegar una imagen, puede revisar su informe de Vulnerability Advisor, que proporciona detalles de los paquetes vulnerables y de los valores de app o de contenedor no seguros, y si la imagen cumple con las políticas de la organización.
+Antes de desplegar una imagen, puede revisar su informe de Vulnerability Advisor para ver los detalles sobre los paquetes vulnerables y valores de configuración no seguros de la app o del contenedor. También puede comprobar si la imagen cumple con las políticas organizativas.
 {:shortdesc}
 
-Si no soluciona ningún problema descubierto, los problemas pueden afectar a la seguridad de los contenedores creados con dicha imagen. Si Container Image Security Enforcement no se despliega, puede seguir utilizando una imagen que tenga problemas de seguridad y de configuración en un contenedor. Si Container Image Security Enforcement se despliega y se activa para la imagen, todos los problemas descubiertos deben estar exentos mediante la política para que los contenedores sean desplegables desde esta imagen. 
+Si no soluciona ningún problema descubierto, los problemas pueden afectar a la seguridad de los contenedores creados utilizando dicha imagen. Si Container Image Security Enforcement no se despliega, puede seguir utilizando una imagen que tenga problemas de seguridad y de configuración en un contenedor. Si Container Image Security Enforcement se despliega y se activa para la imagen, todos los problemas descubiertos deben estar exentos mediante la política para que los contenedores sean desplegables desde esta imagen. 
 
 Para configurar el ámbito de obligatoriedad de los problemas de Vulnerability Advisor en Container Image Security Enforcement, consulte [Personalización de políticas](/docs/services/Registry/registry_security_enforce.html#customize_policies).
 {:tip}
@@ -323,7 +324,7 @@ Para configurar el ámbito de obligatoriedad de los problemas de Vulnerability A
 Si la imagen no cumple los requisitos establecidos por la política de su organización, debe configurar la imagen para que cumpla dichos requisitos para poder desplegarla. Para obtener más información sobre cómo ver y cambiar la política de organización, consulte [Establecimiento de políticas de exención organizativas](#va_managing_policy).
 {:tip}
 
-Después de desplegar la imagen, si Container Scanner se despliega, Vulnerability Advisor seguirá escaneando en busca de problemas de seguridad y de configuración en el contenedor. Puede resolver los problemas encontrados siguiendo los pasos descritos en [Revisión de un informe de contenedor](#va_reviewing_container).
+Si Container Scanner se despliega, después de desplegar la imagen, Vulnerability Advisor seguirá escaneando en busca de problemas de seguridad y de configuración en el contenedor. Puede resolver los problemas encontrados siguiendo los pasos descritos en [Revisión de un informe de contenedor](#va_reviewing_container).
 
 ### Revisión de un informe de vulnerabilidad utilizando la interfaz gráfica de usuario
 {: #va_reviewing_gui}
@@ -332,16 +333,15 @@ Puede revisar la seguridad de imágenes de Docker que se han almacenado en sus e
 {:shortdesc}
 
 1.  Inicie una sesión en {{site.data.keyword.Bluemix_notm}}.
-2.  Pulse **Catálogo**.
-3.  En **Infraestructura**, pulse **Contenedores**.
-4.  Pulse el mosaico **Container Registry**.
-5.  Expanda **Vulnerability Advisor** y pulse **Repositorios explorados**.
-6.  Para ver el informe de la imagen con la etiqueta `latest`, pulse la fila correspondiente a ese repositorio. El informe muestra el número de problemas y si son paquetes vulnerables o problemas de configuración. Si no existe la etiqueta `latest` en el repositorio, se utilizará la imagen más reciente.
-7.  Para ver la información sobre cada paquete vulnerable de la imagen seleccionada, en la tabla **Paquetes vulnerables encontrados** pulse el enlace de la columna **VULNERABILIDADES** para abrir el informe.
+2.  En el catálogo, en **Infraestructura**, pulse **Contenedores**.
+3.  Pulse el mosaico **Container Registry**.
+4.  Expanda **Vulnerability Advisor** y pulse **Repositorios explorados**.
+5.  Para ver el informe de la imagen con la etiqueta `latest`, pulse la fila correspondiente a ese repositorio. El informe muestra el número de problemas y si son paquetes vulnerables o problemas de configuración. Si no existe la etiqueta `latest` en el repositorio, se utilizará la imagen más reciente.
+6.  Para ver la información sobre cada paquete vulnerable de la imagen seleccionada, en la tabla **Paquetes vulnerables encontrados** pulse el enlace de la columna **VULNERABILIDADES** para abrir el informe.
     1.  Para ver más información, amplíe el resumen.
     2.  Si se ha proporcionado un aviso del distribuidor de un sistema operativo, pulse el enlace de la columna **AVISO OFICIAL**.
-8.  Para ver la información sobre cada problema de configuración, en la tabla **Problemas de configuración encontrados** pulse el enlace de la fila correspondiente al problema.
-9.  Realice la acción correctiva para cada problema que se muestra en el informe y vuelva a crear la imagen.
+7.  Para ver la información sobre cada problema de configuración, en la tabla **Problemas de configuración encontrados** pulse el enlace de la fila correspondiente al problema.
+8.  Realice la acción correctiva para cada problema que se muestra en el informe y vuelva a crear la imagen.
 
 
 ### Revisión de un informe de vulnerabilidad utilizando la CLI
@@ -370,8 +370,8 @@ Puede revisar la seguridad de imágenes de Docker que se han almacenado en sus e
     {: pre}
 
     En la salida de la CLI, puede ver la siguiente información sobre los problemas de configuración.
-      - Práctica de seguridad: Una descripción de la vulnerabilidad que se ha encontrado
-      - Acción de corrección: Detalles sobre cómo solucionar la vulnerabilidad
+      - **Práctica de seguridad**: Una descripción de la vulnerabilidad que se ha encontrado
+      - **Acción de corrección**: Detalles sobre cómo solucionar la vulnerabilidad
 
 
 ## Revisión de un informe de contenedor
@@ -391,13 +391,13 @@ el sistema operativo de la instancia del contenedor puede no ser compatible.
 Compruebe si el contenedor está protegido todo lo posible visualizando su informe de seguridad y actúe de acuerdo con los problemas de configuración o seguridad de los que se le informa siguiendo los siguientes pasos:
 
 1.  Seleccione el contenedor del que desea visualizar un informe:
-    1.  Desde el catálogo, seleccione **Contenedores**, pulse **Container Registry**.
+    1.  En el catálogo, seleccione **Contenedores**, pulse **Container Registry**.
     2.  Seleccione el separador **Repositorios privados** y seleccione la fila del repositorio que desee.
     3.  Seleccione la fila de la etiqueta de imagen que desee.
     4.  Seleccione el separador **Contenedores asociados** y, a continuación, seleccione la fila del contenedor que desee. Se abre el informe de seguridad.
 2.  Revise las secciones para ver los problemas potenciales de seguridad y de configuración para cada paquete en la imagen:
 
-      -   **Vulnerabilidades**: Proporciona una lista de paquetes con problemas de vulnerabilidades conocidas, que se actualizan de forma diaria a partir de avisos de seguridad publicados para los tipos de imagen de Docker que se listan en [Tipos de vulnerabilidades](#types). Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varios problemas. Pulse el código de aviso de seguridad para revisar más información sobre el paquete y para ver los pasos para
+      -   **Vulnerabilidades**: Lista los paquetes que contienen problemas de vulnerabilidad conocidos. La lista se actualiza a diario utilizando los avisos de seguridad publicados para los tipos de imagen de Docker que se listan en [Tipos de vulnerabilidades](#types). Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades. Pulse el código de aviso de seguridad para ver más información sobre el paquete y para ver los pasos para
 actualizar el paquete.
 
     -   **Problemas de configuración**: Lista sugerencias que puede adoptar para aumentar la seguridad del contenedor y de cualquier valor de aplicación en el contenedor que se consideren no seguros. Amplíe la fila para ver cómo resolver el problema.
@@ -412,14 +412,14 @@ actualizar el paquete.
 
 4.  Decida cómo actualizar el contenedor para que pueda resolver los problemas.
 
-    **Importante:** Para solucionar problemas con la imagen del contenedor, debe suprimir la instancia antigua y volver a desplegarla, lo que significa perder datos dentro del contenedor existente. Asegúrese de comprender bien la arquitectura del contenedor para elegir el método apropiado para volver a desplegar el contenedor.
+    **Importante**: Para solucionar problemas con la imagen del contenedor, debe suprimir la instancia antigua y volver a desplegarla, lo que significa perder datos dentro del contenedor existente. Asegúrese de comprender bien la arquitectura del contenedor para elegir el método apropiado para volver a desplegar el contenedor.
 
-    Por ejemplo:
+    **Ejemplo**
 
     -   Si el contenedor está desacoplado de los datos que calcula, puede detener el contenedor y suprimirlo, realizar los cambios necesarios a la imagen, y volver a desplegarla, sin pérdida de datos.
-    -   Puede utilizar un servicio de {{site.data.keyword.Bluemix_notm}} para que le ayude como, por ejemplo, [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), con la actualización de la instancia de contenedor vulnerable.
+    -   Puede utilizar un servicio de {{site.data.keyword.Bluemix_notm}} como, por ejemplo, [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), que le ayude con la actualización de la instancia de contenedor vulnerable.
     -   En una arquitectura de microservicios, puede direccionar tráfico a otra instancia de contenedor mientras soluciona los problemas de seguridad o configuración y enviar por push la imagen nueva en un despliegue rojo/negro.
 
-5.  Si no es posible corregir el problema ahora, puede marcarlo como una exención en los valores de política, para evitar que el problema bloquee el despliegue del contenedor. Para marcar el problema como exento, pulse el icono **abrir y cerrar lista de opciones** y pulse **Crear exención**, consulte [Establecimiento de políticas de exención de la organización](#va_managing_policy).
+5.  Si no puede corregir el problema ahora, puede marcarlo como una exención en los valores de política, para evitar que el problema bloquee el despliegue del contenedor. Para marcar el problema como exento, pulse el icono **abrir y cerrar lista de opciones** y pulse **Crear exención**, consulte [Establecimiento de políticas de exención de la organización](#va_managing_policy).
 
 6.  Corrija los problemas descritos en el informe de **Seguridad** y vuelva a recrear la imagen o redesplegar el contenedor de acuerdo con el método que elija.
