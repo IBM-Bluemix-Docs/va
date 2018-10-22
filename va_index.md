@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-10-19"
+lastupdated: "2018-10-22"
 
 ---
 
@@ -270,7 +270,7 @@ When you use Container Image Security Enforcement, any security issue that is de
 If you want to set exemptions to the policy by using the GUI, complete the following steps:
 
 1. Log in to {{site.data.keyword.Bluemix_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
-2. Click  the **Menu** icon and then click **Containers**.
+2. Click **Containers** and then click **Container Regstry**.
 3. Under **Vulnerability Advisor**, click **Policy Settings**.
 4. Click **Create Exemption**.
 5. Select the issue type.
@@ -319,15 +319,23 @@ You can review the security of Docker images that are stored in your namespaces 
 {:shortdesc}
 
 1. Log in to {{site.data.keyword.Bluemix_notm}}.
-2. In the catalog, under **Infrastructure**, click **Containers**.
+2. In the catalog, click **Containers**.
 3. Click the **Container Registry** tile.
-4. Expand **Vulnerability Advisor** and click **Scanned Repositories**.
-5. To see the report for the image that is tagged `latest`, click the row for that repository. The report shows the total number of issues and whether they are vulnerable packages or configuration issues. If no `latest` tag exists in the repository, the most recent image is used.
-6. To view information about each vulnerable package for the image you selected, in the **Vulnerable Packages Found** table, click the link in the **VULNERABILITIES** column to open the report.
-    1. To see more information, expand the summary.
-    2. If an operating system distributor's notice is provided, click the link in the **OFFICIAL NOTICE** column.
-7. To view information about each configuration issue, in the **Configuration Issues Found** table, click the row for the issue.
-8. Complete the corrective action for each issue shown in the report, and rebuild the image.
+4. Click **Images**. A list of your images and the security status of each image is displayed in the **Images** table.
+5. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
+6. If the security status shows any issues, to find out about the issues , click the **Issues by Type** tab. The **Vulnerabilities** and **Configuration Issues** tables open.
+
+   **Vulnerabilities**
+   The **Vulnerabilities** table shows the Vulnerability ID for each issue, the policy status for that issue, the affected packages and how to resolve the issue. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the vendor security notice for that issue. Lists packages that contain known vulnerability issues.
+  
+   The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
+
+   **Configuration Issues**
+   The **Configuration Issues** table shows the Configuration Issue ID for each issue, the policy status for that issue, and the security practice. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the security notice for that issue.
+  
+   The list contains suggestions for actions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
+
+7. Complete the corrective action for each issue shown in the report, and rebuild the image.
 
 ### Reviewing a vulnerability report by using the CLI
 {: #va_registry_cli}
@@ -347,7 +355,7 @@ You can review the security of Docker images that are stored in your namespaces 
     - `<X> Issues`: `<X>` potential security issues or vulnerabilities were found, where `<X>` is the number of issues.
     - `Scanning`: The image is being scanned and the final vulnerability status is not yet determined.
 
-3. To view the details for the status, review the Vulnerability Advisor report.
+3. To view the details for the status, review the Vulnerability Advisor report:
 
    ```
    ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
@@ -361,7 +369,7 @@ You can review the security of Docker images that are stored in your namespaces 
 ## Reviewing a container report
 {: #va_reviewing_container}
 
-In your dashboard, you can see the status of a container to determine whether its security complies with your organization's policy. You can also review a container's Security report, which details any vulnerable packages and nonsecure container or application settings, and whether the container is compliant with organizational policies.
+In your dashboard, you can see the status of a container to determine whether its security complies with your organization's policy. You can also review a container's security report, which details any vulnerable packages and nonsecure container or application settings, and whether the container is compliant with organizational policies.
 {:shortdesc}
 
 Check that containers that are running in your space continue to be compliant with organizational policy by reviewing the **Policy Status** field. The status is displayed as one of the following conditions:
@@ -370,12 +378,12 @@ Check that containers that are running in your space continue to be compliant wi
 - Not Compliant with Policy - Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits the deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
 - Incomplete Assessment - The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
 
-Check that your container is as secure as possible by viewing its Security report and act on any reported security or configuration issues, by completing the following steps:
+Check that your container is as secure as possible by viewing its security report and act on any reported security or configuration issues, by completing the following steps:
 
 1. Select the container that you want to view a report for:
     1. In the catalog, select **Containers**, click **Container Registry**.
     2. Select **Repositories** and expand the row for the repository that you want.
-    3. Select the row for the image tag that you want.
+    3. Select the row for the image that you want.
     4. Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
 2. Review the sections to see the potential security and configuration issues for each package in the image:
 
