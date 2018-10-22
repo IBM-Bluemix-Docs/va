@@ -325,15 +325,13 @@ You can review the security of Docker images that are stored in your namespaces 
 5. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
 6. If the security status shows any issues, to find out about the issues , click the **Issues by Type** tab. The **Vulnerabilities** and **Configuration Issues** tables open.
 
-   **Vulnerabilities**
-   The **Vulnerabilities** table shows the Vulnerability ID for each issue, the policy status for that issue, the affected packages and how to resolve the issue. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the vendor security notice for that issue. Lists packages that contain known vulnerability issues.
+   - **Vulnerabilities**: This table shows the Vulnerability ID for each issue, the policy status for that issue, the affected packages and how to resolve the issue. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the vendor security notice for that issue. Lists packages that contain known vulnerability issues.
   
-   The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
+     The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
 
-   **Configuration Issues**
-   The **Configuration Issues** table shows the Configuration Issue ID for each issue, the policy status for that issue, and the security practice. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the security notice for that issue.
+   - **Configuration Issues**: This table shows the Configuration Issue ID for each issue, the policy status for that issue, and the security practice. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the security notice for that issue.
   
-   The list contains suggestions for actions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
+     The list contains suggestions for actions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
 
 7. Complete the corrective action for each issue shown in the report, and rebuild the image.
 
@@ -351,9 +349,9 @@ You can review the security of Docker images that are stored in your namespaces 
    {: pre}
 
 2. Check the status in the **SECURITY STATUS** column.
-    - `No Issues`: No security issues were found.
-    - `<X> Issues`: `<X>` potential security issues or vulnerabilities were found, where `<X>` is the number of issues.
-    - `Scanning`: The image is being scanned and the final vulnerability status is not yet determined.
+    - **No Issues**: No security issues were found.
+    - **`<X>` Issues**: `<X>` potential security issues or vulnerabilities were found, where `<X>` is the number of issues.
+    - **Scanning**: The image is being scanned and the final vulnerability status is not yet determined.
 
 3. To view the details for the status, review the Vulnerability Advisor report:
 
@@ -374,9 +372,9 @@ In your dashboard, you can see the status of a container to determine whether it
 
 Check that containers that are running in your space continue to be compliant with organizational policy by reviewing the **Policy Status** field. The status is displayed as one of the following conditions:
 
-- Compliant with Policy - No security or configuration issues were found.
-- Not Compliant with Policy - Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits the deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
-- Incomplete Assessment - The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
+- **Compliant with Policy**: No security or configuration issues were found.
+- **Not Compliant with Policy**: Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits the deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
+- **Incomplete Assessment**: The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
 
 Check that your container is as secure as possible by viewing its security report and act on any reported security or configuration issues, by completing the following steps:
 
