@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-14"
+lastupdated: "2018-11-15"
 
 ---
 
@@ -135,17 +135,17 @@ To configure the Helm chart, complete the following steps:
 
 1. [Set up Helm in your cluster](/docs/containers/cs_integrations.html#helm). If you use an RBAC policy to grant the Helm tiller access, ensure that the tiller role has access to all namespaces. Giving the tiller role access ensures that the Container Scanner can watch containers in all namespaces.
 
-2. Add the IBM chart repository to your Helm, such as `ibm-incubator`.
+2. Add the IBM chart repository to your Helm, such as `ibm`.
 
    ```
-   helm repo add ibm-incubator https://registry.bluemix.net/helm/ibm-incubator
+   helm repo add ibm https://registry.bluemix.net/helm/ibm
    ```
    {: pre}
 
-3. Save the default configuration settings for the Container Scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
+3. Save the default configuration settings for the Container Scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm`, in the Helm chart path.
 
    ```
-   helm inspect values ibm-incubator/ibmcloud-container-scanner > config.yaml
+   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
    ```
    {: pre}
 
@@ -188,10 +188,10 @@ To configure the Helm chart, complete the following steps:
    </tr>
    </tbody></table>
 
-5. Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name of your choice for your Helm chart. Include the chart repository, such as `ibm-incubator`, in the Helm chart path.
+5. Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name of your choice for your Helm chart. Include the chart repository, such as `ibm`, in the Helm chart path.
 
    ```
-   helm install -f config.yaml --name=<myscanner> ibm-incubator/ibmcloud-container-scanner
+   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
    ```
    {: pre}
 
