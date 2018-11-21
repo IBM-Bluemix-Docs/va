@@ -124,9 +124,9 @@ Images are scanned only if they are using an operating system that is supported 
        {: codeblock}
        The scanner API key is returned.
 
-       - Ensure that you store your scanner API key safely because it cannot be retrieved later.
-       - Ensure that you have a separate service API key for each cluster that the scanner is installed in.
-         {: tip}
+       Ensure that you store your scanner API key safely because it cannot be retrieved later.  
+       Ensure that you have a separate service API key for each cluster that the scanner is installed in.
+       {: tip}
 
     3. Create a service policy that grants the `Writer` role.
 
@@ -167,7 +167,7 @@ To configure the Helm chart, complete the following steps:
    <table>
    <col width="22%">
    <col width="78%">
-   <caption>Understanding the YAML file components</caption>
+   <caption>Table 2. Understanding the YAML file components</caption>
    <thead>
    <th>Field</th>
    <th>Value</th>
@@ -228,7 +228,7 @@ If your firewall blocks outgoing connections, you must configure your firewall t
 
 <p>
   <table summary=" The rows should be read left to right, with the server zone in column one and IP addresses to match in column two.">
-  <caption>IP addresses to open for outgoing traffic</caption>
+  <caption>Table 3. IP addresses to open for outgoing traffic</caption>
       <thead>
       <th>Region</th>
       <th>IP address</th>
