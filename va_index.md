@@ -124,8 +124,7 @@ Images are scanned only if they are using an operating system that is supported 
        {: codeblock}
        The scanner API key is returned.
 
-       Ensure that you store your scanner API key safely because it cannot be retrieved later.  
-       Ensure that you have a separate service API key for each cluster that the scanner is installed in.
+       Ensure that you store your scanner API key safely because it cannot be retrieved later. Also ensure that you have a separate service API key for each cluster that the scanner is installed in.
        {: tip}
 
     3. Create a service policy that grants the `Writer` role.
@@ -227,7 +226,7 @@ If your firewall blocks outgoing connections, you must configure your firewall t
  
 
 <p>
-  <table summary=" The rows should be read left to right, with the server zone in column one and IP addresses to match in column two.">
+  <table summary=" The rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
   <caption>Table 3. IP addresses to open for outgoing traffic</caption>
     <thead>
       <th>Location</th>
