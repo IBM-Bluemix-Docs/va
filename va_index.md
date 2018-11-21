@@ -113,9 +113,6 @@ Images are scanned only if they are using an operating system that is supported 
        ```
        {: codeblock}
 
-       Share a single service ID between all clusters in an account.
-       {: tip}
-
     2. Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and  `<scanner_APIkey_name>` is a name of your choice for the scanner API key.
 
        ```
