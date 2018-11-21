@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-15"
+lastupdated: "2018-11-21"
 
 ---
 
@@ -111,9 +111,12 @@ Images are scanned only if they are using an operating system that is supported 
        ```
        ibmcloud iam service-id-create <scanner_serviceID>
        ```
-        {: codeblock}
+       {: codeblock}
 
-    2. Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and  `<scanner_APIkey_name>` is a name of your choice for the scanner API key. 
+       Share a single service ID between all clusters in an account.
+       {: tip}
+
+    2. Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and  `<scanner_APIkey_name>` is a name of your choice for the scanner API key.
 
        ```
        ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
@@ -121,8 +124,9 @@ Images are scanned only if they are using an operating system that is supported 
        {: codeblock}
        The scanner API key is returned.
 
-       Ensure that you store your scanner API key safely because it cannot be retrieved later.
-       {: tip}
+       - Ensure that you store your scanner API key safely because it cannot be retrieved later.
+       - Ensure that you have a separate service API key for each cluster that the scanner is installed in.
+         {: tip}
 
     3. Create a service policy that grants the `Writer` role.
 
