@@ -183,7 +183,7 @@ To configure the Helm chart, complete the following steps:
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Replace <code>ClusterID</code> with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip** Use the ID of the cluster, not the name.
+   <td>Replace <code>ClusterID</code> with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip:** Use the ID of the cluster, not the name.
    </td>
    </tr>
    <tr>
@@ -229,33 +229,33 @@ If your firewall blocks outgoing connections, you must configure your firewall t
 <p>
   <table summary=" The rows should be read left to right, with the server zone in column one and IP addresses to match in column two.">
   <caption>Table 3. IP addresses to open for outgoing traffic</caption>
-      <thead>
-      <th>Region</th>
+    <thead>
+      <th>Location</th>
       <th>IP address</th>
-      </thead>
+    </thead>
     <tbody>
       <tr>
-         <td>AP South</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
+        <td>Dallas</td>
+        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
       </tr>
       <tr>
-         <td>EU Central</td>
+         <td>Frankfurt</td>
          <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-        </tr>
+      </tr>
       <tr>
-        <td>UK South</td>
+        <td>London</td>
         <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
       </tr>
       <tr>
-        <td>US East</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
+         <td>Sydney</td>
+         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
       </tr>
       <tr>
-        <td>US South</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
+        <td>Washington DC</td>
+         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
       </tr>
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 </p>
 
 ## Setting organizational exemption policies
