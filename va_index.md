@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-21"
+lastupdated: "2018-11-27"
 
 ---
 
@@ -127,7 +127,7 @@ Images are scanned only if they are using an operating system that is supported 
     3. Create a service policy that grants the `Writer` role.
 
        ```
-       ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
+       ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
        ```
        {: codeblock}
 
