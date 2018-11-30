@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-28"
+lastupdated: "2018-11-30"
 
 ---
 
@@ -17,6 +17,7 @@ lastupdated: "2018-11-28"
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
+
 
 Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If the Container Scanner is installed in each cluster, Vulnerability Advisor also checks the status of containers that are running.
 {:shortdesc}
