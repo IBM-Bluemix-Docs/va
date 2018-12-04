@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-30"
+lastupdated: "2018-12-04"
 
 ---
 
@@ -17,7 +17,6 @@ lastupdated: "2018-11-30"
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
-
 
 Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If the Container Scanner is installed in each cluster, Vulnerability Advisor also checks the status of containers that are running.
 {:shortdesc}
@@ -212,7 +211,7 @@ For more information about the commands, you can use the `--help` flag when you 
 ## Installing the Container Scanner
 {: #va_install_container_scanner}
 
-To check the status of live containers that are running in your cluster, you can install the Container Scanner. Even if you deployed a container from an image that had no issues in the vulnerability report for that image, the operating system or binaries that run in the container might become vulnerable over time. To protect your app, you must ensure that running containers are regularly scanned so that you can detect and remediate vulnerabilities.
+To check the security status of live containers that are running in your cluster, you can install the Container Scanner. Even if you deployed a container from an image that had no issues in the vulnerability report for that image, the operating system or binaries that run in the container might become vulnerable over time. To protect your app, you must ensure that running containers are regularly scanned so that you can detect and remediate vulnerabilities.
 {:shortdesc}
 
 You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must rebuild the source image and redeploy the container. Container Scanner only supports containers that are built from images that are stored in IBM Containers Registry.
