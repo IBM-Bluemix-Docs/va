@@ -211,14 +211,22 @@ For more information about the commands, you can use the `--help` flag when you 
 ## Installing the Container Scanner
 {: #va_install_container_scanner}
 
-To check the security status of live containers that are running in your cluster, you can install the Container Scanner. Even if you deployed a container from an image that had no issues in the vulnerability report for that image, the operating system or binaries that run in the container might become vulnerable over time. To protect your app, you must ensure that running containers are regularly scanned so that you can detect and remediate vulnerabilities.
+Container Scanner enables Vulnerability Advisor to report any problems found in running containers that are not present in the container's base image. If you do not make runtimme modifications to your container then Container Scanner is not required because the image report will show the same issues.
 {:shortdesc}
 
-You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must rebuild the container's image and redeploy the container. Container Scanner only supports containers that are built from images that are stored in IBM Containers Registry.
+To check the security status of live containers that are running in your cluster, you can install the Container Scanner. To protect your app, Container Scanner regularly scans your running containers so that you can detect and rectify any newly detected vulnerabilities.
 
-To use the Container Scanner, you must set up a [Helm Chart ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/developing_charts) and associate it with the cluster in which you want to use it.
+You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must recitify any problems with the image and then redeploy your app. Container Scanner only supports containers that are created from images that are stored in {{site.data.keyword.registrylong_notm}}.
 
-**Before you begin**
+To use the Container Scanner, you must set up permissions and then set up a [Helm Chart ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/developing_charts) and associate it with the cluster in which you want to use it.
+
+### Set up service permissions for Container Scanner
+{: #va_install_container_scanner_permissions}
+
+Container Scanner requires that permissions are set up so that the service can operate.
+{:shortdesc}
+
+To set up service permissions, complete the following steps:
 
 1. Log in to the {{site.data.keyword.Bluemix_notm}} CLI client. If you have a federated account, use `--sso`.
 2. [Target your `kubectl` CLI](/docs/containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
