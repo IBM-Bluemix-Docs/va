@@ -214,7 +214,7 @@ For more information about the commands, you can use the `--help` flag when you 
 To check the security status of live containers that are running in your cluster, you can install the Container Scanner. Even if you deployed a container from an image that had no issues in the vulnerability report for that image, the operating system or binaries that run in the container might become vulnerable over time. To protect your app, you must ensure that running containers are regularly scanned so that you can detect and remediate vulnerabilities.
 {:shortdesc}
 
-You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must rebuild the source image and redeploy the container. Container Scanner only supports containers that are built from images that are stored in IBM Containers Registry.
+You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must rebuild the container's image and redeploy the container. Container Scanner only supports containers that are built from images that are stored in IBM Containers Registry.
 
 To use the Container Scanner, you must set up a [Helm Chart ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/developing_charts) and associate it with the cluster in which you want to use it.
 
