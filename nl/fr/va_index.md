@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-15"
+lastupdated: "2018-12-04"
 
 ---
 
@@ -23,7 +23,7 @@ L'assistant de détection des vulnérabilités (Vulnerability Advisor) vérifie 
 
 Lorsque vous ajoutez une image à un espace de nom, cette image est automatiquement analysée par Vulnerability Advisor pour détecter des problèmes de sécurité et des vulnérabilités potentielles. Si des problèmes de sécurité sont identifiés, des instructions vous sont soumises afin de vous aider à résoudre la vulnérabilité signalée.
 
-Vulnerability Advisor fournit la gestion de la sécurité pour {{site.data.keyword.registrylong_notm}} en générant un rapport de statut de sécurité qui inclut des correctifs suggérés et les meilleures pratiques.
+Vulnerability Advisor fournit la gestion de la sécurité pour [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index) en générant un rapport de statut de sécurité qui inclut des correctifs suggérés et les meilleures pratiques.
 
 Les problèmes détectés par Vulnerability Advisor génèrent un verdict stipulant qu'il n'est pas recommandé de déployer cette image. Si vous choisissez de déployer l'image, les conteneurs qui sont déployés à partir de celle-ci comportent des problèmes connus qui peuvent être exploités pour attaquer ou compromettre le conteneur. Le verdict est ajusté en fonction des exemptions que vous avez spécifiées. Ce verdict peut être utilisé par le programme Image Security Enforcement afin d'empêcher le déploiement d'images non sécurisées dans {{site.data.keyword.containerlong_notm}}.
 
@@ -98,204 +98,6 @@ Les images ne sont analysées que si elles utilisent un système d'exploitation 
 - NGINX
 - Apache
 
-## Installation de l'outil Container Scanner
-{: #va_install_container_scanner}
-
-**Avant de commencer**
-
-1. Connectez-vous au client d'interface CLI {{site.data.keyword.Bluemix_notm}}. Si vous disposez d'un compte fédéré, utilisez `--sso`.
-2. [Ciblez votre interface CLI `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) sur le cluster qui doit utiliser une charte Helm.
-3. Créez un ID de service et une clé d'API pour l'outil Container Scanner et attribuez-lui un nom :
-    1. Pour créer un ID de service, exécutez la commande suivante, où `<scanner_serviceID>` est le nom de votre choix pour l'ID de service. Notez son **CRN**.
-
-       ```
-       ibmcloud iam service-id-create <scanner_serviceID>
-       ```
-        {: codeblock}
-
-    2. Créez une clé d'API de service, où `<scanner_serviceID>` est l'ID service créé à l'étape précédente et `<scanner_APIkey_name>` est le nom de votre choix pour la clé d'API de scanner. 
-
-       ```
-       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
-       ```
-       {: codeblock}
-       La clé d'API de scanner est renvoyée.
-
-       Veillez à stocker votre clé d'API de scanner de manière sécurisée car elle ne pourra pas être extraite ultérieurement.
-       {: tip}
-
-    3. Créez une règle de service accordant le rôle `Writer` (auteur).
-
-       ```
-       ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
-       ```
-       {: codeblock}
-
-Pour configurer la charte Helm, procédez comme suit :
-
-1. [Configurez Helm dans votre cluster](/docs/containers/cs_integrations.html#helm). Si vous utilisez une règle RBAC pour accorder un accès Tiller à Helm, vérifiez que le rôle Tiller a accès à tous les espaces de nom. Accorder l'accès au rôle Tiller garantit que l'outil Container Scanner puis surveiller les conteneurs dans tous ces espaces de nom.
-
-2. Ajoutez le référentiel de charte IBM à votre charte Helm, par exemple `ibm`.
-
-   ```
-   helm repo add ibm  https://registry.bluemix.net/helm/ibm
-   ```
-   {: pre}
-
-3. Sauvegardez les paramètres de configuration par défaut pour la charte Helm de Container Scanner dans un fichier YAML local. Incluez le référentiel de charte, par exemple `ibm`, au chemin d'accès à la charte Helm.
-
-   ```
-   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
-   ```
-   {: pre}
-
-4. Editez le fichier `config.yaml`.
-
-   ```yaml
-   EmitURL: <regional_emit_URL>
-    AccountID: <IBM_Cloud_account_ID>
-    ClusterID: <cluster_ID>
-    APIKey: <scanner_APIkey>
-    ...
-   ```
-   {: pre}
-
-   <table>
-   <col width="22%">
-   <col width="78%">
-   <caption>Description des composants du fichier YAML</caption>
-   <thead>
-   <th>Zone</th>
-   <th>Valeur</th>
-   </thead>
-   <tbody>
-   <tr>
-   <td><code>EmitURL</code></td>
-   <td>Entrez l'URL de point d'extrémité régionale de Vulnerability Advisor. Pour obtenir l'URL, exécutez <code>ibmcloud cr info</code> et extrayez l'adresse de <strong>Container Registry</strong> (registre de conteneur). Remplacez <code>registry</code> par <code>va</code>. Exemple, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
-   </tr>
-   <tr>
-   <td><code>AccountID</code></td>
-   <td>Remplacez <code>AccountID</code> par l'ID de compte {{site.data.keyword.Bluemix_notm}} dans lequel se trouve votre cluster. Pour obtenir l'ID compte, exécutez <code>ibmcloud account list</code>.</td>
-   </tr>
-   <tr>
-   <td><code>ClusterID</code></td>
-   <td>Remplacez <code>ClusterID</code> par le cluster Kubernetes dans lequel vous voulez installer l'outil Container Scanner. Pour répertorier les ID de cluster, exécutez <code>ibmcloud ks clusters</code>. <br> **Astuce :** n'utilisez pas le nom du cluster, mais son ID.
-   </td>
-   </tr>
-   <tr>
-   <td><code>APIKey</code></td>
-   <td>Remplacez <code>APIKey</code> par la clé d'API de scanner créée précédemment.</td>
-   </tr>
-   </tbody></table>
-
-5. Installez la charte Helm sur votre cluster avec le fichier `config.yaml` mis à jour. Les propriétés mises à jour sont stockées dans un objet configmap pour votre charte. Remplacez `<myscanner>` par le nom choisi pour votre charte Helm. Incluez le référentiel de charte, par exemple `ibm`, au chemin d'accès à la charte Helm.
-
-   ```
-   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
-   ```
-   {: pre}
-
-   L'outil Container Scanner est installé dans l'espace de nom `kube-system`, mais il analyse les conteneurs de tous les espaces de nom .
-   {:tip}
-
-6. Vérifiez le statut de déploiement du diagramme. Lorsque la charte est prête, la zone **STATUS** indique `DEPLOYED`.
-
-   ```
-   helm status <myscanner>
-   ```
-   {: pre}
-
-7. Une fois la charte déployée, vérifiez que les paramètres mis à jour dans le fichier `config.yaml` ont bien été utilisés.
-
-   ```
-   helm get values <myscanner>
-   ```
-   {: pre}
-
-L'outil Container Scanner est maintenant installé et l'agent est déployé en tant que [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) dans votre cluster. Bien que l'outil Container Scanner soit déployé sur l'espace de nom `kube-system`, il analyse tous les conteneurs affectés à des pods dans tous vos espaces de nom Kubernetes, par exemple `default`.
-
-## Exécution de l'outil Container Scanner au travers d'un pare-feu
-{: #va_firewall}
-
-Si votre pare-feu bloque les connexions sortantes, vous devez le configurer pour qu'il autorise les noeuds worker à accéder à l'outil Container Scanner sur le port TCP `443` sur les adresses IP répertoriées dans le tableau suivant.
-{:shortdesc}
-
- 
-
-<p>
-  <table summary=" La lecture des lignes se fait de gauche à droite, avec la zone de serveur dans la colonne 1 et les adresses IP pour la mise en correspondance dans la colonne 2.">
-  <caption>Adresses IP à ouvrir pour le trafic sortant</caption>
-      <thead>
-      <th>Région</th>
-      <th>Adresse IP</th>
-      </thead>
-    <tbody>
-      <tr>
-         <td>Asie-Pacifique sud</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-         <td>Europe centrale</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-        </tr>
-      <tr>
-        <td>Sud du Royaume-Uni</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-        <td>Est des Etats-Unis</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-      <tr>
-        <td>Etats-Unis du Sud</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      </tbody>
-    </table>
-</p>
-
-## Définition de règles d'exemption de l'organisation
-{: #va_managing_policy}
-
-Si vous désirez gérer la sécurité d'une organisation {{site.data.keyword.Bluemix_notm}}, vous pouvez utiliser votre paramètre de règle pour déterminer si un problème est exempt ou non. Vous pouvez décider d'utiliser Container Image Security Enforcement pour garantir que le déploiement n'est permis qu'à partir d'images ne présentant pas de problèmes de sécurité une fois que ceux exemptés par votre règle ont été pris en compte.
-{:shortdesc}
-
-Vous pouvez déployer des conteneurs depuis n'importe quelle image quel soit son statut de sécurité, sauf si Container Image Security Enforcement est déployé dans votre cluster. Pour savoir comment déployer Container Image Security Enforcement, voir [Installation de Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
-
-Lorsque vous utilisez Container Image Security Enforcement, tout problème de sécurité détecté par Vulnerability Advisor empêche le déploiement d'un conteneur depuis l'image concernée. Pour permettre le déploiement d'une image dans laquelle des problèmes ont été détectés, vous devez ajouter des exemptions à votre règle.
-
-### Définition de règles d'exemption de l'organisation depuis l'interface graphique
-{: #va_managing_policy_gui}
-
-Si vous désirez définir des exemptions à la règle à l'aide de l'interface graphique, procédez comme suit :
-
-1. Connectez-vous à {{site.data.keyword.Bluemix_notm}}. Vous devez être connecté pour que Vulnerability Advisor soit visible dans l'interface graphique.
-2. Cliquez sur **Conteneurs**, puis sur **Container Registry**.
-3. Sous **Vulnerability Advisor**, cliquez sur **Paramètres de règle**.
-4. Cliquez sur **Créer une exemption**.
-5. Sélectionnez le type de problème.
-6. Entre l'ID du problème.
-
-   Vous pouvez trouver cette information dans votre [rapport de vulnérabilités](#va_reviewing). La colonne **ID de vulnérabilité** contient l'ID à utiliser pour CVE ou pour les problèmes associés à des avis de sécurité. La colonne **ID du problème de configuration** contient l'ID à utiliser pour les problèmes de configuration.
-   {: tip}
-
-7. Sélectionnez l'espace de nom du registre, le référentiel et l'étiquette auxquels appliquer l'exemption.
-8. Cliquez sur **Sauvegarder**.
-
-Vous pouvez également modifier et supprimer des exemptions en survolant la ligne concernée et en cliquant sur l'icône **Ouvrir et fermer la liste des options**.
-
-### Définition de règles d'exemption de l'organisation depuis l'interface de ligne de commande
-{: #va_managing_policy_cli}
-
-Si vous désirez définir des exemptions à la règle à l'aide de l'interface de ligne de commande, procédez comme suit :
-
-- Pour créer une exemption pour un problème de sécurité, exécutez la commande [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add).
-- Pour recenser vos exemptions pour des problèmes de sécurité, exécutez la commande [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list).
-- Pour répertorier les types de problèmes de sécurité que vous pouvez exempter, exécutez la commande [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types).
-- Pour supprimer une exemption pour un problème de sécurité, exécutez la commande [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm).
-
-Pour plus d'informations sur les commandes, utilisez l'indicateur `--help` lorsque vous exécutez la commande.
-
 ## Examen d'un rapport de vulnérabilités
 {: #va_reviewing}
 
@@ -363,6 +165,225 @@ Vous pouvez examiner à l'aide de l'interface CLI la sécurité des images Docke
    Dans la sortie de l'interface CLI, vous pouvez consulter les informations suivantes relatives aux problèmes de configuration.
       - **Pratique de sécurité :** description de la vulnérabilité détectée
       - **Action corrective :** informations expliquant comment corriger la vulnérabilité
+
+## Définition de règles d'exemption de l'organisation
+{: #va_managing_policy}
+
+Si vous désirez gérer la sécurité d'une organisation {{site.data.keyword.Bluemix_notm}}, vous pouvez utiliser votre paramètre de règle pour déterminer si un problème est exempt ou non. Vous pouvez décider d'utiliser Container Image Security Enforcement pour garantir que le déploiement n'est permis qu'à partir d'images ne présentant pas de problèmes de sécurité une fois que ceux exemptés par votre règle ont été pris en compte.
+{:shortdesc}
+
+Vous pouvez déployer des conteneurs depuis n'importe quelle image quel soit son statut de sécurité, sauf si Container Image Security Enforcement est déployé dans votre cluster. Pour savoir comment déployer Container Image Security Enforcement, voir [Installation de Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+
+Lorsque vous utilisez Container Image Security Enforcement, tout problème de sécurité détecté par Vulnerability Advisor empêche le déploiement d'un conteneur depuis l'image concernée. Pour permettre le déploiement d'une image dans laquelle des problèmes ont été détectés, vous devez ajouter des exemptions à votre règle.
+
+### Définition de règles d'exemption de l'organisation depuis l'interface graphique
+{: #va_managing_policy_gui}
+
+Si vous désirez définir des exemptions à la règle à l'aide de l'interface graphique, procédez comme suit :
+
+1. Connectez-vous à {{site.data.keyword.Bluemix_notm}}. Vous devez être connecté pour que Vulnerability Advisor soit visible dans l'interface graphique.
+2. Cliquez sur **Conteneurs**, puis sur **Container Registry**.
+3. Sous **Vulnerability Advisor**, cliquez sur **Paramètres de règle**.
+4. Cliquez sur **Créer une exemption**.
+5. Sélectionnez le type de problème.
+6. Entre l'ID du problème.
+
+   Vous pouvez trouver cette information dans votre [rapport de vulnérabilités](#va_reviewing). La colonne **ID de vulnérabilité** contient l'ID à utiliser pour CVE ou pour les problèmes associés à des avis de sécurité. La colonne **ID du problème de configuration** contient l'ID à utiliser pour les problèmes de configuration.
+   {: tip}
+
+7. Sélectionnez l'espace de nom du registre, le référentiel et l'étiquette auxquels appliquer l'exemption.
+8. Cliquez sur **Sauvegarder**.
+
+Vous pouvez également modifier et supprimer des exemptions en survolant la ligne concernée et en cliquant sur l'icône **Ouvrir et fermer la liste des options**.
+
+### Définition de règles d'exemption de l'organisation depuis l'interface de ligne de commande
+{: #va_managing_policy_cli}
+
+Si vous désirez définir des exemptions à la règle à l'aide de l'interface de ligne de commande, procédez comme suit :
+
+- Pour créer une exemption pour un problème de sécurité, exécutez la commande [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add).
+- Pour recenser vos exemptions pour des problèmes de sécurité, exécutez la commande [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list).
+- Pour répertorier les types de problèmes de sécurité que vous pouvez exempter, exécutez la commande [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types).
+- Pour supprimer une exemption pour un problème de sécurité, exécutez la commande [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm).
+
+Pour plus d'informations sur les commandes, utilisez l'indicateur `--help` lorsque vous exécutez la commande.
+
+## Installation de l'outil Container Scanner
+{: #va_install_container_scanner}
+
+Container Scanner active Vulnerability Advisor pour signaler tout problème lié à l'exécution de conteneurs ne se trouvant pas dans l'image de base du conteneur. Si vous n'apportez aucune modification d'exécution à votre conteneur, Container Scanner n'est pas nécessaire car le rapport de l'image signalera les mêmes problèmes.
+{:shortdesc}
+
+Pour vérifier le statut de sécurité de conteneurs de production s'exécutant dans votre cluster, vous pouvez installer l'outil Container Scanner. Pour protéger votre application, Container Scanner analyse régulièrement vos conteneurs en cours d'exécution pour que vous puissiez détecter et corriger toutes les éventuelles vulnérabilités qui viennent d'être détectées.
+
+Vous pouvez configurer Container Scanner pour qu'il contrôle les vulnérabilités dans les conteneurs affectés à des pods dans tous vos espaces de nom Kubernetes. Lorsque des vulnérabilités sont trouvées, vous devez corriger tous les problèmes liés à l'image, puis redéployer votre application. Container Scanner ne prend en charge que les conteneurs qui sont créés à partir d'images stockées dans {{site.data.keyword.registrylong_notm}}.
+
+Pour utiliser Container Scanner, vous devez configurer les droits et ensuite configurer une [charte Helm ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://docs.helm.sh/developing_charts) et l'associer au cluster dans lequel vous souhaitez l'utiliser.
+
+### Configuration des droits du service pour Container Scanner
+{: #va_install_container_scanner_permissions}
+
+Container Scanner requiert que des droits soient configurés pour que le service puisse fonctionner.
+{:shortdesc}
+
+Pour configurer les droits du service, procédez comme suit :
+
+1. Connectez-vous au client d'interface CLI {{site.data.keyword.Bluemix_notm}}. Si vous disposez d'un compte fédéré, utilisez `--sso`.
+2. [Ciblez votre interface CLI `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) sur le cluster qui doit utiliser une charte Helm.
+3. Créez un ID de service et une clé d'API pour l'outil Container Scanner et attribuez-lui un nom :
+    1. Pour créer un ID de service, exécutez la commande suivante, où `<scanner_serviceID>` est le nom de votre choix pour l'ID de service. Notez son **CRN**.
+
+       ```
+       ibmcloud iam service-id-create <scanner_serviceID>
+       ```
+       {: codeblock}
+
+    2. Créez une clé d'API de service, où `<scanner_serviceID>` est l'ID service créé à l'étape précédente et `<scanner_APIkey_name>` est le nom de votre choix pour la clé d'API de scanner.
+
+       ```
+       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+       ```
+       {: codeblock}
+       La clé d'API de scanner est renvoyée.
+
+       Veillez à stocker votre clé d'API de scanner de manière sécurisée car elle ne pourra pas être extraite ultérieurement. Vérifiez également que vous disposez d'une clé d'API distincte pour chaque cluster sur lequel est installé le scanner.
+       {: tip}
+
+    3. Créez une règle de service accordant le rôle `Writer` (auteur).
+
+       ```
+       ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
+       ```
+       {: codeblock}
+
+### Configuration de la charte Helm
+{: #va_install_container_scanner_helm}
+
+Configurez une charte Helm et associez-la au cluster dans laquelle vous souhaitez l'utiliser.
+{:shortdesc}
+
+Pour configurer une charte Helm, procédez comme suit :
+
+1. [Configurez Helm dans IBM Cloud Kubernetes Service](/docs/containers/cs_integrations.html#helm). Si vous utilisez une règle de contrôle d'accès à base de rôles (RBAC) pour accorder les droits d'accès à Tiller, assurez-vous que le rôle de Tiller a accès à tous les espaces de nom. En accordant au rôle de Tiller l'accès à tous les espaces de nom, Container Scanner peut surveiller les conteneurs dans tous ces espaces de nom.
+
+2. Ajoutez le référentiel de charte IBM à votre charte Helm, par exemple `ibm`.
+
+   ```
+   helm repo add ibm  https://registry.bluemix.net/helm/ibm
+   ```
+   {: pre}
+
+3. Sauvegardez les paramètres de configuration par défaut pour la charte Helm de Container Scanner dans un fichier YAML local. Incluez le référentiel de charte, par exemple `ibm`, au chemin d'accès à la charte Helm.
+
+   ```
+   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
+   ```
+   {: pre}
+
+4. Editez le fichier `config.yaml`.
+
+   ```yaml
+   EmitURL: <regional_emit_URL>
+    AccountID: <IBM_Cloud_account_ID>
+    ClusterID: <cluster_ID>
+    APIKey: <scanner_APIkey>
+    ...
+   ```
+   {: pre}
+
+   <table>
+   <col width="22%">
+   <col width="78%">
+   <caption>Tableau 2. Description des composants du fichier YAML</caption>
+   <thead>
+   <th>Zone</th>
+   <th>Valeur</th>
+   </thead>
+   <tbody>
+   <tr>
+   <td><code>EmitURL</code></td>
+   <td>Entrez l'URL de point d'extrémité régionale de Vulnerability Advisor. Pour obtenir l'URL, exécutez <code>ibmcloud cr info</code> et extrayez l'adresse de <strong>Container Registry</strong> (registre de conteneur). Remplacez <code>registry</code> par <code>va</code>. Exemple, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   </tr>
+   <tr>
+   <td><code>AccountID</code></td>
+   <td>Remplacez <code>AccountID</code> par l'ID de compte {{site.data.keyword.Bluemix_notm}} dans lequel se trouve votre cluster. Pour obtenir l'ID compte, exécutez <code>ibmcloud account list</code>.</td>
+   </tr>
+   <tr>
+   <td><code>ClusterID</code></td>
+   <td>Remplacez <code>ClusterID</code> par le cluster Kubernetes dans lequel vous voulez installer l'outil Container Scanner. Pour répertorier les ID de cluster, exécutez <code>ibmcloud ks clusters</code>. <br> **Astuce :** n'utilisez pas le nom du cluster, mais son ID.
+   </td>
+   </tr>
+   <tr>
+   <td><code>APIKey</code></td>
+   <td>Remplacez <code>APIKey</code> par la clé d'API de scanner créée précédemment.</td>
+   </tr>
+   </tbody></table>
+
+5. Installez la charte Helm sur votre cluster avec le fichier `config.yaml` mis à jour. Les propriétés mises à jour sont stockées dans un objet configmap pour votre charte. Remplacez `<myscanner>` par le nom choisi pour votre charte Helm. Incluez le référentiel de charte, par exemple `ibm`, au chemin d'accès à la charte Helm.
+
+   ```
+   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
+   ```
+   {: pre}
+
+   L'outil Container Scanner est installé dans l'espace de nom `kube-system`, mais il analyse les conteneurs de tous les espaces de nom .
+   {:tip}
+
+6. Vérifiez le statut de déploiement du diagramme. Lorsque la charte est prête, la zone **STATUS** indique `DEPLOYED`.
+
+   ```
+   helm status <myscanner>
+   ```
+   {: pre}
+
+7. Une fois la charte déployée, vérifiez que les paramètres mis à jour dans le fichier `config.yaml` ont bien été utilisés.
+
+   ```
+   helm get values <myscanner>
+   ```
+   {: pre}
+
+L'outil Container Scanner est maintenant installé et l'agent est déployé en tant que [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) dans votre cluster. Bien que l'outil Container Scanner soit déployé sur l'espace de nom `kube-system`, il analyse tous les conteneurs affectés à des pods dans tous vos espaces de nom Kubernetes, par exemple `default`.
+
+## Exécution de l'outil Container Scanner au travers d'un pare-feu
+{: #va_firewall}
+
+Si votre pare-feu bloque les connexions sortantes, vous devez le configurer pour qu'il autorise les noeuds worker à accéder à l'outil Container Scanner sur le port TCP `443` sur les adresses IP répertoriées dans le tableau suivant.
+{:shortdesc}
+
+ 
+
+<p>
+  <table summary=" Les lignes doivent être lues de la gauche vers la droite, l'emplacement du serveur se trouvant dans la colonne 1 et les adresses IP pour la mise en correspondance dans la colonne 2.">
+  <caption>Tableau 3. Adresses IP à ouvrir pour le trafic sortant</caption>
+    <thead>
+      <th>Emplacement</th>
+      <th>Adresse IP</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Dallas</td>
+        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
+      </tr>
+      <tr>
+         <td>Francfort</td>
+         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
+      </tr>
+      <tr>
+        <td>Londres</td>
+        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
+      </tr>
+      <tr>
+         <td>Sydney</td>
+         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
+      </tr>
+      <tr>
+        <td>Washington DC</td>
+         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
 
 ## Examen d'un rapport de conteneur
 {: #va_reviewing_container}
