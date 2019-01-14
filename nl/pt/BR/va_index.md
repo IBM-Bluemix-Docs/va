@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-15"
+lastupdated: "2018-12-04"
 
 ---
 
@@ -23,7 +23,7 @@ O Vulnerability Advisor verifica o status de segurança das imagens de contêine
 
 Quando você inclui uma imagem em um namespace, ela é automaticamente varrida pelo Vulnerability Advisor para detectar problemas de segurança e potenciais vulnerabilidades. Se problemas de segurança forem localizados, instruções serão fornecidas para ajudá-lo a corrigir a vulnerabilidade relatada.
 
-O Vulnerability Advisor fornece o gerenciamento de segurança para o {{site.data.keyword.registrylong_notm}}, gerando um relatório de status de segurança que inclui correções sugeridas e melhores práticas.
+O Vulnerability Advisor fornece o gerenciamento de segurança para o [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index), gerando um relatório de status de segurança que inclui correções sugeridas e melhores práticas.
 
 Quaisquer problemas encontrados pelo Vulnerability Advisor resultam em um veredito que indica que não é aconselhável implementar essa imagem. Se você escolher implementar a imagem, quaisquer contêineres que forem implementados usando a imagem incluirão problemas conhecidos que podem ser usados para atacar ou, de outra forma, comprometer o contêiner. O veredito é ajustado com base em qualquer isenção especificada. Essa avaliação pode ser usada pelo Container Image Security Enforcement para evitar a implementação de imagens não seguras no {{site.data.keyword.containerlong_notm}}.
 
@@ -97,204 +97,6 @@ As imagens serão varridas apenas se estiverem usando um sistema operacional sup
 - MySQL
 - NGINX
 - Apache
-
-## Instalando o Scanner do Contêiner
-{: #va_install_container_scanner}
-
-**Antes de começar**
-
-1. Efetue login no {{site.data.keyword.Bluemix_notm}} CLI do cliente. Se você tiver uma conta federada, use `--sso`.
-2. [Direcione a CLI `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) para o cluster no qual você deseja usar um gráfico Helm.
-3. Crie um ID de serviço e uma chave de API para o Container Scanner e atribua um nome a ele:
-    1. Para criar um ID de serviço, execute o comando a seguir, em que `<scanner_serviceID>` é um nome de sua escolha para o ID do serviço. Observe o **CRN**.
-
-       ```
-       ibmcloud iam service-id-create <scanner_serviceID>
-       ```
-        {: codeblock}
-
-    2. Crie uma chave API de serviço, em que `<scanner_serviceID>` é o ID do serviço que você criou na etapa anterior e `<scanner_APIkey_name>` é um nome de sua escolha para a chave API do scanner. 
-
-       ```
-       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
-       ```
-       {: codeblock}
-       A chave API do scanner é retornado.
-
-       Assegure-se de armazenar sua chave API do scanner com segurança porque ela não pode ser recuperada posteriormente.
-       {: tip}
-
-    3. Crie uma política de serviço que conceda a função `Writer`.
-
-       ```
-       ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
-       ```
-       {: codeblock}
-
-Para configurar o gráfico Helm, conclua as etapas a seguir:
-
-1. [Configure o Helm em seu cluster](/docs/containers/cs_integrations.html#helm). Se você usar uma política RBAC para conceder acesso ao tiller do Helm, assegure-se de que a função do tiller tenha acesso a todos os namespaces. A concessão do acesso à função do tiller assegura que o Container Scanner possa observar contêineres em todos os namespaces.
-
-2. Inclua o repositório de gráficos da IBM em seu Helm, como `ibm`.
-
-   ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
-   ```
-   {: pre}
-
-3. Salve as definições de configuração padrão para o gráfico Helm do Container Scanner em um arquivo YAML local. Inclua o repositório de gráficos, como `ibm`, no caminho do gráfico do Helm.
-
-   ```
-   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
-   ```
-   {: pre}
-
-4. Edite o arquivo `config.yaml`.
-
-   ```yaml
-   EmitURL: <regional_emit_URL>
-    AccountID: <IBM_Cloud_account_ID>
-    ClusterID: <cluster_ID>
-    APIKey: <scanner_APIkey>
-    ...
-   ```
-   {: pre}
-
-   <table>
-   <col width="22%">
-   <col width="78%">
-   <caption>Entendendo os componentes de arquivo YAML</caption>
-   <thead>
-   <th>Campo</th>
-   <th>Valor</th>
-   </thead>
-   <tbody>
-   <tr>
-   <td><code>EmitURL</code></td>
-   <td>Insira a URL de terminal regional do Vulnerability Advisor. Para obter a URL, execute <code>ibmcloud cr info</code> e recupere o endereço do <strong>Registro do contêiner</strong>. Substitua <code>registry</code> por <code>va</code>. Por exemplo, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
-   </tr>
-   <tr>
-   <td><code>AccountID</code></td>
-   <td>Substitua <code>AccountID</code> pelo ID da conta do {{site.data.keyword.Bluemix_notm}} em que seu cluster está. Para obter o ID da conta, execute <code>ibmcloud account list</code>.</td>
-   </tr>
-   <tr>
-   <td><code>ClusterID</code></td>
-   <td>Substitua <code>ClusterID</code> pelo cluster do Kubernetes em que você deseja instalar o seu Container Scanner. Para listar os IDs do cluster, execute <code>ibmcloud ks clusters</code>. <br> **Dica:** use o ID do cluster, não o nome.
-   </td>
-   </tr>
-   <tr>
-   <td><code>Chave</code></td>
-   <td>Substitua <code>APIKey</code> pela chave API do scanner que você criou anteriormente.</td>
-   </tr>
-   </tbody></table>
-
-5. Instale o gráfico Helm em seu cluster com o arquivo `config.yaml` atualizado. As propriedades atualizadas são armazenadas em um configmap para seu gráfico. Substitua `<myscanner>` por um nome de sua escolha para seu gráfico Helm. Inclua o repositório de gráficos, como `ibm`, no caminho do gráfico do Helm.
-
-   ```
-   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
-   ```
-   {: pre}
-
-   O Container Scanner está instalado no namespace `kube-system`, mas varre contêineres de todos os namespaces.
-   {:tip}
-
-6. Verifique o status de implementação do gráfico. Quando o gráfico estiver pronto, o campo **STATUS** terá um valor de `DEPLOYED`.
-
-   ```
-   helm status <myscanner>
-   ```
-   {: pre}
-
-7. Depois que o gráfico for implementado, verifique se as configurações atualizadas no arquivo `config.yaml` foram usadas.
-
-   ```
-   helm get values <myscanner>
-   ```
-   {: pre}
-
-O Container Scanner agora está instalado e o agente é implementado como um [DaemonSet![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) em seu cluster. Embora o Container Scanner esteja implementado no namespace `kube-system`, ele varre todos os contêineres que são designados a pods em todos os namespaces do Kubernetes, tal como `default`.
-
-## Executando o Container Scanner por trás de um firewall
-{: #va_firewall}
-
-Caso o firewall bloqueie conexões de saída, deve-se configurá-lo para permitir que os nós do trabalhador acessem o Container Scanner na porta TCP `443` nos endereços IP na tabela a seguir.
-{:shortdesc}
-
- 
-
-<p>
-  <table summary="As linhas devem ser lidas da esquerda para a direita, com a zona do servidor na coluna 1 e os endereços IP para correspondência na coluna 2.">
-  <caption>Endereços IP a serem abertos para o tráfego de saída</caption>
-      <thead>
-      <th>Região</th>
-      <th>Endereço IP</th>
-      </thead>
-    <tbody>
-      <tr>
-         <td>AP Sul</td>
-         <td><code> 168.1.40.158 </code><br><code> 130.198.65.182 </code></td>
-      </tr>
-      <tr>
-         <td>União Europeia Central</td>
-         <td><code> 159.8.220.182 </code><br><code> 158.177.74.102 </code></td>
-        </tr>
-      <tr>
-        <td>Sul do Reino Unido</td>
-        <td><code> 158.175.71.134 </code><br><code> 5.10.111.190 </code></td>
-      </tr>
-      <tr>
-        <td>Leste dos EUA</td>
-         <td><code> 169.60.73.158 </code><br><code> 169.61.84.102 </code></td>
-      </tr>
-      <tr>
-        <td>Sul dos EUA</td>
-        <td><code> 169.47.103.118 </code><br><code> 169.48.165.6 </code></td>
-      </tr>
-      </tbody>
-    </table>
-</p>
-
-## Configurando políticas de isenção organizacional
-{: #va_managing_policy}
-
-Se você desejar gerenciar a segurança de uma organização do {{site.data.keyword.Bluemix_notm}}, será possível usar sua configuração de política para determinar se um problema está isento ou não. É possível optar por usar o Container Image Security Enforcement para garantir que a implementação seja permitida apenas em imagens que não contêm problemas de segurança após a contabilidade de quaisquer problemas isentos pela sua política.
-{:shortdesc}
-
-É possível implementar contêineres usando qualquer imagem, independentemente do status de segurança, a menos que o Container Image Security Enforcement esteja implementado em seu cluster. Para descobrir como implementar o Container Image Security Enforcement, consulte [Instalando o Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
-
-Ao usar o Container Image Security Enforcement, qualquer problema de segurança que for detectado pelo Vulnerability Advisor evita que um contêiner seja implementado usando a imagem. Para permitir que uma imagem com problemas detectados seja implementada, as isenções devem ser incluídas em sua política.
-
-### Configurando políticas de isenção organizacional usando a GUI
-{: #va_managing_policy_gui}
-
-Se você desejar configurar isenções para a política usando a GUI, conclua as etapas a seguir:
-
-1. Efetue login no {{site.data.keyword.Bluemix_notm}}. Deve-se efetuar login para ver o Vulnerability Advisor na GUI.
-2. Clique em **Contêineres** e, em seguida, clique em **Registro do contêiner**.
-3. Em  ** Vulnerability Advisor **, clique em  ** Configurações de política **.
-4. Clique em **Criar isenção**.
-5. Selecione o tipo de problema.
-6. Insira o ID do problema.
-
-   É possível localizar essas informações em seu [relatório de vulnerabilidade](#va_reviewing). A coluna **ID de Vulnerabilidade** contém o ID a ser usado para problemas de aviso de CVE ou de segurança; a coluna **ID do problema de configuração** contém o ID a ser usado para problemas de configuração.
-   {: tip}
-
-7. Selecione o namespace de registro, o repositório e a tag para os quais você deseja que a isenção se aplique.
-8. Clique **Salvar.**
-
-Também é possível editar e remover isenções ao passar o mouse sobre a linha relevante e clicar no ícone **abrir e fechar a lista de opções**.
-
-### Configurando políticas de isenção organizacional usando a CLI
-{: #va_managing_policy_cli}
-
-Se você desejar configurar isenções para a política usando a CLI, será possível executar os comandos a seguir:
-
-- Para criar uma isenção para um problema de segurança, execute o comando [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add).
-- Para listar suas isenções para problemas de segurança, execute o comando [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list).
-- Para listar os tipos de problemas de segurança que você pode isentar, execute o comando [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types).
-- Para excluir uma isenção para um problema de segurança, execute o comando [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm).
-
-Para obter mais informações sobre os comandos, é possível usar a sinalização `-- help` ao executar o comando.
 
 ## Revisando um relatório de vulnerabilidade
 {: #va_reviewing}
@@ -373,12 +175,232 @@ contêiner e quaisquer configurações de aplicativo para o contêiner que não 
       - **Prática de segurança** Uma descrição da vulnerabilidade que foi localizada
       - **Ação corretiva** Detalhes sobre como corrigir a vulnerabilidade
 
+## Configurando políticas de isenção organizacional
+{: #va_managing_policy}
+
+Se você desejar gerenciar a segurança de uma organização do {{site.data.keyword.Bluemix_notm}}, será possível usar sua configuração de política para determinar se um problema está isento ou não. É possível optar por usar o Container Image Security Enforcement para garantir que a implementação seja permitida apenas em imagens que não contêm problemas de segurança após a contabilidade de quaisquer problemas isentos pela sua política.
+{:shortdesc}
+
+É possível implementar contêineres usando qualquer imagem, independentemente do status de segurança, a menos que o Container Image Security Enforcement esteja implementado em seu cluster. Para descobrir como implementar o Container Image Security Enforcement, consulte [Instalando o Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+
+Ao usar o Container Image Security Enforcement, qualquer problema de segurança que for detectado pelo Vulnerability Advisor evita que um contêiner seja implementado usando a imagem. Para permitir que uma imagem com problemas detectados seja implementada, as isenções devem ser incluídas em sua política.
+
+### Configurando políticas de isenção organizacional usando a GUI
+{: #va_managing_policy_gui}
+
+Se você desejar configurar isenções para a política usando a GUI, conclua as etapas a seguir:
+
+1. Efetue login no {{site.data.keyword.Bluemix_notm}}. Deve-se efetuar login para ver o Vulnerability Advisor na GUI.
+2. Clique em **Contêineres** e, em seguida, clique em **Registro do contêiner**.
+3. Em  ** Vulnerability Advisor **, clique em  ** Configurações de política **.
+4. Clique em **Criar isenção**.
+5. Selecione o tipo de problema.
+6. Insira o ID do problema.
+
+   É possível localizar essas informações em seu [relatório de vulnerabilidade](#va_reviewing). A coluna **ID de Vulnerabilidade** contém o ID a ser usado para problemas de aviso de CVE ou de segurança; a coluna **ID do problema de configuração** contém o ID a ser usado para problemas de configuração.
+   {: tip}
+
+7. Selecione o namespace de registro, o repositório e a tag para os quais você deseja que a isenção se aplique.
+8. Clique **Salvar.**
+
+Também é possível editar e remover isenções ao passar o mouse sobre a linha relevante e clicar no ícone **abrir e fechar a lista de opções**.
+
+### Configurando políticas de isenção organizacional usando a CLI
+{: #va_managing_policy_cli}
+
+Se você desejar configurar isenções para a política usando a CLI, será possível executar os comandos a seguir:
+
+- Para criar uma isenção para um problema de segurança, execute o comando [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add).
+- Para listar suas isenções para problemas de segurança, execute o comando [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list).
+- Para listar os tipos de problemas de segurança que você pode isentar, execute o comando [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types).
+- Para excluir uma isenção para um problema de segurança, execute o comando [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm).
+
+Para obter mais informações sobre os comandos, é possível usar a sinalização `-- help` ao executar o comando.
+
+## Instalando o Scanner do Contêiner
+{: #va_install_container_scanner}
+
+O Container Scanner permite que o Vulnerability Advisor relate quaisquer problemas localizados em contêineres em execução que não estão presentes na imagem base do contêiner. Se você não fizer modificações de tempo de execução em seu contêiner, o Container Scanner não será necessário porque o relatório de imagem mostrará os mesmos problemas.
+{:shortdesc}
+
+Para verificar o status de segurança de contêineres em tempo real que estão em execução em seu cluster, é possível instalar o Container Scanner. Para proteger seu app, o Container Scanner varre regularmente seus contêineres em execução para que seja possível detectar e retificar quaisquer vulnerabilidades detectadas recentemente.
+
+É possível configurar o Container Scanner para monitorar as vulnerabilidades nos contêineres que são designados aos pods em todos os namespaces do Kubernetes. Quando as vulnerabilidades são localizadas, deve-se retificar quaisquer problemas com a imagem e, em seguida, reimplementar seu app. O Container Scanner suporta somente contêineres que são criados por meio de imagens que estão armazenadas no {{site.data.keyword.registrylong_notm}}.
+
+Para usar o Container Scanner, deve-se configurar as permissões e, em seguida, configurar um [Gráfico Helm ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://docs.helm.sh/developing_charts) e associá-lo ao cluster no qual você deseja usá-lo.
+
+### Configurar permissões de serviço para o Container Scanner
+{: #va_install_container_scanner_permissions}
+
+O Container Scanner requer que as permissões sejam configuradas para que o serviço possa operar.
+{:shortdesc}
+
+Para configurar permissões de serviço, conclua as etapas a seguir:
+
+1. Efetue login no {{site.data.keyword.Bluemix_notm}} CLI do cliente. Se você tiver uma conta federada, use `--sso`.
+2. [Direcione a CLI `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) para o cluster no qual você deseja usar um gráfico Helm.
+3. Crie um ID de serviço e uma chave de API para o Container Scanner e atribua um nome a ele:
+    1. Para criar um ID de serviço, execute o comando a seguir, em que `<scanner_serviceID>` é um nome de sua escolha para o ID do serviço. Observe o **CRN**.
+
+       ```
+       ibmcloud iam service-id-create <scanner_serviceID>
+       ```
+       {: codeblock}
+
+    2. Crie uma chave API de serviço, em que `<scanner_serviceID>` é o ID do serviço que você criou na etapa anterior e `<scanner_APIkey_name>` é um nome de sua escolha para a chave API do scanner.
+
+       ```
+       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+       ```
+       {: codeblock}
+       A chave API do scanner é retornado.
+
+       Assegure-se de armazenar sua chave API do scanner com segurança porque ela não pode ser recuperada posteriormente. Além disso, assegure-se de que você tenha uma chave de API de serviço separada para cada cluster no qual o scanner está instalado.
+       {: tip}
+
+    3. Crie uma política de serviço que conceda a função `Writer`.
+
+       ```
+       ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
+       ```
+       {: codeblock}
+
+### Configurar o gráfico Helm
+{: #va_install_container_scanner_helm}
+
+Configure um gráfico Helm e associe-o ao cluster no qual deseja usá-lo.
+{:shortdesc}
+
+Para configurar um gráfico Helm, conclua as etapas a seguir:
+
+1. [Configure o Helm no IBM Cloud Kubernetes Service](/docs/containers/cs_integrations.html#helm). Se você usar uma política de controle de acesso baseado na função (RBAC) para conceder acesso ao Tiller, assegure-se de que a função do Tiller tenha acesso a todos os namespaces. Fornecer à função do Tiller acesso a todos os namespaces assegura que o Container Scanner possa observar contêineres em todos os namespaces.
+
+2. Inclua o repositório de gráficos da IBM em seu Helm, como `ibm`.
+
+   ```
+   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   ```
+   {: pre}
+
+3. Salve as definições de configuração padrão para o gráfico Helm do Container Scanner em um arquivo YAML local. Inclua o repositório de gráficos, como `ibm`, no caminho do gráfico do Helm.
+
+   ```
+   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
+   ```
+   {: pre}
+
+4. Edite o arquivo `config.yaml`.
+
+   ```yaml
+   EmitURL: <regional_emit_URL>
+    AccountID: <IBM_Cloud_account_ID>
+    ClusterID: <cluster_ID>
+    APIKey: <scanner_APIkey>
+    ...
+   ```
+   {: pre}
+
+   <table>
+   <col width="22%">
+   <col width="78%">
+   <caption>Tabela 2. Entendendo os componentes de arquivo YAML</caption>
+   <thead>
+   <th>Campo</th>
+   <th>Valor</th>
+   </thead>
+   <tbody>
+   <tr>
+   <td><code>EmitURL</code></td>
+   <td>Insira a URL de terminal regional do Vulnerability Advisor. Para obter a URL, execute <code>ibmcloud cr info</code> e recupere o endereço do <strong>Registro do contêiner</strong>. Substitua <code>registry</code> por <code>va</code>. Por exemplo, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   </tr>
+   <tr>
+   <td><code>AccountID</code></td>
+   <td>Substitua <code>AccountID</code> pelo ID da conta do {{site.data.keyword.Bluemix_notm}} em que seu cluster está. Para obter o ID da conta, execute <code>ibmcloud account list</code>.</td>
+   </tr>
+   <tr>
+   <td><code>ClusterID</code></td>
+   <td>Substitua <code>ClusterID</code> pelo cluster do Kubernetes em que você deseja instalar o seu Container Scanner. Para listar os IDs do cluster, execute <code>ibmcloud ks clusters</code>. <br> **Dica:** use o ID do cluster, não o nome.
+   </td>
+   </tr>
+   <tr>
+   <td><code>Chave</code></td>
+   <td>Substitua <code>APIKey</code> pela chave API do scanner que você criou anteriormente.</td>
+   </tr>
+   </tbody></table>
+
+5. Instale o gráfico Helm em seu cluster com o arquivo `config.yaml` atualizado. As propriedades atualizadas são armazenadas em um configmap para seu gráfico. Substitua `<myscanner>` por um nome de sua escolha para seu gráfico Helm. Inclua o repositório de gráficos, como `ibm`, no caminho do gráfico do Helm.
+
+   ```
+   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
+   ```
+   {: pre}
+
+   O Container Scanner está instalado no namespace `kube-system`, mas varre contêineres de todos os namespaces.
+   {:tip}
+
+6. Verifique o status de implementação do gráfico. Quando o gráfico estiver pronto, o campo **STATUS** terá um valor de `DEPLOYED`.
+
+   ```
+   helm status <myscanner>
+   ```
+   {: pre}
+
+7. Depois que o gráfico for implementado, verifique se as configurações atualizadas no arquivo `config.yaml` foram usadas.
+
+   ```
+   helm get values <myscanner>
+   ```
+   {: pre}
+
+O Container Scanner agora está instalado e o agente é implementado como um [DaemonSet![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) em seu cluster. Embora o Container Scanner esteja implementado no namespace `kube-system`, ele varre todos os contêineres que são designados a pods em todos os namespaces do Kubernetes, tal como `default`.
+
+## Executando o Container Scanner por trás de um firewall
+{: #va_firewall}
+
+Caso o firewall bloqueie conexões de saída, deve-se configurá-lo para permitir que os nós do trabalhador acessem o Container Scanner na porta TCP `443` nos endereços IP na tabela a seguir.
+{:shortdesc}
+
+ 
+
+<p>
+  <table summary=" As linhas devem ser lidas da esquerda para a direita, com o local do servidor na coluna um e os endereços IP a serem correspondidos na coluna dois.">
+  <caption>Tabela 3. Endereços IP a serem abertos para o tráfego de saída</caption>
+    <thead>
+      <th>Endereço</th>
+      <th>Endereço IP</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Dallas</td>
+        <td><code> 169.47.103.118 </code><br><code> 169.48.165.6 </code></td>
+      </tr>
+      <tr>
+         <td>Frankfurt</td>
+         <td><code> 159.8.220.182 </code><br><code> 158.177.74.102 </code></td>
+      </tr>
+      <tr>
+        <td>London</td>
+        <td><code> 158.175.71.134 </code><br><code> 5.10.111.190 </code></td>
+      </tr>
+      <tr>
+         <td>Sidney</td>
+         <td><code> 168.1.40.158 </code><br><code> 130.198.65.182 </code></td>
+      </tr>
+      <tr>
+        <td>Washington DC</td>
+         <td><code> 169.60.73.158 </code><br><code> 169.61.84.102 </code></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
 ## Revisando um relatório de contêiner
 {: #va_reviewing_container}
 
 Em seu painel, é possível ver o status de um contêiner para determinar se sua segurança está em conformidade com a política de sua organização. Também é possível revisar o relatório de segurança de um contêiner, o qual
 detalha quaisquer pacotes vulneráveis e as configurações não seguras de contêiner ou de aplicativo e se o
-contêiner é compatível com as políticas organizacionais.{:shortdesc}
+contêiner é compatível com as políticas organizacionais.
+{:shortdesc}
 
 Verifique se os contêineres que estão em execução em seu espaço continuam a ser compatíveis com a política organizacional revisando o campo **Status da política**. O status é exibido como uma das condições a seguir:
 
