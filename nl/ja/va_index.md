@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-15"
+lastupdated: "2018-12-04"
 
 ---
 
@@ -23,7 +23,7 @@ lastupdated: "2018-11-15"
 
 イメージを名前空間に追加すると、脆弱性アドバイザーによってイメージが自動的にスキャンされ、セキュリティー問題や潜在的な脆弱性が検出されます。 セキュリティー問題が検出された場合、報告された脆弱性を修正するための指示が出されます。
 
-脆弱性アドバイザーは、推奨される修正とベスト・プラクティスが含まれたセキュリティー状況レポートを生成して、{{site.data.keyword.registrylong_notm}} のセキュリティー管理を提供します。
+脆弱性アドバイザーは、推奨される修正とベスト・プラクティスが含まれたセキュリティー状況レポートを生成して、[{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index) のセキュリティー管理を提供します。
 
 脆弱性アドバイザーによって問題が検出されれば、このイメージのデプロイの非推奨を指示する判断になります。 このイメージのデプロイを選択した場合、このイメージからデプロイされたコンテナーには、コンテナーの攻撃や侵害に使用される可能性のある既知の問題が含まれます。 判断は、指定した適用除外項目に基づいて調整されます。 この判断は、{{site.data.keyword.containerlong_notm}} 内の非セキュアなイメージのデプロイメントを防ぐために、Container Image Security Enforcement が使用できます。
 
@@ -98,161 +98,73 @@ lastupdated: "2018-11-15"
 - NGINX
 - Apache
 
-## Container Scanner のインストール
-{: #va_install_container_scanner}
+## 脆弱性レポートの検討
+{: #va_reviewing}
 
-**開始する前に**
-
-1. {{site.data.keyword.Bluemix_notm}} CLI クライアントにログインします。 統合されたアカウントがある場合は、`--sso` を使用します。
-2. [`kubectl` CLI のターゲット](/docs/containers/cs_cli_install.html#cs_cli_configure)を、Helm チャートを使用するクラスターにします。
-3. Container Scanner のサービス ID と API キーを作成し、名前を付けます。
-    1. サービス ID を作成するには、次のコマンドを実行します。ここで、`<scanner_serviceID>` は、そのサービス ID に付けた名前です。 その **CRN** を書き留めます。
-
-       ```
-       ibmcloud iam service-id-create <scanner_serviceID>
-       ```
-        {: codeblock}
-
-    2. サービス API キーを作成します。ここで、`<scanner_serviceID>` は前の手順で作成したサービス ID で、`<scanner_APIkey_name>` はスキャナー API キーに付けた名前です。 
-
-       ```
-       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
-       ```
-       {: codeblock}
-       スキャナー API キーが返されます。
-
-       後で取得することはできないため、スキャナー API キーは安全に保管してください。
-       {: tip}
-
-    3. `Writer` 役割を付与するサービス・ポリシーを作成します。
-
-       ```
-       ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
-       ```
-       {: codeblock}
-
-Helm チャートを構成するには、以下の手順を実行します。
-
-1. [クラスター内に Helm をセットアップします](/docs/containers/cs_integrations.html#helm)。 RBAC ポリシーを使用して Helm tiller アクセス権限を付与する場合は、tiller 役割がすべての名前空間にアクセス可能であるようにしてください。 tiller 役割アクセス権限を付与すると、Container Scanner がすべての名前空間のコンテナーを監視できるようになります。
-
-2. IBM チャート・リポジトリー (`ibm` など) を Helm に追加します。
-
-   ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
-   ```
-   {: pre}
-
-3. Container Scanner Helm チャートのデフォルトの構成設定を、ローカルの YAML ファイルに保存します。 チャート・リポジトリー (`ibm` など) を Helm チャート・パスに含めます。
-
-   ```
-   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
-   ```
-   {: pre}
-
-4. `config.yaml` ファイルを編集します。
-
-   ```yaml
-   EmitURL: <regional_emit_URL>
-    AccountID: <IBM_Cloud_account_ID>
-    ClusterID: <cluster_ID>
-    APIKey: <scanner_APIkey>
-    ...
-   ```
-   {: pre}
-
-   <table>
-   <col width="22%">
-   <col width="78%">
-   <caption>YAML ファイルの構成要素について</caption>
-   <thead>
-   <th>フィールド</th>
-   <th>値</th>
-   </thead>
-   <tbody>
-   <tr>
-   <td><code>EmitURL</code></td>
-   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 <code>registry</code> を <code>va</code> に置き換えます。 例: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
-   </tr>
-   <tr>
-   <td><code>AccountID</code></td>
-   <td><code>AccountID</code> を、クラスターが入っている {{site.data.keyword.Bluemix_notm}} アカウント ID に置き換えます。 アカウント ID を取得するには、<code>ibmcloud account list</code> を実行します。</td>
-   </tr>
-   <tr>
-   <td><code>ClusterID</code></td>
-   <td><code>ClusterID</code> を、Container Scanner をインストールする Kubernetes クラスターに置き換えます。 クラスター ID をリストするには、<code>ibmcloud ks clusters</code> を実行します。 <br> **ヒント**: 名前ではなく、クラスターの ID を使用します。
-    </td>
-   </tr>
-   <tr>
-   <td><code>APIKey</code></td>
-   <td><code>APIKey</code> を、先ほど作成したスキャナー API キーに置き換えます。</td>
-   </tr>
-   </tbody></table>
-
-5. 更新された `config.yaml` ファイルを使用して、クラスターに Helm チャートをインストールします。 更新されたプロパティーが、チャートの構成マップに保管されます。 `<myscanner>` を、Helm チャートの好みの名前と置き換えます。 チャート・リポジトリー (`ibm` など) を Helm チャート・パスに含めます。
-
-   ```
-   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
-   ```
-   {: pre}
-
-   Container Scanner は `kube-system` 名前空間にインストールされますが、すべての名前空間からのコンテナーをスキャンします。
-   {:tip}
-
-6. チャートのデプロイメント状況を確認します。 チャートの準備ができている場合は、**STATUS** フィールドに `DEPLOYED` の値があります。
-
-   ```
-   helm status <myscanner>
-   ```
-   {: pre}
-
-7. チャートがデプロイされた後、`config.yaml` ファイル内の更新済みの設定が使用されたことを確認します。
-
-   ```
-   helm get values <myscanner>
-   ```
-   {: pre}
-
-Container Scanner がインストールされ、エージェントがクラスターに [DaemonSet ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) としてデプロイされました。 Container Scanner は `kube-system` 名前空間にデプロイされますが、`default` など、すべての Kubernetes 名前空間でポッドに割り当てられているすべてのコンテナーをスキャンします。
-
-## ファイアウォールの内側からの Container Scanner の実行
-{: #va_firewall}
-
-ファイアウォールで発信接続がブロックされている場合は、次の表の IP アドレスに対して、ワーカーノードが TCP ポート `443` の Container Scanner にアクセスできるようにファイアウォールを構成する必要があります。
+イメージをデプロイする前に、そのイメージの脆弱性アドバイザー・レポートを検討して、脆弱性の影響を受けるパッケージ、コンテナーやアプリケーションの非セキュアな設定の詳細を知ることができます。 また、イメージが組織のポリシーに準拠しているかどうかを確認することもできます。
 {:shortdesc}
 
- 
+検出された問題に対処しない場合、それらの問題はそのイメージを使用してビルドされたコンテナーのセキュリティーに影響を与える可能性があります。 Container Image Security Enforcement がデプロイされていない場合は、セキュリティーおよび構成に問題のあるイメージをコンテナー内で使用し続けることができます。 Container Image Security Enforcement がデプロイされ、イメージに対してアクティブな場合、検出されたすべての問題は、このイメージからデプロイ可能なコンテナーに対するポリシーによって適用除外される必要があります。
 
-<p>
-  <table summary=" 行は左から右に読み、列 1 のサーバー・ゾーンと、それと一致する IP アドレスが列 2 に示されています。">
-  <caption>発信トラフィック用に開く IP アドレス</caption>
-      <thead>
-      <th>地域</th>
-      <th>IP アドレス</th>
-      </thead>
-    <tbody>
-      <tr>
-         <td>南アジア太平洋</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-         <td>中欧</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-        </tr>
-      <tr>
-        <td>英国南部</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-        <td>米国東部</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-      <tr>
-        <td>米国南部</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      </tbody>
-    </table>
-</p>
+Container Image Security Enforcement で脆弱性アドバイザーの問題の適用範囲を構成するには、[ポリシーのカスタマイズ](/docs/services/Registry/registry_security_enforce.html#customize_policies)を参照してください。
+{:tip}
+
+イメージが組織のポリシーによって設定されている要件を満たしていない場合は、イメージをデプロイする前に、その要件を満たすようにイメージを構成する必要があります。 組織のポリシーを表示および変更する方法について詳しくは、[組織の適用除外項目ポリシーの設定](#va_managing_policy)を参照してください。
+{:tip}
+
+Container Scanner がデプロイされている場合、イメージをデプロイした後、脆弱性アドバイザーは引き続き、コンテナー内のセキュリティーおよび構成の問題をスキャンします。 見つかった問題は、[コンテナー・レポートの検討](#va_reviewing_container)に記載されている手順に従うことによって解決できます。
+
+### GUI の使用による、脆弱性レポートの検討
+{: #va_reviewing_gui}
+
+GUI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に保管された Docker イメージのセキュリティーを検討できます。
+{:shortdesc}
+
+1. {{site.data.keyword.Bluemix_notm}} にログインします。
+2. カタログ内で**「コンテナー」**をクリックします。
+3. **「コンテナー・レジストリー」**タイルをクリックします。
+4. **「イメージ」**をクリックします。 イメージと各イメージのセキュリティー状況のリストが**「イメージ」**表に表示されます。
+5. `latest` タグが付いたイメージのレポートを表示するには、そのイメージの行をクリックします。 そのイメージのデータが表示された**「イメージの詳細 (Image Details)」**タブが開きます。 リポジトリー内に `latest` タグが存在しない場合、最新のイメージが使用されます。
+6. セキュリティー状況に問題が示される場合に、その問題について確認するには、**「タイプ別の問題 (Issues by Type)」**タブをクリックします。 **「脆弱性 (Vulnerabilities)」**表と**「構成の問題」**表が開きます。
+
+   - **脆弱性 (Vulnerabilities)**: この表には、各問題の脆弱性 ID、その問題のポリシー状況、影響を受けるパッケージ、および問題の解決方法が示されます。 その問題の詳細を表示するには、行を展開します。 その問題のベンダーによるセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。 既知の脆弱性問題が含まれているパッケージをリストします。
+  
+     [脆弱性のタイプ](#types)にリストされた Docker イメージ・タイプに対して公開されるセキュリティー上の注意事項を使用して、リストは毎日更新されます。 脆弱パッケージがスキャンに合格するようにするには通常、脆弱性の修正が反映された新しいバージョンのパッケージが必要です。 同じパッケージに複数の脆弱性がリストされることがあり、その場合は、1 回のパッケージのアップグレードで複数の問題を修正できます。 セキュリティー上の注意事項のコードをクリックして、パッケージに関する詳細情報と、パッケージを更新するための手順を表示してください。
+
+   - **構成の問題**: この表には、各問題の構成の問題 ID、その問題のポリシー状況、およびセキュリティー・プラクティスが示されます。 その問題の詳細を表示するには、行を展開します。 その問題のセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。
+  
+     リストには、コンテナーのセキュリティーを向上させるために行うことができる処置の推奨事項と、非セキュアなコンテナーのアプリケーション設定が含まれています。 行を展開すると、問題の解決方法が表示されます。
+
+7. レポートに示された各問題の修正処置を実行し、イメージを再ビルドします。
+
+### CLI の使用による、脆弱性レポートの検討
+{: #va_registry_cli}
+
+CLI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に保管された Docker イメージのセキュリティーを検討できます。
+{:shortdesc}
+
+1. {{site.data.keyword.Bluemix_notm}} アカウント内のイメージをリストします。 保管されている名前空間に関係なくすべてのイメージのリストが返されます。
+
+   ```
+   ibmcloud cr image-list
+   ```
+   {: pre}
+
+2. **SECURITY STATUS** 列で状況を確認します。
+    - **No Issues**: セキュリティー問題は見つかりませんでした。
+    - **`<X>` Issues**: `<X>` 個の潜在的なセキュリティー問題や脆弱性が見つかりました。`<X>` は問題の数です。
+    - **Scanning**: イメージはスキャン中であり、最終的な脆弱性の状況はまだ決定されていません。
+
+3. 状況の詳細を確認するには、脆弱性アドバイザーのレポートを検討します。
+
+   ```
+   ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
+   ```
+   {: pre}
+
+   CLI 出力には、構成の問題に関する以下の情報が表示されています。
+      - **セキュリティー・プラクティス**: 検出された脆弱性の説明
+      - **修正処置**: この脆弱性の修正方法の詳細
 
 ## 組織の適用除外項目ポリシーの設定
 {: #va_managing_policy}
@@ -296,73 +208,180 @@ CLI を使用してポリシーに適用除外項目を設定するには、以�
 
 コマンドを実行するときに `--help` フラグを使用すると、コマンドの詳細情報を表示できます。
 
-## 脆弱性レポートの検討
-{: #va_reviewing}
+## Container Scanner のインストール
+{: #va_install_container_scanner}
 
-イメージをデプロイする前に、そのイメージの脆弱性アドバイザー・レポートを検討して、脆弱性の影響を受けるパッケージ、コンテナーやアプリケーションの非セキュアな設定の詳細を知ることができます。 また、イメージが組織のポリシーに準拠しているかどうかを確認することもできます。
+Container Scanner を使用すると、脆弱性アドバイザーはコンテナーの基本イメージに存在しないコンテナーの実行中に見つかった問題を報告できます。コンテナーに対しランタイムの変更を行わない場合、イメージ・レポートに同じ問題が表示されるため、Container Scanner は必要ありません。
 {:shortdesc}
 
-検出された問題に対処しない場合、それらの問題はそのイメージを使用してビルドされたコンテナーのセキュリティーに影響を与える可能性があります。 Container Image Security Enforcement がデプロイされていない場合は、セキュリティーおよび構成に問題のあるイメージをコンテナー内で使用し続けることができます。 Container Image Security Enforcement がデプロイされ、イメージに対してアクティブな場合、検出されたすべての問題は、このイメージからデプロイ可能なコンテナーに対するポリシーによって適用除外される必要があります。
+クラスターで実行されている稼働中のコンテナーのセキュリティー状況を確認するために、Container Scanner をインストールできます。アプリを保護するために、Container Scanner は定期的に実行中のコンテナーをスキャンし、新たに検出された脆弱性を検出して修正できるようにします。
 
-Container Image Security Enforcement で脆弱性アドバイザーの問題の適用範囲を構成するには、[ポリシーのカスタマイズ](/docs/services/Registry/registry_security_enforce.html#customize_policies)を参照してください。
-{:tip}
+すべての Kubernetes 名前空間のポッドに割り当てられているコンテナーの脆弱性をモニターするように Container Scanner を設定できます。脆弱性が見つかった場合は、イメージに関する問題を修正してから、アプリを再デプロイする必要があります。Container Scanner は、{{site.data.keyword.registrylong_notm}} に保管されているイメージから作成されたコンテナーのみをサポートします。
 
-イメージが組織のポリシーによって設定されている要件を満たしていない場合は、イメージをデプロイする前に、その要件を満たすようにイメージを構成する必要があります。 組織のポリシーを表示および変更する方法について詳しくは、[組織の適用除外項目ポリシーの設定](#va_managing_policy)を参照してください。
-{:tip}
+Container Scanner を使用するには、許可をセットアップしてから [Helm チャート ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://docs.helm.sh/developing_charts) をセットアップし、それを、使用するクラスターに関連付ける必要があります。
 
-Container Scanner がデプロイされている場合、イメージをデプロイした後、脆弱性アドバイザーは引き続き、コンテナー内のセキュリティーおよび構成の問題をスキャンします。 見つかった問題は、[コンテナー・レポートの検討](#va_reviewing_container)に記載されている手順に従うことによって解決できます。
+### Container Scanner のサービス許可のセットアップ
+{: #va_install_container_scanner_permissions}
 
-### GUI の使用による、脆弱性レポートの検討
-{: #va_reviewing_gui}
-
-GUI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に保管された Docker イメージのセキュリティーを検討できます。
+Container Scanner では、サービスが動作できるように許可が設定されている必要があります。
 {:shortdesc}
 
-1. {{site.data.keyword.Bluemix_notm}} にログインします。
-2. カタログ内で**「コンテナー」**をクリックします。
-3. **「コンテナー・レジストリー」**タイルをクリックします。
-4. **「イメージ」**をクリックします。イメージと各イメージのセキュリティー状況のリストが**「イメージ」**表に表示されます。
-5. `latest` タグが付いたイメージのレポートを表示するには、そのイメージの行をクリックします。そのイメージのデータが表示された**「イメージの詳細 (Image Details)」**タブが開きます。リポジトリー内に `latest` タグが存在しない場合、最新のイメージが使用されます。
-6. セキュリティー状況に問題が示される場合に、その問題について確認するには、**「タイプ別の問題 (Issues by Type)」**タブをクリックします。**「脆弱性 (Vulnerabilities)」**表と**「構成の問題」**表が開きます。
+サービスの許可を設定するには、以下の手順を実行します。
 
-   - **脆弱性 (Vulnerabilities)**: この表には、各問題の脆弱性 ID、その問題のポリシー状況、影響を受けるパッケージ、および問題の解決方法が示されます。その問題の詳細を表示するには、行を展開します。その問題のベンダーによるセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。既知の脆弱性問題が含まれているパッケージをリストします。
-  
-     [脆弱性のタイプ](#types)にリストされた Docker イメージ・タイプに対して公開されるセキュリティー上の注意事項を使用して、リストは毎日更新されます。 脆弱パッケージがスキャンに合格するようにするには通常、脆弱性の修正が反映された新しいバージョンのパッケージが必要です。 同じパッケージに複数の脆弱性がリストされることがあり、その場合は、1 回のパッケージのアップグレードで複数の問題を修正できます。 セキュリティー上の注意事項のコードをクリックして、パッケージに関する詳細情報と、パッケージを更新するための手順を表示してください。
+1. {{site.data.keyword.Bluemix_notm}} CLI クライアントにログインします。 統合されたアカウントがある場合は、`--sso` を使用します。
+2. [`kubectl` CLI のターゲット](/docs/containers/cs_cli_install.html#cs_cli_configure)を、Helm チャートを使用するクラスターにします。
+3. Container Scanner のサービス ID と API キーを作成し、名前を付けます。
+    1. サービス ID を作成するには、次のコマンドを実行します。ここで、`<scanner_serviceID>` は、そのサービス ID に付けた名前です。 その **CRN** を書き留めます。
 
-   - **構成の問題**: この表には、各問題の構成の問題 ID、その問題のポリシー状況、およびセキュリティー・プラクティスが示されます。その問題の詳細を表示するには、行を展開します。その問題のセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。
-  
-     リストには、コンテナーのセキュリティーを向上させるために行うことができる処置の推奨事項と、非セキュアなコンテナーのアプリケーション設定が含まれています。行を展開すると、問題の解決方法が表示されます。
+       ```
+       ibmcloud iam service-id-create <scanner_serviceID>
+       ```
+       {: codeblock}
 
-7. レポートに示された各問題の修正処置を実行し、イメージを再ビルドします。
+    2. サービス API キーを作成します。ここで、`<scanner_serviceID>` は前の手順で作成したサービス ID で、`<scanner_APIkey_name>` はスキャナー API キーに付けた名前です。
 
-### CLI の使用による、脆弱性レポートの検討
-{: #va_registry_cli}
+       ```
+       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+       ```
+       {: codeblock}
+       スキャナー API キーが返されます。
 
-CLI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に保管された Docker イメージのセキュリティーを検討できます。
+       後で取得することはできないため、スキャナー API キーは安全に保管してください。また、スキャナーがインストールされているクラスターごとに個別のサービス API キーを用意してください。{: tip}
+
+    3. `Writer` 役割を付与するサービス・ポリシーを作成します。
+
+       ```
+       ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
+       ```
+       {: codeblock}
+
+### Helm チャートの構成
+{: #va_install_container_scanner_helm}
+
+Helm チャートを構成し、それを使用するクラスターに、関連付けます。
 {:shortdesc}
 
-1. {{site.data.keyword.Bluemix_notm}} アカウント内のイメージをリストします。 保管されている名前空間に関係なくすべてのイメージのリストが返されます。
+Helm チャートを構成するには、以下の手順を実行します。
+
+1. [IBM Cloud Kubernetes サービスに Helm をセットアップします](/docs/containers/cs_integrations.html#helm)。役割ベースのアクセス制御 (RBAC) ポリシーを使用して Tiller へのアクセス権限を付与する場合は、Tiller 役割がすべての名前空間にアクセス可能であるようにしてください。Tiller 役割にすべての名前空間に対するアクセス権限を付与すると、Container Scanner がすべての名前空間のコンテナーを監視できるようになります。
+
+2. IBM チャート・リポジトリー (`ibm` など) を Helm に追加します。
 
    ```
-   ibmcloud cr image-list
+   helm repo add ibm https://registry.bluemix.net/helm/ibm
    ```
    {: pre}
 
-2. **SECURITY STATUS** 列で状況を確認します。
-    - **No Issues**: セキュリティー問題は見つかりませんでした。
-    - **`<X>` Issues**: `<X>` 個の潜在的なセキュリティー問題や脆弱性が見つかりました。`<X>` は問題の数です。
-    - **Scanning**: イメージはスキャン中であり、最終的な脆弱性の状況はまだ決定されていません。
-
-3. 状況の詳細を確認するには、脆弱性アドバイザーのレポートを検討します。
+3. Container Scanner Helm チャートのデフォルトの構成設定を、ローカルの YAML ファイルに保存します。 チャート・リポジトリー (`ibm` など) を Helm チャート・パスに含めます。
 
    ```
-   ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
+   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
    ```
    {: pre}
 
-   CLI 出力には、構成の問題に関する以下の情報が表示されています。
-      - **セキュリティー・プラクティス**: 検出された脆弱性の説明
-      - **修正処置**: この脆弱性の修正方法の詳細
+4. `config.yaml` ファイルを編集します。
+
+   ```yaml
+   EmitURL: <regional_emit_URL>
+    AccountID: <IBM_Cloud_account_ID>
+    ClusterID: <cluster_ID>
+    APIKey: <scanner_APIkey>
+    ...
+   ```
+   {: pre}
+
+   <table>
+   <col width="22%">
+   <col width="78%">
+   <caption>表 2. YAML ファイル・コンポーネントについて</caption>
+   <thead>
+   <th>フィールド</th>
+   <th>値</th>
+   </thead>
+   <tbody>
+   <tr>
+   <td><code>EmitURL</code></td>
+   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 <code>registry</code> を <code>va</code> に置き換えます。 例: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   </tr>
+   <tr>
+   <td><code>AccountID</code></td>
+   <td><code>AccountID</code> を、クラスターが入っている {{site.data.keyword.Bluemix_notm}} アカウント ID に置き換えます。 アカウント ID を取得するには、<code>ibmcloud account list</code> を実行します。</td>
+   </tr>
+   <tr>
+   <td><code>ClusterID</code></td>
+   <td><code>ClusterID</code> を、Container Scanner をインストールする Kubernetes クラスターに置き換えます。 クラスター ID をリストするには、<code>ibmcloud ks clusters</code> を実行します。 <br> **ヒント:** 名前ではなく、クラスターの ID を使用します。</td>
+   </tr>
+   <tr>
+   <td><code>APIKey</code></td>
+   <td><code>APIKey</code> を、先ほど作成したスキャナー API キーに置き換えます。</td>
+   </tr>
+   </tbody></table>
+
+5. 更新された `config.yaml` ファイルを使用して、クラスターに Helm チャートをインストールします。 更新されたプロパティーが、チャートの構成マップに保管されます。 `<myscanner>` を、Helm チャートの好みの名前と置き換えます。 チャート・リポジトリー (`ibm` など) を Helm チャート・パスに含めます。
+
+   ```
+   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
+   ```
+   {: pre}
+
+   Container Scanner は `kube-system` 名前空間にインストールされますが、すべての名前空間からのコンテナーをスキャンします。
+   {:tip}
+
+6. チャートのデプロイメント状況を確認します。 チャートの準備ができている場合は、**STATUS** フィールドに `DEPLOYED` の値があります。
+
+   ```
+   helm status <myscanner>
+   ```
+   {: pre}
+
+7. チャートがデプロイされた後、`config.yaml` ファイル内の更新済みの設定が使用されたことを確認します。
+
+   ```
+   helm get values <myscanner>
+   ```
+   {: pre}
+
+Container Scanner がインストールされ、エージェントがクラスターに [DaemonSet ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) としてデプロイされました。 Container Scanner は `kube-system` 名前空間にデプロイされますが、`default` など、すべての Kubernetes 名前空間でポッドに割り当てられているすべてのコンテナーをスキャンします。
+
+## ファイアウォールの内側からの Container Scanner の実行
+{: #va_firewall}
+
+ファイアウォールで発信接続がブロックされている場合は、次の表の IP アドレスに対して、ワーカーノードが TCP ポート `443` の Container Scanner にアクセスできるようにファイアウォールを構成する必要があります。
+{:shortdesc}
+
+ 
+
+<p>
+  <table summary=" 行は左から右に読み、列 1 のサーバーの場所と、それと一致する IP アドレスが列 2 に示されています。">
+  <caption>表 3. 発信トラフィック用に開く IP アドレス</caption>
+    <thead>
+      <th>ロケーション</th>
+      <th>IP アドレス</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ダラス</td>
+        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
+      </tr>
+      <tr>
+         <td>フランクフルト</td>
+         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
+      </tr>
+      <tr>
+        <td>ロンドン</td>
+        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
+      </tr>
+      <tr>
+         <td>シドニー</td>
+         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
+      </tr>
+      <tr>
+        <td>ワシントン DC</td>
+         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
 
 ## コンテナー・レポートの検討
 {: #va_reviewing_container}
@@ -373,8 +392,8 @@ CLI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
 **「ポリシーの状況」**フィールドを調べて、スペース内で実行されているコンテナーが、引き続き組織ポリシーに準拠していることを確認します。 状況は、以下のいずれかの条件で示されます。
 
 - **ポリシーに準拠している (Compliant with Policy)**: セキュリティーの点でも構成の点でも問題は検出されませんでした。
-- **ポリシーに準拠していない (Not Compliant with Policy)**: 脆弱性アドバイザーによってセキュリティーまたは構成の潜在的な問題が検出されたため、このコンテナーはポリシーに準拠していません。脆弱イメージのデプロイメントが組織ポリシーで許可されている場合、イメージは「`デプロイに注意が必要`」状態でデプロイされている可能性があり、それをデプロイしたユーザーに警告が送信されます。
-- **評価不完全 (Incomplete Assessment)**: スキャンは完了していません。スキャンはまだ実行中である可能性があります。または、そのコンテナー・インスタンスのオペレーティング・システムが非互換である可能性があります。
+- **ポリシーに準拠していない (Not Compliant with Policy)**: 脆弱性アドバイザーによってセキュリティーまたは構成の潜在的な問題が検出されたため、このコンテナーはポリシーに準拠していません。 脆弱イメージのデプロイメントが組織ポリシーで許可されている場合、イメージは「`デプロイに注意が必要`」状態でデプロイされている可能性があり、それをデプロイしたユーザーに警告が送信されます。
+- **評価不完全 (Incomplete Assessment)**: スキャンは完了していません。 スキャンはまだ実行中である可能性があります。または、そのコンテナー・インスタンスのオペレーティング・システムが非互換である可能性があります。
 
 コンテナーが可能な限りセキュアであることをセキュリティー・レポートを表示して確認し、報告されたセキュリティーまたは構成の問題に対処します。それには、次の手順に従います。
 
@@ -385,9 +404,9 @@ CLI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
     4. **「関連付けられたコンテナー (Associated Containers)」**タブを選択し、目的のコンテナーの行を選択します。 セキュリティー・レポートが開きます。
 2. 各セクションを確認して、イメージ内の各パッケージにセキュリティーと構成の問題がないかどうかを調べます。
 
-    - **脆弱性**: 既知の脆弱性問題が含まれているパッケージをリストします。[脆弱性のタイプ](#types)にリストされた Docker イメージ・タイプに対して公開されるセキュリティー上の注意事項を使用して、リストは毎日更新されます。 脆弱パッケージがスキャンに合格するようにするには通常、脆弱性の修正が反映された新しいバージョンのパッケージが必要です。 同じパッケージに複数の脆弱性がリストされることがあり、その場合は、1 回のパッケージのアップグレードで複数の問題を修正できます。 セキュリティー上の注意事項のコードをクリックして、パッケージに関する詳細情報と、パッケージを更新するための手順を表示してください。
+    - **脆弱性**: 既知の脆弱性問題が含まれているパッケージをリストします。 [脆弱性のタイプ](#types)にリストされた Docker イメージ・タイプに対して公開されるセキュリティー上の注意事項を使用して、リストは毎日更新されます。 脆弱パッケージがスキャンに合格するようにするには通常、脆弱性の修正が反映された新しいバージョンのパッケージが必要です。 同じパッケージに複数の脆弱性がリストされることがあり、その場合は、1 回のパッケージのアップグレードで複数の問題を修正できます。 セキュリティー上の注意事項のコードをクリックして、パッケージに関する詳細情報と、パッケージを更新するための手順を表示してください。
 
-    - **構成の問題**: コンテナーのセキュリティーを向上させるための推奨事項と、非セキュアなコンテナーのアプリケーション設定をリストします。行を展開すると、問題の解決方法が表示されます。
+    - **構成の問題**: コンテナーのセキュリティーを向上させるための推奨事項と、非セキュアなコンテナーのアプリケーション設定をリストします。 行を展開すると、問題の解決方法が表示されます。
 
    リストされた項目ごとに、修正アクションまたは提案事項が示されます。
 
@@ -395,11 +414,11 @@ CLI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
 
     - **アクティブ**: 適用除外されていない問題があり、その問題がセキュリティーの状況に影響を及ぼしています。
     - **適用除外**: この問題は、ポリシー設定によって適用除外されています。
-    - **部分的に適用除外**: この問題は、複数のセキュリティー上の注意事項に関連付けられています。セキュリティー上の注意事項がすべて適用除外されているわけではありません。
+    - **部分的に適用除外**: この問題は、複数のセキュリティー上の注意事項に関連付けられています。 セキュリティー上の注意事項がすべて適用除外されているわけではありません。
 
 4. 問題を解決するためのコンテナーの更新方法を決定します。
 
-    **重要:** コンテナー・イメージの問題を修正するには、古いインスタンスを削除して再デプロイする必要があります。これは、既存のコンテナー内にあるデータはすべて失われることを意味します。コンテナーを再デプロイするための適切な方法を選択するには、コンテナーのアーキテクチャーを十分理解しておく必要があります。
+    **重要:** コンテナー・イメージの問題を修正するには、古いインスタンスを削除して再デプロイする必要があります。これは、既存のコンテナー内にあるデータはすべて失われることを意味します。 コンテナーを再デプロイするための適切な方法を選択するには、コンテナーのアーキテクチャーを十分理解しておく必要があります。
 
     **例**
 
