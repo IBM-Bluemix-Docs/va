@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-15"
+lastupdated: "2018-12-04"
 
 ---
 
@@ -23,7 +23,7 @@ Il Controllo vulnerabilità verifica lo stato di sicurezza delle immagini del co
 
 Quando aggiungi un'immagine a uno spazio dei nomi, il Controllo vulnerabilità ne esegue automaticamente la scansione per individuare problemi di sicurezza e potenziali vulnerabilità. Se si riscontrano dei problemi di sicurezza, vengono fornite le istruzioni per aiutare a correggere le vulnerabilità segnalate.
 
-Il Controllo vulnerabilità fornisce la gestione della sicurezza per {{site.data.keyword.registrylong_notm}}, generando un report sullo stato della sicurezza che include le correzioni e le prassi ottimali consigliate.
+Il Controllo vulnerabilità fornisce la gestione della sicurezza per [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index), generando un report sullo stato della sicurezza che include le correzioni e le prassi ottimali consigliate.
 
 Qualsiasi problema rilevato dal controllo vulnerabilità determina un verdetto che indica che non è consigliabile distribuire questa immagine. Se scegli di distribuire l'immagine, qualsiasi contenitore distribuito dall'immagine include dei problemi noti che potrebbero essere utilizzati per attaccarlo o comprometterlo in altro modo. Il verdetto viene modificato in base a tutte le esenzioni che hai specificato. Questo verdetto può essere utilizzato da Container Image Security Enforcement per evitare la distribuzione di immagini non sicure in {{site.data.keyword.containerlong_notm}}.
 
@@ -98,161 +98,73 @@ Le immagini vengono scansionate solo se stanno utilizzando un sistema operativo 
 - NGINX
 - Apache
 
-## Installazione dello Scanner contenitori
-{: #va_install_container_scanner}
+## Riesame di un report di vulnerabilità
+{: #va_reviewing}
 
-**Prima di iniziare**
-
-1. Accedi al client CLI {{site.data.keyword.Bluemix_notm}}. Se hai un account federato, usa `--sso`.
-2. [Indirizza la tua CLI `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) al cluster dove vuoi usare un grafico Helm.
-3. Crea un ID servizio e una chiave API per lo Scanner contenitori e assegna ad esso un nome:
-    1. Per creare un ID servizio, immetti il seguente comando, dove `<scanner_serviceID>` è il nome di tua scelta per l'ID servizio. Prendi nota del relativo **CRN**.
-
-       ```
-       ibmcloud iam service-id-create <scanner_serviceID>
-       ```
-        {: codeblock}
-
-    2. Crea una chiave API di servizio, dove `<scanner_serviceID>` è l'ID servizio che hai creato nel passo precedente e `<scanner_APIkey_name>` è un nome di tua scelta per la chiave API dello scanner. 
-
-       ```
-       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
-       ```
-       {: codeblock}
-       Viene restituita la chiave API dello scanner.
-
-       Assicurati di conservare la tua chiave API dello scanner in modo sicuro perché non sarà possibile recuperarla successivamente.
-       {: tip}
-
-    3. Crea una politica di servizio che conceda il ruolo di `Writer` (Scrittore).
-
-       ```
-       ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
-       ```
-       {: codeblock}
-
-Per configurare il grafico Helm, completa la seguente procedura:
-
-1. [Configura Helm nel tuo cluster](/docs/containers/cs_integrations.html#helm). Se usi una politica RBAC per concedere l'accesso tiller Helm, assicurati che il ruolo di tiller abbia accesso a tutti gli spazi dei nomi. Fornendo l'accesso al ruolo di tiller ti assicuri che lo Scanner contenitori possa controllare tutti i contenitori in tutti gli spazi dei nomi.
-
-2. Aggiungi il repository di grafici IBM al tuo Helm, come ad esempio `ibm`.
-
-   ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
-   ```
-   {: pre}
-
-3. Salva le impostazioni di configurazione predefinite per il grafico Helm dello Scanner contenitori in un file YAML locale. Includi il repository dei grafici, come ad esempio `ibm`, nel percorso del grafico Helm.
-
-   ```
-   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
-   ```
-   {: pre}
-
-4. Modifica il file `config.yaml`.
-
-   ```yaml
-   EmitURL: <regional_emit_URL>
-    AccountID: <IBM_Cloud_account_ID>
-    ClusterID: <cluster_ID>
-    APIKey: <scanner_APIkey>
-    ...
-   ```
-   {: pre}
-
-   <table>
-   <col width="22%">
-   <col width="78%">
-   <caption>Informazioni sui componenti file YAML</caption>
-   <thead>
-   <th>Campo</th>
-   <th>Valore</th>
-   </thead>
-   <tbody>
-   <tr>
-   <td><code>EmitURL</code></td>
-   <td>Immetti l'URL dell'endpoint regionale del Controllo vulnerabilità. Per ottenere l'URL, esegui <code>ibmcloud cr info</code> e recupera l'indirizzo <strong>Registro contenitore</strong>. Sostituisci <code>registry</code> con <code>va</code>. Ad esempio, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
-   </tr>
-   <tr>
-   <td><code>AccountID</code></td>
-   <td>Sostituisci <code>AccountID</code> con l'ID account {{site.data.keyword.Bluemix_notm}} in cui si trova il tuo cluster. Per ottenere l'ID account, esegui <code>ibmcloud account list</code>.</td>
-   </tr>
-   <tr>
-   <td><code>ClusterID</code></td>
-   <td>Sostituisci <code>ClusterID</code> con il cluster Kubernetes in cui vuoi installare lo Scanner contenitori. Per elencare gli ID cluster, esegui <code>ibmcloud ks clusters</code>. <br> **Suggerimento** utilizza l'ID del cluster, non il nome.
-    </td>
-   </tr>
-   <tr>
-   <td><code>APIKey</code></td>
-   <td>Sostituisci <code>APIKey</code> con la chiave API dello scanner che hai creato in precedenza.</td>
-   </tr>
-   </tbody></table>
-
-5. Installa il grafico Helm nel tuo cluster con il file `config.yaml` aggiornato. Le proprietà aggiornate sono memorizzate in una mappa di configurazione per il tuo grafico. Sostituisci a `<myscanner>` un nome a tua scelta per il tuo grafico Helm. Includi il repository dei grafici, come ad esempio `ibm`, nel percorso del grafico Helm.
-
-   ```
-   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
-   ```
-   {: pre}
-
-   Lo Scanner contenitori viene installato nello spazio dei nomi `kube-system` ma esegue la scansione dei contenitori da tutti gli spazi dei nomi.
-   {:tip}
-
-6. Controlla lo stato di distribuzione del grafico. Quando il grafico è pronto, il campo **STATO** ha un valore di `DEPLOYED`.
-
-   ```
-   helm status <myscanner>
-   ```
-   {: pre}
-
-7. Dopo che il grafico è stato distribuito, verifica che siano state utilizzate le impostazioni aggiornate nel file `config.yaml`.
-
-   ```
-   helm get values <myscanner>
-   ```
-   {: pre}
-
-Lo Scanner contenitori è ora installato e l'agent viene distribuito come una [serie di daemon (DaemonSet) ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) nel tuo cluster. Anche se viene distribuito allo spazio dei nomi `kube-system`, lo Scanner contenitori esegue la scansione di tutti i contenitori assegnati ai pod in tutti i tuoi spazi dei nomi Kubernetes, come ad esempio `default`.
-
-## Esecuzione dello Scanner contenitori da dietro un firewall
-{: #va_firewall}
-
-Se il tuo firewall blocca le connessioni in uscita, devi configurare il tuo firewall per consentire ai nodi di lavoro di accedere allo Scanner contenitori sulla porta TCP `443` sugli indirizzi IP nella seguente tabella.
+Prima che tu distribuisca un'immagine, puoi riesaminare il relativo report del Controllo vulnerabilità per i dettagli relativi ad eventuali pacchetti vulnerabili e impostazioni delle applicazioni o del contenitore non sicure. Puoi inoltre controllare se l'immagine è conforme alle politiche organizzative.
 {:shortdesc}
 
- 
+Se non te ne occupi, i problemi rilevati potrebbero avere delle ripercussioni sulla sicurezza dei contenitori creati utilizzando tale immagine. Se Container Image Security Enforcement non viene distribuito, puoi continuare a utilizzare un'immagine che ha problemi di sicurezza e configurazione in un contenitore. Se Container Image Security Enforcement è distribuito e attivo per l'immagine, tutti i problemi rilevati devono essere esentati dalla tua politica perché i contenitori possano essere distribuibili da questa immagine.
 
-<p>
-  <table summary=" Le righe devono essere lette da sinistra a destra, con la posizione del server nella prima colonna e gli indirizzi IP corrispondenti nella seconda colonna.">
-  <caption>Indirizzi IP da aprire per il traffico in uscita</caption>
-      <thead>
-      <th>Regione</th>
-      <th>Indirizzo IP</th>
-      </thead>
-    <tbody>
-      <tr>
-         <td>Asia Pacifico Sud</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-         <td>Europa Centrale</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-        </tr>
-      <tr>
-        <td>Regno Unito Sud</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-        <td>Stati Uniti Est</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-      <tr>
-        <td>Stati Uniti Sud</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      </tbody>
-    </table>
-</p>
+Per configurare l'ambito di implementazione dei problemi del Controllo vulnerabilità in Container Image Security Enforcement, vedi [Personalizzazione delle politiche](/docs/services/Registry/registry_security_enforce.html#customize_policies).
+{:tip}
+
+Se la tua immagine non soddisfa i requisiti impostati dalla politica della tua organizzazione, devi configurare l'immagine in modo che soddisfi tali requisiti prima di poterla distribuire. Per ulteriori informazioni su come visualizzare e modificare la politica dell'organizzazione, consulta  [Impostazione delle politiche di esenzione organizzative](#va_managing_policy).
+{:tip}
+
+Dopo che hai distribuito la tua immagine, se viene distribuito lo Scanner contenitori, il Controllo vulnerabilità continua ad eseguire scansioni per rilevare eventuali problemi di sicurezza e configurazione nel contenitore. Puoi risolvere qualsiasi problema rilevato attenendosi alla procedura descritta in [Riesame di un report del contenitore](#va_reviewing_container).
+
+### Riesame di un report di vulnerabilità utilizzando la GUI
+{: #va_reviewing_gui}
+
+Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi dei nomi in {{site.data.keyword.registrylong_notm}} utilizzando la GUI.
+{:shortdesc}
+
+1. Accedi a {{site.data.keyword.Bluemix_notm}}.
+2. Nel catalogo, fai clic su **Containers**.
+3. Fai clic sul tile **Container Registry**.
+4. Fai clic su **Images**. Viene visualizzato un elenco delle tue immagini e dello stato di sicurezza di ogni immagine nella tabella **Images**.
+5. Per visualizzare il report per l'immagine contrassegnata come `latest`, fai clic sulla riga di tale immagine. Si apre la scheda **Image Details** che mostra i dati di tale immagine. Se non esiste alcuna tag `latest` nel repository, viene utilizzata l'immagine più recente.
+6. Se lo stato di sicurezza mostra un problema, per trovare informazioni sui problemi, fai clic sulla scheda **Issues by Type**. Si aprono le tabelle **Vulnerabilities** e **Configuration Issues**.
+
+   - **Vulnerabilities** questa tabella mostra l'ID di vulnerabilità di ogni problema, lo stato della politica di tale problema, i pacchetti interessati e come risolvere il problema. Per visualizzare ulteriori informazioni su tale problema, espandi la riga. Viene visualizzato un riepilogo di tale problema, che contiene un link all'avviso di sicurezza del fornitore per tale problema. Elenca i pacchetti che contengono problemi di vulnerabilità noti.
+  
+     L'elenco viene aggiornato giornalmente utilizzando gli avvisi di sicurezza pubblicati per i tipi di immagine Docker elencati in [Tipi di vulnerabilità](#types). Di norma, per fare in modo che un pacchetto vulnerabile superi con esito positivo la scansione, è necessaria una sua versione più recente che includa una correzione per la vulnerabilità in questione. Lo stesso pacchetto può elencare più vulnerabilità e in questo caso, un solo upgrade del pacchetto può risolvere più problemi. Fai clic sul codice dell'avviso di sicurezza per visualizzare maggiori informazioni sul pacchetto e i passi per aggiornare il pacchetto.
+
+   - **Configuration Issues** questa tabella mostra l'ID del problema di configurazione di ogni problema, lo stato della politica per tale problema e la prassi di sicurezza. Per visualizzare ulteriori informazioni su tale problema, espandi la riga. Viene visualizzato un riepilogo di tale problema, che contiene un link all'avviso di sicurezza per tale problema.
+  
+     L'elenco contiene i consigli per le azioni che puoi applicare per aumentare la sicurezza del contenitore e le eventuali impostazioni dell'applicazione per il contenitore che non sono sicure. Espandi la riga per vedere come risolvere il problema.
+
+7. Completa l'azione correttiva per ogni problema mostrato nel report e ricrea l'immagine.
+
+### Riesame di un report di vulnerabilità utilizzando la CLI
+{: #va_registry_cli}
+
+Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi dei nomi in {{site.data.keyword.registrylong_notm}} utilizzando la CLI.
+{:shortdesc}
+
+1. Elenca le immagini nel tuo account {{site.data.keyword.Bluemix_notm}}. Viene restituito un elenco di tutte le immagini, indipendentemente dallo spazio dei nomi in cui sono memorizzate.
+
+   ```
+   ibmcloud cr image-list
+   ```
+   {: pre}
+
+2. Controlla lo stato nella colonna **SECURITY STATUS**.
+    - **No Issues** non è stato rilevato alcun problema di sicurezza.
+    - **`<X>` Issues** `<X>` sono stati rilevati dei potenziali problemi di sicurezza o delle potenziali vulnerabilità, dove `<X>` è il numero di problemi.
+    - **Scanning** è in corso la scansione dell'immagine e lo stato di vulnerabilità finale non è stato ancora determinato.
+
+3. Per visualizzare i dettagli per lo stato, esamina il report del Controllo vulnerabilità:
+
+   ```
+   ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
+   ```
+   {: pre}
+
+   Nell'output della CLI, puoi visualizzare le seguenti informazioni sui problemi di sicurezza.
+      - **Security practice** una descrizione della vulnerabilità che è stata rilevata
+      - **Corrective action** i dettagli su come correggere la vulnerabilità
 
 ## Impostazione delle politiche di esenzione organizzative
 {: #va_managing_policy}
@@ -296,73 +208,182 @@ Se vuoi impostare delle esenzioni per la politica utilizzando la CLI, puoi esegu
 
 Per ulteriori informazioni sui comandi, puoi utilizzare l'indicatore `-- help` quando esegui il comando.
 
-## Riesame di un report di vulnerabilità
-{: #va_reviewing}
+## Installazione dello Scanner contenitori
+{: #va_install_container_scanner}
 
-Prima che tu distribuisca un'immagine, puoi riesaminare il relativo report del Controllo vulnerabilità per i dettagli relativi ad eventuali pacchetti vulnerabili e impostazioni delle applicazioni o del contenitore non sicure. Puoi inoltre controllare se l'immagine è conforme alle politiche organizzative.
+Lo Scanner contenitori abilita Controllo vulnerabilità a segnalare gli eventuali problemi rilevati nei contenitori in esecuzione che non sono presenti nell'immagine di base del contenitore. Se non apporti modifiche del runtime al tuo contenitore, lo Scanner contenitori non è necessario perché il report dell'immagine mostrerà gli stessi problemi.
 {:shortdesc}
 
-Se non te ne occupi, i problemi rilevati potrebbero avere delle ripercussioni sulla sicurezza dei contenitori creati utilizzando tale immagine. Se Container Image Security Enforcement non viene distribuito, puoi continuare a utilizzare un'immagine che ha problemi di sicurezza e configurazione in un contenitore. Se Container Image Security Enforcement è distribuito e attivo per l'immagine, tutti i problemi rilevati devono essere esentati dalla tua politica perché i contenitori possano essere distribuibili da questa immagine.
+Per controllare lo stato di sicurezza dei contenitori attivi che sono in esecuzione nel tuo cluster, puoi installare lo Scanner contenitori. Per proteggere la tua applicazione, lo Scanner contenitori esegue regolarmente la scansione dei tuoi contenitori in esecuzione in modo che tu possa rilevare e rettificare le eventuali nuove vulnerabilità rilevate.
 
-Per configurare l'ambito di implementazione dei problemi del Controllo vulnerabilità in Container Image Security Enforcement, vedi [Personalizzazione delle politiche](/docs/services/Registry/registry_security_enforce.html#customize_policies).
-{:tip}
+Puoi configurare lo Scanner contenitori per monitorare le vulnerabilità nei contenitori assegnati ai pod in tutti i tuoi spazi dei nomi Kubernetes. Quando vengono rilevate delle vulnerabilità, devi rettificare gli eventuali problemi con l'immagine e quindi distribuire nuovamente la tua applicazione. Lo Scanner contenitori supporta solo i contenitori che sono creati dalle immagini archiviate in {{site.data.keyword.registrylong_notm}}.
 
-Se la tua immagine non soddisfa i requisiti impostati dalla politica della tua organizzazione, devi configurare l'immagine in modo che soddisfi tali requisiti prima di poterla distribuire. Per ulteriori informazioni su come visualizzare e modificare la politica dell'organizzazione, consulta  [Impostazione delle politiche di esenzione organizzative](#va_managing_policy).
-{:tip}
+Per utilizzare lo Scanner contenitori, devi configurare le autorizzazioni e configurare quindi un [grafico Helm ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://docs.helm.sh/developing_charts) e associarlo al cluster in cui vuoi utilizzarlo.
 
-Dopo che hai distribuito la tua immagine, se viene distribuito lo Scanner contenitori, il Controllo vulnerabilità continua ad eseguire scansioni per rilevare eventuali problemi di sicurezza e configurazione nel contenitore. Puoi risolvere qualsiasi problema rilevato attenendosi alla procedura descritta in [Riesame di un report del contenitore](#va_reviewing_container).
+### Configura le autorizzazioni del servizio per lo Scanner contenitori
+{: #va_install_container_scanner_permissions}
 
-### Riesame di un report di vulnerabilità utilizzando la GUI
-{: #va_reviewing_gui}
-
-Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi dei nomi in {{site.data.keyword.registrylong_notm}} utilizzando la GUI.
+Lo Scanner contenitori richiede che le autorizzazioni siano configurate in modo che il servizio possa funzionare.
 {:shortdesc}
 
-1. Accedi a {{site.data.keyword.Bluemix_notm}}.
-2. Nel catalogo, fai clic su **Containers**.
-3. Fai clic sul tile **Container Registry**.
-4. Fai clic su **Images**. Viene visualizzato un elenco delle tue immagini e dello stato di sicurezza di ogni immagine nella tabella **Images**.
-5. Per visualizzare il report per l'immagine contrassegnata come `latest`, fai clic sulla riga di tale immagine. Si apre la scheda **Image Details** che mostra i dati di tale immagine. Se non esiste alcuna tag `latest` nel repository, viene utilizzata l'immagine più recente.
-6. Se lo stato di sicurezza mostra un problema, per trovare informazioni sui problemi, fai clic sulla scheda **Issues by Type**. Si aprono le tabelle **Vulnerabilities** e **Configuration Issues**.
+Per configurare le autorizzazioni del servizio, completa la seguente procedura:
 
-   - **Vulnerabilities** questa tabella mostra l'ID di vulnerabilità di ogni problema, lo stato della politica di tale problema, i pacchetti interessati e come risolvere il problema. Per visualizzare ulteriori informazioni su tale problema, espandi la riga. Viene visualizzato un riepilogo di tale problema, che contiene un link all'avviso di sicurezza del fornitore per tale problema. Elenca i pacchetti che contengono problemi di vulnerabilità noti. 
-  
-     L'elenco viene aggiornato giornalmente utilizzando gli avvisi di sicurezza pubblicati per i tipi di immagine Docker elencati in [Tipi di vulnerabilità](#types). Di norma, per fare in modo che un pacchetto vulnerabile superi con esito positivo la scansione, è necessaria una sua versione più recente che includa una correzione per la vulnerabilità in questione. Lo stesso pacchetto può elencare più vulnerabilità e in questo caso, un solo upgrade del pacchetto può risolvere più problemi. Fai clic sul codice dell'avviso di sicurezza per visualizzare maggiori informazioni sul pacchetto e i passi per aggiornare il pacchetto.
+1. Accedi al client CLI {{site.data.keyword.Bluemix_notm}}. Se hai un account federato, usa `--sso`.
+2. [Indirizza la tua CLI `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) al cluster dove vuoi usare un grafico Helm.
+3. Crea un ID servizio e una chiave API per lo Scanner contenitori e assegna ad esso un nome:
+    1. Per creare un ID servizio, immetti il seguente comando, dove `<scanner_serviceID>` è il nome di tua scelta per l'ID servizio. Prendi nota del relativo **CRN**.
 
-   - **Configuration Issues** questa tabella mostra l'ID del problema di configurazione di ogni problema, lo stato della politica per tale problema e la prassi di sicurezza. Per visualizzare ulteriori informazioni su tale problema, espandi la riga. Viene visualizzato un riepilogo di tale problema, che contiene un link all'avviso di sicurezza per tale problema. 
-  
-     L'elenco contiene i consigli per le azioni che puoi applicare per aumentare la sicurezza del contenitore e le eventuali impostazioni dell'applicazione per il contenitore che non sono sicure. Espandi la riga per vedere come risolvere il problema.
+       ```
+       ibmcloud iam service-id-create <scanner_serviceID>
+       ```
+       {: codeblock}
 
-7. Completa l'azione correttiva per ogni problema mostrato nel report e ricrea l'immagine.
+    2. Crea una chiave API di servizio, dove `<scanner_serviceID>` è l'ID servizio che hai creato nel passo precedente e `<scanner_APIkey_name>` è un nome di tua scelta per la chiave API dello scanner.
 
-### Riesame di un report di vulnerabilità utilizzando la CLI
-{: #va_registry_cli}
+       ```
+       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+       ```
+       {: codeblock}
+       Viene restituita la chiave API dello scanner.
 
-Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi dei nomi in {{site.data.keyword.registrylong_notm}} utilizzando la CLI.
+       Assicurati di conservare la tua chiave API dello scanner in modo sicuro perché non sarà possibile recuperarla successivamente. Assicurati anche di disporre di una chiave API separata per ciascun cluster in cui è installato lo scanner.
+       {: tip}
+
+    3. Crea una politica di servizio che conceda il ruolo di `Writer` (Scrittore).
+
+       ```
+       ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
+       ```
+       {: codeblock}
+
+### Configura il grafico Helm
+{: #va_install_container_scanner_helm}
+
+Configura un grafico Helm e associalo al cluster in cui vuoi utilizzarlo.
 {:shortdesc}
 
-1. Elenca le immagini nel tuo account {{site.data.keyword.Bluemix_notm}}. Viene restituito un elenco di tutte le immagini, indipendentemente dallo spazio dei nomi in cui sono memorizzate.
+Per configurare un grafico Helm, completa la seguente procedura:
+
+1. [Configura Helm in IBM Cloud Kubernetes Service](/docs/containers/cs_integrations.html#helm). Se utilizzi una politica RBAC (role-based access control) per concedere l'accesso a Tiller, assicurati che il ruolo Tiller abbia accesso a tutti gli spazi dei nomi. Dare al ruolo Tiller l'accesso a tutti gli spazi dei nomi garantisce che lo Scanner contenitori possa controllare i contenitori in tutti gli spazi dei nomi.
+
+2. Aggiungi il repository di grafici IBM al tuo Helm, come ad esempio `ibm`.
 
    ```
-   ibmcloud cr image-list
+   helm repo add ibm https://registry.bluemix.net/helm/ibm
    ```
    {: pre}
 
-2. Controlla lo stato nella colonna **SECURITY STATUS**.
-    - **No Issues** non è stato rilevato alcun problema di sicurezza.
-    - **`<X>` Issues** `<X>` sono stati rilevati dei potenziali problemi di sicurezza o delle potenziali vulnerabilità, dove `<X>` è il numero di problemi.
-    - **Scanning** è in corso la scansione dell'immagine e lo stato di vulnerabilità finale non è stato ancora determinato.
-
-3. Per visualizzare i dettagli per lo stato, esamina il report del Controllo vulnerabilità:
+3. Salva le impostazioni di configurazione predefinite per il grafico Helm dello Scanner contenitori in un file YAML locale. Includi il repository dei grafici, come ad esempio `ibm`, nel percorso del grafico Helm.
 
    ```
-   ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
+   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
    ```
    {: pre}
 
-   Nell'output della CLI, puoi visualizzare le seguenti informazioni sui problemi di sicurezza.
-      - **Security practice** una descrizione della vulnerabilità che è stata rilevata
-      - **Corrective action** i dettagli su come correggere la vulnerabilità
+4. Modifica il file `config.yaml`.
+
+   ```yaml
+   EmitURL: <regional_emit_URL>
+    AccountID: <IBM_Cloud_account_ID>
+    ClusterID: <cluster_ID>
+    APIKey: <scanner_APIkey>
+    ...
+   ```
+   {: pre}
+
+   <table>
+   <col width="22%">
+   <col width="78%">
+   <caption>Tabella 2. Descrizione dei componenti file YAML</caption>
+   <thead>
+   <th>Campo</th>
+   <th>Valore</th>
+   </thead>
+   <tbody>
+   <tr>
+   <td><code>EmitURL</code></td>
+   <td>Immetti l'URL dell'endpoint regionale del Controllo vulnerabilità. Per ottenere l'URL, esegui <code>ibmcloud cr info</code> e recupera l'indirizzo <strong>Registro contenitore</strong>. Sostituisci <code>registry</code> con <code>va</code>. Ad esempio, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   </tr>
+   <tr>
+   <td><code>AccountID</code></td>
+   <td>Sostituisci <code>AccountID</code> con l'ID account {{site.data.keyword.Bluemix_notm}} in cui si trova il tuo cluster. Per ottenere l'ID account, esegui <code>ibmcloud account list</code>.</td>
+   </tr>
+   <tr>
+   <td><code>ClusterID</code></td>
+   <td>Sostituisci <code>ClusterID</code> con il cluster Kubernetes in cui vuoi installare lo Scanner contenitori. Per elencare gli ID cluster, esegui <code>ibmcloud ks clusters</code>. <br> **Suggerimento:** utilizza l'ID del cluster, non il nome.
+   </td>
+   </tr>
+   <tr>
+   <td><code>APIKey</code></td>
+   <td>Sostituisci <code>APIKey</code> con la chiave API dello scanner che hai creato in precedenza.</td>
+   </tr>
+   </tbody></table>
+
+5. Installa il grafico Helm nel tuo cluster con il file `config.yaml` aggiornato. Le proprietà aggiornate sono memorizzate in una mappa di configurazione per il tuo grafico. Sostituisci a `<myscanner>` un nome a tua scelta per il tuo grafico Helm. Includi il repository dei grafici, come ad esempio `ibm`, nel percorso del grafico Helm.
+
+   ```
+   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
+   ```
+   {: pre}
+
+   Lo Scanner contenitori viene installato nello spazio dei nomi `kube-system` ma esegue la scansione dei contenitori da tutti gli spazi dei nomi.
+   {:tip}
+
+6. Controlla lo stato di distribuzione del grafico. Quando il grafico è pronto, il campo **STATO** ha un valore di `DEPLOYED`.
+
+   ```
+   helm status <myscanner>
+   ```
+   {: pre}
+
+7. Dopo che il grafico è stato distribuito, verifica che siano state utilizzate le impostazioni aggiornate nel file `config.yaml`.
+
+   ```
+   helm get values <myscanner>
+   ```
+   {: pre}
+
+Lo Scanner contenitori è ora installato e l'agent viene distribuito come una [serie di daemon (DaemonSet) ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) nel tuo cluster. Anche se viene distribuito allo spazio dei nomi `kube-system`, lo Scanner contenitori esegue la scansione di tutti i contenitori assegnati ai pod in tutti i tuoi spazi dei nomi Kubernetes, come ad esempio `default`.
+
+## Esecuzione dello Scanner contenitori da dietro un firewall
+{: #va_firewall}
+
+Se il tuo firewall blocca le connessioni in uscita, devi configurare il tuo firewall per consentire ai nodi di lavoro di accedere allo Scanner contenitori sulla porta TCP `443` sugli indirizzi IP nella seguente tabella.
+{:shortdesc}
+
+ 
+
+<p>
+  <table summary=" Le righe devono essere lette da sinistra e destra, con l'ubicazione del server nella colonna uno e gli indirizzi IP corrispondenti nella colonna due.">
+  <caption>Tabella 3. Indirizzi IP da aprire per il traffico in uscita</caption>
+    <thead>
+      <th>Ubicazione</th>
+      <th>Indirizzo IP</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Dallas</td>
+        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
+      </tr>
+      <tr>
+         <td>Francoforte</td>
+         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
+      </tr>
+      <tr>
+        <td>Londra</td>
+        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
+      </tr>
+      <tr>
+         <td>Sydney</td>
+         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
+      </tr>
+      <tr>
+        <td>Washington DC</td>
+         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
 
 ## Riesame di un report del contenitore
 {: #va_reviewing_container}

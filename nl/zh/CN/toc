@@ -2,9 +2,8 @@
 {:topicgroup: .topicgroup}
 
 {: .toc subcollection="va" audience="service" href="/docs/services/va/va_index.html" path="services/va"}
-Managing image security with Vulnerability Advisor
+使用漏洞顾问程序管理映像安全性
 
     {: .navgroup id="howto"}
     va_index.md
     {: .navgroup-end}
-

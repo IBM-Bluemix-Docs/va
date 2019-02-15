@@ -2,9 +2,8 @@
 {:topicgroup: .topicgroup}
 
 {: .toc subcollection="va" audience="service" href="/docs/services/va/va_index.html" path="services/va"}
-Managing image security with Vulnerability Advisor
+Gerenciando a segurança de imagens com o Vulnerability Advisor
 
     {: .navgroup id="howto"}
     va_index.md
     {: .navgroup-end}
-

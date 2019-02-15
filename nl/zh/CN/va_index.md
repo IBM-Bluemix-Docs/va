@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2018
-lastupdated: "2018-11-15"
+lastupdated: "2018-12-04"
 
 ---
 
@@ -24,7 +24,7 @@ lastupdated: "2018-11-15"
 
 将映像添加到名称空间时，漏洞顾问程序会自动对该映像进行扫描，以检测安全问题和潜在漏洞。如果发现安全问题，系统会提供指示信息，以帮助修复所报告的漏洞。
 
-漏洞顾问程序为 {{site.data.keyword.registrylong_notm}} 提供安全管理，可生成包含建议修复和最佳实践的安全状态报告。
+漏洞顾问程序为 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index) 提供安全管理，可生成包含建议修复和最佳实践的安全状态报告。
 
 漏洞顾问程序发现的任何问题都会生成判定，指示不建议部署此映像。如果选择部署该映像，那么基于该映像部署的任何容器包含已知问题，可能被用于攻击或以其他方式破坏容器。该判定根据您指定的任何豁免进行调整。Container Image Security Enforcement 可以使用此判定来阻止在 {{site.data.keyword.containerlong_notm}} 中部署非安全映像。
 
@@ -100,204 +100,6 @@ lastupdated: "2018-11-15"
 - NGINX
 - Apache
 
-## 安装容器扫描程序
-{: #va_install_container_scanner}
-
-**开始之前**
-
-1. 登录到 {{site.data.keyword.Bluemix_notm}} CLI 客户机。如果您具有联合帐户，请使用 `--sso`。
-2. [设定 `kubectl` CLI 的目标](/docs/containers/cs_cli_install.html#cs_cli_configure)为要使用 Helm 图表的集群。
-3. 为容器扫描程序创建服务标识和 API 密钥并为其指定名称：
-    1. 要创建服务标识，请运行以下命令，其中 `<scanner_serviceID>` 是针对服务标识选择的名称。记下其 **CRN**。
-
-       ```
-ibmcloud iam service-id-create <scanner_serviceID>
-    	```
-        {: codeblock}
-
-    2. 创建服务 API 密钥，其中 `<scanner_serviceID>` 是在上一步中创建的服务标识，且 `<scanner_APIkey_name>` 是针对扫描程序 API 密钥选择的名称。 
-
-       ```
-ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
-    	```
-       {: codeblock}
-这将返回扫描程序 API 密钥。
-
-       确保安全地存储扫描程序 API 密钥，因为日后无法对其进行检索。
-	    {: tip}
-
-    3. 创建用于授予 `Writer` 角色的服务策略。
-
-       ```
-ibmcloud iam service-policy-create <scanner_serviceID> --resource-type scaningress --service-name container-registry --roles Writer
-    	```
-       {: codeblock}
-
-要配置 Helm 图表，请完成以下步骤：
-
-1. [在集群中设置 Helm](/docs/containers/cs_integrations.html#helm)。如果使用 RBAC 策略来授予 Helm Tiller 访问权，请确保 Tiller 角色有权访问所有名称空间。授予 Tiller 角色访问权，以确保容器扫描程序可以监视所有名称空间中的容器。
-
-2. 向 Helm 添加 IBM 图表存储库，例如 `ibm`。
-
-   ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
-   ```
-   {: pre}
-
-3. 在本地 YAML 文件中保存容器扫描程序 Helm 图表的缺省配置设置。在 Helm 图表路径中包含图表存储库，例如 `ibm`。
-
-   ```
-   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
-   ```
-   {: pre}
-
-4. 编辑 `config.yaml` 文件。
-
-   ```yaml
-    EmitURL: <regional_emit_URL>
-    AccountID: <IBM_Cloud_account_ID>
-    ClusterID: <cluster_ID>
-    APIKey: <scanner_APIkey>
-    ...
-   ```
-   {: pre}
-
-   <table>
-   <col width="22%">
-   <col width="78%">
-   <caption>了解 YAML 文件组成部分</caption>
-   <thead>
-   <th>字段</th>
-   <th>值</th>
-   </thead>
-   <tbody>
-   <tr>
-   <td><code>EmitURL</code></td>
-   <td>输入漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。将 <code>registry</code> 替换为 <code>va</code>。例如，<code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
-   </tr>
-   <tr>
-   <td><code>AccountID</code></td>
-   <td>将 <code>AccountID</code> 替换为集群所在的 {{site.data.keyword.Bluemix_notm}} 帐户标识。要获取帐户标识，请运行 <code>ibmcloud account list</code>。</td>
-   </tr>
-   <tr>
-   <td><code>ClusterID</code></td>
-   <td>将 <code>ClusterID</code> 替换为要在其中安装容器扫描程序的 Kubernetes 集群。要列出集群标识，请运行 <code>ibmcloud ks clusters</code>。<br> **提示**：使用集群的标识，而不是集群的名称。
-    </td>
-   </tr>
-   <tr>
-   <td><code>APIKey</code></td>
-   <td>将 <code>APIKey</code> 替换为先前创建的扫描程序 API 密钥。</td>
-   </tr>
-   </tbody></table>
-
-5. 使用更新后的 `config.yaml` 文件将 Helm 图表安装到集群。更新的属性会存储在图表的配置映射中。将 `<myscanner>` 替换为针对 Helm 图表选择的名称。在 Helm 图表路径中包含图表存储库，例如 `ibm`。
-
-   ```
-   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
-   ```
-   {: pre}
-
-   容器扫描程序安装在 `kube-system` 名称空间中，但是会扫描所有名称空间中的容器。
-    {:tip}
-
-6. 检查图表部署状态。图表就绪时，**STATUS** 字段的值为 `DEPLOYED`。
-
-   ```
-helm status <myscanner>
-    ```
-   {: pre}
-
-7. 部署图表后，验证是否使用了 `config.yaml` 文件中更新的设置。
-
-   ```
-helm get values <myscanner>
-    ```
-   {: pre}
-
-现在容器扫描程序已安装，并且该代理程序已部署为集群中的 [DaemonSet ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)。容器扫描程序虽然是部署到 `kube-system` 名称空间，但是可扫描分配给所有 Kubernetes 名称空间（例如，`default`）中 pod 的所有容器。
-
-## 从防火墙后面运行容器扫描程序
-{: #va_firewall}
-
-如果防火墙阻止出局连接，那么必须配置防火墙以允许工作程序节点访问下表中 IP 地址上的 TCP 端口 `443` 上的容器扫描程序。
-{:shortdesc}
-
- 
-
-<p>
-  <table summary="各行应该从左到右阅读，其中第一列是服务器区域，第二列是要匹配的 IP 地址。">
-  <caption>要为出局流量打开的 IP 地址</caption>
-      <thead>
-      <th>区域</th>
-      <th>IP 地址</th>
-      </thead>
-    <tbody>
-      <tr>
-         <td>亚太地区南部</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-         <td>欧洲中部</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-        </tr>
-      <tr>
-        <td>英国南部</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-        <td>美国东部</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-      <tr>
-        <td>美国南部</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      </tbody>
-    </table>
-</p>
-
-## 设置组织豁免策略
-{: #va_managing_policy}
-
-如果想要管理 {{site.data.keyword.Bluemix_notm}} 组织的安全性，您可以使用策略设置以确定问题是否为豁免。您可以选择使用 Container Image Security Enforcement，确保在识别策略所免除的任何问题后只允许来自不包含任何安全问题的映像的部署。
-{:shortdesc}
-
-除非在集群中部署了 Container Image Security Enforcement，否则无论安全状态如何，都可以从任何映像部署容器。要查找如何部署 Container Image Security Enforcement，请参阅[安装强制实施安全性](/docs/services/Registry/registry_security_enforce.html#security_enforce)。
-
-在使用 Container Image Security Enforcement 时，漏洞顾问程序检测到的任何安全问题都将阻止从映像部署容器。要允许部署包含检测到的问题的映像，必须向策略添加豁免。
-
-### 使用 GUI 设置组织豁免策略
-{: #va_managing_policy_gui}
-
-如果想要使用 GUI 设置策略豁免，请完成以下步骤：
-
-1. 登录到 {{site.data.keyword.Bluemix_notm}}。您必须登录才能在 GUI 中查看漏洞顾问程序。
-2. 单击**容器**，然后单击 **Container Registry**。
-3. 在**漏洞顾问程序**下，单击**政策设置**。
-4. 单击**创建豁免**。
-5. 选择问题类型。
-6. 输入问题标识。
-
-   您可以在[漏洞报告](#va_reviewing)中找到此信息。**漏洞标识**列包含要用于 CVE 或安全声明问题的标识；**配置问题标识**列包含用于配置问题的标识。
-    {: tip}
-
-7. 选择要将豁免应用于哪个注册表名称空间、存储库和标记。
-8. 单击**保存**。
-
-您还可以通过在相关行上悬停鼠标并单击**打开和关闭选项列表**图标，编辑和除去豁免。
-
-### 使用 CLI 设置组织豁免策略
-{: #va_managing_policy_cli}
-
-如果想要使用 CLI 设置策略豁免，您可以运行以下命令：
-
-- 要创建安全问题豁免，请运行 [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) 命令。
-- 要列出安全问题的豁免，请运行 [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) 命令。
-- 要列出可豁免的安全问题的类型，请运行 [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) 命令。
-- 要删除安全问题的豁免，请运行 [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) 命令。
-
-有关命令的更多信息，可在运行命令时使用 `--help` 标志。
-
 ## 复查漏洞报告
 {: #va_reviewing}
 
@@ -365,6 +167,226 @@ helm get values <myscanner>
    在 CLI 输出中，可以查看有关配置问题的以下信息。
       - **安全实践**：发现的漏洞的描述
       - **更正操作**：有关如何修复漏洞的详细信息
+
+## 设置组织豁免策略
+{: #va_managing_policy}
+
+如果想要管理 {{site.data.keyword.Bluemix_notm}} 组织的安全性，您可以使用策略设置以确定问题是否为豁免。您可以选择使用 Container Image Security Enforcement，确保在识别策略所免除的任何问题后只允许来自不包含任何安全问题的映像的部署。
+{:shortdesc}
+
+除非在集群中部署了 Container Image Security Enforcement，否则无论安全状态如何，都可以从任何映像部署容器。要查找如何部署 Container Image Security Enforcement，请参阅[安装强制实施安全性](/docs/services/Registry/registry_security_enforce.html#security_enforce)。
+
+在使用 Container Image Security Enforcement 时，漏洞顾问程序检测到的任何安全问题都将阻止从映像部署容器。要允许部署包含检测到的问题的映像，必须向策略添加豁免。
+
+### 使用 GUI 设置组织豁免策略
+{: #va_managing_policy_gui}
+
+如果想要使用 GUI 设置策略豁免，请完成以下步骤：
+
+1. 登录到 {{site.data.keyword.Bluemix_notm}}。您必须登录才能在 GUI 中查看漏洞顾问程序。
+2. 单击**容器**，然后单击 **Container Registry**。
+3. 在**漏洞顾问程序**下，单击**政策设置**。
+4. 单击**创建豁免**。
+5. 选择问题类型。
+6. 输入问题标识。
+
+   您可以在[漏洞报告](#va_reviewing)中找到此信息。**漏洞标识**列包含要用于 CVE 或安全声明问题的标识；**配置问题标识**列包含用于配置问题的标识。
+    {: tip}
+
+7. 选择要将豁免应用于哪个注册表名称空间、存储库和标记。
+8. 单击**保存**。
+
+您还可以通过在相关行上悬停鼠标并单击**打开和关闭选项列表**图标，编辑和除去豁免。
+
+### 使用 CLI 设置组织豁免策略
+{: #va_managing_policy_cli}
+
+如果想要使用 CLI 设置策略豁免，您可以运行以下命令：
+
+- 要创建安全问题豁免，请运行 [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) 命令。
+- 要列出安全问题的豁免，请运行 [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) 命令。
+- 要列出可豁免的安全问题的类型，请运行 [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) 命令。
+- 要删除安全问题的豁免，请运行 [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) 命令。
+
+有关命令的更多信息，可在运行命令时使用 `--help` 标志。
+
+## 安装容器扫描程序
+{: #va_install_container_scanner}
+
+容器扫描程序支持漏洞顾问程序报告在运行中的容器中发现的任何问题，这些问题在容器的基本映像中不存在。如果不对容器进行运行时修改，那么将不需要运行容器扫描程序，因为映像报告将会显示相同的问题。
+{:shortdesc}
+
+要检查在集群中运行的实时容器的安全状态，可以安装容器扫描程序。为了保护您的应用程序，容器扫描程序会定期扫描正在运行的容器，以便您可以检测和纠正任何新检测到的漏洞。
+
+您可以设置容器扫描程序，以监视分配给所有 Kubernetes 空间名称中的 pod 的容器中的漏洞。在发现漏洞时，您必须纠正映像的任何问题，然后重新部署应用程序。容器扫描程序仅支持从存储在 {{site.data.keyword.registrylong_notm}} 中的映像中创建的容器。
+
+要使用容器扫描程序，必须设置许可权，然后设置 [Helm Chart ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://docs.helm.sh/developing_charts) 并将其与要使用它的集群相关联。
+
+### 为容器扫描程序设置服务许可权
+{: #va_install_container_scanner_permissions}
+
+容器扫描程序需要设置许可权，以便服务可以运行。
+{:shortdesc}
+
+要设置服务许可权，请完成以下步骤：
+
+1. 登录到 {{site.data.keyword.Bluemix_notm}} CLI 客户机。如果您具有联合帐户，请使用 `--sso`。
+2. [设定 `kubectl` CLI 的目标](/docs/containers/cs_cli_install.html#cs_cli_configure)为要使用 Helm 图表的集群。
+3. 为容器扫描程序创建服务标识和 API 密钥并为其指定名称：
+    1. 要创建服务标识，请运行以下命令，其中 `<scanner_serviceID>` 是针对服务标识选择的名称。记下其 **CRN**。
+
+       ```
+ibmcloud iam service-id-create <scanner_serviceID>
+    	```
+       {: codeblock}
+
+    2. 创建服务 API 密钥，其中 `<scanner_serviceID>` 是在上一步中创建的服务标识，且 `<scanner_APIkey_name>` 是针对扫描程序 API 密钥选择的名称。
+
+       ```
+ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
+    	```
+       {: codeblock}
+这将返回扫描程序 API 密钥。
+
+       确保安全地存储扫描程序 API 密钥，因为日后无法对其进行检索。
+	    还要确保安装了扫描程序的每个集群有独立的服务 API 密钥。
+       {: tip}
+
+    3. 创建用于授予 `Writer` 角色的服务策略。
+
+       ```
+       ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
+       ```
+       {: codeblock}
+
+### 配置 Helm 图表
+{: #va_install_container_scanner_helm}
+
+配置 Helm 图表，并将其与要使用它的集群相关联。
+{:shortdesc}
+
+要配置 Helm 图表，请完成以下步骤：
+
+1. [在 IBM Cloud Kubernetes Service 中设置 Helm](/docs/containers/cs_integrations.html#helm)。如果使用基于角色的访问控制 (RBAC) 策略向 Tiller 授予访问权，请确保 Tiller 角色有权访问所有名称空间。向 Tiller 角色授予对所有名称空间的访问权，可确保容器扫描程序可以查看所有名称空间中的容器。
+
+2. 向 Helm 添加 IBM 图表存储库，例如 `ibm`。
+
+   ```
+   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   ```
+   {: pre}
+
+3. 在本地 YAML 文件中保存容器扫描程序 Helm 图表的缺省配置设置。在 Helm 图表路径中包含图表存储库，例如 `ibm`。
+
+   ```
+   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
+   ```
+   {: pre}
+
+4. 编辑 `config.yaml` 文件。
+
+   ```yaml
+    EmitURL: <regional_emit_URL>
+    AccountID: <IBM_Cloud_account_ID>
+    ClusterID: <cluster_ID>
+    APIKey: <scanner_APIkey>
+    ...
+   ```
+   {: pre}
+
+   <table>
+   <col width="22%">
+   <col width="78%">
+   <caption>表 2. 了解 YAML 文件的组成部分</caption>
+   <thead>
+   <th>字段</th>
+   <th>值</th>
+   </thead>
+   <tbody>
+   <tr>
+   <td><code>EmitURL</code></td>
+   <td>输入漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。将 <code>registry</code> 替换为 <code>va</code>。例如，<code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   </tr>
+   <tr>
+   <td><code>AccountID</code></td>
+   <td>将 <code>AccountID</code> 替换为集群所在的 {{site.data.keyword.Bluemix_notm}} 帐户标识。要获取帐户标识，请运行 <code>ibmcloud account list</code>。</td>
+   </tr>
+   <tr>
+   <td><code>ClusterID</code></td>
+   <td>将 <code>ClusterID</code> 替换为要在其中安装容器扫描程序的 Kubernetes 集群。要列出集群标识，请运行 <code>ibmcloud ks clusters</code>。<br> **提示：**使用集群的标识，而不是集群的名称。
+   </td>
+   </tr>
+   <tr>
+   <td><code>APIKey</code></td>
+   <td>将 <code>APIKey</code> 替换为先前创建的扫描程序 API 密钥。</td>
+   </tr>
+   </tbody></table>
+
+5. 使用更新后的 `config.yaml` 文件将 Helm 图表安装到集群。更新的属性会存储在图表的配置映射中。将 `<myscanner>` 替换为针对 Helm 图表选择的名称。在 Helm 图表路径中包含图表存储库，例如 `ibm`。
+
+   ```
+   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
+   ```
+   {: pre}
+
+   容器扫描程序安装在 `kube-system` 名称空间中，但是会扫描所有名称空间中的容器。
+    {:tip}
+
+6. 检查图表部署状态。图表就绪时，**STATUS** 字段的值为 `DEPLOYED`。
+
+   ```
+helm status <myscanner>
+    ```
+   {: pre}
+
+7. 部署图表后，验证是否使用了 `config.yaml` 文件中更新的设置。
+
+   ```
+helm get values <myscanner>
+    ```
+   {: pre}
+
+现在容器扫描程序已安装，并且该代理程序已部署为集群中的 [DaemonSet ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)。容器扫描程序虽然是部署到 `kube-system` 名称空间，但是可扫描分配给所有 Kubernetes 名称空间（例如，`default`）中 pod 的所有容器。
+
+## 从防火墙后面运行容器扫描程序
+{: #va_firewall}
+
+如果防火墙阻止出局连接，那么必须配置防火墙以允许工作程序节点访问下表中 IP 地址上的 TCP 端口 `443` 上的容器扫描程序。
+{:shortdesc}
+
+ 
+
+<p>
+  <table summary=" 应该从左到右读取行，其中第一列是服务器位置，第二列是要匹配的 IP 地址。">
+  <caption>表 3. 要为出局流量打开的 IP 地址</caption>
+    <thead>
+      <th>位置</th>
+      <th>IP 地址</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>达拉斯</td>
+        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
+      </tr>
+      <tr>
+         <td>法兰克福</td>
+         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
+      </tr>
+      <tr>
+        <td>伦敦</td>
+        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
+      </tr>
+      <tr>
+         <td>悉尼</td>
+         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
+      </tr>
+      <tr>
+        <td>华盛顿</td>
+         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
 
 ## 复查容器报告
 {: #va_reviewing_container}
