@@ -184,7 +184,7 @@ When you use Container Image Security Enforcement, any security issue that is de
 If you want to set exemptions to the policy by using the GUI, complete the following steps:
 
 1. Log in to {{site.data.keyword.Bluemix_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
-2. Click **Containers** and then click **Container Registry**.
+2. Click the **Navigation Menu**, and then click **Kubernetes**.
 3. Under **Vulnerability Advisor**, click **Policy Settings**.
 4. Click **Create Exemption**.
 5. Select the issue type.
@@ -402,8 +402,8 @@ Check that containers that are running in your space continue to be compliant wi
 Check that your container is as secure as possible by viewing its security report and act on any reported security or configuration issues, by completing the following steps:
 
 1. Select the container that you want to view a report for:
-    1. In the catalog, select **Containers**, click **Container Registry**.
-    2. Select **Repositories** and expand the row for the repository that you want.
+    1. Click the **Navigation Menu**, and then click **Kubernetes**.
+    2. Click **Registry** and then click the **Repositories** tile, then expand the row for the repository that you want.
     3. Select the row for the image that you want.
     4. Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
 2. Review the sections to see the potential security and configuration issues for each package in the image:
