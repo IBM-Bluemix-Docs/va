@@ -124,11 +124,10 @@ You can review the security of Docker images that are stored in your namespaces 
 {:shortdesc}
 
 1. Log in to {{site.data.keyword.Bluemix_notm}}.
-2. In the catalog, click **Containers**.
-3. Click the **Container Registry** tile.
-4. Click **Images**. A list of your images and the security status of each image is displayed in the **Images** table.
-5. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
-6. If the security status shows any issues, to find out about the issues, click the **Issues by Type** tab. The **Vulnerabilities** and **Configuration Issues** tables open.
+2. Click **Navigation Menu > Kubernetes**.
+3. Click **Registry**, and then click the **Images** tile. A list of your images and the security status of each image is displayed in the **Images** table.
+4. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
+5. If the security status shows any issues, to find out about the issues, click the **Issues by Type** tab. The **Vulnerabilities** and **Configuration Issues** tables open.
 
    - **Vulnerabilities** This table shows the Vulnerability ID for each issue, the policy status for that issue, the affected packages and how to resolve the issue. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the vendor security notice for that issue. Lists packages that contain known vulnerability issues.
   
@@ -138,7 +137,7 @@ You can review the security of Docker images that are stored in your namespaces 
   
      The list contains suggestions for actions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
 
-7. Complete the corrective action for each issue shown in the report, and rebuild the image.
+6. Complete the corrective action for each issue shown in the report, and rebuild the image.
 
 ### Reviewing a vulnerability report by using the CLI
 {: #va_registry_cli}
