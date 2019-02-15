@@ -1,8 +1,8 @@
 ---
 
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-12-04"
+  years: 2017, 2019
+lastupdated: "2019-02-15"
 
 ---
 
@@ -13,6 +13,9 @@ lastupdated: "2018-12-04"
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
 {:tip: .tip}
+{:note: .note}
+{:important: .important}
+{:deprecated: .deprecated}
 {:download: .download}
 
 # Managing image security with Vulnerability Advisor
@@ -121,11 +124,10 @@ You can review the security of Docker images that are stored in your namespaces 
 {:shortdesc}
 
 1. Log in to {{site.data.keyword.Bluemix_notm}}.
-2. In the catalog, click **Containers**.
-3. Click the **Container Registry** tile.
-4. Click **Images**. A list of your images and the security status of each image is displayed in the **Images** table.
-5. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
-6. If the security status shows any issues, to find out about the issues, click the **Issues by Type** tab. The **Vulnerabilities** and **Configuration Issues** tables open.
+2. Click the **Navigation Menu** icon, and then click **Kubernetes**.
+3. Click **Registry**, and then click the **Images** tile. A list of your images and the security status of each image is displayed in the **Images** table.
+4. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
+5. If the security status shows any issues, to find out about the issues, click the **Issues by Type** tab. The **Vulnerabilities** and **Configuration Issues** tables open.
 
    - **Vulnerabilities** This table shows the Vulnerability ID for each issue, the policy status for that issue, the affected packages and how to resolve the issue. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the vendor security notice for that issue. Lists packages that contain known vulnerability issues.
   
@@ -135,7 +137,7 @@ You can review the security of Docker images that are stored in your namespaces 
   
      The list contains suggestions for actions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
 
-7. Complete the corrective action for each issue shown in the report, and rebuild the image.
+6. Complete the corrective action for each issue shown in the report, and rebuild the image.
 
 ### Reviewing a vulnerability report by using the CLI
 {: #va_registry_cli}
@@ -182,7 +184,7 @@ When you use Container Image Security Enforcement, any security issue that is de
 If you want to set exemptions to the policy by using the GUI, complete the following steps:
 
 1. Log in to {{site.data.keyword.Bluemix_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
-2. Click **Containers** and then click **Container Registry**.
+2. Click the **Navigation Menu** icon, and then click **Kubernetes**.
 3. Under **Vulnerability Advisor**, click **Policy Settings**.
 4. Click **Create Exemption**.
 5. Select the issue type.
@@ -400,8 +402,8 @@ Check that containers that are running in your space continue to be compliant wi
 Check that your container is as secure as possible by viewing its security report and act on any reported security or configuration issues, by completing the following steps:
 
 1. Select the container that you want to view a report for:
-    1. In the catalog, select **Containers**, click **Container Registry**.
-    2. Select **Repositories** and expand the row for the repository that you want.
+    1. Click the **Navigation Menu** icon, and then click **Kubernetes**.
+    2. Click **Registry** and then click the **Repositories** tile, then expand the row for the repository that you want.
     3. Select the row for the image that you want.
     4. Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
 2. Review the sections to see the potential security and configuration issues for each package in the image:
