@@ -7,3 +7,4 @@ Managing image security with Vulnerability Advisor
     {: .navgroup id="howto"}
     va_index.md
     {: .navgroup-end}
+

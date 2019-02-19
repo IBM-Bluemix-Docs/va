@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-15"
+lastupdated: "2019-02-19"
 
 ---
 
@@ -304,7 +304,7 @@ To configure a Helm chart, complete the following steps:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. Replace <code>registry</code> with <code>va</code>. For example, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. For example, <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. Replace <code>registry</code> with <code>va</code>. For example, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
