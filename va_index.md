@@ -275,14 +275,14 @@ To configure a Helm chart, complete the following steps:
    ```
    {: pre}
 
-3. Save the default configuration settings for the Container Scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm`, in the Helm chart path.
+4. Save the default configuration settings for the Container Scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm`, in the Helm chart path.
 
    ```
    helm inspect values ibm/ibmcloud-container-scanner > config.yaml
    ```
    {: pre}
 
-4. Edit the `config.yaml` file.
+5. Edit the `config.yaml` file.
 
    ```yaml
    EmitURL: <regional_emit_URL>
@@ -321,7 +321,7 @@ To configure a Helm chart, complete the following steps:
    </tr>
    </tbody></table>
 
-5. Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name of your choice for your Helm chart. Include the chart repository, such as `ibm`, in the Helm chart path.
+6. Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name of your choice for your Helm chart. Include the chart repository, such as `ibm`, in the Helm chart path.
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
@@ -331,14 +331,14 @@ To configure a Helm chart, complete the following steps:
    The Container Scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
    {:tip}
 
-6. Check the chart deployment status. When the chart is ready, the **STATUS** field has a value of `DEPLOYED`.
+7. Check the chart deployment status. When the chart is ready, the **STATUS** field has a value of `DEPLOYED`.
 
    ```
    helm status <myscanner>
    ```
    {: pre}
 
-7. After the chart is deployed, verify that the updated settings in the `config.yaml` file were used.
+8. After the chart is deployed, verify that the updated settings in the `config.yaml` file were used.
 
    ```
    helm get values <myscanner>
