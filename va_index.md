@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-19"
+lastupdated: "2019-02-20"
 
 ---
 
@@ -26,7 +26,7 @@ Vulnerability Advisor checks the security status of container images that are pr
 
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability.
 
-Vulnerability Advisor provides security management for [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index), generating a security status report that includes suggested fixes and best practices.
+Vulnerability Advisor provides security management for [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index), generating a security status report that includes suggested fixes and best practices.
 
 Any issues that are found by Vulnerability Advisor result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict is adjusted based on any exemptions that you specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong_notm}}.
 
@@ -45,7 +45,7 @@ The following functions are available:
 - Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 - Provides recommendations to secure configuration files for a subset of application types
 - Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
-- Provides verdicts to [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce)
+- Provides verdicts to [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
 - Provides links to associated containers in the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the Container Scanner installed.
 
@@ -109,7 +109,7 @@ Before you deploy an image, you can review its Vulnerability Advisor report for 
 
 If you do not address any discovered issues, those issues can impact the security of containers that are built by using that image. If Container Image Security Enforcement is not deployed, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues that are discovered must be exempt by your policy for containers to be deployable from this image.
 
-To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/services/Registry/registry_security_enforce.html#customize_policies).
+To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/services/Registry?topic=registry-security_enforce#customize_policies).
 {:tip}
 
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
@@ -174,7 +174,7 @@ You can review the security of Docker images that are stored in your namespaces 
 If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after accounting for any issues that are exempted by your policy.
 {:shortdesc}
 
-You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce).
 
 When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container from being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
 
@@ -203,10 +203,10 @@ You can also edit and remove exemptions by hovering over the relevant row and cl
 
 If you want to set exemptions to the policy by using the CLI, you can run the following commands:
 
-- To create an exemption for a security issue, run the [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) command.
-- To list your exemptions for security issues, run the [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) command.
-- To list the types of security issues that you can exempt, run the [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) command.
-- To delete an exemption for a security issue, run the [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) command.
+- To create an exemption for a security issue, run the [`ibmcloud cr exemption-add`](/docs/services/Registry?topic=registry-containerregcli#bx_cr_exemption_add) command.
+- To list your exemptions for security issues, run the [`ibmcloud cr exemption-list`](/docs/services/Registry?topic=registry-containerregcli#bx_cr_exemption_list) command.
+- To list the types of security issues that you can exempt, run the [`ibmcloud cr exemption-types`](/docs/services/Registry?topic=registry-containerregcli#bx_cr_exemption_types) command.
+- To delete an exemption for a security issue, run the [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=registry-containerregcli#bx_cr_exemption_rm) command.
 
 For more information about the commands, you can use the `--help` flag when you run the command.
 
@@ -231,7 +231,7 @@ Container Scanner requires that permissions are set up so that the service can o
 To set up service permissions, complete the following steps:
 
 1. Log in to the {{site.data.keyword.Bluemix_notm}} CLI client. If you have a federated account, use `--sso`.
-2. [Target your `kubectl` CLI](/docs/containers/cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
+2. [Target your `kubectl` CLI](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) to the cluster where you want to use a Helm chart.
 3. Create a service ID and API key for the Container Scanner and give it a name:
     1. To create a service ID, run the following command, where `<scanner_serviceID>` is a name of your choice for the service ID. Note its **CRN**.
 
@@ -266,7 +266,7 @@ Configure a Helm Chart and associate it with the cluster in which you want to us
 
 To configure a Helm chart, complete the following steps:
 
-1. [Set up Helm in IBM Cloud Kubernetes Service](/docs/containers/cs_integrations.html#helm). If you use a role-based access control (RBAC) policy to grant access to Tiller, ensure that the Tiller role has access to all namespaces. Giving the Tiller role access to all namespaces ensures that the Container Scanner can watch containers in all namespaces.
+1. [Set up Helm in IBM Cloud Kubernetes Service](/docs/containers?topic=containers-integrations#helm). If you use a role-based access control (RBAC) policy to grant access to Tiller, ensure that the Tiller role has access to all namespaces. Giving the Tiller role access to all namespaces ensures that the Container Scanner can watch containers in all namespaces.
 
 2. Add the IBM chart repository to your Helm, such as `ibm`.
 
@@ -427,7 +427,7 @@ Check that your container is as secure as possible by viewing its security repor
     **Example**
 
     - If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with no data loss.
-    - You can use an {{site.data.keyword.Bluemix_notm}} service, such as [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), to assist with updating the vulnerable container instance.
+    - You can use an {{site.data.keyword.Bluemix_notm}} service, such as [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about), to assist with updating the vulnerable container instance.
     - In a microservices architecture, you can route traffic to another container instance while you fix security or configuration issues, and push the new image in a red-black deployment.
 
 5. If you can't fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
