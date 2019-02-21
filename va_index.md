@@ -2,11 +2,12 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-20"
+lastupdated: "2019-02-21"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
 subcollection: va
+
 ---
 
 {:new_window: target="_blank"}
