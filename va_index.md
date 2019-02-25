@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-21"
+lastupdated: "2019-02-25"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
@@ -275,7 +275,7 @@ To configure a Helm chart, complete the following steps:
 2. Add the IBM chart repository to your Helm, such as `ibm`.
 
    ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
 
@@ -308,7 +308,7 @@ To configure a Helm chart, complete the following steps:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. For example, <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. Replace <code>registry</code> with <code>va</code>. For example, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. For example, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Add <code>/va</code> to the end of this address. For example, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
