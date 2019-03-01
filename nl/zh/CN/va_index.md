@@ -1,8 +1,12 @@
 ---
 
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-12-04"
+  years: 2017, 2019
+lastupdated: "2019-02-21"
+
+keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+
+subcollection: va
 
 ---
 
@@ -13,6 +17,9 @@ lastupdated: "2018-12-04"
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
 {:tip: .tip}
+{:note: .note}
+{:important: .important}
+{:deprecated: .deprecated}
 {:download: .download}
 
 # 使用漏洞顾问程序管理映像安全性
@@ -24,7 +31,7 @@ lastupdated: "2018-12-04"
 
 将映像添加到名称空间时，漏洞顾问程序会自动对该映像进行扫描，以检测安全问题和潜在漏洞。如果发现安全问题，系统会提供指示信息，以帮助修复所报告的漏洞。
 
-漏洞顾问程序为 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index) 提供安全管理，可生成包含建议修复和最佳实践的安全状态报告。
+漏洞顾问程序为 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index) 提供安全管理，可生成包含建议修复和最佳实践的安全状态报告。
 
 漏洞顾问程序发现的任何问题都会生成判定，指示不建议部署此映像。如果选择部署该映像，那么基于该映像部署的任何容器包含已知问题，可能被用于攻击或以其他方式破坏容器。该判定根据您指定的任何豁免进行调整。Container Image Security Enforcement 可以使用此判定来阻止在 {{site.data.keyword.containerlong_notm}} 中部署非安全映像。
 
@@ -44,7 +51,7 @@ lastupdated: "2018-12-04"
 - 提供基于安全实践（特定于 {{site.data.keyword.containerlong_notm}}）的评估报告
 - 提供建议来确保一部分应用程序类型的配置文件安全
 - 提供有关如何修复其报告中所报告的[有漏洞包](#packages)或[配置问题](#app_configurations)的指示信息
-- 针对 [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce) 提供判定
+- 针对 [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce) 提供判定
 - 对帐户、名称空间、存储库或标记级别的报告应用豁免，以标记所标记问题不适用于您的用例
 - 在 {{site.data.keyword.registrylong_notm}} 图形用户界面的**标记**视图中，提供关联容器的链接。您可以列出在安装了容器扫描程序的集群中正在运行的容器以及正在使用该映像的容器。
 
@@ -108,7 +115,7 @@ lastupdated: "2018-12-04"
 
 如果未解决任何已发现的问题，那么这些问题可能会影响使用此映像所构建容器的安全性。如果未部署 Container Image Security Enforcement，您仍可以继续在容器中使用具有安全和配置问题的映像。如果部署 Container Image Security Enforcement 并且针对映像激活，那么策略必须豁免所发现的所有问题才能从此映像部署容器。
 
-要在 Container Image Security Enforcement 中配置实施漏洞顾问程序的范围，请参阅[定制策略](/docs/services/Registry/registry_security_enforce.html#customize_policies)。
+要在 Container Image Security Enforcement 中配置实施漏洞顾问程序的范围，请参阅[定制策略](/docs/services/Registry?topic=registry-security_enforce#customize_policies)。
 {:tip}
 
 如果映像不满足组织策略所设置的需求，那么必须配置映像以满足这些需求，然后才能进行部署。有关如何查看和更改组织策略的更多信息，请参阅[设置组织豁免策略](#va_managing_policy)。
@@ -123,11 +130,10 @@ lastupdated: "2018-12-04"
 {:shortdesc}
 
 1. 登录到 {{site.data.keyword.Bluemix_notm}}。
-2. 在目录中，单击**容器**。
-3. 单击 **Container Registry** 磁贴。
-4. 单击**映像**。映像列表和每个映像的安全状态将显示在**映像**表中。
-5. 要查看标记为 `latest` 的映像的报告，请单击该映像所在的行。这会打开**映像详细信息**选项卡，显示该映像的数据。如果存储库中不存在 `latest` 标记，那么将使用最新的映像。
-6. 如果安全状态显示任何问题，单击**按类型分组的问题**选项卡，可查找问题。这会打开**漏洞**和**配置问题**表。
+2. 单击**导航菜单**图标，然后单击 **Kubernetes**。
+3. 单击**注册表**，然后单击**映像**磁贴。映像列表和每个映像的安全状态将显示在**映像**表中。
+4. 要查看标记为 `latest` 的映像的报告，请单击该映像所在的行。这会打开**映像详细信息**选项卡，显示该映像的数据。如果存储库中不存在 `latest` 标记，那么将使用最新的映像。
+5. 如果安全状态显示任何问题，单击**按类型分组的问题**选项卡，可查找问题。这会打开**漏洞**和**配置问题**表。
 
    - **漏洞**：该表显示了每个问题的漏洞标识、该问题的策略状态、受影响的包以及解决问题的方法。要查看有关该问题的更多信息，请展开该行。将显示问题的摘要，其中包含该问题的供应商安全通知的链接。并列出包含已知漏洞问题的包。
   
@@ -137,7 +143,7 @@ lastupdated: "2018-12-04"
   
      此列表包含为提高容器安全性而采取的措施的建议，以及容器任何不安全的应用程序设置。展开相应行可查看问题的解决方法。
 
-7. 对报告中显示的每个问题完成更正操作，然后重建该映像。
+6. 对报告中显示的每个问题完成更正操作，然后重建该映像。
 
 ### 使用 CLI 复查漏洞报告
 {: #va_registry_cli}
@@ -174,7 +180,7 @@ lastupdated: "2018-12-04"
 如果想要管理 {{site.data.keyword.Bluemix_notm}} 组织的安全性，您可以使用策略设置以确定问题是否为豁免。您可以选择使用 Container Image Security Enforcement，确保在识别策略所免除的任何问题后只允许来自不包含任何安全问题的映像的部署。
 {:shortdesc}
 
-除非在集群中部署了 Container Image Security Enforcement，否则无论安全状态如何，都可以从任何映像部署容器。要查找如何部署 Container Image Security Enforcement，请参阅[安装强制实施安全性](/docs/services/Registry/registry_security_enforce.html#security_enforce)。
+除非在集群中部署了 Container Image Security Enforcement，否则无论安全状态如何，都可以从任何映像部署容器。要查找如何部署 Container Image Security Enforcement，请参阅[安装强制实施安全性](/docs/services/Registry?topic=registry-security_enforce#security_enforce)。
 
 在使用 Container Image Security Enforcement 时，漏洞顾问程序检测到的任何安全问题都将阻止从映像部署容器。要允许部署包含检测到的问题的映像，必须向策略添加豁免。
 
@@ -184,7 +190,7 @@ lastupdated: "2018-12-04"
 如果想要使用 GUI 设置策略豁免，请完成以下步骤：
 
 1. 登录到 {{site.data.keyword.Bluemix_notm}}。您必须登录才能在 GUI 中查看漏洞顾问程序。
-2. 单击**容器**，然后单击 **Container Registry**。
+2. 单击**导航菜单**图标，然后单击 **Kubernetes**。
 3. 在**漏洞顾问程序**下，单击**政策设置**。
 4. 单击**创建豁免**。
 5. 选择问题类型。
@@ -203,10 +209,10 @@ lastupdated: "2018-12-04"
 
 如果想要使用 CLI 设置策略豁免，您可以运行以下命令：
 
-- 要创建安全问题豁免，请运行 [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) 命令。
-- 要列出安全问题的豁免，请运行 [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) 命令。
-- 要列出可豁免的安全问题的类型，请运行 [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) 命令。
-- 要删除安全问题的豁免，请运行 [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) 命令。
+- 要创建安全问题豁免，请运行 [`ibmcloud cr exemption-add`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_add) 命令。
+- 要列出安全问题的豁免，请运行 [`ibmcloud cr exemption-list`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_list) 命令。
+- 要列出可豁免的安全问题的类型，请运行 [`ibmcloud cr exemption-types`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_types) 命令。
+- 要删除安全问题的豁免，请运行 [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) 命令。
 
 有关命令的更多信息，可在运行命令时使用 `--help` 标志。
 
@@ -231,7 +237,7 @@ lastupdated: "2018-12-04"
 要设置服务许可权，请完成以下步骤：
 
 1. 登录到 {{site.data.keyword.Bluemix_notm}} CLI 客户机。如果您具有联合帐户，请使用 `--sso`。
-2. [设定 `kubectl` CLI 的目标](/docs/containers/cs_cli_install.html#cs_cli_configure)为要使用 Helm 图表的集群。
+2. [设定 `kubectl` CLI 的目标](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure)为要使用 Helm chart 的集群。
 3. 为容器扫描程序创建服务标识和 API 密钥并为其指定名称：
     1. 要创建服务标识，请运行以下命令，其中 `<scanner_serviceID>` 是针对服务标识选择的名称。记下其 **CRN**。
 
@@ -259,15 +265,15 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
        ```
        {: codeblock}
 
-### 配置 Helm 图表
+### 配置 Helm chart
 {: #va_install_container_scanner_helm}
 
-配置 Helm 图表，并将其与要使用它的集群相关联。
+配置 Helm chart，并将其与要使用它的集群相关联。
 {:shortdesc}
 
-要配置 Helm 图表，请完成以下步骤：
+要配置 Helm chart，请完成以下步骤：
 
-1. [在 IBM Cloud Kubernetes Service 中设置 Helm](/docs/containers/cs_integrations.html#helm)。如果使用基于角色的访问控制 (RBAC) 策略向 Tiller 授予访问权，请确保 Tiller 角色有权访问所有名称空间。向 Tiller 角色授予对所有名称空间的访问权，可确保容器扫描程序可以查看所有名称空间中的容器。
+1. [在 IBM Cloud Kubernetes Service 中设置 Helm](/docs/containers?topic=containers-integrations#helm)。如果使用基于角色的访问控制 (RBAC) 策略向 Tiller 授予访问权，请确保 Tiller 角色有权访问所有名称空间。向 Tiller 角色授予对所有名称空间的访问权，可确保容器扫描程序可以查看所有名称空间中的容器。
 
 2. 向 Helm 添加 IBM 图表存储库，例如 `ibm`。
 
@@ -276,7 +282,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
    ```
    {: pre}
 
-3. 在本地 YAML 文件中保存容器扫描程序 Helm 图表的缺省配置设置。在 Helm 图表路径中包含图表存储库，例如 `ibm`。
+3. 在本地 YAML 文件中保存容器扫描程序 Helm chart 的缺省配置设置。在 Helm chart 路径中包含图表存储库，例如 `ibm`。
 
    ```
    helm inspect values ibm/ibmcloud-container-scanner > config.yaml
@@ -305,7 +311,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>输入漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。将 <code>registry</code> 替换为 <code>va</code>。例如，<code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>输入漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。例如，<code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>。将 <code>registry</code> 替换为 <code>va</code>。例如，<code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -322,7 +328,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
    </tr>
    </tbody></table>
 
-5. 使用更新后的 `config.yaml` 文件将 Helm 图表安装到集群。更新的属性会存储在图表的配置映射中。将 `<myscanner>` 替换为针对 Helm 图表选择的名称。在 Helm 图表路径中包含图表存储库，例如 `ibm`。
+5. 使用更新后的 `config.yaml` 文件将 Helm chart 安装到集群。更新的属性会存储在图表的配置映射中。将 `<myscanner>` 替换为针对 Helm chart 选择的名称。在 Helm chart 路径中包含图表存储库，例如 `ibm`。
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
@@ -404,8 +410,8 @@ helm get values <myscanner>
 通过完成以下步骤，查看容器安全报告并对任何报告的安全或配置问题采取措施，以确保容器尽可能安全：
 
 1. 选择要查看其报告的容器：
-    1. 在目录中，选择**容器**，然后单击 **Container Registry**。
-    2. 选择**存储库**，并展开所需存储库所在的行。
+    1. 单击**导航菜单**图标，然后单击 **Kubernetes**。
+    2. 依次单击**注册表**和**存储库**磁贴，然后展开所需存储库所在的行。
     3. 选择所需映像所在的行。
     4. 选择**关联的容器**选项卡，然后选择所需容器所在的行。这将打开安全报告。
 2. 复查各部分以了解映像中每个包的潜在安全和配置问题：
@@ -429,7 +435,7 @@ helm get values <myscanner>
     **示例**
 
     - 如果容器与其计算的数据相分离，那么可以停止容器并将其删除，对映像进行必需的更改，然后重新部署，而不会丢失数据。
-    - 可以使用 {{site.data.keyword.Bluemix_notm}} 服务（例如 [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about)）来帮助更新有漏洞的容器实例。
+    - 可以使用 {{site.data.keyword.Bluemix_notm}} 服务（例如 [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about)）来帮助更新有漏洞的容器实例。
     - 在微服务体系结构中，可在修复安全或配置问题时，将流量路由到其他容器实例，然后在红黑部署中推送新的映像。
 
 5. 如果目前无法解决问题，那么可以在策略设置中豁免该问题，从而避免该问题阻止容器部署。要豁免问题，请单击**打开和关闭选项列表**图标，然后单击**创建豁免**，参阅[设置组织豁免策略](#va_managing_policy)。

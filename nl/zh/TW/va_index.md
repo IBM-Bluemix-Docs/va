@@ -1,8 +1,12 @@
 ---
 
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-12-04"
+  years: 2017, 2019
+lastupdated: "2019-02-21"
+
+keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+
+subcollection: va
 
 ---
 
@@ -13,6 +17,9 @@ lastupdated: "2018-12-04"
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
 {:tip: .tip}
+{:note: .note}
+{:important: .important}
+{:deprecated: .deprecated}
 {:download: .download}
 
 # 使用漏洞警告器管理映像檔安全
@@ -23,7 +30,7 @@ lastupdated: "2018-12-04"
 
 當您將映像檔新增至名稱空間時，「漏洞警告器」會自動掃描映像檔，以偵測安全問題及潛在漏洞。如果找到安全問題，會提供指示以協助修正報告的漏洞。
 
-「漏洞警告器」提供 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index) 的安全管理，並產生包含建議修正程式與最佳作法的安全狀態報告。
+「漏洞警告器」提供 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index) 的安全管理，並產生包含建議修正程式與最佳作法的安全狀態報告。
 
 「漏洞警告器」所發現的任何問題都會導致裁決，指出不建議部署此映像檔。如果您選擇部署映像檔，從該映像檔部署的任何容器都包含已知問題，這些已知問題可能會被用來攻擊或以其他方式洩漏容器機密。裁決會根據您指定的任何豁免而調整。這項裁決可以由 Container Image Security Enforcement 用來避免在 {{site.data.keyword.containerlong_notm}} 部署未受保護的映像檔。
 
@@ -42,7 +49,7 @@ lastupdated: "2018-12-04"
 - 提供評估報告，該報告根據 {{site.data.keyword.containerlong_notm}} 特定的安全作法。
 - 提供建議以保護部分應用程式類型的配置檔
 - 提供指示，告知如何修正已報告的[有漏洞套件](#packages)，或其報告中的[配置問題](#app_configurations)
-- 提供裁決給 [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce)
+- 提供裁決給 [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - 在帳戶、名稱空間、儲存庫或標籤層次套用報告的豁免，以註記所標示的問題在何時不適用於您的使用案例
 - 在 {{site.data.keyword.registrylong_notm}} 圖形使用者介面的**標籤**視圖提供相關聯容器的鏈結。您可以列出正在執行並且在已安裝容器掃描器的叢集內使用該映像檔的容器。
 
@@ -106,7 +113,7 @@ lastupdated: "2018-12-04"
 
 如果您未解決任何已發現的問題，那些問題可能會影響使用該映像檔建置之容器的安全。如果未部署 Container Image Security Enforcement，可以繼續使用容器中有安全及配置問題的映像檔。如果已部署 Container Image Security Enforcement 並且針對映像檔在作用中，所有已發現的問題都必須由您的原則豁免，才能從這個映像檔部署容器。
 
-若要在 Container Image Security Enforcement 配置「漏洞警告器」問題的範圍，請參閱[自訂原則](/docs/services/Registry/registry_security_enforce.html#customize_policies)。
+若要在 Container Image Security Enforcement 配置「漏洞警告器」問題的範圍，請參閱[自訂原則](/docs/services/Registry?topic=registry-security_enforce#customize_policies)。
 {:tip}
 
 如果您的映像檔不符合組織原則所設定的需求，您必須配置映像檔以符合那些需求，然後才能部署它。如需如何檢視及變更組織原則的相關資訊，請參閱[設定組織豁免原則](#va_managing_policy)。
@@ -121,11 +128,10 @@ lastupdated: "2018-12-04"
 {:shortdesc}
 
 1. 登入 {{site.data.keyword.Bluemix_notm}}。
-2. 在型錄中，按一下**容器**。
-3. 按一下 **Container Registry** 磚。
-4. 按一下**映像檔**。您的映像檔清單和每個映像檔的安全狀態會顯示在**映像檔**表格中。
-5. 若要查看以 `latest` 標記之映像檔的報告，請按一下該映像檔的列。**映像檔詳細資料**標籤會開啟，顯示該映像檔的資料。如果儲存庫中沒有任何 `latest` 標籤存在，則會使用最新的映像檔。
-6. 如果安全狀態有顯示任何問題，若要進一步了解問題，請按一下**依類型排列的問題**標籤。隨即開啟**漏洞**及**配置問題**表格。
+2. 按一下**導覽功能表**圖示，然後按一下 **Kubernetes**。
+3. 按一下**登錄**，然後按一下**映像檔**磚。您的映像檔清單和每個映像檔的安全狀態會顯示在**映像檔**表格中。
+4. 若要查看以 `latest` 標記之映像檔的報告，請按一下該映像檔的列。**映像檔詳細資料**標籤會開啟，顯示該映像檔的資料。如果儲存庫中沒有任何 `latest` 標籤存在，則會使用最新的映像檔。
+5. 如果安全狀態有顯示任何問題，若要進一步了解問題，請按一下**依類型排列的問題**標籤。隨即開啟**漏洞**及**配置問題**表格。
 
    - **漏洞** 此表格顯示每個問題的「漏洞 ID」、該問題的原則狀態、受影響的套件，以及如何解決問題。若要查看該問題的相關資訊，請展開該列。隨即顯示該問題的摘要，其中包含該問題之供應商安全注意事項的鏈結。會列出包含已知漏洞問題的套件。
   
@@ -135,7 +141,7 @@ lastupdated: "2018-12-04"
   
      清單會包含動作的建議，以便您可以採取動作來提高容器安全和任何未受保護之應用程式設定的安全。展開某一列即可檢視如何解決問題。
 
-7. 針對報告中顯示的每個問題完成更正動作，然後重建映像檔。
+6. 針對報告中顯示的每個問題完成更正動作，然後重建映像檔。
 
 ### 使用 CLI 檢閱漏洞報告
 {: #va_registry_cli}
@@ -172,7 +178,7 @@ lastupdated: "2018-12-04"
 如果您想要管理 {{site.data.keyword.Bluemix_notm}} 組織的安全，可以使用您的原則設定來決定是否豁免問題。您可以選擇使用 Container Image Security Enforcement，確保在為您的原則豁免的問題負責之後，只允許來自不包含任何安全問題之映像檔的部署。
 {:shortdesc}
 
-您可以從任何映像檔部署容器，而不論安全狀態為何，除非已在您的叢集部署 Container Image Security Enforcement。若要找出如何部署 Container Image Security Enforcement，請參閱[安裝安全強制執行](/docs/services/Registry/registry_security_enforce.html#security_enforce)。
+您可以從任何映像檔部署容器，而不論安全狀態為何，除非已在您的叢集部署 Container Image Security Enforcement。若要找出如何部署 Container Image Security Enforcement，請參閱[安裝安全強制執行](/docs/services/Registry?topic=registry-security_enforce#security_enforce)。
 
 當您使用 Container Image Security Enforcement 時，「漏洞警告器」所偵測到的任何安全問題都會導致無法從映像檔部署容器。若要容許部署具有所偵測到問題的映像檔，必須在您的原則新增豁免。
 
@@ -182,7 +188,7 @@ lastupdated: "2018-12-04"
 如果您想要使用 GUI 設定原則的豁免，請完成下列步驟：
 
 1. 登入 {{site.data.keyword.Bluemix_notm}}。您必須登入才能在 GUI 看到「漏洞警告器」。
-2. 按一下**容器**然後按一下 **Container Registry**。
+2. 按一下**導覽功能表**圖示，然後按一下 **Kubernetes**。
 3. 在**漏洞警告器**下，按一下**原則設定**。
 4. 按一下**建立豁免**。
 5. 選取問題類型。
@@ -201,10 +207,10 @@ lastupdated: "2018-12-04"
 
 如果您想要使用 CLI 設定原則的豁免，可以執行下列指令：
 
-- 若要建立安全問題的豁免，請執行 [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) 指令。
-- 若要列出安全問題的豁免，請執行 [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) 指令。
-- 若要列出您可以豁免的安全問題類型，請執行 [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) 指令。
-- 若要刪除安全問題的豁免，請執行 [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) 指令。
+- 若要建立安全問題的豁免，請執行 [`ibmcloud cr exemption-add`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_add) 指令。
+- 若要列出安全問題的豁免，請執行 [`ibmcloud cr exemption-list`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_list) 指令。
+- 若要列出您可以豁免的安全問題類型，請執行 [`ibmcloud cr exemption-types`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_types) 指令。
+- 若要刪除安全問題的豁免，請執行 [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) 指令。
 
 如需指令的相關資訊，您可以在執行指令時使用 `--help` 旗標。
 
@@ -229,7 +235,7 @@ lastupdated: "2018-12-04"
 若要設定服務許可權，請完成下列步驟：
 
 1. 登入 {{site.data.keyword.Bluemix_notm}} CLI 用戶端。如果您有聯合帳戶，請使用 `--sso`。
-2. [將您 `kubectl` CLI](/docs/containers/cs_cli_install.html#cs_cli_configure) 的目標設為要在其中使用 Helm 圖表的叢集。
+2. [將您 `kubectl` CLI](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) 的目標設為要在其中使用 Helm 圖表的叢集。
 3. 建立容器掃描器的服務 ID 及 API 金鑰，並進行命名：
     1. 若要建立服務 ID，請執行下列指令，其中 `<scanner_serviceID>` 是您所選的服務 ID 名稱。請注意其 **CRN**。
 
@@ -265,7 +271,7 @@ lastupdated: "2018-12-04"
 
 若要配置 Helm 圖表，請完成下列步驟：
 
-1. [在 IBM Cloud Kubernetes Service 設定 Helm](/docs/containers/cs_integrations.html#helm)。如果您使用角色型存取控制 (RBAC) 原則來授與 Tiller 存取權，請確定 Tiller 角色擁有所有名稱空間的存取權。提供 Tiller 角色對所有名稱空間的存取權，可確保容器掃描器可以監看所有名稱空間中的容器。
+1. [在 IBM Cloud Kubernetes Service 設定 Helm](/docs/containers?topic=containers-integrations#helm)。如果您使用角色型存取控制 (RBAC) 原則來授與 Tiller 存取權，請確定 Tiller 角色擁有所有名稱空間的存取權。提供 Tiller 角色對所有名稱空間的存取權，可確保容器掃描器可以監看所有名稱空間中的容器。
 
 2. 將 IBM 圖表儲存庫新增至您的 Helm，例如，`ibm`。
 
@@ -303,7 +309,7 @@ lastupdated: "2018-12-04"
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>輸入「漏洞警告器」區域端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。將 <code>registry</code> 取代為 <code>va</code>。例如 <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>輸入「漏洞警告器」區域端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。例如，<code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>。將 <code>registry</code> 取代為 <code>va</code>。例如 <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -320,7 +326,7 @@ lastupdated: "2018-12-04"
    </tr>
    </tbody></table>
 
-5. 以更新的 `config.yaml` 檔案，將 Helm 圖表安裝至您的叢集。更新的內容會儲存在您圖表的 configmap 中。將 `<myscanner>` 取代為您所選的 Helm 圖表名稱。將圖表儲存庫（例如，`ibm`）併入 Helm 圖表路徑。
+5. 使用已更新的 `config.yaml` 檔案，將 Helm 圖表安裝至叢集。更新的內容會儲存在您圖表的 configmap 中。將 `<myscanner>` 取代為您所選的 Helm 圖表名稱。將圖表儲存庫（例如，`ibm`）併入 Helm 圖表路徑。
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
@@ -401,8 +407,8 @@ lastupdated: "2018-12-04"
 確認您的容器盡可能安全，方法是完成下列步驟以檢視其安全報告，並處理任何已報告的安全或配置問題：
 
 1. 選取您要檢視其報告的容器：
-    1. 在型錄中，選取**容器**，然後按一下 **Container Registry**。
-    2. 選取**儲存庫**標籤，然後展開您要的儲存庫列。
+    1. 按一下**導覽功能表**圖示，然後按一下 **Kubernetes**。
+    2. 按一下**登錄**，然後按一下**儲存庫**磚，然後展開您要的儲存庫列。
     3. 選取您要的映像檔列。
     4. 選取**相關聯的容器**標籤，然後選取您要的容器列。安全報告會開啟。
 2. 檢閱各區段以查看映像檔中每個套件的可能安全及配置問題：
@@ -426,7 +432,7 @@ lastupdated: "2018-12-04"
     **範例**
 
     - 如果您的容器與它運算的資料分開，您可以停止容器並刪除它、對映像檔進行必要的變更，然後重新部署，而不會流失任何資料。
-    - 您可以使用 {{site.data.keyword.Bluemix_notm}} 服務，例如 [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about)，以便協助更新有漏洞的容器實例。
+    - 您可以使用 {{site.data.keyword.Bluemix_notm}} 服務，例如 [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about)，以便協助更新有漏洞的容器實例。
     - 在微服務架構中，您可以在修正安全或配置問題時將資料流量遞送到另一個容器實例，然後以紅黑部署方式推送新的映像檔。
 
 5. 如果您現在無法修正問題，可以在原則設定中豁免該問題，如此可避免問題阻擋容器的部署。若要豁免問題，請按一下**開啟及關閉選項清單**圖示，然後按一下**建立豁免**。請參閱[設定組織豁免原則](#va_managing_policy)。

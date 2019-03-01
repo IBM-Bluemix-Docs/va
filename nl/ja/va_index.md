@@ -1,8 +1,12 @@
 ---
 
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-12-04"
+  years: 2017, 2019
+lastupdated: "2019-02-21"
+
+keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+
+subcollection: va
 
 ---
 
@@ -13,6 +17,9 @@ lastupdated: "2018-12-04"
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
 {:tip: .tip}
+{:note: .note}
+{:important: .important}
+{:deprecated: .deprecated}
 {:download: .download}
 
 # 脆弱性アドバイザーを使用したイメージ・セキュリティーの管理
@@ -23,7 +30,7 @@ lastupdated: "2018-12-04"
 
 イメージを名前空間に追加すると、脆弱性アドバイザーによってイメージが自動的にスキャンされ、セキュリティー問題や潜在的な脆弱性が検出されます。 セキュリティー問題が検出された場合、報告された脆弱性を修正するための指示が出されます。
 
-脆弱性アドバイザーは、推奨される修正とベスト・プラクティスが含まれたセキュリティー状況レポートを生成して、[{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index) のセキュリティー管理を提供します。
+脆弱性アドバイザーは、推奨される修正とベスト・プラクティスが含まれたセキュリティー状況レポートを生成して、[{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index) のセキュリティー管理を提供します。
 
 脆弱性アドバイザーによって問題が検出されれば、このイメージのデプロイの非推奨を指示する判断になります。 このイメージのデプロイを選択した場合、このイメージからデプロイされたコンテナーには、コンテナーの攻撃や侵害に使用される可能性のある既知の問題が含まれます。 判断は、指定した適用除外項目に基づいて調整されます。 この判断は、{{site.data.keyword.containerlong_notm}} 内の非セキュアなイメージのデプロイメントを防ぐために、Container Image Security Enforcement が使用できます。
 
@@ -42,7 +49,7 @@ lastupdated: "2018-12-04"
 - {{site.data.keyword.containerlong_notm}} に固有のセキュリティー・プラクティスに基づく評価レポートを提供する
 - アプリケーション・タイプのサブセット用の構成ファイルをセキュアにするために推奨情報を提供する
 - レポートで報告された[脆弱なパッケージ](#packages)または[構成の問題](#app_configurations)を修正する方法について説明する
-- 判断を [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce) に提供する
+- 判断を [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce) に提供する
 - アカウント・レベル、名前空間レベル、リポジトリー・レベル、またはタグ・レベルでレポートに適用除外項目を適用し、フラグが付いた問題をユース・ケースに適用しない場合にマークを付ける
 - {{site.data.keyword.registrylong_notm}} グラフィカル・ユーザー・インターフェースの**「タグ」**ビューで、関連付けられたコンテナーへのリンクを提供する。 Container Scanner がインストールされているクラスターで、実行中のコンテナーとそのイメージを使用しているコンテナーをリストできます。
 
@@ -106,7 +113,7 @@ lastupdated: "2018-12-04"
 
 検出された問題に対処しない場合、それらの問題はそのイメージを使用してビルドされたコンテナーのセキュリティーに影響を与える可能性があります。 Container Image Security Enforcement がデプロイされていない場合は、セキュリティーおよび構成に問題のあるイメージをコンテナー内で使用し続けることができます。 Container Image Security Enforcement がデプロイされ、イメージに対してアクティブな場合、検出されたすべての問題は、このイメージからデプロイ可能なコンテナーに対するポリシーによって適用除外される必要があります。
 
-Container Image Security Enforcement で脆弱性アドバイザーの問題の適用範囲を構成するには、[ポリシーのカスタマイズ](/docs/services/Registry/registry_security_enforce.html#customize_policies)を参照してください。
+Container Image Security Enforcement で脆弱性アドバイザーの問題の適用範囲を構成するには、[ポリシーのカスタマイズ](/docs/services/Registry?topic=registry-security_enforce#customize_policies)を参照してください。
 {:tip}
 
 イメージが組織のポリシーによって設定されている要件を満たしていない場合は、イメージをデプロイする前に、その要件を満たすようにイメージを構成する必要があります。 組織のポリシーを表示および変更する方法について詳しくは、[組織の適用除外項目ポリシーの設定](#va_managing_policy)を参照してください。
@@ -121,11 +128,10 @@ GUI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
 {:shortdesc}
 
 1. {{site.data.keyword.Bluemix_notm}} にログインします。
-2. カタログ内で**「コンテナー」**をクリックします。
-3. **「コンテナー・レジストリー」**タイルをクリックします。
-4. **「イメージ」**をクリックします。 イメージと各イメージのセキュリティー状況のリストが**「イメージ」**表に表示されます。
-5. `latest` タグが付いたイメージのレポートを表示するには、そのイメージの行をクリックします。 そのイメージのデータが表示された**「イメージの詳細 (Image Details)」**タブが開きます。 リポジトリー内に `latest` タグが存在しない場合、最新のイメージが使用されます。
-6. セキュリティー状況に問題が示される場合に、その問題について確認するには、**「タイプ別の問題 (Issues by Type)」**タブをクリックします。 **「脆弱性 (Vulnerabilities)」**表と**「構成の問題」**表が開きます。
+2. **ナビゲーション・メニュー**・アイコンをクリックし、次に**「Kubernetes」**をクリックします。
+3. **「レジストリー (Registry)」**をクリックし、次に**「イメージ」**タイルをクリックします。イメージと各イメージのセキュリティー状況のリストが**「イメージ」**表に表示されます。
+4. `latest` タグが付いたイメージのレポートを表示するには、そのイメージの行をクリックします。 そのイメージのデータが表示された**「イメージの詳細 (Image Details)」**タブが開きます。 リポジトリー内に `latest` タグが存在しない場合、最新のイメージが使用されます。
+5. セキュリティー状況に問題が示される場合に、その問題について確認するには、**「タイプ別の問題 (Issues by Type)」**タブをクリックします。 **「脆弱性 (Vulnerabilities)」**表と**「構成の問題」**表が開きます。
 
    - **脆弱性 (Vulnerabilities)**: この表には、各問題の脆弱性 ID、その問題のポリシー状況、影響を受けるパッケージ、および問題の解決方法が示されます。 その問題の詳細を表示するには、行を展開します。 その問題のベンダーによるセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。 既知の脆弱性問題が含まれているパッケージをリストします。
   
@@ -135,7 +141,7 @@ GUI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
   
      リストには、コンテナーのセキュリティーを向上させるために行うことができる処置の推奨事項と、非セキュアなコンテナーのアプリケーション設定が含まれています。 行を展開すると、問題の解決方法が表示されます。
 
-7. レポートに示された各問題の修正処置を実行し、イメージを再ビルドします。
+6. レポートに示された各問題の修正処置を実行し、イメージを再ビルドします。
 
 ### CLI の使用による、脆弱性レポートの検討
 {: #va_registry_cli}
@@ -172,7 +178,7 @@ CLI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
 {{site.data.keyword.Bluemix_notm}} 組織のセキュリティーを管理する場合は、ポリシー設定を使用して、問題を適用除外するかどうかを決定できます。 Container Image Security Enforcement を使用して、ポリシーによって適用除外される問題と判断された後はセキュリティー問題が含まれないイメージからのみデプロイメントを許可するという選択もできます。
 {:shortdesc}
 
-Container Image Security Enforcement がクラスターにデプロイされていない限り、セキュリティー状況に関係なく、どのイメージからもコンテナーをデプロイできます。 Container Image Security Enforcement のデプロイ方法については、[セキュリティー機能のインストール](/docs/services/Registry/registry_security_enforce.html#security_enforce)を参照してください。
+Container Image Security Enforcement がクラスターにデプロイされていない限り、セキュリティー状況に関係なく、どのイメージからもコンテナーをデプロイできます。 Container Image Security Enforcement のデプロイ方法については、[セキュリティー機能のインストール](/docs/services/Registry?topic=registry-security_enforce#security_enforce)を参照してください。
 
 Container Image Security Enforcement を使用すると、脆弱性アドバイザーによって検出されたセキュリティー問題により、コンテナーがイメージからデプロイされなくなります。 検出された問題が含まれたイメージをデプロイできるようにするには、ポリシーに適用除外項目を追加する必要があります。
 
@@ -182,7 +188,7 @@ Container Image Security Enforcement を使用すると、脆弱性アドバイ�
 GUI を使用してポリシーに適用除外項目を設定するには、以下のステップを実行します。
 
 1. {{site.data.keyword.Bluemix_notm}} にログインします。 GUI に脆弱性アドバイザーを表示するには、ログインした状態である必要があります。
-2. **「コンテナー」**をクリックしてから、**「コンテナー・レジストリー」**をクリックします。
+2. **ナビゲーション・メニュー**・アイコンをクリックし、次に**「Kubernetes」**をクリックします。
 3. **「脆弱性アドバイザー」**の下で、**「ポリシー設定 (Policy Settings)」**をクリックします。
 4. **「適用除外項目の作成 (Create Exemption)」**をクリックします。
 5. 発行タイプを選択します。
@@ -201,22 +207,22 @@ GUI を使用してポリシーに適用除外項目を設定するには、以�
 
 CLI を使用してポリシーに適用除外項目を設定するには、以下のコマンドを実行します。
 
-- セキュリティー問題の適用除外項目を作成するには、[`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) コマンドを実行します。
-- セキュリティー問題の適用除外項目をリストするには、[`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) コマンドを実行します。
-- 適用除外できるセキュリティー問題のタイプをリストするには、[`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) コマンドを実行します。
-- セキュリティー問題の適用除外項目を削除するには、[`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) コマンドを実行します。
+- セキュリティー問題の適用除外項目を作成するには、[`ibmcloud cr exemption-add`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_add) コマンドを実行します。
+- セキュリティー問題の適用除外項目をリストするには、[`ibmcloud cr exemption-list`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_list) コマンドを実行します。
+- 適用除外できるセキュリティー問題のタイプをリストするには、[`ibmcloud cr exemption-types`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_types) コマンドを実行します。
+- セキュリティー問題の適用除外項目を削除するには、[`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) コマンドを実行します。
 
 コマンドを実行するときに `--help` フラグを使用すると、コマンドの詳細情報を表示できます。
 
 ## Container Scanner のインストール
 {: #va_install_container_scanner}
 
-Container Scanner を使用すると、脆弱性アドバイザーはコンテナーの基本イメージに存在しないコンテナーの実行中に見つかった問題を報告できます。コンテナーに対しランタイムの変更を行わない場合、イメージ・レポートに同じ問題が表示されるため、Container Scanner は必要ありません。
+Container Scanner を使用すると、脆弱性アドバイザーはコンテナーの基本イメージに存在しないコンテナーの実行中に見つかった問題を報告できます。 コンテナーに対しランタイムの変更を行わない場合、イメージ・レポートに同じ問題が表示されるため、Container Scanner は必要ありません。
 {:shortdesc}
 
-クラスターで実行されている稼働中のコンテナーのセキュリティー状況を確認するために、Container Scanner をインストールできます。アプリを保護するために、Container Scanner は定期的に実行中のコンテナーをスキャンし、新たに検出された脆弱性を検出して修正できるようにします。
+クラスターで実行されている稼働中のコンテナーのセキュリティー状況を確認するために、Container Scanner をインストールできます。 アプリを保護するために、Container Scanner は定期的に実行中のコンテナーをスキャンし、新たに検出された脆弱性を検出して修正できるようにします。
 
-すべての Kubernetes 名前空間のポッドに割り当てられているコンテナーの脆弱性をモニターするように Container Scanner を設定できます。脆弱性が見つかった場合は、イメージに関する問題を修正してから、アプリを再デプロイする必要があります。Container Scanner は、{{site.data.keyword.registrylong_notm}} に保管されているイメージから作成されたコンテナーのみをサポートします。
+すべての Kubernetes 名前空間のポッドに割り当てられているコンテナーの脆弱性をモニターするように Container Scanner を設定できます。 脆弱性が見つかった場合は、イメージに関する問題を修正してから、アプリを再デプロイする必要があります。 Container Scanner は、{{site.data.keyword.registrylong_notm}} に保管されているイメージから作成されたコンテナーのみをサポートします。
 
 Container Scanner を使用するには、許可をセットアップしてから [Helm チャート ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://docs.helm.sh/developing_charts) をセットアップし、それを、使用するクラスターに関連付ける必要があります。
 
@@ -229,7 +235,7 @@ Container Scanner では、サービスが動作できるように許可が設�
 サービスの許可を設定するには、以下の手順を実行します。
 
 1. {{site.data.keyword.Bluemix_notm}} CLI クライアントにログインします。 統合されたアカウントがある場合は、`--sso` を使用します。
-2. [`kubectl` CLI のターゲット](/docs/containers/cs_cli_install.html#cs_cli_configure)を、Helm チャートを使用するクラスターにします。
+2. [`kubectl` CLI のターゲット](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure)を、Helm チャートを使用するクラスターにします。
 3. Container Scanner のサービス ID と API キーを作成し、名前を付けます。
     1. サービス ID を作成するには、次のコマンドを実行します。ここで、`<scanner_serviceID>` は、そのサービス ID に付けた名前です。 その **CRN** を書き留めます。
 
@@ -246,7 +252,8 @@ Container Scanner では、サービスが動作できるように許可が設�
        {: codeblock}
        スキャナー API キーが返されます。
 
-       後で取得することはできないため、スキャナー API キーは安全に保管してください。また、スキャナーがインストールされているクラスターごとに個別のサービス API キーを用意してください。{: tip}
+       後で取得することはできないため、スキャナー API キーは安全に保管してください。 また、スキャナーがインストールされているクラスターごとに個別のサービス API キーを用意してください。
+       {: tip}
 
     3. `Writer` 役割を付与するサービス・ポリシーを作成します。
 
@@ -263,7 +270,7 @@ Helm チャートを構成し、それを使用するクラスターに、関連
 
 Helm チャートを構成するには、以下の手順を実行します。
 
-1. [IBM Cloud Kubernetes サービスに Helm をセットアップします](/docs/containers/cs_integrations.html#helm)。役割ベースのアクセス制御 (RBAC) ポリシーを使用して Tiller へのアクセス権限を付与する場合は、Tiller 役割がすべての名前空間にアクセス可能であるようにしてください。Tiller 役割にすべての名前空間に対するアクセス権限を付与すると、Container Scanner がすべての名前空間のコンテナーを監視できるようになります。
+1. [IBM Cloud Kubernetes サービスに Helm をセットアップします](/docs/containers?topic=containers-integrations#helm)。 役割ベースのアクセス制御 (RBAC) ポリシーを使用して Tiller へのアクセス権限を付与する場合は、Tiller 役割がすべての名前空間にアクセス可能であるようにしてください。 Tiller 役割にすべての名前空間に対するアクセス権限を付与すると、Container Scanner がすべての名前空間のコンテナーを監視できるようになります。
 
 2. IBM チャート・リポジトリー (`ibm` など) を Helm に追加します。
 
@@ -301,7 +308,7 @@ Helm チャートを構成するには、以下の手順を実行します。
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 <code>registry</code> を <code>va</code> に置き換えます。 例: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>。<code>registry</code> を <code>va</code> に置き換えます。例: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -309,7 +316,8 @@ Helm チャートを構成するには、以下の手順を実行します。
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td><code>ClusterID</code> を、Container Scanner をインストールする Kubernetes クラスターに置き換えます。 クラスター ID をリストするには、<code>ibmcloud ks clusters</code> を実行します。 <br> **ヒント:** 名前ではなく、クラスターの ID を使用します。</td>
+   <td><code>ClusterID</code> を、Container Scanner をインストールする Kubernetes クラスターに置き換えます。 クラスター ID をリストするには、<code>ibmcloud ks clusters</code> を実行します。 <br> **ヒント:** 名前ではなく、クラスターの ID を使用します。
+   </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
@@ -398,8 +406,8 @@ Container Scanner がインストールされ、エージェントがクラス�
 コンテナーが可能な限りセキュアであることをセキュリティー・レポートを表示して確認し、報告されたセキュリティーまたは構成の問題に対処します。それには、次の手順に従います。
 
 1. レポートを表示するコンテナーを選択します。
-    1. カタログ内で**「コンテナー」**を選択し、**「コンテナー・レジストリー」**をクリックします。
-    2. **「リポジトリー」**を選択して、目的のリポジトリーの行を展開します。
+    1. **ナビゲーション・メニュー**・アイコンをクリックし、次に**「Kubernetes」**をクリックします。
+    2. **「レジストリー (Registry)」**をクリックし、**「リポジトリー」**タイルをクリックしたら、目的のリポジトリーの行を展開します。
     3. 目的のイメージの行を選択します。
     4. **「関連付けられたコンテナー (Associated Containers)」**タブを選択し、目的のコンテナーの行を選択します。 セキュリティー・レポートが開きます。
 2. 各セクションを確認して、イメージ内の各パッケージにセキュリティーと構成の問題がないかどうかを調べます。
@@ -423,7 +431,7 @@ Container Scanner がインストールされ、エージェントがクラス�
     **例**
 
     - コンテナーとそれが計算するデータが分離されている場合は、コンテナーを停止して削除し、必要な変更をイメージに加えた後に再デプロイすることで、データが損失されないようにすることができます。
-    - [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about) などの {{site.data.keyword.Bluemix_notm}} サービスを使用して、脆弱なコンテナー・インスタンスの更新を支援することができます。
+    - [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about) などの {{site.data.keyword.Bluemix_notm}} サービスを使用して、脆弱なコンテナー・インスタンスの更新を支援することができます。
     - マイクロサービス・アーキテクチャーでは、別のコンテナー・インスタンスにトラフィックをルーティングしておいて、その間にセキュリティーまたは構成の問題を修正してから、新しいイメージを red-black デプロイメントにプッシュすることができます。
 
 5. これで問題を解決できない場合は、ポリシー設定で問題を適用除外して、この問題がコンテナーのデプロイメントを妨げないようにします。 問題を適用除外するには、**「オプションのリストのオープンおよびクローズ」**アイコンをクリックし、**「適用除外項目の作成 (Create Exemption)」**をクリックします。[組織の適用除外項目ポリシーの設定](#va_managing_policy)を参照してください。

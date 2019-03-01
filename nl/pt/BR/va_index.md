@@ -1,8 +1,12 @@
 ---
 
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-12-04"
+  years: 2017, 2019
+lastupdated: "2019-02-21"
+
+keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+
+subcollection: va
 
 ---
 
@@ -13,6 +17,9 @@ lastupdated: "2018-12-04"
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
 {:tip: .tip}
+{:note: .note}
+{:important: .important}
+{:deprecated: .deprecated}
 {:download: .download}
 
 # Gerenciando a segurança de imagens com o Vulnerability Advisor
@@ -23,7 +30,7 @@ O Vulnerability Advisor verifica o status de segurança das imagens de contêine
 
 Quando você inclui uma imagem em um namespace, ela é automaticamente varrida pelo Vulnerability Advisor para detectar problemas de segurança e potenciais vulnerabilidades. Se problemas de segurança forem localizados, instruções serão fornecidas para ajudá-lo a corrigir a vulnerabilidade relatada.
 
-O Vulnerability Advisor fornece o gerenciamento de segurança para o [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index), gerando um relatório de status de segurança que inclui correções sugeridas e melhores práticas.
+O Vulnerability Advisor fornece o gerenciamento de segurança para o [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index), gerando um relatório de status de segurança que inclui correções sugeridas e melhores práticas.
 
 Quaisquer problemas encontrados pelo Vulnerability Advisor resultam em um veredito que indica que não é aconselhável implementar essa imagem. Se você escolher implementar a imagem, quaisquer contêineres que forem implementados usando a imagem incluirão problemas conhecidos que podem ser usados para atacar ou, de outra forma, comprometer o contêiner. O veredito é ajustado com base em qualquer isenção especificada. Essa avaliação pode ser usada pelo Container Image Security Enforcement para evitar a implementação de imagens não seguras no {{site.data.keyword.containerlong_notm}}.
 
@@ -42,7 +49,7 @@ As funções a seguir estão disponíveis:
 - Fornece um relatório de avaliação que é baseado em práticas de segurança que são específicas para o {{site.data.keyword.containerlong_notm}}
 - Fornece recomendações para proteger arquivos de configuração para um subconjunto de tipos de aplicativos
 - Fornece instruções sobre como corrigir um [pacote vulnerável](#packages) ou [problema de configuração](#app_configurations) relatado em seus relatórios
-- Fornece avaliações para o [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce)
+- Fornece avaliações para o [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - Aplica isenções para os relatórios em uma conta, um namespace, um repositório ou um nível de tag para marcar quando os problemas sinalizados não se aplicam ao seu caso de uso
 - Fornece links para contêineres associados na visualização **Tag** da interface gráfica com o usuário do {{site.data.keyword.registrylong_notm}}. É possível listar os contêineres que estão em execução e que estão usando essa imagem em um cluster no qual o Container Scanner está instalado.
 
@@ -106,7 +113,7 @@ Antes de implementar uma imagem, é possível revisar o relatório do Vulnerabil
 
 Se você não resolver nenhum dos problemas descobertos, esses problemas poderão afetar a segurança dos contêineres que são criados usando essa imagem. Se o Container Image Security Enforcement não for implementado, será possível continuar a usar uma imagem com problemas de segurança e de configuração em um contêiner. Se o Container Image Security Enforcement estiver implementado e ativo para a imagem, todos os problemas descobertos deverão ser isentos pela política para que os contêineres possam ser implementados usando essa imagem.
 
-Para configurar o escopo de cumprimento de problemas do Vulnerability Advisor no Container Image Security Enforcement, consulte [Customizando políticas](/docs/services/Registry/registry_security_enforce.html#customize_policies).
+Para configurar o escopo de cumprimento de problemas do Vulnerability Advisor no Container Image Security Enforcement, consulte [Customizando políticas](/docs/services/Registry?topic=registry-security_enforce#customize_policies).
 {:tip}
 
 Caso a sua imagem não atenda aos requisitos que são configurados pela política de sua organização, deve-se configurar a imagem para atender a esses requisitos antes de poder implementá-la. Para obter mais informações sobre como visualizar e mudar a política de organização, consulte [Configurando políticas de isenção organizacional](#va_managing_policy).
@@ -121,14 +128,14 @@ Se o Container Scanner for implementado, após a implementação da imagem, o Vu
 {:shortdesc}
 
 1. Efetue login no {{site.data.keyword.Bluemix_notm}}.
-2. No catálogo, clique em **Contêineres**.
-3. Clique no azulejo **Registro do contêiner**.
-4. Clique em **Imagens**. Uma lista de suas imagens e o status de segurança
+2. Clique no ícone **Menu de navegação** e, em seguida, clique em
+**Kubernetes**.
+3. Clique em **Registro** e, em seguida, clique no bloco **Imagens**. Uma lista de suas imagens e o status de segurança
 de cada imagem é exibido na tabela **Imagens**.
-5. Para ver o relatório para a imagem que está marcada como `latest`,
+4. Para ver o relatório para a imagem que está marcada como `latest`,
 clique na linha para essa imagem. A guia **Detalhes da imagem** é aberta mostrando
 os dados dessa imagem. Se nenhuma marcação `mais recente` existir no repositório, a imagem mais recente será usada.
-6. Se o status de segurança mostrar quaisquer problemas, para descobrir quais são eles, clique
+5. Se o status de segurança mostrar quaisquer problemas, para descobrir quais são eles, clique
 na guia **Problemas por tipo**. As tabelas **Vulnerabilidades** e **Problemas de configuração** são abertas.
 
    - **Vulnerabilidades** Essa tabela mostra o ID de vulnerabilidade para cada problema, o status da política para esse problema, os pacotes afetados e como resolver o problema. Para
@@ -144,7 +151,7 @@ ver mais informações sobre esse problema, expanda a linha. É exibido um resum
      A lista contém sugestões de ações que podem ser tomadas para aumentar a segurança do
 contêiner e quaisquer configurações de aplicativo para o contêiner que não são seguras. Expanda a linha para visualizar como resolver o problema.
 
-7. Conclua a ação corretiva para cada problema mostrado no relatório e reconstrua a imagem.
+6. Conclua a ação corretiva para cada problema mostrado no relatório e reconstrua a imagem.
 
 ### Revisando um relatório de vulnerabilidade usando a CLI
 {: #va_registry_cli}
@@ -181,7 +188,7 @@ contêiner e quaisquer configurações de aplicativo para o contêiner que não 
 Se você desejar gerenciar a segurança de uma organização do {{site.data.keyword.Bluemix_notm}}, será possível usar sua configuração de política para determinar se um problema está isento ou não. É possível optar por usar o Container Image Security Enforcement para garantir que a implementação seja permitida apenas em imagens que não contêm problemas de segurança após a contabilidade de quaisquer problemas isentos pela sua política.
 {:shortdesc}
 
-É possível implementar contêineres usando qualquer imagem, independentemente do status de segurança, a menos que o Container Image Security Enforcement esteja implementado em seu cluster. Para descobrir como implementar o Container Image Security Enforcement, consulte [Instalando o Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+É possível implementar contêineres usando qualquer imagem, independentemente do status de segurança, a menos que o Container Image Security Enforcement esteja implementado em seu cluster. Para descobrir como implementar o Container Image Security Enforcement, consulte [Instalando o Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce).
 
 Ao usar o Container Image Security Enforcement, qualquer problema de segurança que for detectado pelo Vulnerability Advisor evita que um contêiner seja implementado usando a imagem. Para permitir que uma imagem com problemas detectados seja implementada, as isenções devem ser incluídas em sua política.
 
@@ -191,7 +198,7 @@ Ao usar o Container Image Security Enforcement, qualquer problema de segurança 
 Se você desejar configurar isenções para a política usando a GUI, conclua as etapas a seguir:
 
 1. Efetue login no {{site.data.keyword.Bluemix_notm}}. Deve-se efetuar login para ver o Vulnerability Advisor na GUI.
-2. Clique em **Contêineres** e, em seguida, clique em **Registro do contêiner**.
+2. Clique no ícone **Menu de navegação** e, em seguida, clique em **Kubernetes**.
 3. Em  ** Vulnerability Advisor **, clique em  ** Configurações de política **.
 4. Clique em **Criar isenção**.
 5. Selecione o tipo de problema.
@@ -210,10 +217,10 @@ Também é possível editar e remover isenções ao passar o mouse sobre a linha
 
 Se você desejar configurar isenções para a política usando a CLI, será possível executar os comandos a seguir:
 
-- Para criar uma isenção para um problema de segurança, execute o comando [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add).
-- Para listar suas isenções para problemas de segurança, execute o comando [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list).
-- Para listar os tipos de problemas de segurança que você pode isentar, execute o comando [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types).
-- Para excluir uma isenção para um problema de segurança, execute o comando [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm).
+- Para criar uma isenção para um problema de segurança, execute o comando [`ibmcloud cr exemption-add`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_add).
+- Para listar suas isenções para problemas de segurança, execute o comando [`ibmcloud cr exemption-list`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_list).
+- Para listar os tipos de problemas de segurança que você pode isentar, execute o comando [`ibmcloud cr exemption-types`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_types).
+- Para excluir uma isenção para um problema de segurança, execute o comando [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm).
 
 Para obter mais informações sobre os comandos, é possível usar a sinalização `-- help` ao executar o comando.
 
@@ -238,7 +245,8 @@ O Container Scanner requer que as permissões sejam configuradas para que o serv
 Para configurar permissões de serviço, conclua as etapas a seguir:
 
 1. Efetue login no {{site.data.keyword.Bluemix_notm}} CLI do cliente. Se você tiver uma conta federada, use `--sso`.
-2. [Direcione a CLI `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) para o cluster no qual você deseja usar um gráfico Helm.
+2. [Destine a CLI
+kubectl](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) ao cluster no qual você deseja usar um gráfico do Helm.
 3. Crie um ID de serviço e uma chave de API para o Container Scanner e atribua um nome a ele:
     1. Para criar um ID de serviço, execute o comando a seguir, em que `<scanner_serviceID>` é um nome de sua escolha para o ID do serviço. Observe o **CRN**.
 
@@ -273,7 +281,7 @@ Configure um gráfico Helm e associe-o ao cluster no qual deseja usá-lo.
 
 Para configurar um gráfico Helm, conclua as etapas a seguir:
 
-1. [Configure o Helm no IBM Cloud Kubernetes Service](/docs/containers/cs_integrations.html#helm). Se você usar uma política de controle de acesso baseado na função (RBAC) para conceder acesso ao Tiller, assegure-se de que a função do Tiller tenha acesso a todos os namespaces. Fornecer à função do Tiller acesso a todos os namespaces assegura que o Container Scanner possa observar contêineres em todos os namespaces.
+1. [Configure o Helm no IBM Cloud Kubernetes Service](/docs/containers?topic=containers-integrations#helm). Se você usar uma política de controle de acesso baseado na função (RBAC) para conceder acesso ao Tiller, assegure-se de que a função do Tiller tenha acesso a todos os namespaces. Fornecer à função do Tiller acesso a todos os namespaces assegura que o Container Scanner possa observar contêineres em todos os namespaces.
 
 2. Inclua o repositório de gráficos da IBM em seu Helm, como `ibm`.
 
@@ -311,7 +319,7 @@ Para configurar um gráfico Helm, conclua as etapas a seguir:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Insira a URL de terminal regional do Vulnerability Advisor. Para obter a URL, execute <code>ibmcloud cr info</code> e recupere o endereço do <strong>Registro do contêiner</strong>. Substitua <code>registry</code> por <code>va</code>. Por exemplo, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Insira a URL de terminal regional do Vulnerability Advisor. Para obter a URL, execute <code>ibmcloud cr info</code> e recupere o endereço do <strong>Registro do contêiner</strong>. Por exemplo, <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. Substitua <code>registry</code> por <code>va</code>. Por exemplo, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -413,8 +421,9 @@ Verifique se o seu contêiner está o mais seguro possível visualizando seu rel
 e tome ação com relação a qualquer problema de segurança ou de configuração relatado concluindo as etapas a seguir:
 
 1. Selecione o contêiner para cujo relatório deseja visualizar:
-    1. No catálogo, selecione **Contêineres**, clique em **Registro de contêiner**.
-    2. Selecione **Repositórios** e expanda a linha para o repositório desejado.
+    1. Clique no ícone **Menu de navegação** e, em seguida, clique em **Kubernetes**.
+    2. Clique em **Registro** e, em seguida, clique no bloco **Repositórios** e expanda a
+linha para o repositório desejado.
     3. Selecione a linha para a imagem desejada.
     4. Selecione a guia **Contêineres associados** e, em seguida, selecione a linha para o contêiner desejado. O relatório de segurança é aberto.
 2. Revise as seções para ver os problemas potenciais de segurança e de configuração de cada pacote na imagem:
@@ -443,7 +452,7 @@ existente. Assegure-se de que tenha um bom entendimento da arquitetura de seu co
     **Exemplo**
 
     - Se o seu contêiner for desacoplado dos dados que ele calcula, será possível parar o contêiner e excluí-lo, fazer as mudanças necessárias na imagem e reimplementar, sem perda de dados.
-    - É possível usar um serviço do {{site.data.keyword.Bluemix_notm}}, tal como [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), para ajudar na atualização da instância de contêiner vulnerável.
+    - É possível usar um serviço do {{site.data.keyword.Bluemix_notm}}, tal como [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about), para ajudar na atualização da instância de contêiner vulnerável.
     - Em uma arquitetura de microsserviços, é possível rotear o tráfego para outra instância de
 contêiner enquanto corrige problemas de segurança ou de configuração e envia a nova imagem por push em
 uma implementação vermelho-preto.

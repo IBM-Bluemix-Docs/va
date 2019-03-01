@@ -1,8 +1,12 @@
 ---
 
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-12-04"
+  years: 2017, 2019
+lastupdated: "2019-02-21"
+
+keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+
+subcollection: va
 
 ---
 
@@ -13,6 +17,9 @@ lastupdated: "2018-12-04"
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
 {:tip: .tip}
+{:note: .note}
+{:important: .important}
+{:deprecated: .deprecated}
 {:download: .download}
 
 # Gestione della sicurezza delle immagini con il Controllo vulnerabilità
@@ -23,7 +30,7 @@ Il Controllo vulnerabilità verifica lo stato di sicurezza delle immagini del co
 
 Quando aggiungi un'immagine a uno spazio dei nomi, il Controllo vulnerabilità ne esegue automaticamente la scansione per individuare problemi di sicurezza e potenziali vulnerabilità. Se si riscontrano dei problemi di sicurezza, vengono fornite le istruzioni per aiutare a correggere le vulnerabilità segnalate.
 
-Il Controllo vulnerabilità fornisce la gestione della sicurezza per [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index), generando un report sullo stato della sicurezza che include le correzioni e le prassi ottimali consigliate.
+Il Controllo vulnerabilità fornisce la gestione della sicurezza per [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index), generando un report sullo stato della sicurezza che include le correzioni e le prassi ottimali consigliate.
 
 Qualsiasi problema rilevato dal controllo vulnerabilità determina un verdetto che indica che non è consigliabile distribuire questa immagine. Se scegli di distribuire l'immagine, qualsiasi contenitore distribuito dall'immagine include dei problemi noti che potrebbero essere utilizzati per attaccarlo o comprometterlo in altro modo. Il verdetto viene modificato in base a tutte le esenzioni che hai specificato. Questo verdetto può essere utilizzato da Container Image Security Enforcement per evitare la distribuzione di immagini non sicure in {{site.data.keyword.containerlong_notm}}.
 
@@ -42,7 +49,7 @@ Sono disponibili le seguenti funzioni:
 - Fornisce un report di valutazione basato sulle prassi di sicurezza specifiche per {{site.data.keyword.containerlong_notm}}
 - Fornisce raccomandazioni per proteggere i file di configurazione per una serie secondaria di tipi di applicazione
 - Fornisce istruzioni su come correggere un [pacchetto vulnerabile](#packages) o un [problema di configurazione](#app_configurations) segnalato nei relativi report
-- Fornisce i verdetti a [Container Image Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce)
+- Fornisce i verdetti a [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - Applica esenzioni ai report a un livello di account, spazio dei nomi, repository o tag per indicare quando dei problemi contrassegnati non si applicano al tuo caso d'uso.
 - Fornisce dei link ai contenitori associati nella vista **Tag** della GUI (graphical user interface) {{site.data.keyword.registrylong_notm}}. Puoi elencare i contenitori che sono in esecuzione e che stanno utilizzando tale immagine in un cluster su cui è installato lo Scanner contenitori.
 
@@ -106,7 +113,7 @@ Prima che tu distribuisca un'immagine, puoi riesaminare il relativo report del C
 
 Se non te ne occupi, i problemi rilevati potrebbero avere delle ripercussioni sulla sicurezza dei contenitori creati utilizzando tale immagine. Se Container Image Security Enforcement non viene distribuito, puoi continuare a utilizzare un'immagine che ha problemi di sicurezza e configurazione in un contenitore. Se Container Image Security Enforcement è distribuito e attivo per l'immagine, tutti i problemi rilevati devono essere esentati dalla tua politica perché i contenitori possano essere distribuibili da questa immagine.
 
-Per configurare l'ambito di implementazione dei problemi del Controllo vulnerabilità in Container Image Security Enforcement, vedi [Personalizzazione delle politiche](/docs/services/Registry/registry_security_enforce.html#customize_policies).
+Per configurare l'ambito di implementazione dei problemi del Controllo vulnerabilità in Container Image Security Enforcement, vedi [Personalizzazione delle politiche](/docs/services/Registry?topic=registry-security_enforce#customize_policies).
 {:tip}
 
 Se la tua immagine non soddisfa i requisiti impostati dalla politica della tua organizzazione, devi configurare l'immagine in modo che soddisfi tali requisiti prima di poterla distribuire. Per ulteriori informazioni su come visualizzare e modificare la politica dell'organizzazione, consulta  [Impostazione delle politiche di esenzione organizzative](#va_managing_policy).
@@ -121,11 +128,10 @@ Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi d
 {:shortdesc}
 
 1. Accedi a {{site.data.keyword.Bluemix_notm}}.
-2. Nel catalogo, fai clic su **Containers**.
-3. Fai clic sul tile **Container Registry**.
-4. Fai clic su **Images**. Viene visualizzato un elenco delle tue immagini e dello stato di sicurezza di ogni immagine nella tabella **Images**.
-5. Per visualizzare il report per l'immagine contrassegnata come `latest`, fai clic sulla riga di tale immagine. Si apre la scheda **Image Details** che mostra i dati di tale immagine. Se non esiste alcuna tag `latest` nel repository, viene utilizzata l'immagine più recente.
-6. Se lo stato di sicurezza mostra un problema, per trovare informazioni sui problemi, fai clic sulla scheda **Issues by Type**. Si aprono le tabelle **Vulnerabilities** e **Configuration Issues**.
+2. Fai clic sull'icona relativa al menu di navigazione (**Navigation Menu**) e fai quindi clic su **Kubernetes**.
+3. Fai clic su **Registry** e fai quindi clic sul tile **Images**. Viene visualizzato un elenco delle tue immagini e dello stato di sicurezza di ogni immagine nella tabella **Images**.
+4. Per visualizzare il report per l'immagine contrassegnata come `latest`, fai clic sulla riga di tale immagine. Si apre la scheda **Image Details** che mostra i dati di tale immagine. Se non esiste alcuna tag `latest` nel repository, viene utilizzata l'immagine più recente.
+5. Se lo stato di sicurezza mostra un problema, per trovare informazioni sui problemi, fai clic sulla scheda **Issues by Type**. Si aprono le tabelle **Vulnerabilities** e **Configuration Issues**.
 
    - **Vulnerabilities** questa tabella mostra l'ID di vulnerabilità di ogni problema, lo stato della politica di tale problema, i pacchetti interessati e come risolvere il problema. Per visualizzare ulteriori informazioni su tale problema, espandi la riga. Viene visualizzato un riepilogo di tale problema, che contiene un link all'avviso di sicurezza del fornitore per tale problema. Elenca i pacchetti che contengono problemi di vulnerabilità noti.
   
@@ -135,7 +141,7 @@ Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi d
   
      L'elenco contiene i consigli per le azioni che puoi applicare per aumentare la sicurezza del contenitore e le eventuali impostazioni dell'applicazione per il contenitore che non sono sicure. Espandi la riga per vedere come risolvere il problema.
 
-7. Completa l'azione correttiva per ogni problema mostrato nel report e ricrea l'immagine.
+6. Completa l'azione correttiva per ogni problema mostrato nel report e ricrea l'immagine.
 
 ### Riesame di un report di vulnerabilità utilizzando la CLI
 {: #va_registry_cli}
@@ -172,7 +178,7 @@ Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi d
 Se vuoi gestire la sicurezza di un'organizzazione {{site.data.keyword.Bluemix_notm}}, puoi utilizzare la tua impostazione della politica per determinare se un problema è esente o meno. Puoi scegliere di utilizzare Container Image Security Enforcement per garantire che la distribuzione sia consentita solo da immagini che non contengono alcun problema di sicurezza, una volta ignorati quelli esentati dalla tua politica.
 {:shortdesc}
 
-Puoi distribuire i contenitori da qualsiasi immagine indipendentemente dallo stato della sicurezza, a meno che nel tuo cluster non sia distribuito Container Image Security Enforcement. Per informazioni su come distribuire Container Image Security Enforcement, vedi [Installazione di Security Enforcement](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+Puoi distribuire i contenitori da qualsiasi immagine indipendentemente dallo stato della sicurezza, a meno che nel tuo cluster non sia distribuito Container Image Security Enforcement. Per informazioni su come distribuire Container Image Security Enforcement, vedi [Installazione di Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce).
 
 Quando utilizzi Container Image Security Enforcement, qualsiasi problema di sicurezza rilevato dal Controllo vulnerabilità impedisce la distribuzione di un contenitore dall'immagine. Per consentire la distribuzione di un'immagine con dei problemi rilevati, è necessario aggiungere delle esenzioni alla tua politica.
 
@@ -182,7 +188,7 @@ Quando utilizzi Container Image Security Enforcement, qualsiasi problema di sicu
 Se vuoi impostare delle esenzioni per la politica utilizzando la GUI, completa la seguente procedura:
 
 1. Accedi a {{site.data.keyword.Bluemix_notm}}. Devi aver eseguito l'accesso per visualizzare il Controllo vulnerabilità nella GUI.
-2. Fai clic su **Containers** e quindi su **Container Registry**.
+2. Fai clic sull'icona relativa al menu di navigazione (**Navigation Menu**) e fai quindi clic su **Kubernetes**.
 3. In **Vulnerability Advisor**, fai clic su **Policy Settings**.
 4. Fai clic su **Create Exemption**.
 5. Seleziona il tipo di problema.
@@ -201,10 +207,10 @@ Puoi anche modificare e rimuovere le esenzioni passando il puntatore del mouse s
 
 Se vuoi impostare delle esenzioni per la politica utilizzando la CLI, puoi eseguire questi comandi:
 
-- Per creare un'esenzione per un problema di sicurezza, esegui il comando [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add).
-- Per elencare le eccezioni per i problemi di sicurezza, esegui il comando [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) .
-- Per elencare i tipi di problemi di sicurezza che puoi esentare, esegui il comando [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types).
-- Per eliminare un'esenzione per un problema di sicurezza, esegui il comando [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm).
+- Per creare un'esenzione per un problema di sicurezza, esegui il comando [`ibmcloud cr exemption-add`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_add).
+- Per elencare le eccezioni per i problemi di sicurezza, esegui il comando [`ibmcloud cr exemption-list`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_list) .
+- Per elencare i tipi di problemi di sicurezza che puoi esentare, esegui il comando [`ibmcloud cr exemption-types`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_types).
+- Per eliminare un'esenzione per un problema di sicurezza, esegui il comando [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm).
 
 Per ulteriori informazioni sui comandi, puoi utilizzare l'indicatore `-- help` quando esegui il comando.
 
@@ -229,7 +235,7 @@ Lo Scanner contenitori richiede che le autorizzazioni siano configurate in modo 
 Per configurare le autorizzazioni del servizio, completa la seguente procedura:
 
 1. Accedi al client CLI {{site.data.keyword.Bluemix_notm}}. Se hai un account federato, usa `--sso`.
-2. [Indirizza la tua CLI `kubectl`](/docs/containers/cs_cli_install.html#cs_cli_configure) al cluster dove vuoi usare un grafico Helm.
+2. [Indirizza la tua CLI `kubectl`](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) al cluster dove vuoi usare un grafico Helm.
 3. Crea un ID servizio e una chiave API per lo Scanner contenitori e assegna ad esso un nome:
     1. Per creare un ID servizio, immetti il seguente comando, dove `<scanner_serviceID>` è il nome di tua scelta per l'ID servizio. Prendi nota del relativo **CRN**.
 
@@ -264,7 +270,7 @@ Configura un grafico Helm e associalo al cluster in cui vuoi utilizzarlo.
 
 Per configurare un grafico Helm, completa la seguente procedura:
 
-1. [Configura Helm in IBM Cloud Kubernetes Service](/docs/containers/cs_integrations.html#helm). Se utilizzi una politica RBAC (role-based access control) per concedere l'accesso a Tiller, assicurati che il ruolo Tiller abbia accesso a tutti gli spazi dei nomi. Dare al ruolo Tiller l'accesso a tutti gli spazi dei nomi garantisce che lo Scanner contenitori possa controllare i contenitori in tutti gli spazi dei nomi.
+1. [Configura Helm in IBM Cloud Kubernetes Service](/docs/containers?topic=containers-integrations#helm). Se utilizzi una politica RBAC (role-based access control) per concedere l'accesso a Tiller, assicurati che il ruolo Tiller abbia accesso a tutti gli spazi dei nomi. Dare al ruolo Tiller l'accesso a tutti gli spazi dei nomi garantisce che lo Scanner contenitori possa controllare i contenitori in tutti gli spazi dei nomi.
 
 2. Aggiungi il repository di grafici IBM al tuo Helm, come ad esempio `ibm`.
 
@@ -302,7 +308,7 @@ Per configurare un grafico Helm, completa la seguente procedura:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Immetti l'URL dell'endpoint regionale del Controllo vulnerabilità. Per ottenere l'URL, esegui <code>ibmcloud cr info</code> e recupera l'indirizzo <strong>Registro contenitore</strong>. Sostituisci <code>registry</code> con <code>va</code>. Ad esempio, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Immetti l'URL dell'endpoint regionale del Controllo vulnerabilità. Per ottenere l'URL, esegui <code>ibmcloud cr info</code> e recupera l'indirizzo <strong>Registro contenitore</strong>. Ad esempio, <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. Sostituisci <code>registry</code> con <code>va</code>. Ad esempio, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -400,8 +406,8 @@ Controlla che i contenitori che stai eseguendo nel tuo spazio continuino a esser
 Controlla che il tuo contenitore sia il più sicuro possibile visualizzando il relativo report di sicurezza e intervieni su qualsiasi problema di sicurezza o configurazione notificato completando la seguente procedura:
 
 1. Seleziona il contenitore per cui vuoi visualizzare un report:
-    1. Nel catalogo, seleziona **Containers** e fai clic su **Container Registry**.
-    2. Seleziona **Repositories** e espandi la riga per il repository che desideri.
+    1. Fai clic sull'icona relativa al menu di navigazione (**Navigation Menu**) e fai quindi clic su **Kubernetes**.
+    2. Fai clic su **Registry**, fai quindi clic sul tile **Repositories** ed espandi quindi la riga per il repository che desideri.
     3. Seleziona la riga per l'immagine che desideri.
     4. Seleziona la scheda **Associated Containers** e seleziona quindi la riga per il contenitore che desideri. Il report di sicurezza viene aperto.
 2. Riesamina le sezioni per vedere i potenziali problemi di sicurezza e configurazione per ogni pacchetto nell'immagine.
@@ -425,7 +431,7 @@ Controlla che il tuo contenitore sia il più sicuro possibile visualizzando il r
     **Esempio**
 
     - Se il tuo contenitore è disaccoppiato dai dati che calcola, puoi arrestarlo ed eliminarlo, eseguire le modifiche necessarie all'immagine ed eseguire la ridistribuzione senza perdere dati.
-    - Puoi utilizzare un servizio {{site.data.keyword.Bluemix_notm}}, come ad esempio [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about), per assistenza nell'aggiornamento dell'istanza del contenitore vulnerabile.
+    - Puoi utilizzare un servizio {{site.data.keyword.Bluemix_notm}}, come ad esempio [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about), per assistenza nell'aggiornamento dell'istanza del contenitore vulnerabile.
     - In un'architettura dei microservizi, puoi instradare il traffico a un'altra istanza del contenitore mentre correggi i problemi di sicurezza o di configurazione ed esegui il push della nuova immagine in una distribuzione red-black.
 
 5. Se non puoi correggere il problema ora, puoi esentare il problema nelle tue impostazioni della politica, il che impedisce al problema di bloccare la distribuzione del contenitore. Per esentare il problema, fai clic sull'icona **apri e chiudi elenco di opzioni** e fai clic su **Create Exemption**; vedi [Impostazione delle politiche di esenzione organizzative](#va_managing_policy).

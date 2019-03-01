@@ -1,8 +1,12 @@
 ---
 
 copyright:
-  years: 2017, 2018
-lastupdated: "2018-12-04"
+  years: 2017, 2019
+lastupdated: "2019-02-21"
+
+keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+
+subcollection: va
 
 ---
 
@@ -13,6 +17,9 @@ lastupdated: "2018-12-04"
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
 {:tip: .tip}
+{:note: .note}
+{:important: .important}
+{:deprecated: .deprecated}
 {:download: .download}
 
 # Vulnerability Advisor로 이미지 보안 관리
@@ -23,7 +30,7 @@ Vulnerability Advisor는 {{site.data.keyword.IBM}} 또는 써드파티에서 제
 
 네임스페이스에 이미지를 추가하면 Vulnerability Advisor에서 보안 문제와 잠재적 취약성을 발견하기 위해 자동으로 이미지를 스캔합니다. 보안 문제가 발견되면 보고된 취약성을 수정하는 데 유용한 지시사항이 제공됩니다.
 
-Vulnerability Advisor는 제안되는 수정사항 및 우수 사례가 포함된 심각도 상태 보고서를 생성하여 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry/index.html#index)를 위한 보안 관리를 제공합니다.
+Vulnerability Advisor는 제안되는 수정사항 및 우수 사례가 포함된 심각도 상태 보고서를 생성하여 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index)를 위한 보안 관리를 제공합니다.
 
 Vulnerability Advisor에서 발견된 문제는 이 이미지의 배치는 권장되지 않음을 표시하는 결과를 나타냅니다. 이미지를 배치하도록 선택한 경우 이미지에서 배치된 컨테이너는 컨테이너를 공격하거나 손상시키는 데 사용될 수 있는 문제를 알고 있습니다. 결과는 지정한 면제 정책을 기반으로 조정됩니다. 이 결과는 {{site.data.keyword.containerlong_notm}}에서 비보안 이미지의 배치를 방지하기 위해 컨테이너 이미지 보안 적용으로 사용될 수 있습니다.
 
@@ -42,7 +49,7 @@ Vulnerability Advisor는 이미지를 보호할 수 있는 기능을 제공합�
 - {{site.data.keyword.containerlong_notm}}에 대한 보안 사례를 기반으로 한 평가 보고서 제공
 - 애플리케이션 유형의 서브세트에 대한 구성 파일을 보호하기 위한 권장사항 제공
 - 보고된 [취약한 패키지](#packages) 또는 이 보고서의 [구성 문제](#app_configurations)를 수정하는 방법에 대한 지시사항 제공
-- 결과를 [컨테이너 이미지 보안 적용](/docs/services/Registry/registry_security_enforce.html#security_enforce)에 제공
+- 결과를 [컨테이너 이미지 보안 적용](/docs/services/Registry?topic=registry-security_enforce#security_enforce)에 제공
 - 플래그 지정된 문제가 유스 케이스에 적용되지 않을 때 표시할 계정, 네임스페이스, 저장소 또는 태그 레벨에서 면제를 보고서에 적용
 - {{site.data.keyword.registrylong_notm}} 그래픽 사용자 인터페이스의 **태그** 보기에서 연관된 컨테이너에 대한 링크 제공. 컨테이너 스캐너가 설치된 클러스터에서 해당 이미지를 실행 중이고 사용 중인 컨테이너를 나열할 수 있습니다.
 
@@ -106,13 +113,13 @@ Vulnerability Advisor에서는 지원되는 운영 체제를 사용 중인 이�
 
 발견된 문제를 해결하지 않은 경우 이러한 문제는 이 이미지를 사용하여 빌드된 컨테이너의 보안에 영향을 줄 수 있습니다. 컨테이너 이미지 보안 적용이 배치되지 않은 경우 컨테이너에 보안 및 구성 문제가 있는 이미지를 계속 사용할 수 있습니다. 컨테이너 이미지 보안 적용이 배치되고 이미지용으로 활성인 경우 이 이미지에서 컨테이너를 배치할 수 있도록 정책에서 발견된 모든 문제를 면제해야 합니다.
 
-컨테이너 이미지 보안 적용에서 Vulnerability Advisor 문제 적용 범위를 구성하려면 [정책 사용자 정의](/docs/services/Registry/registry_security_enforce.html#customize_policies)를 참조하십시오.
+컨테이너 이미지 보안 적용에서 Vulnerability Advisor 문제 적용 범위를 구성하려면 [정책 사용자 정의](/docs/services/Registry?topic=registry-security_enforce#customize_policies)를 참조하십시오.
 {:tip}
 
 이미지가 조직 정책에 따라 설정된 요구사항을 만족하지 않으면 해당 요구사항을 충족하도록 이미지를 구성해야 배치할 수 있습니다. 조직 정책을 보고 변경하는 방법에 대한 자세한 정보는 [조직 면제 정책 설정](#va_managing_policy)을 참조하십시오.
 {:tip}
 
-컨테이너 스캐너가 배치되면 이미지를 배치한 후  Vulnerability Advisor에서 컨테이너의 보안 및 구성 문제를 계속 스캔합니다. [컨테이너 보고서 검토](#va_reviewing_container)에 설명된 단계를 따라 발견된 모든 문제를 해결할 수 있습니다.
+컨테이너 스캐너가 배치되면 이미지를 배치한 후 Vulnerability Advisor에서 컨테이너의 보안 및 구성 문제를 계속 스캔합니다. [컨테이너 보고서 검토](#va_reviewing_container)에 설명된 단계를 따라 발견된 모든 문제를 해결할 수 있습니다.
 
 ### GUI를 사용하여 취약성 보고서 검토
 {: #va_reviewing_gui}
@@ -121,11 +128,10 @@ GUI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 {:shortdesc}
 
 1. {{site.data.keyword.Bluemix_notm}}에 로그인하십시오.
-2. 카탈로그에서 **컨테이너**를 클릭하십시오.
-3. **컨테이너 레지스트리** 타일을 클릭하십시오.
-4. **이미지**를 클릭하십시오. 이미지의 목록과 각 이미지의 보안 상태가 **이미지** 테이블에 표시됩니다.
-5. `latest`로 태그가 지정된 이미지에 대한 보고서를 보려면, 해당 이미지의 행을 클릭하십시오. **이미지 세부사항 정보** 탭이 열리고 해당 이미지에 대한 데이터가 표시됩니다. 저장소에 `최신` 태그가 존재하지 않으면 최신 이미지가 사용됩니다.
-6. 보안 상태에 문제가 표시되는 경우 문제에 대해 확인하려면, **유형별 문제** 탭을 클릭하십시오. **취약성** 및 **구성 문제** 테이블이 열립니다.
+2. **탐색 메뉴** 아이콘을 클릭하고 **Kubernetes**를 클릭하십시오.
+3. **레지스트리**를 클릭하고 **이미지** 타일을 클릭하십시오. 이미지의 목록과 각 이미지의 보안 상태가 **이미지** 테이블에 표시됩니다.
+4. `latest`로 태그가 지정된 이미지에 대한 보고서를 보려면, 해당 이미지의 행을 클릭하십시오. **이미지 세부사항 정보** 탭이 열리고 해당 이미지에 대한 데이터가 표시됩니다. 저장소에 `최신` 태그가 존재하지 않으면 최신 이미지가 사용됩니다.
+5. 보안 상태에 문제가 표시되는 경우 문제에 대해 확인하려면, **유형별 문제** 탭을 클릭하십시오. **취약성** 및 **구성 문제** 테이블이 열립니다.
 
    - **취약성** 이 테이블에는 각 문제에 대한 취약성 ID, 해당 문제에 대한 정책 상태, 영향을 받는 패키지 및 문제 해결 방법이 표시됩니다. 해당 문제에 대한 자세한 정보를 보려면 행을 펼치십시오. 문제의 요약 정보가 표시되며 해당 문제와 관련된 벤더 보안 공지사항에 대한 링크가 포함되어 있습니다. 알려진 취약성 문제가 포함된 패키지를 나열합니다.
   
@@ -135,7 +141,7 @@ GUI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
   
      목록에는 비보안 컨테이너에 대한 애플리케이션 설정 및 컨테이너의 보안을 강화하기 위해 수행할 수 있는 조치에 대한 제안사항이 포함되어 있습니다. 문제를 해결하는 방법을 보려면 행을 펼치십시오.
 
-7. 보고서에 표시된 각 문제에 대한 정정 조치를 완료하고 이미지를 다시 빌드하십시오.
+6. 보고서에 표시된 각 문제에 대한 정정 조치를 완료하고 이미지를 다시 빌드하십시오.
 
 ### CLI를 사용하여 취약성 보고서 검토
 {: #va_registry_cli}
@@ -172,7 +178,7 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 {{site.data.keyword.Bluemix_notm}} 조직의 보안을 관리하려면 정책 설정을 사용하여 문제 면제 여부를 판별할 수 있습니다. 사용자 정책에 따라 면제된 문제를 처리한 후 보안 문제가 없는 이미지에서만 배치가 허용되도록 컨테이너 이미지 보안 적용을 사용하게 선택할 수도 있습니다.
 {:shortdesc}
 
-클러스터에 컨테이너 이미지 보안 적용이 배치되지 않은 경우 보안 상태와 상관없이 이미지에서 컨테이너를 배치할 수 있습니다. 컨테이너 이미지 보안 적용을 배치하는 방법을 알아보려면 [보안 적용 설치](/docs/services/Registry/registry_security_enforce.html#security_enforce)를 참조하십시오.
+클러스터에 컨테이너 이미지 보안 적용이 배치되지 않은 경우 보안 상태와 상관없이 이미지에서 컨테이너를 배치할 수 있습니다. 컨테이너 이미지 보안 적용을 배치하는 방법을 알아보려면 [보안 적용 설치](/docs/services/Registry?topic=registry-security_enforce#security_enforce)를 참조하십시오.
 
 컨테이너 이미지 보안 적용을 사용하는 경우 Vulnerability Advisor에서 발견한 보안 문제 때문에 이미지에서 컨테이너가 배치되지 않습니다. 발견된 문제가 있는 이미지를 배치할 수 있으려면 정책에 면제가 추가되어야 합니다.
 
@@ -182,7 +188,7 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 GUI를 사용하여 정책에 면제를 설정하려면 다음 단계를 완료하십시오.
 
 1. {{site.data.keyword.Bluemix_notm}}에 로그인하십시오. GUI에서 Vulnerability Advisor에 로그인해야 합니다.
-2. **컨테이너**를 클릭한 후 **컨테이너 레지스트리**를 클릭하십시오.
+2. **탐색 메뉴** 아이콘을 클릭하고 **Kubernetes**를 클릭하십시오.
 3. **Vulnerability Advisor**에서 **정책 설정**을 클릭하십시오.
 4. **면제 작성**을 클릭하십시오.
 5. 문제 유형을 선택하십시오.
@@ -201,10 +207,10 @@ GUI를 사용하여 정책에 면제를 설정하려면 다음 단계를 완료�
 
 CLI를 사용하여 정책에 면제를 설정하려면 다음 명령을 실행할 수 있습니다.
 
-- 보안 문제 면제를 작성하려면 [`ibmcloud cr exemption-add`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_add) 명령을 실행하십시오.
-- 보안 문제 면제를 나열하려면 [`ibmcloud cr exemption-list`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_list) 명령을 실행하십시오.
-- 면제할 수 있는 보안 문제 유형을 나열하려면 [`ibmcloud cr exemption-types`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_types) 명령을 실행하십시오.
-- 보안 문제 면제를 삭제하려면 [`ibmcloud cr exemption-rm`](/docs/services/Registry/registry_cli.html#bx_cr_exemption_rm) 명령을 실행하십시오.
+- 보안 문제 면제를 작성하려면 [`ibmcloud cr exemption-add`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_add) 명령을 실행하십시오.
+- 보안 문제 면제를 나열하려면 [`ibmcloud cr exemption-list`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_list) 명령을 실행하십시오.
+- 면제할 수 있는 보안 문제 유형을 나열하려면 [`ibmcloud cr exemption-types`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_types) 명령을 실행하십시오.
+- 보안 문제 면제를 삭제하려면 [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) 명령을 실행하십시오.
 
 명령에 대한 자세한 정보는 명령을 실행할 때 `--help` 플래그를 사용할 수 있습니다.
 
@@ -229,7 +235,7 @@ CLI를 사용하여 정책에 면제를 설정하려면 다음 명령을 실행�
 서비스 권한을 설정하려면 다음 단계를 완료하십시오.
 
 1. {{site.data.keyword.Bluemix_notm}} CLI 클라이언트에 로그인하십시오. 연합 계정이 있는 경우 `--sso`를 사용하십시오.
-2. [Helm 차트를 사용할 대상 클러스터로 `kubectl` CLI](/docs/containers/cs_cli_install.html#cs_cli_configure)를 지정하십시오.
+2. [Helm 차트를 사용할 대상 클러스터로 `kubectl` CLI](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure)를 지정하십시오.
 3. 컨테이너 스캐너의 서비스 ID와 API 키를 작성하고 이름을 제공하십시오.
     1. 서비스 ID를 작성하려면 다음 명령을 실행하십시오. 여기서 `<scanner_serviceID>`는 서비스 ID에 대해 선택한 이름입니다. 해당 **CRN**을 기록하십시오.
 
@@ -264,7 +270,7 @@ Helm 차트를 구성하고 사용할 클러스터와 연관시키십시오.
 
 Helm 차트를 구성하려면 다음 단계를 완료하십시오.
 
-1. [IBM Cloud Kubernetes 서비스에 Helm을 설정](/docs/containers/cs_integrations.html#helm)하십시오. 역할 기반 액세스 제어(RBAC) 정책을 사용하여 틸러에 액세스 권한을 부여하는 경우 틸러 역할에 모든 네임스페이스에 대한 액세스 권한이 있는지 확인하십시오. 틸러 역할에 모든 네임스페이스에 대한 액세스 권한을 부여하면 컨테이너 스캐너가 모든 네임스페이스에서 컨테이너를 감시할 수 있습니다.
+1. [IBM Cloud Kubernetes 서비스에 Helm을 설정](/docs/containers?topic=containers-integrations#helm)하십시오. 역할 기반 액세스 제어(RBAC) 정책을 사용하여 틸러에 액세스 권한을 부여하는 경우 틸러 역할에 모든 네임스페이스에 대한 액세스 권한이 있는지 확인하십시오. 틸러 역할에 모든 네임스페이스에 대한 액세스 권한을 부여하면 컨테이너 스캐너가 모든 네임스페이스에서 컨테이너를 감시할 수 있습니다.
 
 2. Helm에 IBM 차트 저장소를 추가하십시오(예: `ibm`).
 
@@ -302,7 +308,7 @@ Helm 차트를 구성하려면 다음 단계를 완료하십시오.
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Vulnerability Advisor 지역 엔드포인트 URL을 입력하십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. <code>registry</code>를 <code>va</code>로 바꾸십시오. 예: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Vulnerability Advisor 지역 엔드포인트 URL을 입력하십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예: <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. <code>registry</code>를 <code>va</code>로 바꾸십시오. 예: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -400,8 +406,8 @@ helm get values <myscanner>
 보고된 보안 또는 구성 문제에 대한 보안 보고서 및 법령을 확인하고, 다음 단계를 완료하여 컨테이너가 최대한 안전한지 확인하십시오.
 
 1. 보고서를 보려는 컨테이너를 선택하십시오.
-    1. 카탈로그에서 **컨테이너**를 선택하고 **컨테이너 레지스트리**를 클릭하십시오.
-    2. **저장소**를 선택하고 원하는 저장소의 행을 펼치십시오.
+    1. **탐색 메뉴** 아이콘을 클릭하고 **Kubernetes**를 클릭하십시오.
+    2. **레지스트리**를 클릭한 다음 **저장소** 타일을 클릭하고 원하는 저장소의 행을 펼치십시오. 
     3. 원하는 이미지의 행을 선택하십시오.
     4. **연관된 컨테이너** 탭을 선택한 후 원하는 컨테이너의 행을 선택하십시오. 보안 보고서가 열립니다.
 2. 이미지에서 각 패키지에 대해 잠재적 보안 및 구성 문제를 보기 위한 섹션을 검토하십시오.
@@ -425,7 +431,7 @@ helm get values <myscanner>
     **예**
 
     - 컨테이너가 컴퓨팅하는 데이터와 분리되는 경우 데이터 유실 없이 컨테이너를 중지하여 삭제하고, 이미지에 필요한 변경사항을 수행하고, 다시 배치할 수 있습니다.
-    - {{site.data.keyword.Bluemix_notm}} 서비스(예: [Delivery Pipeline](/docs/services/ContinuousDelivery/pipeline_about.html#deliverypipeline_about))를 사용하여 취약한 컨테이너 인스턴스를 업데이트하는 데 도움을 받을 수 있습니다.
+    - {{site.data.keyword.Bluemix_notm}} 서비스(예: [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about))를 사용하여 취약한 컨테이너 인스턴스를 업데이트하는 데 도움을 받을 수 있습니다.
     - 마이크로서비스 아키텍처에서, 보안 또는 구성 문제를 수정하는 동안 트래픽을 다른 컨테이너 인스턴스로 라우팅하고 레드-블랙 배치에 새 이미지를 푸시할 수 있습니다.
 
 5. 지금 문제를 해결할 수 없는 경우 정책 설정에서 문제를 면제하면 문제로 인해 컨테이너 배치가 차단되지 않습니다. 문제를 면제하려면 **옵션 목록 열기 및 닫기** 아이콘을 클릭하고 **면제 작성**을 클릭하십시오. [조직 면제 정책 설정](#va_managing_policy)을 참조하십시오.

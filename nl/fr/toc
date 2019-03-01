@@ -1,9 +1,10 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="va" audience="service" href="/docs/services/va/va_index.html" path="services/va"}
+{: .toc subcollection="va" audience="service" href="/docs/services/Registry?topic=va-va_index" path="services/va"}
 Gestion de la sécurité des images avec Vulnerability Advisor
 
     {: .navgroup id="howto"}
     va_index.md
     {: .navgroup-end}
+
