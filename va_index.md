@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-05"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Container Service, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, security issues, configuration issues,
 
 subcollection: va
 
