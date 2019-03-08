@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-21"
+lastupdated: "2019-02-25"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
@@ -129,7 +129,7 @@ GUI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
 
 1. {{site.data.keyword.Bluemix_notm}} にログインします。
 2. **ナビゲーション・メニュー**・アイコンをクリックし、次に**「Kubernetes」**をクリックします。
-3. **「レジストリー (Registry)」**をクリックし、次に**「イメージ」**タイルをクリックします。イメージと各イメージのセキュリティー状況のリストが**「イメージ」**表に表示されます。
+3. **「レジストリー (Registry)」**をクリックし、次に**「イメージ」**タイルをクリックします。 イメージと各イメージのセキュリティー状況のリストが**「イメージ」**表に表示されます。
 4. `latest` タグが付いたイメージのレポートを表示するには、そのイメージの行をクリックします。 そのイメージのデータが表示された**「イメージの詳細 (Image Details)」**タブが開きます。 リポジトリー内に `latest` タグが存在しない場合、最新のイメージが使用されます。
 5. セキュリティー状況に問題が示される場合に、その問題について確認するには、**「タイプ別の問題 (Issues by Type)」**タブをクリックします。 **「脆弱性 (Vulnerabilities)」**表と**「構成の問題」**表が開きます。
 
@@ -275,7 +275,7 @@ Helm チャートを構成するには、以下の手順を実行します。
 2. IBM チャート・リポジトリー (`ibm` など) を Helm に追加します。
 
    ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
 
@@ -308,7 +308,7 @@ Helm チャートを構成するには、以下の手順を実行します。
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>。<code>registry</code> を <code>va</code> に置き換えます。例: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。<code>/va</code> をこのアドレスの最後に追加します。例: <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>

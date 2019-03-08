@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-21"
+lastupdated: "2019-02-25"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
@@ -25,7 +25,7 @@ subcollection: va
 # Vulnerability Advisor로 이미지 보안 관리
 {: #va_index}
 
-Vulnerability Advisor는 {{site.data.keyword.IBM}} 또는 써드파티에서 제공하거나 조직의 레지스트리 네임스페이스에 추가된 컨테이너 이미지의 보안 상태를 검사합니다. 각 클러스터에 컨테이너 스캐너가 설치된 경우 Vulnerability Advisor에서는 실행 중인 컨테이너 상태도 확인합니다.
+Vulnerability Advisor는 {{site.data.keyword.IBM}} 또는 서드파티에서 제공하거나 조직의 레지스트리 네임스페이스에 추가된 컨테이너 이미지의 보안 상태를 검사합니다. 각 클러스터에 컨테이너 스캐너가 설치된 경우 Vulnerability Advisor에서는 실행 중인 컨테이너 상태도 확인합니다.
 {:shortdesc}
 
 네임스페이스에 이미지를 추가하면 Vulnerability Advisor에서 보안 문제와 잠재적 취약성을 발견하기 위해 자동으로 이미지를 스캔합니다. 보안 문제가 발견되면 보고된 취약성을 수정하는 데 유용한 지시사항이 제공됩니다.
@@ -275,7 +275,7 @@ Helm 차트를 구성하려면 다음 단계를 완료하십시오.
 2. Helm에 IBM 차트 저장소를 추가하십시오(예: `ibm`).
 
    ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
 
@@ -308,7 +308,7 @@ Helm 차트를 구성하려면 다음 단계를 완료하십시오.
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Vulnerability Advisor 지역 엔드포인트 URL을 입력하십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예: <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. <code>registry</code>를 <code>va</code>로 바꾸십시오. 예: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Vulnerability Advisor 지역 엔드포인트 URL을 입력하십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>입니다. 이 주소의 끝에 <code>/va</code>를 추가하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>입니다. </td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -372,7 +372,7 @@ helm get values <myscanner>
         <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
       </tr>
       <tr>
-         <td>프랑크프루트</td>
+         <td>프랑크푸르트</td>
          <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
       </tr>
       <tr>
@@ -407,7 +407,7 @@ helm get values <myscanner>
 
 1. 보고서를 보려는 컨테이너를 선택하십시오.
     1. **탐색 메뉴** 아이콘을 클릭하고 **Kubernetes**를 클릭하십시오.
-    2. **레지스트리**를 클릭한 다음 **저장소** 타일을 클릭하고 원하는 저장소의 행을 펼치십시오. 
+    2. **레지스트리**를 클릭한 다음 **저장소** 타일을 클릭하고 원하는 저장소의 행을 펼치십시오.
     3. 원하는 이미지의 행을 선택하십시오.
     4. **연관된 컨테이너** 탭을 선택한 후 원하는 컨테이너의 행을 선택하십시오. 보안 보고서가 열립니다.
 2. 이미지에서 각 패키지에 대해 잠재적 보안 및 구성 문제를 보기 위한 섹션을 검토하십시오.

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-21"
+lastupdated: "2019-02-25"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
@@ -276,7 +276,7 @@ subcollection: va
 2. 將 IBM 圖表儲存庫新增至您的 Helm，例如，`ibm`。
 
    ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
 
@@ -309,7 +309,7 @@ subcollection: va
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>輸入「漏洞警告器」區域端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。例如，<code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>。將 <code>registry</code> 取代為 <code>va</code>。例如 <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>輸入「漏洞警告器」區域端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。請在此位址結尾加上 <code>/va</code>。例如 <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>

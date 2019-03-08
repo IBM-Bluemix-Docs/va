@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-21"
+lastupdated: "2019-02-25"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
@@ -128,7 +128,7 @@ Sie können die Sicherheit von Docker-Images, die in Ihren Namensbereichen in {{
 {:shortdesc}
 
 1. Melden Sie sich bei {{site.data.keyword.Bluemix_notm}} an.
-2. Klicken Sie auf das Symbol **Navigationsmenü** und anschließend auf **Kubernetes**. 
+2. Klicken Sie auf das Symbol **Navigationsmenü** und anschließend auf **Kubernetes**.
 3. Klicken Sie auf **Registry** und anschließend auf die Kachel **Images**. Eine Liste der Images und der Sicherheitsstatus der einzelnen Images werden in der Tabelle **Images** angezeigt.
 4. Zeigen Sie den Bericht für das aktuelle Image (mit dem Tag `latest` markiert) an, indem Sie auf die Zeile für das betreffende Image klicken. Die Registerkarte mit den **Imagedetails** wird geöffnet und enthält die Daten für dieses Image. Enthält das Repository kein Image mit dem Tag `latest`, wird das neueste Image verwendet.
 5. Wenn der Sicherheitsstatus Probleme aufweist, klicken Sie auf die Registerkarte **Probleme nach Typ**, um Informationen zu den Problemen anzuzeigen. Die Tabellen **Sicherheitslücken** und **Konfigurationsprobleme** werden geöffnet.
@@ -188,7 +188,7 @@ Wenn Container Image Security Enforcement verwendet wird, verhindert jedes von V
 Führen Sie die folgenden Schritte aus, um Ausnahmen für die Richtlinie über die grafische Benutzerschnittstelle festzulegen:
 
 1. Melden Sie sich bei {{site.data.keyword.Bluemix_notm}} an. Sie müssen angemeldet sein, um Vulnerability Advisor in der GUI anzuzeigen.
-2. Klicken Sie auf das Symbol **Navigationsmenü** und anschließend auf **Kubernetes**. 
+2. Klicken Sie auf das Symbol **Navigationsmenü** und anschließend auf **Kubernetes**.
 3. Klicken Sie unter **Vulnerability Advisor** auf **Richtlinieneinstellungen**.
 4. Klicken Sie auf **Ausnahme erstellen**.
 5. Wählen Sie den Problemtyp aus.
@@ -275,7 +275,7 @@ Führe Sie die folgenden Schritte aus, um ein Helm-Diagramm zu konfigurieren:
 2. Fügen Sie das IBM Diagrammrepository zu Helm hinzu, z. B. `ibm`.
 
    ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
 
@@ -308,7 +308,7 @@ Führe Sie die folgenden Schritte aus, um ein Helm-Diagramm zu konfigurieren:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Geben Sie die regionale Endpunkt-URL für Vulnerability Advisor ein. Führen Sie zum Abrufen der URL <code>ibmcloud cr info</code> aus und rufen Sie die Adresse der <strong>Container-Registry</strong> ab. Beispiel: <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. Ersetzen Sie <code>registry</code> durch <code>va</code>. Beispiel: <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Geben Sie die regionale Endpunkt-URL für Vulnerability Advisor ein. Führen Sie zum Abrufen der URL <code>ibmcloud cr info</code> aus und rufen Sie die Adresse der <strong>Container-Registry</strong> ab. Beispiel: <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. <code>/va</code> an das Ende dieser Adresse anfügen. Beispiel: <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -406,8 +406,8 @@ Vergewissern Sie sich, dass in Ihrem Bereich ausgeführte Container weiterhin de
 Vergewissern Sie sich, dass der Container so sicher wie möglich ist, indem Sie den zugehörigen Sicherheitsbericht anzeigen und für alle gemeldeten Sicherheits- oder Konfigurationsprobleme die entsprechenden Maßnahmen durchführen. Führen Sie hierzu die folgenden Schritte aus:
 
 1. Wählen Sie den Container aus, für den ein Bericht angezeigt werden soll:
-    1. Klicken Sie auf das Symbol **Navigationsmenü** und anschließend auf **Kubernetes**. 
-    2. Klicken Sie auf **Registry** und anschließend auf die Kachel **Repositorys**. Erweitern Sie dann die Zeile für das gewünschte Repository. 
+    1. Klicken Sie auf das Symbol **Navigationsmenü** und anschließend auf **Kubernetes**.
+    2. Klicken Sie auf **Registry** und anschließend auf die Kachel **Repositorys**. Erweitern Sie dann die Zeile für das gewünschte Repository.
     3. Wählen Sie die Zeile für das gewünschte Image aus.
     4. Wählen Sie die Registerkarte **Zugehörige Container** und anschließend die Zeile für den gewünschten Container aus. Der Sicherheitsbericht wird geöffnet.
 2. Überprüfen Sie die jeweiligen Abschnitte, um die potenziellen Sicherheits- und Konfigurationsprobleme für die einzelnen Pakete im Image anzuzeigen:

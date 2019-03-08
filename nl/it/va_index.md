@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-21"
+lastupdated: "2019-02-25"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
@@ -275,7 +275,7 @@ Per configurare un grafico Helm, completa la seguente procedura:
 2. Aggiungi il repository di grafici IBM al tuo Helm, come ad esempio `ibm`.
 
    ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
 
@@ -308,7 +308,7 @@ Per configurare un grafico Helm, completa la seguente procedura:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Immetti l'URL dell'endpoint regionale del Controllo vulnerabilità. Per ottenere l'URL, esegui <code>ibmcloud cr info</code> e recupera l'indirizzo <strong>Registro contenitore</strong>. Ad esempio, <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. Sostituisci <code>registry</code> con <code>va</code>. Ad esempio, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Immetti l'URL dell'endpoint regionale del Controllo vulnerabilità. Per ottenere l'URL, esegui <code>ibmcloud cr info</code> e recupera l'indirizzo <strong>Registro contenitore</strong>. Ad esempio, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Aggiungi <code>/va</code> alla fine di questo indirizzo. Ad esempio, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>

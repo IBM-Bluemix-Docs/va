@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-21"
+lastupdated: "2019-02-25"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
@@ -278,7 +278,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
 2. 向 Helm 添加 IBM 图表存储库，例如 `ibm`。
 
    ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
 
@@ -311,7 +311,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>输入漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。例如，<code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>。将 <code>registry</code> 替换为 <code>va</code>。例如，<code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>输入漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。将 <code>/va</code> 添加到此地址的结尾处。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>

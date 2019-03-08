@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-21"
+lastupdated: "2019-02-25"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
 
@@ -275,7 +275,7 @@ Pour configurer une charte Helm, procédez comme suit :
 2. Ajoutez le référentiel de charte IBM à votre charte Helm, par exemple `ibm`.
 
    ```
-   helm repo add ibm https://registry.bluemix.net/helm/ibm
+   helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
 
@@ -308,7 +308,7 @@ Pour configurer une charte Helm, procédez comme suit :
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Entrez l'URL de point d'extrémité régionale de Vulnerability Advisor. Pour obtenir l'URL, exécutez <code>ibmcloud cr info</code> et extrayez l'adresse de <strong>Container Registry</strong> (registre de conteneur). Par exemple, <code>https<span comment="make the link not a link">://registry.</span>eu-gb.bluemix.net</code>. Remplacez <code>registry</code> par <code>va</code>. Exemple, <code>https<span comment="make the link not a link">://va.</span>eu-gb.bluemix.net</code></td>
+   <td>Entrez l'URL de point d'extrémité régionale de Vulnerability Advisor. Pour obtenir l'URL, exécutez <code>ibmcloud cr info</code> et extrayez l'adresse de <strong>Container Registry</strong> (registre de conteneur). Par exemple, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Ajoutez <code>/va</code> à la fin de cette adresse. Par exemple, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>.</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
