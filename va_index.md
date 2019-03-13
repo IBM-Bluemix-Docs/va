@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-03-13"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -217,12 +217,12 @@ For more information about the commands, you can use the `--help` flag when you 
 ## Installing the Container Scanner
 {: #va_install_container_scanner}
 
-Container Scanner enables Vulnerability Advisor to report any problems found in running containers that are not present in the container's base image. If you do not make runtimme modifications to your container then Container Scanner is not required because the image report will show the same issues.
+Container Scanner enables Vulnerability Advisor to report any problems found in running containers that are not present in the container's base image. If you do not make runtime modifications to your container then Container Scanner is not required because the image report will show the same issues.
 {:shortdesc}
 
 To check the security status of live containers that are running in your cluster, you can install the Container Scanner. To protect your app, Container Scanner regularly scans your running containers so that you can detect and rectify any newly detected vulnerabilities.
 
-You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must recitify any problems with the image and then redeploy your app. Container Scanner only supports containers that are created from images that are stored in {{site.data.keyword.registrylong_notm}}.
+You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must rectify any problems with the image and then redeploy your app. Container Scanner only supports containers that are created from images that are stored in {{site.data.keyword.registrylong_notm}}.
 
 To use the Container Scanner, you must set up permissions and then set up a [Helm Chart ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/developing_charts) and associate it with the cluster in which you want to use it.
 
