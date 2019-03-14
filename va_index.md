@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-13"
+lastupdated: "2019-03-14"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -325,7 +325,7 @@ To configure a Helm chart, complete the following steps:
    </tr>
    </tbody></table>
 
-5. Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a configmap for your chart. Replace `<myscanner>` with a name of your choice for your Helm chart. Include the chart repository, such as `ibm`, in the Helm chart path.
+5. Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a ConfigMap for your chart. Replace `<myscanner>` with a name of your choice for your Helm chart. Include the chart repository, such as `ibm`, in the Helm chart path.
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
