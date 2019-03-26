@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-25"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -30,7 +30,7 @@ O Vulnerability Advisor verifica o status de segurança das imagens de contêine
 
 Quando você inclui uma imagem em um namespace, ela é automaticamente varrida pelo Vulnerability Advisor para detectar problemas de segurança e potenciais vulnerabilidades. Se problemas de segurança forem localizados, instruções serão fornecidas para ajudá-lo a corrigir a vulnerabilidade relatada.
 
-O Vulnerability Advisor fornece o gerenciamento de segurança para o [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index), gerando um relatório de status de segurança que inclui correções sugeridas e melhores práticas.
+O Vulnerability Advisor fornece o gerenciamento de segurança para o [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started), gerando um relatório de status de segurança que inclui correções sugeridas e melhores práticas.
 
 Quaisquer problemas encontrados pelo Vulnerability Advisor resultam em um veredito que indica que não é aconselhável implementar essa imagem. Se você escolher implementar a imagem, quaisquer contêineres que forem implementados usando a imagem incluirão problemas conhecidos que podem ser usados para atacar ou, de outra forma, comprometer o contêiner. O veredito é ajustado com base em qualquer isenção especificada. Essa avaliação pode ser usada pelo Container Image Security Enforcement para evitar a implementação de imagens não seguras no {{site.data.keyword.containerlong_notm}}.
 
@@ -198,7 +198,8 @@ Ao usar o Container Image Security Enforcement, qualquer problema de segurança 
 Se você desejar configurar isenções para a política usando a GUI, conclua as etapas a seguir:
 
 1. Efetue login no {{site.data.keyword.Bluemix_notm}}. Deve-se efetuar login para ver o Vulnerability Advisor na GUI.
-2. Clique no ícone **Menu de navegação** e, em seguida, clique em **Kubernetes**.
+2. Clique no ícone **Menu de navegação** e, em seguida, clique em
+**Kubernetes**.
 3. Em  ** Vulnerability Advisor **, clique em  ** Configurações de política **.
 4. Clique em **Criar isenção**.
 5. Selecione o tipo de problema.
@@ -421,7 +422,8 @@ Verifique se o seu contêiner está o mais seguro possível visualizando seu rel
 e tome ação com relação a qualquer problema de segurança ou de configuração relatado concluindo as etapas a seguir:
 
 1. Selecione o contêiner para cujo relatório deseja visualizar:
-    1. Clique no ícone **Menu de navegação** e, em seguida, clique em **Kubernetes**.
+    1. Clique no ícone **Menu de navegação** e, em seguida, clique em
+**Kubernetes**.
     2. Clique em **Registro** e, em seguida, clique no bloco **Repositórios** e expanda a
 linha para o repositório desejado.
     3. Selecione a linha para a imagem desejada.

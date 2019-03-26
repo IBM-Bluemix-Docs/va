@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-25"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -30,7 +30,7 @@ subcollection: va
 
 當您將映像檔新增至名稱空間時，「漏洞警告器」會自動掃描映像檔，以偵測安全問題及潛在漏洞。如果找到安全問題，會提供指示以協助修正報告的漏洞。
 
-「漏洞警告器」提供 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index) 的安全管理，並產生包含建議修正程式與最佳作法的安全狀態報告。
+「漏洞警告器」提供 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started) 的安全管理，並產生包含建議修正程式與最佳作法的安全狀態報告。
 
 「漏洞警告器」所發現的任何問題都會導致裁決，指出不建議部署此映像檔。如果您選擇部署映像檔，從該映像檔部署的任何容器都包含已知問題，這些已知問題可能會被用來攻擊或以其他方式洩漏容器機密。裁決會根據您指定的任何豁免而調整。這項裁決可以由 Container Image Security Enforcement 用來避免在 {{site.data.keyword.containerlong_notm}} 部署未受保護的映像檔。
 

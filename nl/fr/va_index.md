@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-25"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -30,7 +30,7 @@ L'assistant de détection des vulnérabilités (Vulnerability Advisor) vérifie 
 
 Lorsque vous ajoutez une image à un espace de nom, cette image est automatiquement analysée par Vulnerability Advisor pour détecter des problèmes de sécurité et des vulnérabilités potentielles. Si des problèmes de sécurité sont identifiés, des instructions vous sont soumises afin de vous aider à résoudre la vulnérabilité signalée.
 
-Vulnerability Advisor fournit la gestion de la sécurité pour [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index) en générant un rapport de statut de sécurité qui inclut des correctifs suggérés et les meilleures pratiques.
+Vulnerability Advisor fournit la gestion de la sécurité pour [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started) en générant un rapport de statut de sécurité qui inclut des correctifs suggérés et les meilleures pratiques.
 
 Les problèmes détectés par Vulnerability Advisor génèrent un verdict stipulant qu'il n'est pas recommandé de déployer cette image. Si vous choisissez de déployer l'image, les conteneurs qui sont déployés à partir de celle-ci comportent des problèmes connus qui peuvent être exploités pour attaquer ou compromettre le conteneur. Le verdict est ajusté en fonction des exemptions que vous avez spécifiées. Ce verdict peut être utilisé par le programme Image Security Enforcement afin d'empêcher le déploiement d'images non sécurisées dans {{site.data.keyword.containerlong_notm}}.
 

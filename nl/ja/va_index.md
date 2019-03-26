@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-25"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -30,7 +30,7 @@ subcollection: va
 
 イメージを名前空間に追加すると、脆弱性アドバイザーによってイメージが自動的にスキャンされ、セキュリティー問題や潜在的な脆弱性が検出されます。 セキュリティー問題が検出された場合、報告された脆弱性を修正するための指示が出されます。
 
-脆弱性アドバイザーは、推奨される修正とベスト・プラクティスが含まれたセキュリティー状況レポートを生成して、[{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index) のセキュリティー管理を提供します。
+脆弱性アドバイザーは、推奨される修正とベスト・プラクティスが含まれたセキュリティー状況レポートを生成して、[{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started) のセキュリティー管理を提供します。
 
 脆弱性アドバイザーによって問題が検出されれば、このイメージのデプロイの非推奨を指示する判断になります。 このイメージのデプロイを選択した場合、このイメージからデプロイされたコンテナーには、コンテナーの攻撃や侵害に使用される可能性のある既知の問題が含まれます。 判断は、指定した適用除外項目に基づいて調整されます。 この判断は、{{site.data.keyword.containerlong_notm}} 内の非セキュアなイメージのデプロイメントを防ぐために、Container Image Security Enforcement が使用できます。
 
@@ -308,7 +308,7 @@ Helm チャートを構成するには、以下の手順を実行します。
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。<code>/va</code> をこのアドレスの最後に追加します。例: <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。 <code>/va</code> をこのアドレスの最後に追加します。 例: <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>

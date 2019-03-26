@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-25"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -30,7 +30,7 @@ Il Controllo vulnerabilità verifica lo stato di sicurezza delle immagini del co
 
 Quando aggiungi un'immagine a uno spazio dei nomi, il Controllo vulnerabilità ne esegue automaticamente la scansione per individuare problemi di sicurezza e potenziali vulnerabilità. Se si riscontrano dei problemi di sicurezza, vengono fornite le istruzioni per aiutare a correggere le vulnerabilità segnalate.
 
-Il Controllo vulnerabilità fornisce la gestione della sicurezza per [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index), generando un report sullo stato della sicurezza che include le correzioni e le prassi ottimali consigliate.
+Il Controllo vulnerabilità fornisce la gestione della sicurezza per [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started), generando un report sullo stato della sicurezza che include le correzioni e le prassi ottimali consigliate.
 
 Qualsiasi problema rilevato dal controllo vulnerabilità determina un verdetto che indica che non è consigliabile distribuire questa immagine. Se scegli di distribuire l'immagine, qualsiasi contenitore distribuito dall'immagine include dei problemi noti che potrebbero essere utilizzati per attaccarlo o comprometterlo in altro modo. Il verdetto viene modificato in base a tutte le esenzioni che hai specificato. Questo verdetto può essere utilizzato da Container Image Security Enforcement per evitare la distribuzione di immagini non sicure in {{site.data.keyword.containerlong_notm}}.
 

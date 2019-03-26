@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-25"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -30,7 +30,7 @@ Vulnerability Advisor comprueba el estado de seguridad de las imágenes de conte
 
 Cuando añade una imagen a un espacio de nombres, Vulnerability Advisor la explora automáticamente para detectar problemas de seguridad y potenciales vulnerabilidades. Si encuentra problemas de seguridad, se proporcionan instrucciones para poder arreglar el problema de vulnerabilidad notificado.
 
-Vulnerability Advisor proporciona funciones de gestión de la seguridad para [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index) y genera un informe sobre el estado de la seguridad que incluye correcciones sugeridas y procedimientos recomendados.
+Vulnerability Advisor proporciona funciones de gestión de la seguridad para [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started) y genera un informe sobre el estado de la seguridad que incluye correcciones sugeridas y procedimientos recomendados.
 
 Todos los problemas que encuentra Vulnerability Advisor dan lugar a un veredicto que indica que no es recomendable desplegar esta imagen. Si elige desplegar la imagen, todos los contenedores que se despliegan de la imagen incluirán problemas conocidos que podrían utilizarse en un ataque o bien comprometer el contenedor. El veredicto se ajusta en función de las exenciones que ha especificado. Este veredicto lo puede utilizar Container Image Security Enforcement para evitar el despliegue de imágenes no seguras en {{site.data.keyword.containerlong_notm}}.
 

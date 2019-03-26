@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-25"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -30,7 +30,7 @@ Vulnerability Advisor는 {{site.data.keyword.IBM}} 또는 서드파티에서 제
 
 네임스페이스에 이미지를 추가하면 Vulnerability Advisor에서 보안 문제와 잠재적 취약성을 발견하기 위해 자동으로 이미지를 스캔합니다. 보안 문제가 발견되면 보고된 취약성을 수정하는 데 유용한 지시사항이 제공됩니다.
 
-Vulnerability Advisor는 제안되는 수정사항 및 우수 사례가 포함된 심각도 상태 보고서를 생성하여 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index)를 위한 보안 관리를 제공합니다.
+Vulnerability Advisor는 제안되는 수정사항 및 우수 사례가 포함된 심각도 상태 보고서를 생성하여 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started)를 위한 보안 관리를 제공합니다.
 
 Vulnerability Advisor에서 발견된 문제는 이 이미지의 배치는 권장되지 않음을 표시하는 결과를 나타냅니다. 이미지를 배치하도록 선택한 경우 이미지에서 배치된 컨테이너는 컨테이너를 공격하거나 손상시키는 데 사용될 수 있는 문제를 알고 있습니다. 결과는 지정한 면제 정책을 기반으로 조정됩니다. 이 결과는 {{site.data.keyword.containerlong_notm}}에서 비보안 이미지의 배치를 방지하기 위해 컨테이너 이미지 보안 적용으로 사용될 수 있습니다.
 
@@ -308,7 +308,7 @@ Helm 차트를 구성하려면 다음 단계를 완료하십시오.
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Vulnerability Advisor 지역 엔드포인트 URL을 입력하십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>입니다. 이 주소의 끝에 <code>/va</code>를 추가하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>입니다. </td>
+   <td>Vulnerability Advisor 지역 엔드포인트 URL을 입력하십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>입니다. 이 주소의 끝에 <code>/va</code>를 추가하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>입니다.</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>

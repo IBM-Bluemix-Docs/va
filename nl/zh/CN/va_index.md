@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-02-25"
+lastupdated: "2019-03-06"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -31,7 +31,7 @@ subcollection: va
 
 将映像添加到名称空间时，漏洞顾问程序会自动对该映像进行扫描，以检测安全问题和潜在漏洞。如果发现安全问题，系统会提供指示信息，以帮助修复所报告的漏洞。
 
-漏洞顾问程序为 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-index#index) 提供安全管理，可生成包含建议修复和最佳实践的安全状态报告。
+漏洞顾问程序为 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started) 提供安全管理，可生成包含建议修复和最佳实践的安全状态报告。
 
 漏洞顾问程序发现的任何问题都会生成判定，指示不建议部署此映像。如果选择部署该映像，那么基于该映像部署的任何容器包含已知问题，可能被用于攻击或以其他方式破坏容器。该判定根据您指定的任何豁免进行调整。Container Image Security Enforcement 可以使用此判定来阻止在 {{site.data.keyword.containerlong_notm}} 中部署非安全映像。
 
