@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-14"
+lastupdated: "2019-03-28"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -253,7 +253,7 @@ To set up service permissions, complete the following steps:
        The scanner API key is returned.
 
        Ensure that you store your scanner API key safely because it cannot be retrieved later. Also ensure that you have a separate service API key for each cluster that the scanner is installed in.
-       {: tip}
+       {: important}
 
     3. Create a service policy that grants the `Writer` role.
 
