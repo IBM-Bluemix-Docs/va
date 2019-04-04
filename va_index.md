@@ -357,6 +357,8 @@ The Container Scanner is now installed, and the agent is deployed as a [DaemonSe
 If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses in the following table.
 {:shortdesc}
 
+
+
  
 
 <p>
