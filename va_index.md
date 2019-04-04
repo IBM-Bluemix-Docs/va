@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-01"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -308,20 +308,20 @@ To configure a Helm chart, complete the following steps:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Enter the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. For example, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Add <code>/va</code> to the end of this address. For example, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>Replace <code>&lt;regional_emit_URL&gt;</code> with the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. For example, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Add <code>/va</code> to the end of this address. For example, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>Replace <code>AccountID</code> with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>ibmcloud account list</code>.</td>
+   <td>Replace <code>&lt;IBM_Cloud_account_ID&gt;</code> with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>ibmcloud account list</code>.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Replace <code>ClusterID</code> with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip:** Use the ID of the cluster, not the name.
+   <td>Replace <code>&lt;cluster_ID&gt;</code> with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip:** Use the ID of the cluster, not the name.
    </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td>Replace <code>APIKey</code> with the scanner API key that you created earlier.</td>
+   <td>Replace <code>&lt;scanner_APIkey&gt;</code> with the scanner API key that you created earlier.</td>
    </tr>
    </tbody></table>
 
