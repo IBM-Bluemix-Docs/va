@@ -354,7 +354,7 @@ The Container Scanner is now installed, and the agent is deployed as a [DaemonSe
 ## Running the Container Scanner from behind a firewall
 {: #va_firewall}
 
-If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses<, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound) in the {{site.data.keyword.containerlong_notm}} documentation.
+If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound) in the {{site.data.keyword.containerlong_notm}} documentation.
 {:shortdesc}
 
 ## Reviewing a container report
