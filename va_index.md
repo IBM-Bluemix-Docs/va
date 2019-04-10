@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-05"
+lastupdated: "2019-04-10"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -354,44 +354,8 @@ The Container Scanner is now installed, and the agent is deployed as a [DaemonSe
 ## Running the Container Scanner from behind a firewall
 {: #va_firewall}
 
-If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses in the following table.
+If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses<, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound) in the {{site.data.keyword.containerlong_notm}} documentation.
 {:shortdesc}
-
-
-
- 
-
-<p>
-  <table summary=" The rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
-  <caption>Table 3. IP addresses to open for outgoing traffic</caption>
-    <thead>
-      <th>Location</th>
-      <th>IP address</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Dallas</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      <tr>
-         <td>Frankfurt</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-      </tr>
-      <tr>
-        <td>London</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-         <td>Sydney</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-        <td>Washington DC</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
 
 ## Reviewing a container report
 {: #va_reviewing_container}
