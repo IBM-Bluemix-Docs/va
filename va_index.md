@@ -403,3 +403,4 @@ Check that your container is as secure as possible by viewing its security repor
 5. If you can't fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
 
 6. Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose.
+   
