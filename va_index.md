@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-10"
+lastupdated: "2019-04-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -127,7 +127,7 @@ If Container Scanner is deployed, after you deploy your image Vulnerability Advi
 You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the GUI.
 {:shortdesc}
 
-1. Log in to {{site.data.keyword.Bluemix_notm}}.
+1. Log in to {{site.data.keyword.cloud_notm}}.
 2. Click the **Navigation Menu** icon, and then click **Kubernetes**.
 3. Click **Registry**, and then click the **Images** tile. A list of your images and the security status of each image is displayed in the **Images** table.
 4. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
@@ -149,7 +149,7 @@ You can review the security of Docker images that are stored in your namespaces 
 You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the CLI.
 {:shortdesc}
 
-1. List the images in your {{site.data.keyword.Bluemix_notm}} account. A list of all images is returned, independent of the namespace where they are stored.
+1. List the images in your {{site.data.keyword.cloud_notm}} account. A list of all images is returned, independent of the namespace where they are stored.
 
    ```
    ibmcloud cr image-list
@@ -175,7 +175,7 @@ You can review the security of Docker images that are stored in your namespaces 
 ## Setting organizational exemption policies
 {: #va_managing_policy}
 
-If you want to manage the security of an {{site.data.keyword.Bluemix_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after accounting for any issues that are exempted by your policy.
+If you want to manage the security of an {{site.data.keyword.cloud_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after accounting for any issues that are exempted by your policy.
 {:shortdesc}
 
 You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce).
@@ -187,7 +187,7 @@ When you use Container Image Security Enforcement, any security issue that is de
 
 If you want to set exemptions to the policy by using the GUI, complete the following steps:
 
-1. Log in to {{site.data.keyword.Bluemix_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
+1. Log in to {{site.data.keyword.cloud_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
 2. Click the **Navigation Menu** icon, and then click **Kubernetes**.
 3. Under **Vulnerability Advisor**, click **Policy Settings**.
 4. Click **Create Exemption**.
@@ -234,7 +234,7 @@ Container Scanner requires that permissions are set up so that the service can o
 
 To set up service permissions, complete the following steps:
 
-1. Log in to the {{site.data.keyword.Bluemix_notm}} CLI client. If you have a federated account, use `--sso`.
+1. Log in to the {{site.data.keyword.cloud_notm}} CLI client. If you have a federated account, use `--sso`.
 2. [Target your `kubectl` CLI](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) to the cluster where you want to use a Helm chart.
 3. Create a service ID and API key for the Container Scanner and give it a name:
     1. To create a service ID, run the following command, where `<scanner_serviceID>` is a name of your choice for the service ID. Note its **CRN**.
@@ -312,7 +312,7 @@ To configure a Helm chart, complete the following steps:
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>Replace <code>&lt;IBM_Cloud_account_ID&gt;</code> with the {{site.data.keyword.Bluemix_notm}} account ID that your cluster is in. To get the account ID, run <code>ibmcloud account list</code>.</td>
+   <td>Replace <code>&lt;IBM_Cloud_account_ID&gt;</code> with the {{site.data.keyword.cloud_notm}} account ID that your cluster is in. To get the account ID, run <code>ibmcloud account list</code>.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
@@ -397,9 +397,10 @@ Check that your container is as secure as possible by viewing its security repor
     **Example**
 
     - If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with no data loss.
-    - You can use an {{site.data.keyword.Bluemix_notm}} service, such as [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about), to assist with updating the vulnerable container instance.
+    - You can use an {{site.data.keyword.cloud_notm}} service, such as [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about), to assist with updating the vulnerable container instance.
     - In a microservices architecture, you can route traffic to another container instance while you fix security or configuration issues, and push the new image in a red-black deployment.
 
 5. If you can't fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
 
 6. Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose.
+   
