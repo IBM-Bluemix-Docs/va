@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -256,7 +256,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
 
        确保安全地存储扫描程序 API 密钥，因为日后无法对其进行检索。
 	    还要确保安装了扫描程序的每个集群有独立的服务 API 密钥。
-       {: tip}
+       {: important}
 
     3. 创建用于授予 `Writer` 角色的服务策略。
 
@@ -311,20 +311,20 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>输入漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。将 <code>/va</code> 添加到此地址的结尾处。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>将 <code>&lt;regional_emit_URL&gt;</code> 替换为漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。将 <code>/va</code> 添加到此地址的结尾处。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>将 <code>AccountID</code> 替换为集群所在的 {{site.data.keyword.Bluemix_notm}} 帐户标识。要获取帐户标识，请运行 <code>ibmcloud account list</code>。</td>
+   <td>将 <code>&lt;IBM_Cloud_account_ID&gt;</code> 替换为集群所在的 {{site.data.keyword.Bluemix_notm}} 帐户标识。要获取帐户标识，请运行 <code>ibmcloud account list</code>。</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>将 <code>ClusterID</code> 替换为要在其中安装容器扫描程序的 Kubernetes 集群。要列出集群标识，请运行 <code>ibmcloud ks clusters</code>。<br> **提示：**使用集群的标识，而不是集群的名称。
+   <td>将 <code>&lt;cluster_ID&gt;</code> 替换为要在其中安装容器扫描程序的 Kubernetes 集群。要列出集群标识，请运行 <code>ibmcloud ks clusters</code>。<br> **提示：**使用集群的标识，而不是集群的名称。
    </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td>将 <code>APIKey</code> 替换为先前创建的扫描程序 API 密钥。</td>
+   <td>将 <code>&lt;scanner_APIkey&gt;</code> 替换为先前创建的扫描程序 API 密钥。</td>
    </tr>
    </tbody></table>
 
@@ -359,6 +359,8 @@ helm get values <myscanner>
 
 如果防火墙阻止出局连接，那么必须配置防火墙以允许工作程序节点访问下表中 IP 地址上的 TCP 端口 `443` 上的容器扫描程序。
 {:shortdesc}
+
+
 
  
 

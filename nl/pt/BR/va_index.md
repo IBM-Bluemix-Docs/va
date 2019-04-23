@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -228,12 +228,12 @@ Para obter mais informações sobre os comandos, é possível usar a sinalizaç�
 ## Instalando o Scanner do Contêiner
 {: #va_install_container_scanner}
 
-O Container Scanner permite que o Vulnerability Advisor relate quaisquer problemas localizados em contêineres em execução que não estão presentes na imagem base do contêiner. Se você não fizer modificações de tempo de execução em seu contêiner, o Container Scanner não será necessário porque o relatório de imagem mostrará os mesmos problemas.
+O Container Scanner permite que o Vulnerability Advisor relate quaisquer problemas localizados em contêineres em execução que não estão presentes na imagem base do contêiner. Se você não fizer modificações no tempo de execução em seu contêiner, o Container Scanner não será necessário porque o relatório de imagem mostrará os mesmos problemas.
 {:shortdesc}
 
 Para verificar o status de segurança de contêineres em tempo real que estão em execução em seu cluster, é possível instalar o Container Scanner. Para proteger seu app, o Container Scanner varre regularmente seus contêineres em execução para que seja possível detectar e retificar quaisquer vulnerabilidades detectadas recentemente.
 
-É possível configurar o Container Scanner para monitorar as vulnerabilidades nos contêineres que são designados aos pods em todos os namespaces do Kubernetes. Quando as vulnerabilidades são localizadas, deve-se retificar quaisquer problemas com a imagem e, em seguida, reimplementar seu app. O Container Scanner suporta somente contêineres que são criados por meio de imagens que estão armazenadas no {{site.data.keyword.registrylong_notm}}.
+É possível configurar o Container Scanner para monitorar as vulnerabilidades nos contêineres que são designados aos pods em todos os namespaces do Kubernetes. Quando as vulnerabilidades são localizadas, deve-se retificar qualquer problema com a imagem e, em seguida, reimplementar seu app. O Container Scanner suporta somente contêineres que são criados por meio de imagens que estão armazenadas no {{site.data.keyword.registrylong_notm}}.
 
 Para usar o Container Scanner, deve-se configurar as permissões e, em seguida, configurar um [Gráfico Helm ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://docs.helm.sh/developing_charts) e associá-lo ao cluster no qual você deseja usá-lo.
 
@@ -265,7 +265,7 @@ kubectl](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) ao c
        A chave API do scanner é retornado.
 
        Assegure-se de armazenar sua chave API do scanner com segurança porque ela não pode ser recuperada posteriormente. Além disso, assegure-se de que você tenha uma chave de API de serviço separada para cada cluster no qual o scanner está instalado.
-       {: tip}
+       {: important}
 
     3. Crie uma política de serviço que conceda a função `Writer`.
 
@@ -320,24 +320,24 @@ Para configurar um gráfico Helm, conclua as etapas a seguir:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Insira a URL de terminal regional do Vulnerability Advisor. Para obter a URL, execute <code>ibmcloud cr info</code> e recupere o endereço do <strong>Registro do contêiner</strong>. Por exemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Inclua <code>/va</code> ao final deste endereço. Por exemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>Substitua <code>&lt;regional_emit_URL&gt;</code> pela URL do terminal regional do Vulnerability Advisor. Para obter a URL, execute <code>ibmcloud cr info</code> e recupere o endereço do <strong>Registro do contêiner</strong>. Por exemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Inclua <code>/va</code> ao final deste endereço. Por exemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>Substitua <code>AccountID</code> pelo ID da conta do {{site.data.keyword.Bluemix_notm}} em que seu cluster está. Para obter o ID da conta, execute <code>ibmcloud account list</code>.</td>
+   <td>Substitua <code>&lt;IBM_Cloud_account_ID&gt;</code> pelo ID da conta do {{site.data.keyword.Bluemix_notm}} na qual seu cluster está. Para obter o ID da conta, execute <code>ibmcloud account list</code>.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Substitua <code>ClusterID</code> pelo cluster do Kubernetes em que você deseja instalar o seu Container Scanner. Para listar os IDs do cluster, execute <code>ibmcloud ks clusters</code>. <br> **Dica:** use o ID do cluster, não o nome.
+   <td>Substitua <code>&lt;cluster_ID&gt;</code> pelo cluster Kubernetes no qual você deseja instalar o Container Scanner. Para listar os IDs do cluster, execute <code>ibmcloud ks clusters</code>. <br> **Dica:** use o ID do cluster, não o nome.
    </td>
    </tr>
    <tr>
    <td><code>Chave</code></td>
-   <td>Substitua <code>APIKey</code> pela chave API do scanner que você criou anteriormente.</td>
+   <td>Substitua <code>&lt;scanner_APIkey&gt;</code> pela chave de API do scanner criada anteriormente.</td>
    </tr>
    </tbody></table>
 
-5. Instale o gráfico Helm em seu cluster com o arquivo `config.yaml` atualizado. As propriedades atualizadas são armazenadas em um configmap para seu gráfico. Substitua `<myscanner>` por um nome de sua escolha para seu gráfico Helm. Inclua o repositório de gráficos, como `ibm`, no caminho do gráfico do Helm.
+5. Instale o gráfico Helm em seu cluster com o arquivo `config.yaml` atualizado. As propriedades atualizadas são armazenadas em um ConfigMap para seu gráfico. Substitua `<myscanner>` por um nome de sua escolha para seu gráfico Helm. Inclua o repositório de gráficos, como `ibm`, no caminho do gráfico do Helm.
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
@@ -368,6 +368,8 @@ O Container Scanner agora está instalado e o agente é implementado como um [Da
 
 Caso o firewall bloqueie conexões de saída, deve-se configurá-lo para permitir que os nós do trabalhador acessem o Container Scanner na porta TCP `443` nos endereços IP na tabela a seguir.
 {:shortdesc}
+
+
 
  
 

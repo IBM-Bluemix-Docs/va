@@ -7,7 +7,7 @@ lastupdated: "2019-02-14"
 ---
 
 
-# 漏洞警告器文件
+# Vulnerability Advisor 文件
 
 
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -253,7 +253,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
 스캐너 API 키가 리턴됩니다.
 
        스캐너 API 키를 나중에 검색할 수 없으므로 이를 안전하게 저장하십시오. 스캐너가 설치된 클러스터마다 개별 서비스 API 키가 있는지도 확인하십시오.
-       {: tip}
+       {: important}
 
     3. `작성자` 역할을 부여하는 서비스 정책을 작성하십시오.
 
@@ -308,20 +308,20 @@ Helm 차트를 구성하려면 다음 단계를 완료하십시오.
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Vulnerability Advisor 지역 엔드포인트 URL을 입력하십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>입니다. 이 주소의 끝에 <code>/va</code>를 추가하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>입니다.</td>
+   <td><code>&lt;regional_emit_URL&gt;</code>을 Vulnerability Advisor 지역 엔드포인트 URL로 바꾸십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>입니다. 이 주소의 끝에 <code>/va</code>를 추가하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>입니다.</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td><code>AccountID</code>를 클러스터가 있는 {{site.data.keyword.Bluemix_notm}} 계정 ID로 바꾸십시오. 계정 ID를 가져오려면 <code>ibmcloud account list</code>를 실행하십시오.</td>
+   <td><code>&lt;IBM_Cloud_account_ID&gt;</code>를 클러스터가 있는 {{site.data.keyword.Bluemix_notm}} 계정 ID로 바꾸십시오. 계정 ID를 가져오려면 <code>ibmcloud account list</code>를 실행하십시오.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td><code>ClusterID</code>를 컨테이너 스캐너를 설치할 Kubernetes 클러스터로 바꾸십시오. 클러스터 ID를 나열하려면 <code>ibmcloud ks clusters</code>를 실행하십시오. <br> **팁:** 이름이 아닌 클러스터의 ID를 사용하십시오.
+   <td><code>&lt;cluster_ID&gt;</code>를 컨테이너 스캐너를 설치할 Kubernetes 클러스터로 바꾸십시오. 클러스터 ID를 나열하려면 <code>ibmcloud ks clusters</code>를 실행하십시오. <br> **팁:** 이름이 아닌 클러스터의 ID를 사용하십시오.
    </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td><code>APIKey</code>를 이전에 작성한 스캐너 API 키로 바꾸십시오.</td>
+   <td><code>&lt;scanner_APIkey&gt;</code>를 이전에 작성한 스캐너 API 키로 바꾸십시오.</td>
    </tr>
    </tbody></table>
 
@@ -356,6 +356,8 @@ helm get values <myscanner>
 
 방화벽이 발신 연결을 차단하는 경우 작업자 노드가 다음 표에 있는 IP 주소의 TCP 포트 `443`에서 컨테이너 스캐너에 액세스할 수 있도록 방화벽을 구성해야 합니다.
 {:shortdesc}
+
+
 
  
 

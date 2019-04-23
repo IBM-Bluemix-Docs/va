@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -222,7 +222,7 @@ Container Scanner を使用すると、脆弱性アドバイザーはコンテ�
 
 クラスターで実行されている稼働中のコンテナーのセキュリティー状況を確認するために、Container Scanner をインストールできます。 アプリを保護するために、Container Scanner は定期的に実行中のコンテナーをスキャンし、新たに検出された脆弱性を検出して修正できるようにします。
 
-すべての Kubernetes 名前空間のポッドに割り当てられているコンテナーの脆弱性をモニターするように Container Scanner を設定できます。 脆弱性が見つかった場合は、イメージに関する問題を修正してから、アプリを再デプロイする必要があります。 Container Scanner は、{{site.data.keyword.registrylong_notm}} に保管されているイメージから作成されたコンテナーのみをサポートします。
+すべての Kubernetes 名前空間のポッドに割り当てられているコンテナーの脆弱性をモニターするように Container Scanner を設定できます。 脆弱性が見つかった場合は、イメージに関する問題を修正してから、アプリを再デプロイする必要があります。Container Scanner は、{{site.data.keyword.registrylong_notm}} に保管されているイメージから作成されたコンテナーのみをサポートします。
 
 Container Scanner を使用するには、許可をセットアップしてから [Helm チャート ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://docs.helm.sh/developing_charts) をセットアップし、それを、使用するクラスターに関連付ける必要があります。
 
@@ -253,7 +253,7 @@ Container Scanner では、サービスが動作できるように許可が設�
        スキャナー API キーが返されます。
 
        後で取得することはできないため、スキャナー API キーは安全に保管してください。 また、スキャナーがインストールされているクラスターごとに個別のサービス API キーを用意してください。
-       {: tip}
+       {: important}
 
     3. `Writer` 役割を付与するサービス・ポリシーを作成します。
 
@@ -308,24 +308,24 @@ Helm チャートを構成するには、以下の手順を実行します。
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>脆弱性アドバイザーの地域エンドポイント URL を入力します。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。 <code>/va</code> をこのアドレスの最後に追加します。 例: <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td><code>&lt;regional_emit_URL&gt;</code> を、脆弱性アドバイザーの地域エンドポイント URL に置き換えます。URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。 <code>/va</code> をこのアドレスの最後に追加します。 例: <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td><code>AccountID</code> を、クラスターが入っている {{site.data.keyword.Bluemix_notm}} アカウント ID に置き換えます。 アカウント ID を取得するには、<code>ibmcloud account list</code> を実行します。</td>
+   <td><code>&lt;IBM_Cloud_account_ID&gt;</code> を、クラスターが入っている {{site.data.keyword.Bluemix_notm}} アカウント ID に置き換えます。アカウント ID を取得するには、<code>ibmcloud account list</code> を実行します。</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td><code>ClusterID</code> を、Container Scanner をインストールする Kubernetes クラスターに置き換えます。 クラスター ID をリストするには、<code>ibmcloud ks clusters</code> を実行します。 <br> **ヒント:** 名前ではなく、クラスターの ID を使用します。
+   <td><code>&lt;cluster_ID&gt;</code> を、Container Scanner をインストールする Kubernetes クラスターに置き換えます。クラスター ID をリストするには、<code>ibmcloud ks clusters</code> を実行します。 <br> **ヒント:** 名前ではなく、クラスターの ID を使用します。
    </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td><code>APIKey</code> を、先ほど作成したスキャナー API キーに置き換えます。</td>
+   <td><code>&lt;scanner_APIkey&gt;</code> を、先ほど作成したスキャナー API キーに置き換えます。</td>
    </tr>
    </tbody></table>
 
-5. 更新された `config.yaml` ファイルを使用して、クラスターに Helm チャートをインストールします。 更新されたプロパティーが、チャートの構成マップに保管されます。 `<myscanner>` を、Helm チャートの好みの名前と置き換えます。 チャート・リポジトリー (`ibm` など) を Helm チャート・パスに含めます。
+5. 更新された `config.yaml` ファイルを使用して、クラスターに Helm チャートをインストールします。 更新されたプロパティーが、チャートの ConfigMap に保管されます。`<myscanner>` を、Helm チャートの好みの名前と置き換えます。 チャート・リポジトリー (`ibm` など) を Helm チャート・パスに含めます。
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
@@ -356,6 +356,8 @@ Container Scanner がインストールされ、エージェントがクラス�
 
 ファイアウォールで発信接続がブロックされている場合は、次の表の IP アドレスに対して、ワーカーノードが TCP ポート `443` の Container Scanner にアクセスできるようにファイアウォールを構成する必要があります。
 {:shortdesc}
+
+
 
  
 

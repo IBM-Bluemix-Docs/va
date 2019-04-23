@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -253,7 +253,7 @@ Pour configurer les droits du service, procédez comme suit :
        La clé d'API de scanner est renvoyée.
 
        Veillez à stocker votre clé d'API de scanner de manière sécurisée car elle ne pourra pas être extraite ultérieurement. Vérifiez également que vous disposez d'une clé d'API distincte pour chaque cluster sur lequel est installé le scanner.
-       {: tip}
+       {: important}
 
     3. Créez une règle de service accordant le rôle `Writer` (auteur).
 
@@ -308,24 +308,24 @@ Pour configurer une charte Helm, procédez comme suit :
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Entrez l'URL de point d'extrémité régionale de Vulnerability Advisor. Pour obtenir l'URL, exécutez <code>ibmcloud cr info</code> et extrayez l'adresse de <strong>Container Registry</strong> (registre de conteneur). Par exemple, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Ajoutez <code>/va</code> à la fin de cette adresse. Par exemple, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>.</td>
+   <td>Remplacez <code>&lt;regional_emit_URL&gt;</code> par l'URL de point d'extrémité régionale de Vulnerability Advisor. Pour obtenir l'URL, exécutez <code>ibmcloud cr info</code> et extrayez l'adresse de <strong>Container Registry</strong> (registre de conteneur). Par exemple, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Ajoutez <code>/va</code> à la fin de cette adresse. Par exemple, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>.</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>Remplacez <code>AccountID</code> par l'ID de compte {{site.data.keyword.Bluemix_notm}} dans lequel se trouve votre cluster. Pour obtenir l'ID compte, exécutez <code>ibmcloud account list</code>.</td>
+   <td>Remplacez <code>&lt;IBM_Cloud_account_ID&gt;</code> par l'ID de compte {{site.data.keyword.Bluemix_notm}} dans lequel se trouve votre cluster. Pour obtenir l'ID de compte, exécutez <code>ibmcloud account list</code>.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Remplacez <code>ClusterID</code> par le cluster Kubernetes dans lequel vous voulez installer l'outil Container Scanner. Pour répertorier les ID de cluster, exécutez <code>ibmcloud ks clusters</code>. <br> **Astuce :** n'utilisez pas le nom du cluster, mais son ID.
+   <td>Remplacez <code>&lt;cluster_ID&gt;</code> par le cluster Kubernetes dans lequel vous voulez installer l'outil Container Scanner. Pour répertorier les ID de cluster, exécutez <code>ibmcloud ks clusters</code>. <br> **Astuce :** n'utilisez pas le nom du cluster, mais son ID.
    </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td>Remplacez <code>APIKey</code> par la clé d'API de scanner créée précédemment.</td>
+   <td>Remplacez <code>&lt;scanner_APIkey&gt;</code> par la clé d'API de scanner créée précédemment.</td>
    </tr>
    </tbody></table>
 
-5. Installez la charte Helm sur votre cluster avec le fichier `config.yaml` mis à jour. Les propriétés mises à jour sont stockées dans un objet configmap pour votre charte. Remplacez `<myscanner>` par le nom choisi pour votre charte Helm. Incluez le référentiel de charte, par exemple `ibm`, au chemin d'accès à la charte Helm.
+5. Installez la charte Helm sur votre cluster avec le fichier `config.yaml` mis à jour. Les propriétés mises à jour sont stockées dans un objet ConfigMap pour votre charte. Remplacez `<myscanner>` par le nom choisi pour votre charte Helm. Incluez le référentiel de charte, par exemple `ibm`, au chemin d'accès à la charte Helm.
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
@@ -356,6 +356,8 @@ L'outil Container Scanner est maintenant installé et l'agent est déployé en t
 
 Si votre pare-feu bloque les connexions sortantes, vous devez le configurer pour qu'il autorise les noeuds worker à accéder à l'outil Container Scanner sur le port TCP `443` sur les adresses IP répertoriées dans le tableau suivant.
 {:shortdesc}
+
+
 
  
 

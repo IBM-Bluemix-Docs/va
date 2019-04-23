@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -253,7 +253,7 @@ Führen Sie die folgenden Schritte aus, um Serviceberechtigungen einzurichten:
        Der API-Schlüssel des Scanners wird zurückgegeben.
 
        Stellen Sie sicher, dass der Scanner-API-Schlüssel sicher gespeichert wird, da er zu einem späteren Zeitpunkt nicht erneut abgerufen werden kann. Stellen Sie darüber hinaus sicher, dass Sie für jeden Cluster, in dem der Scanner installiert ist, über einen separaten API-Schlüssel verfügen.
-       {: tip}
+       {: important}
 
     3. Erstellen Sie eine Servicerichtlinie, mit der die Rolle eines `Schreibberechtigten` erteilt wird.
 
@@ -308,24 +308,24 @@ Führe Sie die folgenden Schritte aus, um ein Helm-Diagramm zu konfigurieren:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Geben Sie die regionale Endpunkt-URL für Vulnerability Advisor ein. Führen Sie zum Abrufen der URL <code>ibmcloud cr info</code> aus und rufen Sie die Adresse der <strong>Container-Registry</strong> ab. Beispiel: <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. <code>/va</code> an das Ende dieser Adresse anfügen. Beispiel: <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>Ersetzen Sie <code>&lt;regional_emit_URL&gt;</code> durch die URL des regionalen Endpunkts für Vulnerability Advisor. Führen Sie zum Abrufen der URL <code>ibmcloud cr info</code> aus und rufen Sie die Adresse der <strong>Container-Registry</strong> ab. Beispiel: <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. <code>/va</code> an das Ende dieser Adresse anfügen. Beispiel: <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>Ersetzen Sie <code>AccountID</code> durch die ID des {{site.data.keyword.Bluemix_notm}}-Kontos, in dem sich der Cluster befindet. Zum Abrufen der Konto-ID führen Sie <code>ibmcloud account list</code> aus.</td>
+   <td>Ersetzen Sie <code>&lt;IBM_Cloud_account_ID&gt;</code> durch die ID des {{site.data.keyword.Bluemix_notm}}-Kontos, in dem sich der Cluster befindet. Zum Abrufen der Konto-ID führen Sie <code>ibmcloud account list</code> aus.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Ersetzen Sie <code>ClusterID</code> durch den Kubernetes-Cluster, in dem Container Scanner installiert werden soll. Zum Abrufen einer Liste mit Cluster-IDs führen Sie <code>ibmcloud ks clusters</code> aus. <br> **Tipp:** Verwenden Sie die ID des Clusters, nicht den Namen.
+   <td>Ersetzen Sie <code>&lt;cluster_ID&gt;</code> durch den Kubernetes-Cluster, in dem Container Scanner installiert werden soll. Zum Abrufen einer Liste mit Cluster-IDs führen Sie <code>ibmcloud ks clusters</code> aus. <br> **Tipp:** Verwenden Sie die ID des Clusters, nicht den Namen.
    </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td>Ersetzen Sie <code>APIKey</code> durch den API-Schlüssel des Scanners, der in einem der vorhergehenden Schritte erstellt wurde.</td>
+   <td>Ersetzen Sie <code>&lt;scanner_APIkey&gt;</code> durch den API-Schlüssel des Scanners, der in einem der vorhergehenden Schritte erstellt wurde.</td>
    </tr>
    </tbody></table>
 
-5. Installieren Sie das Helm-Diagramm mit der aktualisierten Datei `config.yaml` im Cluster. Die aktualisierten Eigenschaften werden in einer Konfigurationsübersicht für das Diagramm gespeichert. Ersetzen Sie `<myscanner>` durch den gewünschten Namen für das Helm-Diagramm. Beziehen Sie das Diagrammrepository, z. B. `ibm`, in den Helm-Diagrammpfad ein.
+5. Installieren Sie das Helm-Diagramm mit der aktualisierten Datei `config.yaml` im Cluster. Die aktualisierten Eigenschaften werden in einer Konfigurationsübersicht (ConfigMap) für das Diagramm gespeichert. Ersetzen Sie `<myscanner>` durch den gewünschten Namen für das Helm-Diagramm. Beziehen Sie das Diagrammrepository, z. B. `ibm`, in den Helm-Diagrammpfad ein.
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
@@ -356,6 +356,8 @@ Container Scanner ist nun installiert und der Agent ist als [Dämongruppe ![Symb
 
 Wenn Ihre Firewall abgehende Verbindungen blockiert, müssen Sie sie so konfigurieren, dass Workerknoten auf den Container Scanner am TCP-Port `443` über die in der folgenden Tabelle aufgeführten IP-Adressen zugreifen können.
 {:shortdesc}
+
+
 
  
 

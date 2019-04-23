@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -22,25 +22,26 @@ subcollection: va
 {:deprecated: .deprecated}
 {:download: .download}
 
-# 使用漏洞警告器管理映像檔安全
+# 使用 Vulnerability Advisor 管理映像檔安全
 {: #va_index}
 
-「漏洞警告器」會針對由 {{site.data.keyword.IBM}}、協力廠商所提供的容器映像檔，或者新增至您組織登錄名稱空間的容器映像檔，檢查其安全狀態。如果您已在每個叢集安裝容器掃描器，則「漏洞警告器」也會檢查執行中容器的狀態。
+Vulnerability Advisor 會針對由 {{site.data.keyword.IBM}}、協力廠商所提供的容器映像檔，或者新增至您組織登錄名稱空間的容器映像檔，檢查其安全狀態。如果您已在每個叢集安裝容器掃描器，則 Vulnerability Advisor 也會檢查執行中容器的狀態。
 {:shortdesc}
 
-當您將映像檔新增至名稱空間時，「漏洞警告器」會自動掃描映像檔，以偵測安全問題及潛在漏洞。如果找到安全問題，會提供指示以協助修正報告的漏洞。
+當您將映像檔新增至名稱空間時，Vulnerability Advisor 會自動掃描映像檔，以偵測安全問題及潛在漏洞。如果找到安全問題，會提供指示以協助修正報告的漏洞。
 
-「漏洞警告器」提供 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started) 的安全管理，並產生包含建議修正程式與最佳作法的安全狀態報告。
+Vulnerability Advisor 提供 [{{site.data.keyword.registrylong_notm}}](/docs/services/Registry?topic=registry-getting-started#getting-started) 的安全管理，並產生包含建議修正程式與最佳作法的安全狀態報告。
 
-「漏洞警告器」所發現的任何問題都會導致裁決，指出不建議部署此映像檔。如果您選擇部署映像檔，從該映像檔部署的任何容器都包含已知問題，這些已知問題可能會被用來攻擊或以其他方式洩漏容器機密。裁決會根據您指定的任何豁免而調整。這項裁決可以由 Container Image Security Enforcement 用來避免在 {{site.data.keyword.containerlong_notm}} 部署未受保護的映像檔。
+Vulnerability Advisor 所發現的任何問題都會導致裁決，指出不建議部署此映像檔。如果您選擇部署映像檔，從該映像檔部署的任何容器都包含已知問題，這些已知問題可能會被用來攻擊或以其他方式洩漏容器機密。裁決會根據您指定的任何豁免而調整。這項裁決可以由 Container Image Security Enforcement 用來避免在 {{site.data.keyword.containerlong_notm}} 部署未受保護的映像檔。
 
-修正「漏洞警告器」所報告的安全及配置問題，有助於您保護 {{site.data.keyword.cloud_notm}} 基礎架構。
+修正 Vulnerability Advisor 所報告的安全及配置問題，有助於您保護 {{site.data.keyword.cloud_notm}} 基礎架構。
 
 
-## 關於漏洞警告器
+## 關於 Vulnerability Advisor
 {: #about}
 
-「漏洞警告器」提供功能來協助保護映像檔。{:shortdesc}
+Vulnerability Advisor 提供功能來協助保護映像檔。
+{:shortdesc}
 
 可用的功能如下：
 
@@ -55,11 +56,11 @@ subcollection: va
 
 在「登錄」儀表板中，**原則狀態**直欄會顯示儲存庫的狀態。鏈結的報告會識別映像檔的良好雲端安全作法。
 
-「漏洞警告器」儀表板提供映像檔的安全概觀與評量，以及執行中容器的鏈結（如果已安裝容器掃描器的話）。如果您想要找出「漏洞警告器」儀表板的相關資訊，請參閱[檢閱漏洞報告](#va_reviewing)。
+Vulnerability Advisor 儀表板提供映像檔的安全概觀與評量，以及執行中容器的鏈結（如果已安裝容器掃描器的話）。如果您想要找出 Vulnerability Advisor 儀表板的相關資訊，請參閱[檢閱漏洞報告](#va_reviewing)。
 
 **資料保護**
 
-為了掃描您帳戶中映像檔與容器的安全問題，「漏洞警告器」會收集、儲存及處理下列資訊：
+為了掃描您帳戶中映像檔與容器的安全問題，Vulnerability Advisor 會收集、儲存及處理下列資訊：
 
 - 開放式欄位，包括 ID、說明及映像檔名稱（登錄、名稱空間、儲存庫名稱及映像檔標籤）
 - Kubernetes meta 資料，包括 Kubernetes 資源的名稱，例如，Pod、抄本集與部署名稱
@@ -67,7 +68,7 @@ subcollection: va
 - 映像檔及容器中的系統內容及應用程式配置檔
 - 已安裝套件及媒體庫（包括其版本）
 
-請勿將個人資訊放到「漏洞警告器」會處理的任何欄位或位置中，如之前清單中所示。
+請勿將個人資訊放到 Vulnerability Advisor 會處理的任何欄位或位置中，如之前清單中所示。
 
 掃描結果（聚集在資料中心層次）會進行處理以產生匿名度量，以便運作及改進服務。
 
@@ -79,7 +80,7 @@ subcollection: va
 ### 有漏洞的套件
 {: #packages}
 
-「漏洞警告器」會檢查使用支援作業系統的映像檔中是否有具有漏洞的套件，並提供關於漏洞之任何相關安全注意事項的鏈結。
+Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有具有漏洞的套件，並提供關於漏洞之任何相關安全注意事項的鏈結。
 {:shortdesc}
 
 掃描結果中會顯示包含已知漏洞問題的套件。潛在漏洞會使用下表所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件升級可能會解決多個漏洞。
@@ -91,7 +92,7 @@ subcollection: va
   |Debian|[Debian 安全公告 ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.debian.org/debian-security-announce/)|
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://access.redhat.com/errata/#/)|
   |Ubuntu|[Ubuntu Security Notices ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://usn.ubuntu.com/)|
-  {: caption="表 1. 「漏洞警告器」檢查套件是否有漏洞的受支援 Docker 基礎映像檔" caption-side="top"}
+  {: caption="表 1. Vulnerability Advisor 檢查套件是否有漏洞的受支援 Docker 基礎映像檔" caption-side="top"}
 
 ### 配置問題
 {: #app_configurations}
@@ -99,7 +100,7 @@ subcollection: va
 配置問題是指與應用程式設定方式有關的潛在安全問題。許多已報告的問題可以藉由更新 Dockerfile 而修正。
 {:shortdesc}
 
-只有在映像檔使用「漏洞警告器」所支援的作業系統時才會掃描映像檔。「漏洞警告器」會檢查下列應用程式類型的配置設定：
+只有在映像檔使用 Vulnerability Advisor 所支援的作業系統時才會掃描映像檔。Vulnerability Advisor 會檢查下列應用程式類型的配置設定：
 
 - MySQL
 - NGINX
@@ -108,18 +109,18 @@ subcollection: va
 ## 檢閱漏洞報告
 {: #va_reviewing}
 
-部署映像檔之前，您可以檢閱其「漏洞警告器」報告中，有關所有有漏洞套件及不安全容器或應用程式設定的詳細資料。您也可以檢查映像檔是否與組織原則相容。
+部署映像檔之前，您可以檢閱其 Vulnerability Advisor 報告中，有關所有有漏洞套件及不安全容器或應用程式設定的詳細資料。您也可以檢查映像檔是否與組織原則相容。
 {:shortdesc}
 
 如果您未解決任何已發現的問題，那些問題可能會影響使用該映像檔建置之容器的安全。如果未部署 Container Image Security Enforcement，可以繼續使用容器中有安全及配置問題的映像檔。如果已部署 Container Image Security Enforcement 並且針對映像檔在作用中，所有已發現的問題都必須由您的原則豁免，才能從這個映像檔部署容器。
 
-若要在 Container Image Security Enforcement 配置「漏洞警告器」問題的範圍，請參閱[自訂原則](/docs/services/Registry?topic=registry-security_enforce#customize_policies)。
+若要在 Container Image Security Enforcement 配置 Vulnerability Advisor 問題的範圍，請參閱[自訂原則](/docs/services/Registry?topic=registry-security_enforce#customize_policies)。
 {:tip}
 
 如果您的映像檔不符合組織原則所設定的需求，您必須配置映像檔以符合那些需求，然後才能部署它。如需如何檢視及變更組織原則的相關資訊，請參閱[設定組織豁免原則](#va_managing_policy)。
 {:tip}
 
-部署映像檔之後，如果已部署容器掃描器，「漏洞警告器」會繼續掃描容器中是否有安全與配置問題。您可以藉由遵循[檢閱容器報告](#va_reviewing_container)中所述的步驟來解決找到的任何問題。
+部署映像檔之後，如果已部署容器掃描器，Vulnerability Advisor 會繼續掃描容器中是否有安全與配置問題。您可以藉由遵循[檢閱容器報告](#va_reviewing_container)中所述的步驟來解決找到的任何問題。
 
 ### 使用 GUI 檢閱漏洞報告
 {: #va_reviewing_gui}
@@ -161,7 +162,7 @@ subcollection: va
     - **`<X>` 個問題**：找到 `<X>` 個潛在的安全問題或漏洞，其中 `<X>` 是問題的數目。
     - **掃描中**：正在掃描映像檔，尚未判斷最後的漏洞狀態。
 
-3. 若要檢視狀態的詳細資料，請檢閱「漏洞警告器」報告：
+3. 若要檢視狀態的詳細資料，請檢閱 Vulnerability Advisor 報告：
 
    ```
     ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
@@ -180,16 +181,16 @@ subcollection: va
 
 您可以從任何映像檔部署容器，而不論安全狀態為何，除非已在您的叢集部署 Container Image Security Enforcement。若要找出如何部署 Container Image Security Enforcement，請參閱[安裝安全強制執行](/docs/services/Registry?topic=registry-security_enforce#security_enforce)。
 
-當您使用 Container Image Security Enforcement 時，「漏洞警告器」所偵測到的任何安全問題都會導致無法從映像檔部署容器。若要容許部署具有所偵測到問題的映像檔，必須在您的原則新增豁免。
+當您使用 Container Image Security Enforcement 時，Vulnerability Advisor 所偵測到的任何安全問題都會導致無法從映像檔部署容器。若要容許部署具有所偵測到問題的映像檔，必須在您的原則新增豁免。
 
 ### 使用 GUI 設定組織豁免原則
 {: #va_managing_policy_gui}
 
 如果您想要使用 GUI 設定原則的豁免，請完成下列步驟：
 
-1. 登入 {{site.data.keyword.Bluemix_notm}}。您必須登入才能在 GUI 看到「漏洞警告器」。
+1. 登入 {{site.data.keyword.Bluemix_notm}}。您必須登入才能在 GUI 看到 Vulnerability Advisor。
 2. 按一下**導覽功能表**圖示，然後按一下 **Kubernetes**。
-3. 在**漏洞警告器**下，按一下**原則設定**。
+3. 在 **Vulnerability Advisor** 下，按一下**原則設定**。
 4. 按一下**建立豁免**。
 5. 選取問題類型。
 6. 輸入問題 ID。
@@ -217,7 +218,7 @@ subcollection: va
 ## 安裝容器掃描器
 {: #va_install_container_scanner}
 
-容器掃描器讓漏洞警告器能回報執行中容器裡，所發現且不存在於容器基礎映像檔的任何問題。如果您沒有對容器進行執行時的修改，則不需要容器掃描器，因為映像檔報告會顯示相同的問題。
+容器掃描器讓 Vulnerability Advisor 能回報執行中容器裡，所發現且不存在於容器基礎映像檔的任何問題。如果您沒有對容器進行執行時的修改，則不需要容器掃描器，因為映像檔報告會顯示相同的問題。
 {:shortdesc}
 
 若要檢查叢集裡正在執行的即時容器安全狀態，您可以安裝容器掃描器。為了保護您的應用程式，容器掃描器會定期掃描執行中的容器，以便您可以偵測並更正任何新偵測到的漏洞。
@@ -254,7 +255,7 @@ subcollection: va
 
        請確定安全儲存您的掃描器 API 金鑰，因為稍後無法再擷取該金鑰。
 	    同時也請確定您針對安裝掃描器的每個叢集，都有個別的服務 API 金鑰。
-       {: tip}
+       {: important}
 
     3. 建立授予 `Writer` 角色的服務原則。
 
@@ -309,24 +310,24 @@ subcollection: va
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>輸入「漏洞警告器」區域端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。請在此位址結尾加上 <code>/va</code>。例如 <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>將 <code>&lt;regional_emit_URL&gt;</code> 取代為 Vulnerability Advisor 地區端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。請在此位址結尾加上 <code>/va</code>。例如 <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>將 <code>AccountID</code> 取代為您叢集所在的 {{site.data.keyword.Bluemix_notm}} 帳戶 ID。若要取得帳戶 ID，請執行 <code>ibmcloud account list</code>。</td>
+   <td>將 <code>&lt;IBM_Cloud_account_ID&gt;</code> 取代為您叢集所在的 {{site.data.keyword.Bluemix_notm}} 帳戶 ID。若要取得帳戶 ID，請執行 <code>ibmcloud account list</code>。</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>將 <code>ClusterID</code> 取代為您要在其中安裝容器掃描器的 Kubernetes 叢集。若要列出叢集 ID，請執行 <code>ibmcloud ks clusters</code>。<br> **提示**：請使用叢集的 ID，而不要使用名稱。
+   <td>將 <code>&lt;cluster_ID&gt;</code> 取代為您要在其中安裝容器掃描器的 Kubernetes 叢集。若要列出叢集 ID，請執行 <code>ibmcloud ks clusters</code>。<br> **提示**：請使用叢集的 ID，而不要使用名稱。
     </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td>將 <code>APIKey</code> 取代為您稍早建立的掃描器 API 金鑰。</td>
+   <td>將 <code>&lt;scanner_APIkey&gt;</code> 取代為您稍早建立的掃描器 API 金鑰。</td>
    </tr>
    </tbody></table>
 
-5. 使用已更新的 `config.yaml` 檔案，將 Helm 圖表安裝至叢集。更新的內容會儲存在您圖表的 configmap 中。將 `<myscanner>` 取代為您所選的 Helm 圖表名稱。將圖表儲存庫（例如，`ibm`）併入 Helm 圖表路徑。
+5. 使用已更新的 `config.yaml` 檔案，將 Helm 圖表安裝至叢集。更新的內容會儲存在您圖表的 ConfigMap 中。將 `<myscanner>` 取代為您所選的 Helm 圖表名稱。將圖表儲存庫（例如，`ibm`）併入 Helm 圖表路徑。
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
@@ -357,6 +358,8 @@ subcollection: va
 
 如果您的防火牆會封鎖送出的連線，您必須配置防火牆，以容許工作者節點存取下表 IP 位址的 TCP 埠 `443` 上的容器掃描器。
 {:shortdesc}
+
+
 
  
 
@@ -401,7 +404,7 @@ subcollection: va
 確認在您空間中執行的容器能繼續遵守組織原則，方法是檢閱**原則狀態**欄位。即會以下列其中一種狀況顯示狀態：
 
 - **遵循原則**：找不到任何安全或配置問題。
-- **未遵循原則**：漏洞警告器找到潛在的安全或配置問題，這些問題導致容器未遵循原則。如果您的組織原則允許部署有漏洞的映像檔，映像檔可能會以 `Deploy with Caution` 狀態部署，並且傳送警告給部署它的使用者。
+- **未遵循原則**：Vulnerability Advisor 找到潛在的安全或配置問題，這些問題導致容器未遵循原則。如果您的組織原則允許部署有漏洞的映像檔，映像檔可能會以 `Deploy with Caution` 狀態部署，並且傳送警告給部署它的使用者。
 - **不完整的評量**：掃描未完成。掃描可能仍在執行中，或該容器實例的作業系統可能不相容。
 
 確認您的容器盡可能安全，方法是完成下列步驟以檢視其安全報告，並處理任何已報告的安全或配置問題：

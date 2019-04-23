@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -253,7 +253,7 @@ Per configurare le autorizzazioni del servizio, completa la seguente procedura:
        Viene restituita la chiave API dello scanner.
 
        Assicurati di conservare la tua chiave API dello scanner in modo sicuro perché non sarà possibile recuperarla successivamente. Assicurati anche di disporre di una chiave API separata per ciascun cluster in cui è installato lo scanner.
-       {: tip}
+       {: important}
 
     3. Crea una politica di servizio che conceda il ruolo di `Writer` (Scrittore).
 
@@ -308,20 +308,20 @@ Per configurare un grafico Helm, completa la seguente procedura:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Immetti l'URL dell'endpoint regionale del Controllo vulnerabilità. Per ottenere l'URL, esegui <code>ibmcloud cr info</code> e recupera l'indirizzo <strong>Registro contenitore</strong>. Ad esempio, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Aggiungi <code>/va</code> alla fine di questo indirizzo. Ad esempio, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>Sostituisci <code>&lt;regional_emit_URL&gt;</code> con l'URL dell'endpoint regionale del Controllo vulnerabilità. Per ottenere l'URL, esegui <code>ibmcloud cr info</code> e recupera l'indirizzo <strong>Registro contenitore</strong>. Ad esempio, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Aggiungi <code>/va</code> alla fine di questo indirizzo. Ad esempio, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>Sostituisci <code>AccountID</code> con l'ID account {{site.data.keyword.Bluemix_notm}} in cui si trova il tuo cluster. Per ottenere l'ID account, esegui <code>ibmcloud account list</code>.</td>
+   <td>Sostituisci <code>&lt;IBM_Cloud_account_ID&gt;</code> con l'ID account {{site.data.keyword.Bluemix_notm}} in cui si trova il tuo cluster. Per ottenere l'ID account, esegui <code>ibmcloud account list</code>.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Sostituisci <code>ClusterID</code> con il cluster Kubernetes in cui vuoi installare lo Scanner contenitori. Per elencare gli ID cluster, esegui <code>ibmcloud ks clusters</code>. <br> **Suggerimento:** utilizza l'ID del cluster, non il nome.
+   <td>Sostituisci <code>&lt;cluster_ID&gt;</code> con il cluster Kubernetes in cui vuoi installare lo Scanner contenitori. Per elencare gli ID cluster, esegui <code>ibmcloud ks clusters</code>. <br> **Suggerimento:** utilizza l'ID del cluster, non il nome.
    </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td>Sostituisci <code>APIKey</code> con la chiave API dello scanner che hai creato in precedenza.</td>
+   <td>Sostituisci <code>&lt;scanner_APIkey&gt;</code> con la chiave API dello scanner che hai creato in precedenza. </td>
    </tr>
    </tbody></table>
 
@@ -356,6 +356,8 @@ Lo Scanner contenitori è ora installato e l'agent viene distribuito come una [s
 
 Se il tuo firewall blocca le connessioni in uscita, devi configurare il tuo firewall per consentire ai nodi di lavoro di accedere allo Scanner contenitori sulla porta TCP `443` sugli indirizzi IP nella seguente tabella.
 {:shortdesc}
+
+
 
  
 

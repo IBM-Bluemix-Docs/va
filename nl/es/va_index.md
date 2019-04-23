@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-03-06"
+lastupdated: "2019-04-04"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -59,7 +59,7 @@ El panel de control de Vulnerability Advisor muestra una visión general y una e
 
 **Protección de los datos**
 
-Para escanear imágenes y contenedores en su cuenta por motivos de seguridad, Vulnerability Advisor recopila, almacena y procesa la información siguiente:
+Para explorar imágenes y contenedores en su cuenta por motivos de seguridad, Vulnerability Advisor recopila, almacena y procesa la información siguiente:
 
 - Campos de formato libre, incluidos ID, descripciones y nombres de imágenes (etiqueta de registro, de espacio de nombres, de nombre de repositorio y de imagen)
 - Metadatos de Kubernetes, incluidos nombres de recursos de Kubernetes como, por ejemplo, pod, ReplicaSet y nombres de despliegue
@@ -69,9 +69,9 @@ Para escanear imágenes y contenedores en su cuenta por motivos de seguridad, Vu
 
 No coloque información personal en ningún campo ni ubicación que procese Vulnerability Advisor, tal como se identifica en la lista anterior.
 
-Los resultados del escaneo, agregados en un nivel de centro de datos, se procesan para crear métricas anonimizadas para operar y mejorar el servicio.
+Los resultados de la exploración, agregados en un nivel de centro de datos, se procesan para crear métricas anonimizadas para operar y mejorar el servicio.
 
-Los resultados del escaneo se suprimen a los 30 días una vez generados.
+Los resultados de la exploración se suprimen a los 30 días una vez generados.
 
 ## Tipos de vulnerabilidades
 {: #types}
@@ -82,7 +82,7 @@ Los resultados del escaneo se suprimen a los 30 días una vez generados.
 Vulnerability Advisor comprueba si hay paquetes vulnerables en imágenes que utilizan sistemas operativos soportados y proporciona un enlace con los avisos de seguridad relevantes acerca de la vulnerabilidad.
 {:shortdesc}
 
-Se muestran los paquetes que contienen problemas de vulnerabilidad conocidos en los resultados del escaneo. Las posibles vulnerabilidades se actualizan a diario utilizando los avisos de seguridad publicados para los tipos de imagen de Docker que se muestran en la tabla siguiente. Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades.
+Se muestran los paquetes que contienen problemas de vulnerabilidad conocidos en los resultados de la exploración. Las posibles vulnerabilidades se actualizan a diario utilizando los avisos de seguridad publicados para los tipos de imagen de Docker que se muestran en la tabla siguiente. Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades.
 
   |Imagen base de Docker|Origen de los avisos de seguridad|
   |-----------------|--------------------------|
@@ -119,7 +119,7 @@ Para configurar el ámbito de obligatoriedad de los problemas de Vulnerability A
 Si la imagen no cumple los requisitos establecidos por la política de su organización, debe configurar la imagen para que cumpla dichos requisitos para poder desplegarla. Para obtener más información sobre cómo ver y cambiar la política de organización, consulte [Establecimiento de políticas de exención organizativas](#va_managing_policy).
 {:tip}
 
-Si Container Scanner se despliega, después de desplegar la imagen, Vulnerability Advisor seguirá escaneando en busca de problemas de seguridad y de configuración en el contenedor. Puede resolver los problemas encontrados siguiendo los pasos descritos en [Revisión de un informe de contenedor](#va_reviewing_container).
+Si Container Scanner se despliega, después de desplegar la imagen, Vulnerability Advisor seguirá explorando en busca de problemas de seguridad y de configuración en el contenedor. Puede resolver los problemas encontrados siguiendo los pasos descritos en [Revisión de un informe de contenedor](#va_reviewing_container).
 
 ### Revisión de un informe de vulnerabilidad utilizando la interfaz gráfica de usuario
 {: #va_reviewing_gui}
@@ -159,7 +159,7 @@ Puede revisar la seguridad de imágenes de Docker que se han almacenado en sus e
 
 2. Compruebe el estado en la columna **ESTADO DE SEGURIDAD**.
     - **Sin problemas** No se han encontrado problemas de seguridad.
-    - **`<X>` Problemas** `<X>` Se han encontrado posible problemas o vulnerabilidades de seguridad, donde `<X>` es el número de problemas.
+    - **`<X>` problemas** Se han encontrado `<X>` posibles problemas o vulnerabilidades de seguridad, donde `<X>` es el número de problemas.
     - **Explorando** La imagen se está explorando y todavía no se ha determinado el estado de vulnerabilidad final.
 
 3. Para ver los detalles para el estado, revise el informe de Vulnerability Advisor:
@@ -245,16 +245,16 @@ Para configurar los permisos del servicio, realice los pasos siguientes:
        ```
        {: codeblock}
 
-    2. Cree una clave de API de servicio, donde `<scanner_serviceID>` es el ID de servicio que creó en el paso anterior y `<scanner_APIkey_name>` es un nombre de su elección para la clave de API del escáner.
+    2. Cree una clave de API de servicio, donde `<scanner_serviceID>` es el ID de servicio que creó en el paso anterior y `<scanner_APIkey_name>` es un nombre de su elección para la clave de API del explorador.
 
        ```
        ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
        ```
        {: codeblock}
-       Se devuelve la clave de API del escáner.
+       Se devuelve la clave de API del explorador.
 
-       Asegúrese de almacenar la clave de API del escáner de forma segura porque no se puede recuperar más tarde. Además, asegúrese de tener una clave de API del servicio para cada clúster en el que se instalará el escáner.
-       {: tip}
+       Asegúrese de almacenar la clave de API del explorador de forma segura porque no se puede recuperar más tarde. Además, asegúrese de tener una clave de API del servicio para cada clúster en el que se instalará el explorador.
+       {: important}
 
     3. Cree una política de servicios que otorgue el rol `Writer`.
 
@@ -309,31 +309,31 @@ Para configurar una gráfica de Helm, realice los pasos siguientes:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Especifique el URL de punto final regional de Vulnerability Advisor. Para obtener el URL, ejecute <code>ibmcloud cr info</code> y recupere la dirección <strong>Registro de contenedores</strong>. Por ejemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Añada <code>/va</code> al final de esta dirección. Por ejemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>Sustituya <code>&lt;regional_emit_URL&gt;</code> por el URL de punto final regional de Vulnerability Advisor. Para obtener el URL, ejecute <code>ibmcloud cr info</code> y recupere la dirección <strong>Registro de contenedores</strong>. Por ejemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Añada <code>/va</code> al final de esta dirección. Por ejemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>Sustituya <code>AccountID</code> por el ID de cuenta de {{site.data.keyword.Bluemix_notm}} en el que se encuentre el clúster. Para obtener el ID de cuenta, ejecute <code>ibmcloud account list</code>.</td>
+   <td>Sustituya <code>&lt;IBM_Cloud_account_ID&gt;</code> por el ID de cuenta de {{site.data.keyword.Bluemix_notm}} en el que se encuentre el clúster. Para obtener el ID de cuenta, ejecute <code>ibmcloud account list</code>.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Sustituya <code>ClusterID</code> por el clúster de Kubernetes en el que desee instalar Container Scanner. Para listar ID de clúster, ejecute <code>ibmcloud ks clusters</code>. <br> **Sugerencia:** Utilice el ID del clúster y no el nombre.
+   <td>Sustituya <code>&lt;cluster_ID&gt;</code> por el clúster de Kubernetes en el que desee instalar Container Scanner. Para listar ID de clúster, ejecute <code>ibmcloud ks clusters</code>. <br> **Sugerencia:** Utilice el ID del clúster y no el nombre.
    </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
-   <td>Sustituya <code>APIKey</code> por la clave de API de escáner que ha creado anteriormente.</td>
+   <td>Sustituya <code>&lt;scanner_APIkey&gt;</code> por la clave de API del explorador que ha creado anteriormente.</td>
    </tr>
    </tbody></table>
 
-5. Instale la gráfica de Helm en el clúster con el archivo `config.yaml` actualizado. Las propiedades actualizadas se almacenan en un mapa de configuración para su gráfica. Sustituya `<myscanner>` por un nombre de su elección para la gráfica de Helm. Incluya el repositorio de gráficas, como por ejemplo `ibm`, en la vía de acceso de gráficas de Helm.
+5. Instale la gráfica de Helm en el clúster con el archivo `config.yaml` actualizado. Las propiedades actualizadas se almacenan en un mapa de configuración (ConfigMap) para su gráfica. Sustituya `<myscanner>` por un nombre de su elección para la gráfica de Helm. Incluya el repositorio de gráficas, como por ejemplo `ibm`, en la vía de acceso de gráficas de Helm.
 
    ```
    helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
    ```
    {: pre}
 
-   Container Scanner está instalado en el espacio de nombres `kube-system`, pero escanea contenedores desde todos los espacios de nombres.
+   Container Scanner está instalado en el espacio de nombres `kube-system`, pero explora contenedores de todos los espacios de nombres.
    {:tip}
 
 6. Compruebe el estado de despliegue de la gráfica. Cuando la gráfica esté lista, el campo **ESTADO** tiene un valor de `DESPLEGADO`.
@@ -350,13 +350,15 @@ Para configurar una gráfica de Helm, realice los pasos siguientes:
    ```
    {: pre}
 
-Container Scanner ahora está instalado, y el agente se despliega como un [DaemonSet ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) en su clúster. Aunque Container Scanner se despliega en el espacio de nombres de `kube-system`, escanea todos los contenedores asignados a los pods en todos los espacios de nombres de Kubernetes, como por ejemplo `default`.
+Container Scanner ahora está instalado, y el agente se despliega como un [DaemonSet ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) en su clúster. Aunque Container Scanner se despliega en el espacio de nombres de `kube-system`, explora todos los contenedores asignados a los pods en todos los espacios de nombres de Kubernetes, como por ejemplo `default`.
 
 ## Ejecución de Container Scanner desde detrás de un cortafuegos
 {: #va_firewall}
 
 Si su cortafuegos bloquea conexiones salientes, debe configurarlo para permitir que los nodos trabajadores accedan al Container Scanner a través del puerto TCP `443` en las direcciones IP en la siguiente tabla.
 {:shortdesc}
+
+
 
  
 
