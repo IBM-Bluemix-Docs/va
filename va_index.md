@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-11"
+lastupdated: "2019-04-18"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -308,7 +308,7 @@ To configure a Helm chart, complete the following steps:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Replace <code>&lt;regional_emit_URL&gt;</code> with the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. For example, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Add <code>/va</code> to the end of this address. For example, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>Replace <code>&lt;regional_emit_URL&gt;</code> with the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. For example, <code>https<span comment="make the link not a link">://us.</span>icr.io</code>. Add <code>/va</code> to the end of this address. For example, <code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>. For more information about regions, see [Local regions](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local).</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -316,7 +316,7 @@ To configure a Helm chart, complete the following steps:
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Replace <code>&lt;cluster_ID&gt;</code> with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip:** Use the ID of the cluster, not the name.
+   <td>Replace <code>&lt;cluster_ID&gt;</code> with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
    </td>
    </tr>
    <tr>
