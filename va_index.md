@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-18"
+lastupdated: "2019-05-01"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -270,7 +270,7 @@ Configure a Helm Chart and associate it with the cluster in which you want to us
 
 To configure a Helm chart, complete the following steps:
 
-1. [Set up Helm in IBM Cloud Kubernetes Service](/docs/containers?topic=containers-integrations#helm). If you use a role-based access control (RBAC) policy to grant access to Tiller, ensure that the Tiller role has access to all namespaces. Giving the Tiller role access to all namespaces ensures that the Container Scanner can watch containers in all namespaces.
+1. [Set up Helm in IBM Cloud Kubernetes Service](/docs/containers?topic=containers-helm#helm). If you use a role-based access control (RBAC) policy to grant access to Tiller, ensure that the Tiller role has access to all namespaces. Giving the Tiller role access to all namespaces ensures that the Container Scanner can watch containers in all namespaces.
 
 2. Add the IBM chart repository to your Helm, such as `ibm`.
 
@@ -403,4 +403,3 @@ Check that your container is as secure as possible by viewing its security repor
 5. If you can't fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
 
 6. Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose.
-   
