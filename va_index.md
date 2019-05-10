@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-01"
+lastupdated: "2019-05-10"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -45,7 +45,7 @@ Vulnerability Advisor provides functions to help you to secure your images.
 The following functions are available:
 
 - Scans images for issues
-- Scans for issues in containers that are running if a [Container Scanner](#va_install_container_scanner) is installed in each cluster
+- Scans for issues in containers that are running if a [Container Scanner](#va_install_container_scanner) is installed in each cluster 
 - Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 - Provides recommendations to secure configuration files for a subset of application types
 - Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
