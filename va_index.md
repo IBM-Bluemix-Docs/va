@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-10"
+lastupdated: "2019-05-16"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -354,8 +354,10 @@ The Container Scanner is now installed, and the agent is deployed as a [DaemonSe
 ## Running the Container Scanner from behind a firewall
 {: #va_firewall}
 
-If your firewall blocks outgoing connections, you must configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound) in the {{site.data.keyword.containerlong_notm}} documentation.
+If your firewall blocks outgoing connections, you must configure your firewall.
 {:shortdesc}
+
+To configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound) in the {{site.data.keyword.containerlong_notm}} documentation.
 
 ## Reviewing a container report
 {: #va_reviewing_container}
