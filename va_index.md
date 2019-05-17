@@ -22,6 +22,7 @@ subcollection: va
 {:deprecated: .deprecated}
 {:download: .download}
 
+
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
