@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-16"
+lastupdated: "2019-05-17"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -25,7 +25,7 @@ subcollection: va
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
-Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If the Container Scanner is installed in each cluster, Vulnerability Advisor also checks the status of containers that are running.
+Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If the Container Scanner (deprecated) is installed in each cluster, Vulnerability Advisor also checks the status of containers that are running.
 {:shortdesc}
 
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability.
@@ -45,17 +45,17 @@ Vulnerability Advisor provides functions to help you to secure your images.
 The following functions are available:
 
 - Scans images for issues
-- Scans for issues in containers that are running if a [Container Scanner](#va_install_container_scanner) is installed in each cluster 
+- Scans for issues in containers that are running if a [Container Scanner](#va_install_container_scanner) is installed in each cluster (deprecated)
 - Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 - Provides recommendations to secure configuration files for a subset of application types
 - Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
 - Provides verdicts to [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
-- Provides links to associated containers in the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the Container Scanner installed.
+- Provides links to associated containers in the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the Container Scanner (deprecated) installed.
 
 In the Registry dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images.
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the Container Scanner is installed, links to containers that are running. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the Container Scanner (deprecated) is installed, links to containers that are running. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 
 **Data protection**
 
@@ -119,7 +119,7 @@ To configure the scope of enforcement of Vulnerability Advisor issues in Contain
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
 {:tip}
 
-If Container Scanner is deployed, after you deploy your image Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
+If Container Scanner (deprecated) is deployed, after you deploy your image Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
 
 ### Reviewing a vulnerability report by using the GUI
 {: #va_reviewing_gui}
@@ -214,8 +214,11 @@ If you want to set exemptions to the policy by using the CLI, you can run the fo
 
 For more information about the commands, you can use the `--help` flag when you run the command.
 
-## Installing the Container Scanner
+## Installing the Container Scanner (deprecated)
 {: #va_install_container_scanner}
+
+Container Scanner is deprecated.
+{: deprecated}
 
 Container Scanner enables Vulnerability Advisor to report any problems found in running containers that are not present in the container's base image. If you do not make runtime modifications to your container then Container Scanner is not required because the image report will show the same issues.
 {:shortdesc}
@@ -226,8 +229,11 @@ You can set up the Container Scanner to monitor for vulnerabilities in the conta
 
 To use the Container Scanner, you must set up permissions and then set up a [Helm Chart ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/developing_charts) and associate it with the cluster in which you want to use it.
 
-### Set up service permissions for Container Scanner
+### Set up service permissions for Container Scanner (deprecated)
 {: #va_install_container_scanner_permissions}
+
+Container Scanner is deprecated.
+{: deprecated}
 
 Container Scanner requires that permissions are set up so that the service can operate.
 {:shortdesc}
@@ -262,8 +268,11 @@ To set up service permissions, complete the following steps:
        ```
        {: codeblock}
 
-### Configure the Helm Chart
+### Configure the Helm Chart (deprecated)
 {: #va_install_container_scanner_helm}
+
+Container Scanner is deprecated.
+{: deprecated}
 
 Configure a Helm Chart and associate it with the cluster in which you want to use it.
 {:shortdesc}
@@ -274,7 +283,7 @@ To configure a Helm chart, complete the following steps:
 
 2. Add the IBM chart repository to your Helm, such as `ibm`.
 
-   ```
+    ```
    helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
@@ -351,16 +360,22 @@ To configure a Helm chart, complete the following steps:
 
 The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the Container Scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`.
 
-## Running the Container Scanner from behind a firewall
+## Running the Container Scanner from behind a firewall (deprecated)
 {: #va_firewall}
+
+Container Scanner is deprecated.
+{: deprecated}
 
 If your firewall blocks outgoing connections, you must configure your firewall.
 {:shortdesc}
 
 To configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound) in the {{site.data.keyword.containerlong_notm}} documentation.
 
-## Reviewing a container report
+## Reviewing a container report (deprecated)
 {: #va_reviewing_container}
+
+Container Scanner is deprecated.
+{: deprecated}
 
 In your dashboard, you can see the status of a container to determine whether its security complies with your organization's policy. You can also review a container's security report, which details any vulnerable packages and nonsecure container or application settings, and whether the container is compliant with organizational policies.
 {:shortdesc}
