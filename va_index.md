@@ -283,7 +283,7 @@ To configure a Helm chart, complete the following steps:
 
 2. Add the IBM chart repository to your Helm, such as `ibm`.
 
-    ```
+   ```
    helm repo add ibm https://icr.io/helm/ibm
    ```
    {: pre}
