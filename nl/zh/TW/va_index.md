@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-04"
+lastupdated: "2019-05-01"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -128,7 +128,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 您可以使用 GUI 來檢閱儲存在 {{site.data.keyword.registrylong_notm}} 名稱空間之 Docker 映像檔的安全。
 {:shortdesc}
 
-1. 登入 {{site.data.keyword.Bluemix_notm}}。
+1. 登入 {{site.data.keyword.cloud_notm}}。
 2. 按一下**導覽功能表**圖示，然後按一下 **Kubernetes**。
 3. 按一下**登錄**，然後按一下**映像檔**磚。您的映像檔清單和每個映像檔的安全狀態會顯示在**映像檔**表格中。
 4. 若要查看以 `latest` 標記之映像檔的報告，請按一下該映像檔的列。**映像檔詳細資料**標籤會開啟，顯示該映像檔的資料。如果儲存庫中沒有任何 `latest` 標籤存在，則會使用最新的映像檔。
@@ -150,7 +150,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 您可以使用 CLI 來檢閱儲存在 {{site.data.keyword.registrylong_notm}} 名稱空間之 Docker 映像檔的安全。
 {:shortdesc}
 
-1. 列出 {{site.data.keyword.Bluemix_notm}} 帳戶中的映像檔。系統會傳回所有映像檔的清單，與其儲存所在的名稱空間無關。
+1. 列出 {{site.data.keyword.cloud_notm}} 帳戶中的映像檔。系統會傳回所有映像檔的清單，與其儲存所在的名稱空間無關。
 
    ```
     ibmcloud cr image-list
@@ -159,7 +159,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
 2. 檢查**安全狀態**直欄中的狀態。
     - **沒有問題**：找不到任何安全問題。
-    - **`<X>` 個問題**：找到 `<X>` 個潛在的安全問題或漏洞，其中 `<X>` 是問題的數目。
+    - **`<X>` 個問題** `<X>` 個潛在的安全問題或漏洞，其中 `<X>` 是問題的數目。
     - **掃描中**：正在掃描映像檔，尚未判斷最後的漏洞狀態。
 
 3. 若要檢視狀態的詳細資料，請檢閱 Vulnerability Advisor 報告：
@@ -176,7 +176,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 ## 設定組織豁免原則
 {: #va_managing_policy}
 
-如果您想要管理 {{site.data.keyword.Bluemix_notm}} 組織的安全，可以使用您的原則設定來決定是否豁免問題。您可以選擇使用 Container Image Security Enforcement，確保在為您的原則豁免的問題負責之後，只允許來自不包含任何安全問題之映像檔的部署。
+如果您想要管理 {{site.data.keyword.cloud_notm}} 組織的安全，可以使用您的原則設定來決定是否豁免問題。您可以選擇使用 Container Image Security Enforcement，確保在為您的原則豁免的問題負責之後，只允許來自不包含任何安全問題之映像檔的部署。
 {:shortdesc}
 
 您可以從任何映像檔部署容器，而不論安全狀態為何，除非已在您的叢集部署 Container Image Security Enforcement。若要找出如何部署 Container Image Security Enforcement，請參閱[安裝安全強制執行](/docs/services/Registry?topic=registry-security_enforce#security_enforce)。
@@ -188,7 +188,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
 如果您想要使用 GUI 設定原則的豁免，請完成下列步驟：
 
-1. 登入 {{site.data.keyword.Bluemix_notm}}。您必須登入才能在 GUI 看到 Vulnerability Advisor。
+1. 登入 {{site.data.keyword.cloud_notm}}。您必須登入才能在 GUI 看到 Vulnerability Advisor。
 2. 按一下**導覽功能表**圖示，然後按一下 **Kubernetes**。
 3. 在 **Vulnerability Advisor** 下，按一下**原則設定**。
 4. 按一下**建立豁免**。
@@ -235,7 +235,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
 若要設定服務許可權，請完成下列步驟：
 
-1. 登入 {{site.data.keyword.Bluemix_notm}} CLI 用戶端。如果您有聯合帳戶，請使用 `--sso`。
+1. 登入 {{site.data.keyword.cloud_notm}} CLI 用戶端。如果您有聯合帳戶，請使用 `--sso`。
 2. [將您 `kubectl` CLI](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) 的目標設為要在其中使用 Helm 圖表的叢集。
 3. 建立容器掃描器的服務 ID 及 API 金鑰，並進行命名：
     1. 若要建立服務 ID，請執行下列指令，其中 `<scanner_serviceID>` 是您所選的服務 ID 名稱。請注意其 **CRN**。
@@ -272,7 +272,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
 若要配置 Helm 圖表，請完成下列步驟：
 
-1. [在 IBM Cloud Kubernetes Service 設定 Helm](/docs/containers?topic=containers-integrations#helm)。如果您使用角色型存取控制 (RBAC) 原則來授與 Tiller 存取權，請確定 Tiller 角色擁有所有名稱空間的存取權。提供 Tiller 角色對所有名稱空間的存取權，可確保容器掃描器可以監看所有名稱空間中的容器。
+1. [在 IBM Cloud Kubernetes Service 設定 Helm](/docs/containers?topic=containers-helm#helm)。如果您使用角色型存取控制 (RBAC) 原則來授與 Tiller 存取權，請確定 Tiller 角色擁有所有名稱空間的存取權。提供 Tiller 角色對所有名稱空間的存取權，可確保容器掃描器可以監看所有名稱空間中的容器。
 
 2. 將 IBM 圖表儲存庫新增至您的 Helm，例如，`ibm`。
 
@@ -310,16 +310,16 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>將 <code>&lt;regional_emit_URL&gt;</code> 取代為 Vulnerability Advisor 地區端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。請在此位址結尾加上 <code>/va</code>。例如 <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>將 <code>&lt;regional_emit_URL&gt;</code> 取代為 Vulnerability Advisor 地區端點 URL。若要取得 URL，請執行 <code>ibmcloud cr info</code>，並擷取 <strong>Container Registry</strong> 位址。例如，<code>https<span comment="make the link not a link">://us.</span>icr.io</code>。請在此位址結尾加上 <code>/va</code>。例如，<code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>。如需地區的相關資訊，請參閱[本端地區](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local)。</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>將 <code>&lt;IBM_Cloud_account_ID&gt;</code> 取代為您叢集所在的 {{site.data.keyword.Bluemix_notm}} 帳戶 ID。若要取得帳戶 ID，請執行 <code>ibmcloud account list</code>。</td>
+   <td>將 <code>&lt;IBM_Cloud_account_ID&gt;</code> 取代為您叢集所在的 {{site.data.keyword.cloud_notm}} 帳戶 ID。若要取得帳戶 ID，請執行 <code>ibmcloud account list</code>。</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
    <td>將 <code>&lt;cluster_ID&gt;</code> 取代為您要在其中安裝容器掃描器的 Kubernetes 叢集。若要列出叢集 ID，請執行 <code>ibmcloud ks clusters</code>。<br> **提示**：請使用叢集的 ID，而不要使用名稱。
-    </td>
+   </td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
@@ -356,44 +356,8 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 ## 從防火牆背後執行容器掃描器
 {: #va_firewall}
 
-如果您的防火牆會封鎖送出的連線，您必須配置防火牆，以容許工作者節點存取下表 IP 位址的 TCP 埠 `443` 上的容器掃描器。
+如果您的防火牆會封鎖送出的連線，您必須配置防火牆，以容許工作者節點存取 IP 位址的 TCP 埠 `443` 上的容器掃描器。請參閱 {{site.data.keyword.containerlong_notm}} 文件[容許叢集透過公用防火牆存取基礎架構資源和其他服務](/docs/containers?topic=containers-firewall#firewall_outbound)中的步驟 3。
 {:shortdesc}
-
-
-
- 
-
-<p>
-  <table summary=" 列應該從左到右閱讀，第一欄為伺服器位置，第二欄為配對的 IP 位址。">
-  <caption>表 3. 針對送出資料流量開啟的 IP 位址</caption>
-    <thead>
-      <th>位置</th>
-      <th>IP 位址</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>達拉斯</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      <tr>
-         <td>法蘭克福</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-      </tr>
-      <tr>
-        <td>倫敦</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-         <td>雪梨</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-        <td>華盛頓特區</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
 
 ## 檢閱容器報告
 {: #va_reviewing_container}
@@ -435,7 +399,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
     **範例**
 
     - 如果您的容器與它運算的資料分開，您可以停止容器並刪除它、對映像檔進行必要的變更，然後重新部署，而不會流失任何資料。
-    - 您可以使用 {{site.data.keyword.Bluemix_notm}} 服務，例如 [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about)，以便協助更新有漏洞的容器實例。
+    - 您可以使用 {{site.data.keyword.cloud_notm}} 服務，例如 [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about)，以便協助更新有漏洞的容器實例。
     - 在微服務架構中，您可以在修正安全或配置問題時將資料流量遞送到另一個容器實例，然後以紅黑部署方式推送新的映像檔。
 
 5. 如果您現在無法修正問題，可以在原則設定中豁免該問題，如此可避免問題阻擋容器的部署。若要豁免問題，請按一下**開啟及關閉選項清單**圖示，然後按一下**建立豁免**。請參閱[設定組織豁免原則](#va_managing_policy)。

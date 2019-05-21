@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-04"
+lastupdated: "2019-05-01"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -127,7 +127,7 @@ Vulnerability Advisor에서는 지원되는 운영 체제를 사용 중인 이�
 GUI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이스에 저장된 Docker 이미지의 보안을 검토할 수 있습니다.
 {:shortdesc}
 
-1. {{site.data.keyword.Bluemix_notm}}에 로그인하십시오.
+1. {{site.data.keyword.cloud_notm}}에 로그인하십시오.
 2. **탐색 메뉴** 아이콘을 클릭하고 **Kubernetes**를 클릭하십시오.
 3. **레지스트리**를 클릭하고 **이미지** 타일을 클릭하십시오. 이미지의 목록과 각 이미지의 보안 상태가 **이미지** 테이블에 표시됩니다.
 4. `latest`로 태그가 지정된 이미지에 대한 보고서를 보려면, 해당 이미지의 행을 클릭하십시오. **이미지 세부사항 정보** 탭이 열리고 해당 이미지에 대한 데이터가 표시됩니다. 저장소에 `최신` 태그가 존재하지 않으면 최신 이미지가 사용됩니다.
@@ -149,7 +149,7 @@ GUI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이스에 저장된 Docker 이미지의 보안을 검토할 수 있습니다.
 {:shortdesc}
 
-1. {{site.data.keyword.Bluemix_notm}} 계정에 이미지를 나열하십시오. 저장된 네임스페이스와 관계없이 모든 이미지의 목록이 리턴됩니다.
+1. {{site.data.keyword.cloud_notm}} 계정에 이미지를 나열하십시오. 저장된 네임스페이스와 관계없이 모든 이미지의 목록이 리턴됩니다.
 
    ```
     ibmcloud cr image-list
@@ -158,7 +158,7 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 
 2. **SECURITY STATUS** 열에서 상태를 확인하십시오.
     - **문제 없음** 보안 문제가 발견되지 않았습니다.
-    - **`<X>`개 문제** `<X>` 잠재적 보안 문제 또는 취약성이 있습니다. 여기서 `<X>`는 문제의 갯수입니다.
+    - **`<X>`개의 문제** `<X>`개의 잠재적 보안 문제 또는 취약성이 있습니다. 여기서 `<X>`는 문제 수입니다.
     - **스캐닝** 이미지가 스캐닝되고 있으며 최종 취약성 상태는 아직 판별되지 않았습니다.
 
 3. 상태에 대한 세부사항을 보려면 Vulnerability Advisor 보고서를 검토하십시오.
@@ -175,7 +175,7 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 ## 조직 면제 정책 설정
 {: #va_managing_policy}
 
-{{site.data.keyword.Bluemix_notm}} 조직의 보안을 관리하려면 정책 설정을 사용하여 문제 면제 여부를 판별할 수 있습니다. 사용자 정책에 따라 면제된 문제를 처리한 후 보안 문제가 없는 이미지에서만 배치가 허용되도록 컨테이너 이미지 보안 적용을 사용하게 선택할 수도 있습니다.
+{{site.data.keyword.cloud_notm}} 조직의 보안을 관리하려면 정책 설정을 사용하여 문제 면제 여부를 판별할 수 있습니다. 사용자 정책에 따라 면제된 문제를 처리한 후 보안 문제가 없는 이미지에서만 배치가 허용되도록 컨테이너 이미지 보안 적용을 사용하게 선택할 수도 있습니다.
 {:shortdesc}
 
 클러스터에 컨테이너 이미지 보안 적용이 배치되지 않은 경우 보안 상태와 상관없이 이미지에서 컨테이너를 배치할 수 있습니다. 컨테이너 이미지 보안 적용을 배치하는 방법을 알아보려면 [보안 적용 설치](/docs/services/Registry?topic=registry-security_enforce#security_enforce)를 참조하십시오.
@@ -187,7 +187,7 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 
 GUI를 사용하여 정책에 면제를 설정하려면 다음 단계를 완료하십시오.
 
-1. {{site.data.keyword.Bluemix_notm}}에 로그인하십시오. GUI에서 Vulnerability Advisor에 로그인해야 합니다.
+1. {{site.data.keyword.cloud_notm}}에 로그인하십시오. GUI에서 Vulnerability Advisor에 로그인해야 합니다.
 2. **탐색 메뉴** 아이콘을 클릭하고 **Kubernetes**를 클릭하십시오.
 3. **Vulnerability Advisor**에서 **정책 설정**을 클릭하십시오.
 4. **면제 작성**을 클릭하십시오.
@@ -234,7 +234,7 @@ CLI를 사용하여 정책에 면제를 설정하려면 다음 명령을 실행�
 
 서비스 권한을 설정하려면 다음 단계를 완료하십시오.
 
-1. {{site.data.keyword.Bluemix_notm}} CLI 클라이언트에 로그인하십시오. 연합 계정이 있는 경우 `--sso`를 사용하십시오.
+1. {{site.data.keyword.cloud_notm}} CLI 클라이언트에 로그인하십시오. 연합 계정이 있는 경우 `--sso`를 사용하십시오.
 2. [Helm 차트를 사용할 대상 클러스터로 `kubectl` CLI](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure)를 지정하십시오.
 3. 컨테이너 스캐너의 서비스 ID와 API 키를 작성하고 이름을 제공하십시오.
     1. 서비스 ID를 작성하려면 다음 명령을 실행하십시오. 여기서 `<scanner_serviceID>`는 서비스 ID에 대해 선택한 이름입니다. 해당 **CRN**을 기록하십시오.
@@ -270,7 +270,7 @@ Helm 차트를 구성하고 사용할 클러스터와 연관시키십시오.
 
 Helm 차트를 구성하려면 다음 단계를 완료하십시오.
 
-1. [IBM Cloud Kubernetes 서비스에 Helm을 설정](/docs/containers?topic=containers-integrations#helm)하십시오. 역할 기반 액세스 제어(RBAC) 정책을 사용하여 틸러에 액세스 권한을 부여하는 경우 틸러 역할에 모든 네임스페이스에 대한 액세스 권한이 있는지 확인하십시오. 틸러 역할에 모든 네임스페이스에 대한 액세스 권한을 부여하면 컨테이너 스캐너가 모든 네임스페이스에서 컨테이너를 감시할 수 있습니다.
+1. [IBM Cloud Kubernetes 서비스에 Helm을 설정](/docs/containers?topic=containers-helm#helm)하십시오. 역할 기반 액세스 제어(RBAC) 정책을 사용하여 틸러에 액세스 권한을 부여하는 경우 틸러 역할에 모든 네임스페이스에 대한 액세스 권한이 있는지 확인하십시오. 틸러 역할에 모든 네임스페이스에 대한 액세스 권한을 부여하면 컨테이너 스캐너가 모든 네임스페이스에서 컨테이너를 감시할 수 있습니다.
 
 2. Helm에 IBM 차트 저장소를 추가하십시오(예: `ibm`).
 
@@ -308,16 +308,15 @@ Helm 차트를 구성하려면 다음 단계를 완료하십시오.
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td><code>&lt;regional_emit_URL&gt;</code>을 Vulnerability Advisor 지역 엔드포인트 URL로 바꾸십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>입니다. 이 주소의 끝에 <code>/va</code>를 추가하십시오. 예를 들면, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code>입니다.</td>
+   <td><code>&lt;regional_emit_URL&gt;</code>을 Vulnerability Advisor 지역 엔드포인트 URL로 바꾸십시오. URL을 가져오려면 <code>ibmcloud cr info</code>를 실행하고 <strong>컨테이너 레지스트리</strong> 주소를 검색하십시오. 예를 들어, <code>https<span comment="make the link not a link">://us.</span>icr.io</code>입니다. 이 주소의 끝에 <code>/va</code>를 추가하십시오. 예를 들어, <code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>입니다. 지역에 대한 자세한 정보는 [로컬 지역](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local)을 참조하십시오.</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td><code>&lt;IBM_Cloud_account_ID&gt;</code>를 클러스터가 있는 {{site.data.keyword.Bluemix_notm}} 계정 ID로 바꾸십시오. 계정 ID를 가져오려면 <code>ibmcloud account list</code>를 실행하십시오.</td>
+   <td><code>&lt;IBM_Cloud_account_ID&gt;</code>를 클러스터가 있는 {{site.data.keyword.cloud_notm}} 계정 ID로 바꾸십시오. 계정 ID를 가져오려면 <code>ibmcloud account list</code>를 실행하십시오.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td><code>&lt;cluster_ID&gt;</code>를 컨테이너 스캐너를 설치할 Kubernetes 클러스터로 바꾸십시오. 클러스터 ID를 나열하려면 <code>ibmcloud ks clusters</code>를 실행하십시오. <br> **팁:** 이름이 아닌 클러스터의 ID를 사용하십시오.
-   </td>
+   <td><code>&lt;cluster_ID&gt;</code>를 컨테이너 스캐너를 설치할 Kubernetes 클러스터로 바꾸십시오. 클러스터 ID를 나열하려면 <code>ibmcloud ks clusters</code>를 실행하십시오. <br> **팁:** 이름이 아닌 클러스터의 ID를 사용하십시오.</td>
    </tr>
    <tr>
    <td><code>APIKey</code></td>
@@ -354,44 +353,8 @@ helm get values <myscanner>
 ## 방화벽 뒤에서 컨테이너 스캐너 실행
 {: #va_firewall}
 
-방화벽이 발신 연결을 차단하는 경우 작업자 노드가 다음 표에 있는 IP 주소의 TCP 포트 `443`에서 컨테이너 스캐너에 액세스할 수 있도록 방화벽을 구성해야 합니다.
+방화벽이 발신 연결을 차단하는 경우 작업자 노드가 IP 주소의 TCP 포트 `443`에서 컨테이너 스캐너에 액세스할 수 있도록 방화벽을 구성해야 합니다. {{site.data.keyword.containerlong_notm}} 문서에서 [클러스터가 공용 방화벽을 통해 인프라 리소스 및 기타 서비스에 액세스하도록 허용](/docs/containers?topic=containers-firewall#firewall_outbound)의 3단계를 참조하십시오.
 {:shortdesc}
-
-
-
- 
-
-<p>
-  <table summary="행은 왼쪽에서 오른쪽으로 읽어야 하며, 첫 번째 열에는 서버 위치가 있고 두 번째 열에는 일치하는 IP 주소가 표시됩니다.">
-  <caption>표 3. 발신 트래픽을 위해 열린 IP 주소</caption>
-    <thead>
-      <th>위치</th>
-      <th>IP 주소</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Dallas</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      <tr>
-         <td>프랑크푸르트</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-      </tr>
-      <tr>
-        <td>런던</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-         <td>시드니</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-        <td>워싱턴 DC</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
 
 ## 컨테이너 보고서 검토
 {: #va_reviewing_container}
@@ -433,7 +396,7 @@ helm get values <myscanner>
     **예**
 
     - 컨테이너가 컴퓨팅하는 데이터와 분리되는 경우 데이터 유실 없이 컨테이너를 중지하여 삭제하고, 이미지에 필요한 변경사항을 수행하고, 다시 배치할 수 있습니다.
-    - {{site.data.keyword.Bluemix_notm}} 서비스(예: [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about))를 사용하여 취약한 컨테이너 인스턴스를 업데이트하는 데 도움을 받을 수 있습니다.
+    - {{site.data.keyword.cloud_notm}} 서비스(예: [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about))를 사용하여 취약한 컨테이너 인스턴스를 업데이트하는 데 도움을 받을 수 있습니다.
     - 마이크로서비스 아키텍처에서, 보안 또는 구성 문제를 수정하는 동안 트래픽을 다른 컨테이너 인스턴스로 라우팅하고 레드-블랙 배치에 새 이미지를 푸시할 수 있습니다.
 
 5. 지금 문제를 해결할 수 없는 경우 정책 설정에서 문제를 면제하면 문제로 인해 컨테이너 배치가 차단되지 않습니다. 문제를 면제하려면 **옵션 목록 열기 및 닫기** 아이콘을 클릭하고 **면제 작성**을 클릭하십시오. [조직 면제 정책 설정](#va_managing_policy)을 참조하십시오.

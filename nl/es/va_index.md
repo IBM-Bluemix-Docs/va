@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-04"
+lastupdated: "2019-05-01"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -127,7 +127,7 @@ Si Container Scanner se despliega, después de desplegar la imagen, Vulnerabilit
 Puede revisar la seguridad de imágenes de Docker que se han almacenado en sus espacios de nombres de {{site.data.keyword.registrylong_notm}} mediante la GUI.
 {:shortdesc}
 
-1. Inicie una sesión en {{site.data.keyword.Bluemix_notm}}.
+1. Inicie una sesión en {{site.data.keyword.cloud_notm}}.
 2. Pulse el icono de **Menú de navegación** y pulse **Kubernetes**.
 3. Pulse **Registro** y pulse el mosaico **Imágenes**. Se muestra una lista de sus imágenes y el estado de seguridad en la tabla **Imágenes**.
 4. Para ver el informe de la imagen con la etiqueta `latest`, pulse la fila correspondiente a esa imagen. Se abre el separador **Detalles de imagen**, que muestra los datos correspondientes a dicha imagen. Si no existe la etiqueta `latest` en el repositorio, se utilizará la imagen más reciente.
@@ -150,7 +150,7 @@ actualizar el paquete.
 Puede revisar la seguridad de imágenes de Docker que se han almacenado en sus espacios de nombres de {{site.data.keyword.registrylong_notm}} mediante la CLI.
 {:shortdesc}
 
-1. Enumere las imágenes en su cuenta {{site.data.keyword.Bluemix_notm}}. Se devolverá una lista de todas las imágenes, independientemente del espacio de nombres en el que se almacenan.
+1. Enumere las imágenes en su cuenta {{site.data.keyword.cloud_notm}}. Se devolverá una lista de todas las imágenes, independientemente del espacio de nombres en el que se almacenan.
 
    ```
    ibmcloud cr image-list
@@ -176,7 +176,7 @@ Puede revisar la seguridad de imágenes de Docker que se han almacenado en sus e
 ## Establecimiento de políticas de exención organizativas
 {: #va_managing_policy}
 
-Si desea gestionar la seguridad de una organización de {{site.data.keyword.Bluemix_notm}}, puede utilizar el valor de política para determinar si un problema está exento o no. Puede elegir utilizar Container Image Security Enforcement para asegurarse de que el despliegue solo se permita desde imágenes que no tengan problemas de seguridad después de justificar los problemas exentos por su política.
+Si desea gestionar la seguridad de una organización de {{site.data.keyword.cloud_notm}}, puede utilizar el valor de política para determinar si un problema está exento o no. Puede elegir utilizar Container Image Security Enforcement para asegurarse de que el despliegue solo se permita desde imágenes que no tengan problemas de seguridad después de justificar los problemas exentos por su política.
 {:shortdesc}
 
 Puede desplegar contenedores desde cualquier imagen, independientemente del estado de seguridad, a menos que Container Image Security Enforcement esté desplegado en el clúster. Para saber cómo desplegar Container Image Security Enforcement, consulte [Instalación de la obligatoriedad de seguridad](/docs/services/Registry?topic=registry-security_enforce#security_enforce).
@@ -188,7 +188,7 @@ Al utilizar Container Image Security Enforcement, cualquier problema de segurida
 
 Si desea establecer exenciones a la política utilizando la GUI, realice los pasos siguientes:
 
-1. Inicie una sesión en {{site.data.keyword.Bluemix_notm}}. Debe haber iniciado la sesión para ver Vulnerability Advisor en la GUI.
+1. Inicie una sesión en {{site.data.keyword.cloud_notm}}. Debe haber iniciado la sesión para ver Vulnerability Advisor en la GUI.
 2. Pulse el icono de **Menú de navegación** y pulse **Kubernetes**.
 3. En **Vulnerability Advisor**, pulse **Valores de política**.
 4. Pulse **Crear exención**.
@@ -235,7 +235,7 @@ Container Scanner requiere que se configuren permisos para que el servicio pueda
 
 Para configurar los permisos del servicio, realice los pasos siguientes:
 
-1. Inicie una sesión en el cliente de CLI de {{site.data.keyword.Bluemix_notm}}. Si tiene una cuenta federada, utilice `--sso`.
+1. Inicie una sesión en el cliente de CLI de {{site.data.keyword.cloud_notm}}. Si tiene una cuenta federada, utilice `--sso`.
 2. [Apunte la CLI de `kubectl`](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) al clúster donde desea utilizar una gráfica de Helm.
 3. Cree un ID de servicio y una clave de API para Container Scanner y proporcióneles un nombre:
     1. Para crear un ID de servicio, ejecute el siguiente mandato, donde `<scanner_serviceID>` es un nombre de su elección para el ID de servicio. Anote su **CRN**.
@@ -271,7 +271,7 @@ Configure una gráfica de Helm y asóciela al clúster en el que desea utilizarl
 
 Para configurar una gráfica de Helm, realice los pasos siguientes:
 
-1. [Configurar Helm en IBM Cloud Kubernetes Service](/docs/containers?topic=containers-integrations#helm). Si utiliza una política de control de acceso basado en roles (RBAC) para otorgar acceso a Tiller, asegúrese de que el rol de Tiller tenga acceso a todos los espacios de nombres. Otorgar al rol de Tiller acceso a todos los espacios de nombres garantiza que Container Scanner pueda ver los contenedores en todos los espacios de nombres.
+1. [Configurar Helm en IBM Cloud Kubernetes Service](/docs/containers?topic=containers-helm#helm). Si utiliza una política de control de acceso basado en roles (RBAC) para otorgar acceso a Tiller, asegúrese de que el rol de Tiller tenga acceso a todos los espacios de nombres. Otorgar al rol de Tiller acceso a todos los espacios de nombres garantiza que Container Scanner pueda ver los contenedores en todos los espacios de nombres.
 
 2. Añada el repositorio de gráficas de IBM al Helm, como por ejemplo `ibm`.
 
@@ -309,15 +309,15 @@ Para configurar una gráfica de Helm, realice los pasos siguientes:
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>Sustituya <code>&lt;regional_emit_URL&gt;</code> por el URL de punto final regional de Vulnerability Advisor. Para obtener el URL, ejecute <code>ibmcloud cr info</code> y recupere la dirección <strong>Registro de contenedores</strong>. Por ejemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io</code>. Añada <code>/va</code> al final de esta dirección. Por ejemplo, <code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>Sustituya <code>&lt;regional_emit_URL&gt;</code> por el URL de punto final regional de Vulnerability Advisor. Para obtener el URL, ejecute <code>ibmcloud cr info</code> y recupere la dirección <strong>Registro de contenedores</strong>. Por ejemplo, <code>https<span comment="make the link not a link">://us.</span>icr.io</code>. Añada <code>/va</code> al final de esta dirección. Por ejemplo, <code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>. Para obtener más información sobre regiones, consulte [Regiones locales](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local).</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>Sustituya <code>&lt;IBM_Cloud_account_ID&gt;</code> por el ID de cuenta de {{site.data.keyword.Bluemix_notm}} en el que se encuentre el clúster. Para obtener el ID de cuenta, ejecute <code>ibmcloud account list</code>.</td>
+   <td>Sustituya <code>&lt;IBM_Cloud_account_ID&gt;</code> por el ID de cuenta de {{site.data.keyword.cloud_notm}} en el que se encuentre el clúster. Para obtener el ID de cuenta, ejecute <code>ibmcloud account list</code>.</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>Sustituya <code>&lt;cluster_ID&gt;</code> por el clúster de Kubernetes en el que desee instalar Container Scanner. Para listar ID de clúster, ejecute <code>ibmcloud ks clusters</code>. <br> **Sugerencia:** Utilice el ID del clúster y no el nombre.
+   <td>Sustituya <code>&lt;cluster_ID&gt;</code> por el clúster de Kubernetes en el que desee instalar Container Scanner. Para listar ID de clúster, ejecute <code>ibmcloud ks clusters</code>. <br> **Sugerencia**: Utilice el ID del clúster y no el nombre.
    </td>
    </tr>
    <tr>
@@ -355,44 +355,8 @@ Container Scanner ahora está instalado, y el agente se despliega como un [Daemo
 ## Ejecución de Container Scanner desde detrás de un cortafuegos
 {: #va_firewall}
 
-Si su cortafuegos bloquea conexiones salientes, debe configurarlo para permitir que los nodos trabajadores accedan al Container Scanner a través del puerto TCP `443` en las direcciones IP en la siguiente tabla.
+Si su cortafuegos bloquea conexiones salientes, debe configurarlo para permitir que los nodos trabajadores accedan al Container Scanner a través del puerto TCP `443` en las direcciones IP, como se describe en el paso 3, [Cómo permitir al clúster acceder a recursos de infraestructura y otros servicios a través de un cortafuegos público](/docs/containers?topic=containers-firewall#firewall_outbound), de la documentación de {{site.data.keyword.containerlong_notm}}.
 {:shortdesc}
-
-
-
- 
-
-<p>
-  <table summary=" Las filas se deben leer de izquierda a derecha; la ubicación del servidor está en la columna uno y las direcciones IP correspondientes en la columna dos.">
-  <caption>Tabla 3. Direcciones IP para abrir para el tráfico saliente</caption>
-    <thead>
-      <th>Ubicación</th>
-      <th>Dirección IP</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Dallas</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      <tr>
-         <td>Frankfurt</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-      </tr>
-      <tr>
-        <td>Londres</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-         <td>Sídney</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-        <td>Washington DC</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
 
 ## Revisión de un informe de contenedor
 {: #va_reviewing_container}
@@ -437,7 +401,7 @@ actualizar el paquete.
     **Ejemplo**
 
     - Si el contenedor está desacoplado de los datos que calcula, puede detener el contenedor y suprimirlo, realizar los cambios necesarios a la imagen, y volver a desplegarla, sin pérdida de datos.
-    - Puede utilizar un servicio de {{site.data.keyword.Bluemix_notm}} como, por ejemplo, [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about), que le ayude con la actualización de la instancia de contenedor vulnerable.
+    - Puede utilizar un servicio de {{site.data.keyword.cloud_notm}} como, por ejemplo, [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about), que le ayude con la actualización de la instancia de contenedor vulnerable.
     - En una arquitectura de microservicios, puede direccionar tráfico a otra instancia de contenedor mientras soluciona los problemas de seguridad o configuración y enviar por push la imagen nueva en un despliegue rojo-negro.
 
 5. Si no puede corregir el problema ahora, puede marcarlo como una exención en los valores de política, para evitar que el problema bloquee el despliegue del contenedor. Para marcar el problema como exento, pulse el icono **abrir y cerrar lista de opciones** y pulse **Crear exención**, consulte [Establecimiento de políticas de exención de la organización](#va_managing_policy).

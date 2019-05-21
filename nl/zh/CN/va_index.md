@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-04-04"
+lastupdated: "2019-05-01"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -129,7 +129,7 @@ subcollection: va
 您可以使用 GUI 复查存储在 {{site.data.keyword.registrylong_notm}} 中名称空间内的 Docker 映像的安全性。
 {:shortdesc}
 
-1. 登录到 {{site.data.keyword.Bluemix_notm}}。
+1. 登录到 {{site.data.keyword.cloud_notm}}。
 2. 单击**导航菜单**图标，然后单击 **Kubernetes**。
 3. 单击**注册表**，然后单击**映像**磁贴。映像列表和每个映像的安全状态将显示在**映像**表中。
 4. 要查看标记为 `latest` 的映像的报告，请单击该映像所在的行。这会打开**映像详细信息**选项卡，显示该映像的数据。如果存储库中不存在 `latest` 标记，那么将使用最新的映像。
@@ -151,7 +151,7 @@ subcollection: va
 您可以使用 CLI 复查存储在 {{site.data.keyword.registrylong_notm}} 中名称空间内的 Docker 映像的安全性。
 {:shortdesc}
 
-1. 列出 {{site.data.keyword.Bluemix_notm}} 帐户中的映像。这将返回所有映像的列表，而无论其存储在哪个名称空间。
+1. 列出 {{site.data.keyword.cloud_notm}} 帐户中的映像。这将返回所有映像的列表，而无论其存储在哪个名称空间。
 
    ```
     ibmcloud cr image-list
@@ -160,7 +160,7 @@ subcollection: va
 
 2. 检查**安全状态**列中的状态。
     - **没有问题**：未发现安全问题。
-    - **`<X>` 个问题** 发现 `<X>` 个可能的安全问题或漏洞，其中，`<X>` 是问题的数量。
+    - **`<X>` 问题** `<X>` 发现潜在的安全问题或漏洞，其中 `<X>` 是问题的数量。
     - **正在扫描**：正在扫描映像，尚未确定最终漏洞状态。
 
 3. 要查看状态的详细信息，请复查漏洞顾问程序报告：
@@ -177,7 +177,7 @@ subcollection: va
 ## 设置组织豁免策略
 {: #va_managing_policy}
 
-如果想要管理 {{site.data.keyword.Bluemix_notm}} 组织的安全性，您可以使用策略设置以确定问题是否为豁免。您可以选择使用 Container Image Security Enforcement，确保在识别策略所免除的任何问题后只允许来自不包含任何安全问题的映像的部署。
+如果想要管理 {{site.data.keyword.cloud_notm}} 组织的安全性，您可以使用策略设置以确定问题是否为豁免。您可以选择使用 Container Image Security Enforcement，确保在识别策略所免除的任何问题后只允许来自不包含任何安全问题的映像的部署。
 {:shortdesc}
 
 除非在集群中部署了 Container Image Security Enforcement，否则无论安全状态如何，都可以从任何映像部署容器。要查找如何部署 Container Image Security Enforcement，请参阅[安装强制实施安全性](/docs/services/Registry?topic=registry-security_enforce#security_enforce)。
@@ -189,7 +189,7 @@ subcollection: va
 
 如果想要使用 GUI 设置策略豁免，请完成以下步骤：
 
-1. 登录到 {{site.data.keyword.Bluemix_notm}}。您必须登录才能在 GUI 中查看漏洞顾问程序。
+1. 登录到 {{site.data.keyword.cloud_notm}}。您必须登录才能在 GUI 中查看漏洞顾问程序。
 2. 单击**导航菜单**图标，然后单击 **Kubernetes**。
 3. 在**漏洞顾问程序**下，单击**政策设置**。
 4. 单击**创建豁免**。
@@ -236,7 +236,7 @@ subcollection: va
 
 要设置服务许可权，请完成以下步骤：
 
-1. 登录到 {{site.data.keyword.Bluemix_notm}} CLI 客户机。如果您具有联合帐户，请使用 `--sso`。
+1. 登录到 {{site.data.keyword.cloud_notm}} CLI 客户机。如果您具有联合帐户，请使用 `--sso`。
 2. [设定 `kubectl` CLI 的目标](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure)为要使用 Helm chart 的集群。
 3. 为容器扫描程序创建服务标识和 API 密钥并为其指定名称：
     1. 要创建服务标识，请运行以下命令，其中 `<scanner_serviceID>` 是针对服务标识选择的名称。记下其 **CRN**。
@@ -273,7 +273,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
 
 要配置 Helm chart，请完成以下步骤：
 
-1. [在 IBM Cloud Kubernetes Service 中设置 Helm](/docs/containers?topic=containers-integrations#helm)。如果使用基于角色的访问控制 (RBAC) 策略向 Tiller 授予访问权，请确保 Tiller 角色有权访问所有名称空间。向 Tiller 角色授予对所有名称空间的访问权，可确保容器扫描程序可以查看所有名称空间中的容器。
+1. [在 IBM Cloud Kubernetes Service 中设置 Helm](/docs/containers?topic=containers-helm#helm)。如果使用基于角色的访问控制 (RBAC) 策略向 Tiller 授予访问权，请确保 Tiller 角色有权访问所有名称空间。向 Tiller 角色授予对所有名称空间的访问权，可确保容器扫描程序可以查看所有名称空间中的容器。
 
 2. 向 Helm 添加 IBM 图表存储库，例如 `ibm`。
 
@@ -311,15 +311,15 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td>将 <code>&lt;regional_emit_URL&gt;</code> 替换为漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io</code>。将 <code>/va</code> 添加到此地址的结尾处。例如，<code>https<span comment="make the link not a link">://uk.</span>icr.io/va</code></td>
+   <td>将 <code>&lt;regional_emit_URL&gt;</code> 替换为漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。例如，<code>https<span comment="make the link not a link">://us.</span>icr.io</code>。将 <code>/va</code> 添加到此地址的结尾处。例如，<code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>。有关区域的更多信息，请参阅[本地区域](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local)。</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
-   <td>将 <code>&lt;IBM_Cloud_account_ID&gt;</code> 替换为集群所在的 {{site.data.keyword.Bluemix_notm}} 帐户标识。要获取帐户标识，请运行 <code>ibmcloud account list</code>。</td>
+   <td>将 <code>&lt;IBM_Cloud_account_ID&gt;</code> 替换为集群所在的 {{site.data.keyword.cloud_notm}} 帐户标识。要获取帐户标识，请运行 <code>ibmcloud account list</code>。</td>
    </tr>
    <tr>
    <td><code>ClusterID</code></td>
-   <td>将 <code>&lt;cluster_ID&gt;</code> 替换为要在其中安装容器扫描程序的 Kubernetes 集群。要列出集群标识，请运行 <code>ibmcloud ks clusters</code>。<br> **提示：**使用集群的标识，而不是集群的名称。
+   <td>将 <code>&lt;cluster_ID&gt;</code> 替换为要在其中安装容器扫描程序的 Kubernetes 集群。要列出集群标识，请运行 <code>ibmcloud ks clusters</code>。<br> **提示**：使用集群的标识，而不是集群的名称。
    </td>
    </tr>
    <tr>
@@ -357,44 +357,8 @@ helm get values <myscanner>
 ## 从防火墙后面运行容器扫描程序
 {: #va_firewall}
 
-如果防火墙阻止出局连接，那么必须配置防火墙以允许工作程序节点访问下表中 IP 地址上的 TCP 端口 `443` 上的容器扫描程序。
+如果防火墙阻止出局连接，那么必须配置防火墙以允许工作程序节点访问 IP 地址上的 TCP 端口 `443` 上的容器扫描程序，请参阅{{site.data.keyword.containerlong_notm}} 文档的 [ 允许集群访问公共防火墙上的基础架构资源和其他服务](/docs/containers?topic=containers-firewall#firewall_outbound)中的步骤 3。
 {:shortdesc}
-
-
-
- 
-
-<p>
-  <table summary=" 应该从左到右读取行，其中第一列是服务器位置，第二列是要匹配的 IP 地址。">
-  <caption>表 3. 要为出局流量打开的 IP 地址</caption>
-    <thead>
-      <th>位置</th>
-      <th>IP 地址</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>达拉斯</td>
-        <td><code>169.47.103.118</code><br><code>169.48.165.6</code></td>
-      </tr>
-      <tr>
-         <td>法兰克福</td>
-         <td><code>159.8.220.182</code><br><code>158.177.74.102</code></td>
-      </tr>
-      <tr>
-        <td>伦敦</td>
-        <td><code>158.175.71.134</code><br><code>5.10.111.190</code></td>
-      </tr>
-      <tr>
-         <td>悉尼</td>
-         <td><code>168.1.40.158</code><br><code>130.198.65.182</code></td>
-      </tr>
-      <tr>
-        <td>华盛顿</td>
-         <td><code>169.60.73.158</code><br><code>169.61.84.102</code></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
 
 ## 复查容器报告
 {: #va_reviewing_container}
@@ -437,7 +401,7 @@ helm get values <myscanner>
     **示例**
 
     - 如果容器与其计算的数据相分离，那么可以停止容器并将其删除，对映像进行必需的更改，然后重新部署，而不会丢失数据。
-    - 可以使用 {{site.data.keyword.Bluemix_notm}} 服务（例如 [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about)）来帮助更新有漏洞的容器实例。
+    - 可以使用 {{site.data.keyword.cloud_notm}} 服务（例如 [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about)）来帮助更新有漏洞的容器实例。
     - 在微服务体系结构中，可在修复安全或配置问题时，将流量路由到其他容器实例，然后在红黑部署中推送新的映像。
 
 5. 如果目前无法解决问题，那么可以在策略设置中豁免该问题，从而避免该问题阻止容器部署。要豁免问题，请单击**打开和关闭选项列表**图标，然后单击**创建豁免**，参阅[设置组织豁免策略](#va_managing_policy)。
