@@ -158,7 +158,7 @@ You can review the security of Docker images that are stored in your namespaces 
 
 2. Check the status in the **SECURITY STATUS** column.
     - `No Issues` No security issues were found.
-    - `<X> Issues` The number of potential security issues or vulnerabilities found, where `<X>` is the number of issues.
+    - `<X> Issues` The number of potential security issues or vulnerabilities that are found, where `<X>` is the number of issues.
     - `Scanning` The image is being scanned and the final vulnerability status is not determined.
 
 3. To view the details for the status, review the Vulnerability Advisor report:
@@ -175,7 +175,7 @@ You can review the security of Docker images that are stored in your namespaces 
 ## Setting organizational exemption policies
 {: #va_managing_policy}
 
-If you want to manage the security of an {{site.data.keyword.cloud_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can choose to use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after accounting for any issues that are exempted by your policy.
+If you want to manage the security of an {{site.data.keyword.cloud_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues, after accounting for any issues that are exempted by your policy.
 {:shortdesc}
 
 You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce).
@@ -369,7 +369,7 @@ Container Scanner is deprecated.
 If your firewall blocks outgoing connections, you must configure your firewall.
 {:shortdesc}
 
-To configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound) in the {{site.data.keyword.containerlong_notm}} documentation.
+To configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound).
 
 ## Reviewing a container report (deprecated)
 {: #va_reviewing_container}
