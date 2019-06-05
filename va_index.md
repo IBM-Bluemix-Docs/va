@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-24"
+lastupdated: "2019-06-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -62,7 +62,7 @@ The Vulnerability Advisor dashboard provides an overview and assessment of the s
 To scan images and containers in your account for security issues, Vulnerability Advisor collects, stores, and processes the following information:
 
 - Free-form fields, including IDs, descriptions, and image names (registry, namespace, repository name, and image tag)
-- Kubernetes metadata including names of Kubernetes resources such as pod, ReplicaSet, and deployment names
+- Kubernetes metadata, which includes the names of Kubernetes resources such as pod, ReplicaSet, and deployment names
 - Metadata about the file modes and creation timestamps of the configuration files
 - The content of system and application configuration files in images and containers
 - Installed packages and libraries (including their versions)
@@ -133,11 +133,11 @@ You can review the security of Docker images that are stored in your namespaces 
 4. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
 5. If the security status shows any issues, to find out about the issues, click the **Issues by Type** tab. The **Vulnerabilities** and **Configuration Issues** tables open.
 
-   - **Vulnerabilities** This table shows the Vulnerability ID for each issue, the policy status for that issue, the affected packages and how to resolve the issue. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the vendor security notice for that issue. Lists packages that contain known vulnerability issues.
+   - **Vulnerabilities** table. Shows the Vulnerability ID for each issue, the policy status for that issue, the affected packages and how to resolve the issue. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the vendor security notice for that issue. Lists packages that contain known vulnerability issues.
   
      The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
 
-   - **Configuration Issues** This table shows the Configuration Issue ID for each issue, the policy status for that issue, and the security practice. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the security notice for that issue.
+   - **Configuration Issues** table. Shows the Configuration Issue ID for each issue, the policy status for that issue, and the security practice. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the security notice for that issue.
   
      The list contains suggestions for actions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
 
@@ -157,9 +157,9 @@ You can review the security of Docker images that are stored in your namespaces 
    {: pre}
 
 2. Check the status in the **SECURITY STATUS** column.
-    - **No Issues** No security issues were found.
-    - **`<X>` Issues** `<X>` potential security issues or vulnerabilities were found, where `<X>` is the number of issues.
-    - **Scanning** The image is being scanned and the final vulnerability status is not yet determined.
+    - `No Issues` No security issues were found.
+    - `<X> Issues` The number of potential security issues or vulnerabilities found, where `<X>` is the number of issues.
+    - `Scanning` The image is being scanned and the final vulnerability status is not determined.
 
 3. To view the details for the status, review the Vulnerability Advisor report:
 
@@ -169,8 +169,8 @@ You can review the security of Docker images that are stored in your namespaces 
    {: pre}
 
    In the CLI output, you can view the following information about the configuration issues.
-      - **Security practice** A description of the vulnerability that was found
-      - **Corrective action** Details about how to fix the vulnerability
+      - `Security practice` A description of the vulnerability that was found
+      - `Corrective action` Details about how to fix the vulnerability
 
 ## Setting organizational exemption policies
 {: #va_managing_policy}
@@ -220,12 +220,12 @@ For more information about the commands, you can use the `--help` flag when you 
 Container Scanner is deprecated.
 {: deprecated}
 
-Container Scanner enables Vulnerability Advisor to report any problems found in running containers that are not present in the container's base image. If you do not make runtime modifications to your container then Container Scanner is not required because the image report will show the same issues.
+Container Scanner enables Vulnerability Advisor to report any problems that are found in running containers that are not present in the container's base image. If you do not make runtime modifications to your container, then you do not require Container Scanner because the image report shows the same issues.
 {:shortdesc}
 
 To check the security status of live containers that are running in your cluster, you can install the Container Scanner. To protect your app, Container Scanner regularly scans your running containers so that you can detect and rectify any newly detected vulnerabilities.
 
-You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must rectify any problems with the image and then redeploy your app. Container Scanner only supports containers that are created from images that are stored in {{site.data.keyword.registrylong_notm}}.
+You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must rectify any problems with the image and then redeploy your app. Container Scanner supports containers that are created from images that are stored in {{site.data.keyword.registrylong_notm}} only.
 
 To use the Container Scanner, you must set up permissions and then set up a [Helm Chart ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/developing_charts) and associate it with the cluster in which you want to use it.
 
@@ -258,7 +258,7 @@ To set up service permissions, complete the following steps:
        {: codeblock}
        The scanner API key is returned.
 
-       Ensure that you store your scanner API key safely because it cannot be retrieved later. Also ensure that you have a separate service API key for each cluster that the scanner is installed in.
+       Ensure that you store your scanner API key safely because it cannot be retrieved later. Also, ensure that you have a separate service API key for each cluster that the scanner is installed in.
        {: important}
 
     3. Create a service policy that grants the `Writer` role.
@@ -382,9 +382,9 @@ In your dashboard, you can see the status of a container to determine whether it
 
 Check that containers that are running in your space continue to be compliant with organizational policy by reviewing the **Policy Status** field. The status is displayed as one of the following conditions:
 
-- **Compliant with Policy** No security or configuration issues were found.
-- **Not Compliant with Policy** Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits the deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
-- **Incomplete Assessment** The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
+- `Compliant with Policy` No security or configuration issues were found.
+- `Not Compliant with Policy` Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits the deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
+- `Incomplete Assessment` The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
 
 Check that your container is as secure as possible by viewing its security report and act on any reported security or configuration issues, by completing the following steps:
 
@@ -403,13 +403,14 @@ Check that your container is as secure as possible by viewing its security repor
 
 3. Review the policy status for each security issue. The policy status indicates whether this issue is exempt.
 
-    - **Active** You have an issue that is not exempted and the issue is affecting your security status.
-    - **Exempt** This issue is exempted by your policy settings.
-    - **Partially exempt** This issue is associated with more than one security notice. The security notices are not all exempt.
+    - `Active` You have an issue that is not exempted and the issue is affecting your security status.
+    - `Exempt` This issue is exempted by your policy settings.
+    - `Partially exempt` This issue is associated with more than one security notice. The security notices are not all exempt.
 
 4. Decide how to update the container so that you can resolve the problems.
 
-    **Important** To fix problems with the container image, you must delete the old instance and redeploy, which means losing any data within the existing container. Ensure that you have a good understanding of your container architecture to choose the appropriate method of redeploying the container.
+    To fix problems with the container image, you must delete the old instance and redeploy, which means losing any data within the existing container. Ensure that you have a good understanding of your container architecture to choose the appropriate method of redeploying the container.
+    {: important}
 
     **Example**
 
