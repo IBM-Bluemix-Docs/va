@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-07"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -87,7 +87,7 @@ Packages that contain known vulnerability issues are displayed in the scan resul
   |Docker base image|Source of security notices|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://git.alpinelinux.org/) and [CIRCL CVE Search ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://cve.circl.lu/).|
-  |CentOS| [CentOS announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-announce/) and [CentOS CR announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |CentOS| [CentOS announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-announce/) and [CentOS CR announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-cr-announce/). For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos).|
   |Debian|[Debian security announcements ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.debian.org/debian-security-announce/).|
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/labsinfo/securitydataapi).|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://usn.ubuntu.com/).|
@@ -171,6 +171,19 @@ You can review the security of Docker images that are stored in your namespaces 
    In the CLI output, you can view the following information about the configuration issues.
       - `Security practice` A description of the vulnerability that was found
       - `Corrective action` Details about how to fix the vulnerability
+
+### Vulnerabilities in packages on CentOS
+{: #va_centos}
+
+If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by Red Hat but the security notice is not applicable to, or the fix has not yet been ported to, CentOS.
+{:shortdesc}
+
+If you receive a report that says your package has vulnerabilities, complete the following steps:
+
+1. View the steps for updating the package by clicking the security notice code.
+2. Update the package by completing the steps to update the package.
+3. If the package is updated, the result was not a false positive and the required action is complete.
+4. If the package does not update because no newer versions are available to install, the result was a false positive. You can add an exemption policy for this security notice, see [Setting organizational exemption policies](#va_managing_policy).
 
 ## Setting organizational exemption policies
 {: #va_managing_policy}
