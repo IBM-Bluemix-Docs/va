@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -83,14 +83,14 @@ Scan results are deleted 30 days after they are generated.
 Vulnerability Advisor checks for vulnerable packages in images that are using supported operating systems and provides a link to any relevant security notices about the vulnerability.
 {:shortdesc}
 
-Packages that contain known vulnerability issues are displayed in the scan results. The possible vulnerabilities are updated daily by using the published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can address multiple vulnerabilities.
+Packages that contain known vulnerability issues are displayed in the scan results. The possible vulnerabilities are updated daily by using the published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package update can address multiple vulnerabilities.
 
   |Docker base image|Source of security notices|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://git.alpinelinux.org/) and [CIRCL CVE Search ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://cve.circl.lu/).|
-  |CentOS| [CentOS announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-announce/) and [CentOS CR announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |CentOS| [CentOS announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-announce/) and [CentOS CR announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-cr-announce/). For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos).|
   |Debian|[Debian security announcements ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.debian.org/debian-security-announce/).|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/errata/#/).|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/labsinfo/securitydataapi).|
   |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://usn.ubuntu.com/).|
   {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
@@ -136,7 +136,7 @@ You can review the security of Docker images that are stored in your namespaces 
 
    - **Vulnerabilities** table. Shows the Vulnerability ID for each issue, the policy status for that issue, the affected packages and how to resolve the issue. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the vendor security notice for that issue. Lists packages that contain known vulnerability issues.
   
-     The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
+     The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package update can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
 
    - **Configuration Issues** table. Shows the Configuration Issue ID for each issue, the policy status for that issue, and the security practice. To see more information about that issue, expand the row. A summary of that issue is displayed that contains a link to the security notice for that issue.
   
@@ -172,6 +172,19 @@ You can review the security of Docker images that are stored in your namespaces 
    In the CLI output, you can view the following information about the configuration issues.
       - `Security practice` A description of the vulnerability that was found
       - `Corrective action` Details about how to fix the vulnerability
+
+### Vulnerabilities in packages on CentOS
+{: #va_centos}
+
+If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by Red Hat but the security notice is not applicable to, or the fix has not yet been ported to, CentOS.
+{:shortdesc}
+
+If you receive a report that says your package has vulnerabilities, complete the following steps:
+
+1. View the steps for updating the package by clicking the security notice code.
+2. Update the package by completing the steps to update the package.
+3. If the package is updated, the result was not a false positive and the required action is complete.
+4. If the package does not update because no newer versions are available to install, the result was a false positive. You can add an exemption policy for this security notice, see [Setting organizational exemption policies](#va_managing_policy).
 
 ## Setting organizational exemption policies
 {: #va_managing_policy}
@@ -396,7 +409,7 @@ Check that your container is as secure as possible by viewing its security repor
     4. Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
 2. Review the sections to see the potential security and configuration issues for each package in the image:
 
-    - **Vulnerabilities** Lists packages that contain known vulnerability issues. The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package upgrade can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
+    - **Vulnerabilities** Lists packages that contain known vulnerability issues. The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package update can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
 
     - **Configuration Issues** Lists suggestions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
 
