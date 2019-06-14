@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-01"
+lastupdated: "2019-06-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -22,11 +22,12 @@ subcollection: va
 {:deprecated: .deprecated}
 {:download: .download}
 
+
 # 使用漏洞顾问程序管理映像安全性
 {: #va_index}
 
 漏洞顾问程序用于检查 {{site.data.keyword.IBM}} 或第三方提供的容器映像的安全状态，或者检查添加到组织的注册表名称空间的容器映像的安全状态。
-如果在每个集群中安装了容器扫描程序，那么漏洞顾问程序也会检查正在运行的容器的状态。
+如果在每个集群中安装了容器扫描程序（不推荐），那么漏洞顾问程序也会检查正在运行的容器的状态。
 {:shortdesc}
 
 将映像添加到名称空间时，漏洞顾问程序会自动对该映像进行扫描，以检测安全问题和潜在漏洞。如果发现安全问题，系统会提供指示信息，以帮助修复所报告的漏洞。
@@ -47,17 +48,17 @@ subcollection: va
 提供了以下功能：
 
 - 扫描映像以查看是否存在问题
-- 扫描正在运行的容器中的问题（如果每个集群中安装了[容器扫描程序](#va_install_container_scanner)）
+- 在每个集群中安装了[容器扫描程序](#va_install_container_scanner)（不推荐）时扫描正在运行的容器中的问题
 - 提供基于安全实践（特定于 {{site.data.keyword.containerlong_notm}}）的评估报告
 - 提供建议来确保一部分应用程序类型的配置文件安全
 - 提供有关如何修复其报告中所报告的[有漏洞包](#packages)或[配置问题](#app_configurations)的指示信息
 - 针对 [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce) 提供判定
 - 对帐户、名称空间、存储库或标记级别的报告应用豁免，以标记所标记问题不适用于您的用例
-- 在 {{site.data.keyword.registrylong_notm}} 图形用户界面的**标记**视图中，提供关联容器的链接。您可以列出在安装了容器扫描程序的集群中正在运行的容器以及正在使用该映像的容器。
+- 在 {{site.data.keyword.registrylong_notm}} 图形用户界面的**标记**视图中，提供关联容器的链接。您可以列出在安装了容器扫描程序（不推荐）的集群中正在运行的容器以及正在使用该映像的容器。
 
 在“注册表”仪表板中，**策略状态**列显示存储库的状态。链接的报告可识别映像的良好云安全实践。
 
-漏洞顾问程序仪表板提供映像安全性的概述和评估，如果安装了容器扫描程序，那么还将提供正在运行的容器的链接。如果要了解漏洞顾问程序仪表板的更多信息，请参阅[复查漏洞报告](#va_reviewing)。
+漏洞顾问程序仪表板提供映像安全性的概述和评估，如果安装了容器扫描程序（不推荐），那么还将提供正在运行的容器的链接。如果要了解漏洞顾问程序仪表板的更多信息，请参阅[复查漏洞报告](#va_reviewing)。
 
 **数据保护**
 
@@ -88,11 +89,11 @@ subcollection: va
 
   |Docker 基本映像|安全通知的源|
   |-----------------|--------------------------|
-  |Alpine|[Git - Alpine Linux ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://git.alpinelinux.org/) 和 [CIRCL CVE Search ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://cve.circl.lu/)|
-  |CentOS|[CentOS announce archives ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.centos.org/pipermail/centos-announce/) 和 [CentOS CR announce archives ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.centos.org/pipermail/centos-cr-announce/)|
-  |Debian|[Debian security announcements ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.debian.org/debian-security-announce/)|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://access.redhat.com/errata/#/)|
-  |Ubuntu|[Ubuntu Security Notices ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://usn.ubuntu.com/)|
+  |Alpine|[Git - Alpine Linux ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://git.alpinelinux.org/) 和 [CIRCL CVE Search ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://cve.circl.lu/)。|
+  |CentOS| [CentOS announce archives ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.centos.org/pipermail/centos-announce/) 和 [CentOS CR announce archives ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.centos.org/pipermail/centos-cr-announce/)。|
+  |Debian|[Debian security announcements ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.debian.org/debian-security-announce/)。|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://access.redhat.com/errata/#/)。|
+  |Ubuntu|[Ubuntu Security Notices ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://usn.ubuntu.com/)。|
   {: caption="表 1. 支持漏洞顾问程序检查其是否存在有漏洞包的 Docker 基本映像" caption-side="top"}
 
 ### 配置问题
@@ -121,7 +122,7 @@ subcollection: va
 如果映像不满足组织策略所设置的需求，那么必须配置映像以满足这些需求，然后才能进行部署。有关如何查看和更改组织策略的更多信息，请参阅[设置组织豁免策略](#va_managing_policy)。
 {:tip}
 
-如果部署了容器扫描程序，那么在部署映像后，漏洞顾问程序会继续扫描容器中的安全和配置问题。您可以按照[检查容器报告](#va_reviewing_container)中描述的步骤来解决发现的任何问题。
+如果部署了容器扫描程序（不推荐），那么在部署映像后，漏洞顾问程序会继续扫描容器中的安全和配置问题。您可以按照[检查容器报告](#va_reviewing_container)中描述的步骤来解决发现的任何问题。
 
 ### 使用 GUI 复查漏洞报告
 {: #va_reviewing_gui}
@@ -135,11 +136,11 @@ subcollection: va
 4. 要查看标记为 `latest` 的映像的报告，请单击该映像所在的行。这会打开**映像详细信息**选项卡，显示该映像的数据。如果存储库中不存在 `latest` 标记，那么将使用最新的映像。
 5. 如果安全状态显示任何问题，单击**按类型分组的问题**选项卡，可查找问题。这会打开**漏洞**和**配置问题**表。
 
-   - **漏洞**：该表显示了每个问题的漏洞标识、该问题的策略状态、受影响的包以及解决问题的方法。要查看有关该问题的更多信息，请展开该行。将显示问题的摘要，其中包含该问题的供应商安全通知的链接。并列出包含已知漏洞问题的包。
+   - **漏洞**表。显示了每个问题的漏洞标识、该问题的策略状态、受影响的包以及解决问题的方法。要查看有关该问题的更多信息，请展开该行。将显示问题的摘要，其中包含该问题的供应商安全通知的链接。并列出包含已知漏洞问题的包。
   
      对于[漏洞类型](#types)中所列的 Docker 映像类型，将使用已发布的安全通知，每天更新列表。通常，要使有漏洞的包能够通过扫描，需要该包的更高版本，其中包含对该漏洞的修订。相同的包可能列出多个漏洞，在此情况下，对包进行一次升级可更正多个问题。单击安全通知代码，以查看包的更多信息以及更新包的步骤。
 
-   - **配置问题**：该表显示了每个问题的配置问题标识、该问题的策略状态以及安全实践。要查看有关该问题的更多信息，请展开该行。将显示问题的摘要，其中包含该问题的安全通知的链接。
+   - **配置问题**表。显示了每个问题的配置问题标识、该问题的策略状态以及安全实践。要查看有关该问题的更多信息，请展开该行。将显示问题的摘要，其中包含该问题的安全通知的链接。
   
      此列表包含为提高容器安全性而采取的措施的建议，以及容器任何不安全的应用程序设置。展开相应行可查看问题的解决方法。
 
@@ -159,9 +160,9 @@ subcollection: va
    {: pre}
 
 2. 检查**安全状态**列中的状态。
-    - **没有问题**：未发现安全问题。
-    - **`<X>` 问题** `<X>` 发现潜在的安全问题或漏洞，其中 `<X>` 是问题的数量。
-    - **正在扫描**：正在扫描映像，尚未确定最终漏洞状态。
+    - `没有问题`：未发现安全问题。
+    - `<X> 个问题`：发现的潜在安全问题或漏洞的数量，其中 `<X>` 是问题的数量。
+    - `正在扫描`：正在扫描映像，未确定最终漏洞状态。
 
 3. 要查看状态的详细信息，请复查漏洞顾问程序报告：
 
@@ -171,13 +172,13 @@ subcollection: va
    {: pre}
 
    在 CLI 输出中，可以查看有关配置问题的以下信息。
-      - **安全实践**：发现的漏洞的描述
-      - **更正操作**：有关如何修复漏洞的详细信息
+      - `安全实践`：发现的漏洞的描述
+      - `更正操作`：有关如何修复漏洞的详细信息
 
 ## 设置组织豁免策略
 {: #va_managing_policy}
 
-如果想要管理 {{site.data.keyword.cloud_notm}} 组织的安全性，您可以使用策略设置以确定问题是否为豁免。您可以选择使用 Container Image Security Enforcement，确保在识别策略所免除的任何问题后只允许来自不包含任何安全问题的映像的部署。
+如果想要管理 {{site.data.keyword.cloud_notm}} 组织的安全性，您可以使用策略设置以确定问题是否为豁免。您可以使用 Container Image Security Enforcement，确保在考虑策略所免除的任何问题后，只允许来自不包含任何安全问题的映像的部署。
 {:shortdesc}
 
 除非在集群中部署了 Container Image Security Enforcement，否则无论安全状态如何，都可以从任何映像部署容器。要查找如何部署 Container Image Security Enforcement，请参阅[安装强制实施安全性](/docs/services/Registry?topic=registry-security_enforce#security_enforce)。
@@ -216,20 +217,26 @@ subcollection: va
 
 有关命令的更多信息，可在运行命令时使用 `--help` 标志。
 
-## 安装容器扫描程序
+## 安装容器扫描程序（不推荐）
 {: #va_install_container_scanner}
 
-容器扫描程序支持漏洞顾问程序报告在运行中的容器中发现的任何问题，这些问题在容器的基本映像中不存在。如果不对容器进行运行时修改，那么将不需要运行容器扫描程序，因为映像报告将会显示相同的问题。
+不推荐使用容器扫描程序。
+{: deprecated}
+
+容器扫描程序支持漏洞顾问程序报告正在运行的容器中所发现，而在容器的基本映像中不存在的任何问题。如果不对容器进行运行时修改，那么将不需要运行容器扫描程序，因为映像报告会显示相同的问题。
 {:shortdesc}
 
 要检查在集群中运行的实时容器的安全状态，可以安装容器扫描程序。为了保护您的应用程序，容器扫描程序会定期扫描正在运行的容器，以便您可以检测和纠正任何新检测到的漏洞。
 
-您可以设置容器扫描程序，以监视分配给所有 Kubernetes 空间名称中的 pod 的容器中的漏洞。在发现漏洞时，您必须纠正映像的任何问题，然后重新部署应用程序。容器扫描程序仅支持从存储在 {{site.data.keyword.registrylong_notm}} 中的映像中创建的容器。
+您可以设置容器扫描程序，以监视分配给所有 Kubernetes 空间名称中的 pod 的容器中的漏洞。在发现漏洞时，您必须纠正映像的任何问题，然后重新部署应用程序。容器扫描程序仅支持从存储在 {{site.data.keyword.registrylong_notm}} 中的映像创建的容器。
 
 要使用容器扫描程序，必须设置许可权，然后设置 [Helm Chart ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://docs.helm.sh/developing_charts) 并将其与要使用它的集群相关联。
 
-### 为容器扫描程序设置服务许可权
+### 为容器扫描程序（不推荐）设置服务许可权
 {: #va_install_container_scanner_permissions}
+
+不推荐使用容器扫描程序。
+{: deprecated}
 
 容器扫描程序需要设置许可权，以便服务可以运行。
 {:shortdesc}
@@ -255,7 +262,7 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
 这将返回扫描程序 API 密钥。
 
        确保安全地存储扫描程序 API 密钥，因为日后无法对其进行检索。
-	    还要确保安装了扫描程序的每个集群有独立的服务 API 密钥。
+	    此外，还要确保安装了扫描程序的每个集群有独立的服务 API 密钥。
        {: important}
 
     3. 创建用于授予 `Writer` 角色的服务策略。
@@ -265,8 +272,11 @@ ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
        ```
        {: codeblock}
 
-### 配置 Helm chart
+### 配置 Helm Chart（不推荐）
 {: #va_install_container_scanner_helm}
+
+不推荐使用容器扫描程序。
+{: deprecated}
 
 配置 Helm chart，并将其与要使用它的集群相关联。
 {:shortdesc}
@@ -354,14 +364,22 @@ helm get values <myscanner>
 
 现在容器扫描程序已安装，并且该代理程序已部署为集群中的 [DaemonSet ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)。容器扫描程序虽然是部署到 `kube-system` 名称空间，但是可扫描分配给所有 Kubernetes 名称空间（例如，`default`）中 pod 的所有容器。
 
-## 从防火墙后面运行容器扫描程序
+## 从防火墙后面运行容器扫描程序（不推荐）
 {: #va_firewall}
 
-如果防火墙阻止出局连接，那么必须配置防火墙以允许工作程序节点访问 IP 地址上的 TCP 端口 `443` 上的容器扫描程序，请参阅{{site.data.keyword.containerlong_notm}} 文档的 [ 允许集群访问公共防火墙上的基础架构资源和其他服务](/docs/containers?topic=containers-firewall#firewall_outbound)中的步骤 3。
+不推荐使用容器扫描程序。
+{: deprecated}
+
+如果防火墙阻止出局连接，那么必须配置防火墙。
 {:shortdesc}
 
-## 复查容器报告
+要配置防火墙以允许工作程序节点访问 IP 地址上的 TCP 端口 `443` 上的容器扫描程序，请参阅 [ 允许集群访问公共防火墙上的基础架构资源和其他服务](/docs/containers?topic=containers-firewall#firewall_outbound)中的步骤 3。
+
+## 复查容器报告（不推荐）
 {: #va_reviewing_container}
+
+不推荐使用容器扫描程序。
+{: deprecated}
 
 在仪表板中，可以查看容器的状态，以确定其安全性是否符合组织策略。还可以复查容器的安全报告，其中详细描述了任何有漏洞的包和不安全的容器或应用程序设置，以及容器是否符合组织策略。
 {:shortdesc}
@@ -369,9 +387,9 @@ helm get values <myscanner>
 通过复查**策略状态**字段，检查正在空间中运行的容器是否依然符合组织策略。状态显示为以下某个条件：
 
 
-- **符合策略**：未发现安全或配置问题。
-- **不符合策略**：漏洞顾问程序发现可能的安全或配置问题，导致容器不符合策略。如果组织策略允许部署有漏洞的映像，那么可使用`小心部署`状态部署映像，并且会向部署的用户发送警告。
-- **评估不完整**：扫描未完成。扫描可能仍在运行，或该容器实例的操作系统可能不兼容。
+- `符合策略`：未发现安全或配置问题。
+- `不符合策略`：漏洞顾问程序发现可能的安全或配置问题，导致容器不符合策略。如果组织策略允许部署有漏洞的映像，那么可使用`小心部署`状态部署映像，并且会向部署的用户发送警告。
+- `评估不完整`：扫描未完成。扫描可能仍在运行，或该容器实例的操作系统可能不兼容。
 
 通过完成以下步骤，查看容器安全报告并对任何报告的安全或配置问题采取措施，以确保容器尽可能安全：
 
@@ -390,13 +408,14 @@ helm get values <myscanner>
 
 3. 复查每个安全问题的策略状态。策略状态指示此问题是否已豁免。
 
-    - **活动**：您有未豁免的问题，该问题正在影响安全状态。
-    - **豁免**：您的策略设置已豁免此问题。
-    - **部分豁免**：此问题与多个安全通知相关联。并非所有安全通知都已豁免。
+    - `活动`：您有未豁免的问题，该问题正在影响安全状态。
+    - `豁免`：您的策略设置已豁免此问题。
+    - `部分豁免`：此问题与多个安全通知相关联。并非所有安全通知都已豁免。
 
 4. 决定如何更新容器以便您能够解决问题。
 
-    **重要信息**：要修复容器映像问题，必须删除旧实例并重新部署，这意味着会丢失现有容器中的所有数据。请确保对容器体系结构有充分的了解，以选择相应的容器重新部署方法。
+    要修复容器映像的问题，必须删除旧实例并重新部署，这意味着会丢失现有容器中的所有数据。请确保对容器体系结构有充分的了解，以选择相应的容器重新部署方法。
+    {: important}
 
     **示例**
 

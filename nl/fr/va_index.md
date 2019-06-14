@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-01"
+lastupdated: "2019-06-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -22,10 +22,11 @@ subcollection: va
 {:deprecated: .deprecated}
 {:download: .download}
 
+
 # Gestion de la sécurité des images avec Vulnerability Advisor
 {: #va_index}
 
-L'assistant de détection des vulnérabilités (Vulnerability Advisor) vérifie le statut de sécurité des images de conteneur fournies par {{site.data.keyword.IBM}}, des tiers, ou ajoutées aux espaces de nom de registre de votre organisation. Si l'outil Container Scanner est installé dans chaque cluster, Vulnerability Advisor vérifie également le statut des conteneurs qui sont en cours d'exécution.
+L'assistant de détection des vulnérabilités (Vulnerability Advisor) vérifie le statut de sécurité des images de conteneur fournies par {{site.data.keyword.IBM}}, des tiers, ou ajoutées aux espaces de nom de registre de votre organisation. Si l'outil Container Scanner (obsolète) est installé dans chaque cluster, Vulnerability Advisor vérifie également le statut des conteneurs qui sont en cours d'exécution.
 {:shortdesc}
 
 Lorsque vous ajoutez une image à un espace de nom, cette image est automatiquement analysée par Vulnerability Advisor pour détecter des problèmes de sécurité et des vulnérabilités potentielles. Si des problèmes de sécurité sont identifiés, des instructions vous sont soumises afin de vous aider à résoudre la vulnérabilité signalée.
@@ -45,17 +46,17 @@ Vulnerability Advisor fournit des fonctions vous permettant de sécuriser vos im
 Les fonctions disponibles sont les suivantes :
 
 - Analyse les images pour détection d'images
-- Analyse les problèmes dans les conteneurs qui s'exécutent si un outil [Container Scanner](#va_install_container_scanner) est installé dans chaque cluster
+- Analyse les problèmes dans les conteneurs qui s'exécutent si un outil [Container Scanner](#va_install_container_scanner) est installé dans chaque cluster (obsolète)
 - Fournit un rapport d'évaluation basé sur les pratiques de sécurité spécifiques à {{site.data.keyword.containerlong_notm}}
 - Soumet des recommandations pour sécuriser les fichiers de configuration d'un sous-ensemble de fichiers d'application
 - Fournit des instructions pour la correction d'un [package vulnérable](#packages) ou d'un [problème de configuration](#app_configurations) signalé dans son rapport.
 - Fournit des verdicts au programme [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - Applique des exemptions à des rapports au niveau compte, espace de nom, référentiel ou balise afin de signaler que les problèmes qui sont marqués ne s'appliquent pas à votre cas d'utilisation
-- Fournit des liens vers des conteneurs associés dans la vue **Balise** de l'interface graphique {{site.data.keyword.registrylong_notm}}. Vous pouvez répertorier les conteneurs qui sont en cours d'exécution et qui utilisent cette image dans un cluster sur lequel l'outil Container Scanner est installé.
+- Fournit des liens vers des conteneurs associés dans la vue **Balise** de l'interface graphique {{site.data.keyword.registrylong_notm}}. Vous pouvez répertorier les conteneurs qui sont en cours d'exécution et qui utilisent cette image dans un cluster sur lequel l'outil Container Scanner est installé (obsolète).
 
 Dans le tableau de bord Registre, la colonne **Statut de règle** indique le statut de vos référentiels. Le rapport lié identifie les pratiques de sécurité de cloud souhaitables pour vos images.
 
-Le tableau de bord de Vulnerability Advisor fournit une présentation et une évaluation de la sécurité d'une image et, si l'outil Container Scanner est installé, comporte des liens vers les conteneurs en cours d'exécution. Pour plus d'informations sur le tableau de bord Vulnerability Advisor, voir [Examen d'un rapport de vulnérabilité](#va_reviewing).
+Le tableau de bord de Vulnerability Advisor fournit une présentation et une évaluation de la sécurité d'une image et, si l'outil Container Scanner (obsolète) est installé, comporte des liens vers les conteneurs en cours d'exécution. Pour plus d'informations sur le tableau de bord Vulnerability Advisor, voir [Examen d'un rapport de vulnérabilité](#va_reviewing).
 
 **Protection des données**
 
@@ -86,11 +87,11 @@ Les packages comportant des problèmes de vulnérabilité connus sont affichés 
 
   |Image de base Docker|Source des avis de sécurité|
   |-----------------|--------------------------|
-  |Alpine|[Git - Alpine Linux ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://git.alpinelinux.org/) et [CIRCL CVE Search ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://cve.circl.lu/)|
-  |CentOS| [CentOS announce archives ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.centos.org/pipermail/centos-announce/) et [CentOS CR announce archives ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.centos.org/pipermail/centos-cr-announce/)|
-  |Debian|[Debian security announcements ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.debian.org/debian-security-announce/)|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://access.redhat.com/errata/#/)|
-  |Ubuntu|[Ubuntu Security Notices ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://usn.ubuntu.com/)|
+  |Alpine|[Git - Alpine Linux ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://git.alpinelinux.org/) rt [CIRCL CVE Search ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://cve.circl.lu/).|
+  |CentOS| [CentOS announce archives ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.centos.org/pipermail/centos-announce/) et [CentOS CR announce archives ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |Debian|[Debian security announcements ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.debian.org/debian-security-announce/).|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://access.redhat.com/errata/#/).|
+  |Ubuntu|[Ubuntu Security Notices ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://usn.ubuntu.com/).|
   {: caption="Tableau 1. Images de base Docker prises en charge et pour lesquelles Vulnerability Advisor recherche les packages vulnérables" caption-side="top"}
 
 ### Problèmes de configuration
@@ -119,7 +120,7 @@ Pour déterminer la portée d'application dans Container Image Security Enforcem
 Si votre image ne répond pas aux exigences définies par la règle de votre organisation, vous devez configurer l'image pour qu'elle se conforme à ces exigences avant de pouvoir la déployer. Pour plus d'informations sur la consultation et la modification de la règle de l'organisation, voir [Définition de règles d'exemption de l'organisation](#va_managing_policy).
 {:tip}
 
-Si vous déployez Container Scanner après avoir déployé votre image, Vulnerability Advisor continue à analyser le conteneur pour détecter des problèmes de sécurité et de configuration. Vous pouvez résoudre les problèmes éventuels détectés en suivant la procédure décrite dans [Examen d'un rapport de conteneur](#va_reviewing_container).
+Si vous déployez Container Scanner (obsolète) après avoir déployé votre image, Vulnerability Advisor continue à analyser le conteneur pour détecter des problèmes de sécurité et de configuration. Vous pouvez résoudre les problèmes éventuels détectés en suivant la procédure décrite dans [Examen d'un rapport de conteneur](#va_reviewing_container).
 
 ### Examen d'un rapport de vulnérabilité via l'interface graphique
 {: #va_reviewing_gui}
@@ -133,11 +134,11 @@ Vous pouvez examiner à l'aide de l'interface graphique la sécurité des images
 4. Pour afficher le rapport de l'image indiquant `latest` (dernière), cliquez sur la ligne de cette image. L'onglet **Détails de l'image** s'ouvre et affiche les données de cette image. Si aucune balise `latest` n'existe dans le référentiel, l'image la plus récente est utilisée.
 5. Si le statut de sécurité affiche des problèmes, cliquez sur l'onglet **Problèmes par type** pour en connaître les détails. Les tableaux **Vulnérabilités** et **Problèmes de configuration** s'ouvrent.
 
-   - **Vulnérabilités :** ce tableau affiche l'ID de vulnérabilité de chaque problème, le statut de règle de ce problème ainsi que les packages affectés et indique comment résoudre le problème. Pour afficher plus d'informations sur ce problème, développez la ligne. Ceci affichera un récapitulatif du problème ainsi qu'un lien vers l'avis de sécurité correspondant du fournisseur. Une liste des packages s'affiche avec les problèmes de vulnérabilité connus.
+   - Tableau **Vulnérabilités**. Affiche l'ID de vulnérabilité de chaque problème, le statut de règle de ce problème ainsi que les packages affectés et indique comment résoudre le problème. Pour afficher plus d'informations sur ce problème, développez la ligne. Ceci affichera un récapitulatif du problème ainsi qu'un lien vers l'avis de sécurité correspondant du fournisseur. Une liste des packages s'affiche avec les problèmes de vulnérabilité connus.
   
      La liste est mise à jour quotidiennement d'après les avis de sécurité publiés pour les images Docker répertoriées dans [Types de vulnérabilité](#types). Généralement, pour qu'un package vulnérable réussisse l'examen, une version plus récente de ce package incluant un correctif pour la vulnérabilité est requise. Un même package peut recenser plusieurs vulnérabilités et, dans ce cas, une seule mise à niveau du package peut résoudre plusieurs problèmes. Cliquez sur le code de l'avis de sécurité pour afficher plus d'informations sur le package et sur la procédure à suivre pour le mettre à jour.
 
-   - **Problèmes de configuration : ** ce tableau affiche l'ID de problème de configuration de chaque problème, le statut de règle de ce problème ainsi que la pratique de sécurité. Pour afficher plus d'informations sur ce problème, développez la ligne. Ceci affichera un récapitulatif de ce problème ainsi qu'un lien vers l'avis de sécurité correspondant.
+   - Tableau **Problèmes de configuration**. Affiche l'ID de problème de configuration de chaque problème, le statut de règle de ce problème ainsi que la pratique de sécurité. Pour afficher plus d'informations sur ce problème, développez la ligne. Ceci affichera un récapitulatif de ce problème ainsi qu'un lien vers l'avis de sécurité correspondant.
   
      La liste propose des actions que vous pouvez effectuer pour augmenter la sécurité du conteneur et répertorie les paramètres d'application du conteneur qui ne sont pas sécurisés. Développez la ligne pour savoir comment résoudre le problème.
 
@@ -157,9 +158,9 @@ Vous pouvez examiner à l'aide de l'interface CLI la sécurité des images Docke
    {: pre}
 
 2. Vérifiez le statut dans la colonne du **STATUT DE SECURITE**.
-    - **Aucun problème :** aucun problème de sécurité n'a été détecté.
-    - **`<X>` problèmes** : `<X>` vulnérabilités ou problèmes de sécurité potentiels on été détectés, `<X>` correspondant au nombre de problèmes.
-    - **En cours d'analyse :** l'image est en cours d'analyse et le statut de vulnérabilité final n'est pas encore déterminé.
+    - `Aucun problème :` aucun problème de sécurité n'a été détecté.
+    - `<X> problèmes :` nombre de vulnérabilités ou problèmes de sécurité potentiels détectés, où `<X>` correspondant au nombre de problèmes.
+    - `En cours d'analyse :` l'image est en cours d'analyse et le statut de vulnérabilité final n'est pas déterminé.
 
 3. Pour afficher les détails des statuts, passez en revue le rapport de Vulnerability Advisor :
 
@@ -169,13 +170,13 @@ Vous pouvez examiner à l'aide de l'interface CLI la sécurité des images Docke
    {: pre}
 
    Dans la sortie de l'interface CLI, vous pouvez consulter les informations suivantes relatives aux problèmes de configuration.
-      - **Pratique de sécurité :** description de la vulnérabilité détectée
-      - **Action corrective :** informations expliquant comment corriger la vulnérabilité
+      - `Pratique de sécurité :` description de la vulnérabilité détectée
+      - `Action corrective :` informations expliquant comment corriger la vulnérabilité
 
 ## Définition de règles d'exemption de l'organisation
 {: #va_managing_policy}
 
-Si vous désirez gérer la sécurité d'une organisation {{site.data.keyword.cloud_notm}}, vous pouvez utiliser votre paramètre de règle pour déterminer si un problème est exempt ou non. Vous pouvez décider d'utiliser Container Image Security Enforcement pour garantir que le déploiement n'est permis qu'à partir d'images ne présentant pas de problèmes de sécurité une fois que ceux exemptés par votre règle ont été pris en compte.
+Si vous désirez gérer la sécurité d'une organisation {{site.data.keyword.cloud_notm}}, vous pouvez utiliser votre paramètre de règle pour déterminer si un problème est exempt ou non. Vous pouvez utiliser Container Image Security Enforcement pour garantir que le déploiement n'est permis qu'à partir d'images ne présentant pas de problèmes de sécurité une fois que ceux exemptés par votre règle ont été pris en compte.
 {:shortdesc}
 
 Vous pouvez déployer des conteneurs depuis n'importe quelle image quel soit son statut de sécurité, sauf si Container Image Security Enforcement est déployé dans votre cluster. Pour savoir comment déployer Container Image Security Enforcement, voir [Installation de Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce).
@@ -214,20 +215,26 @@ Si vous désirez définir des exemptions à la règle à l'aide de l'interface d
 
 Pour plus d'informations sur les commandes, utilisez l'indicateur `--help` lorsque vous exécutez la commande.
 
-## Installation de l'outil Container Scanner
+## Installation de l'outil Container Scanner (obsolète)
 {: #va_install_container_scanner}
 
-Container Scanner active Vulnerability Advisor pour signaler tout problème lié à l'exécution de conteneurs ne se trouvant pas dans l'image de base du conteneur. Si vous n'apportez aucune modification d'exécution à votre conteneur, Container Scanner n'est pas nécessaire car le rapport de l'image signalera les mêmes problèmes.
+Container Scanner est obsolète.
+{: deprecated}
+
+Container Scanner active Vulnerability Advisor pour signaler tout problème lié à l'exécution de conteneurs ne se trouvant pas dans l'image de base du conteneur. Si vous n'apportez aucune modification d'exécution à votre conteneur, Container Scanner n'est pas nécessaire car le rapport de l'image signale les mêmes problèmes.
 {:shortdesc}
 
 Pour vérifier le statut de sécurité de conteneurs de production s'exécutant dans votre cluster, vous pouvez installer l'outil Container Scanner. Pour protéger votre application, Container Scanner analyse régulièrement vos conteneurs en cours d'exécution pour que vous puissiez détecter et corriger toutes les éventuelles vulnérabilités qui viennent d'être détectées.
 
-Vous pouvez configurer Container Scanner pour qu'il contrôle les vulnérabilités dans les conteneurs affectés à des pods dans tous vos espaces de nom Kubernetes. Lorsque des vulnérabilités sont trouvées, vous devez corriger tous les problèmes liés à l'image, puis redéployer votre application. Container Scanner ne prend en charge que les conteneurs qui sont créés à partir d'images stockées dans {{site.data.keyword.registrylong_notm}}.
+Vous pouvez configurer Container Scanner pour qu'il contrôle les vulnérabilités dans les conteneurs affectés à des pods dans tous vos espaces de nom Kubernetes. Lorsque des vulnérabilités sont trouvées, vous devez corriger tous les problèmes liés à l'image, puis redéployer votre application. Container Scanner prend uniquement en charge les conteneurs créés à partir d'images stockées dans {{site.data.keyword.registrylong_notm}}.
 
 Pour utiliser Container Scanner, vous devez configurer les droits et ensuite configurer une [charte Helm ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://docs.helm.sh/developing_charts) et l'associer au cluster dans lequel vous souhaitez l'utiliser.
 
-### Configuration des droits du service pour Container Scanner
+### Configuration des droits du service pour Container Scanner (obsolète)
 {: #va_install_container_scanner_permissions}
+
+Container Scanner est obsolète.
+{: deprecated}
 
 Container Scanner requiert que des droits soient configurés pour que le service puisse fonctionner.
 {:shortdesc}
@@ -244,7 +251,7 @@ Pour configurer les droits du service, procédez comme suit :
        ```
        {: codeblock}
 
-    2. Créez une clé d'API de service, où `<scanner_serviceID>` est l'ID de service créé à l'étape précédente et `<scanner_APIkey_name>` le nom que vous avez choisi pour la clé d'API de l'analyseur (scanner). 
+    2. Créez une clé d'API de service, où `<scanner_serviceID>` est l'ID de service créé à l'étape précédente et `<scanner_APIkey_name>` le nom que vous avez choisi pour la clé d'API de l'analyseur (scanner).
 
        ```
        ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
@@ -262,8 +269,11 @@ Pour configurer les droits du service, procédez comme suit :
        ```
        {: codeblock}
 
-### Configuration de la charte Helm
+### Configuration de la charte Helm (obsolète)
 {: #va_install_container_scanner_helm}
+
+Container Scanner est obsolète.
+{: deprecated}
 
 Configurez une charte Helm et associez-la au cluster dans laquelle vous souhaitez l'utiliser.
 {:shortdesc}
@@ -351,23 +361,31 @@ Pour configurer une charte Helm, procédez comme suit :
 
 L'outil Container Scanner est maintenant installé et l'agent est déployé en tant que [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) dans votre cluster. Bien que l'outil Container Scanner soit déployé sur l'espace de nom `kube-system`, il analyse tous les conteneurs affectés à des pods dans tous vos espaces de nom Kubernetes, par exemple `default`.
 
-## Exécution de l'outil Container Scanner au travers d'un pare-feu
+## Exécution de l'outil Container Scanner au travers d'un pare-feu (obsolète)
 {: #va_firewall}
 
-Si votre pare-feu bloque les connexions sortantes, vous devez le configurer pour qu'il autorise les noeuds worker à accéder à l'outil Container Scanner sur le port TCP `443` sur les adresses IP répertoriées. Voir l'étape 3 dans [Autorisation du cluster à accéder aux ressources d'infrastructure et autres services via un pare-feu public](/docs/containers?topic=containers-firewall#firewall_outbound) dans la documentation {{site.data.keyword.containerlong_notm}}.
+Container Scanner est obsolète.
+{: deprecated}
+
+Si votre pare-feu bloque les connexions sortantes, vous devez le configurer.
 {:shortdesc}
 
-## Examen d'un rapport de conteneur
+Pour configurer votre pare-feu de sorte qu'il autorise les noeuds worker à accéder à l'outil Container Scanner sur le port TCP `443` sur les adresses IP répertoriées, voir l'étape 3 dans [Autorisation du cluster à accéder aux ressources d'infrastructure et autres services via un pare-feu public](/docs/containers?topic=containers-firewall#firewall_outbound).
+
+## Examen d'un rapport de conteneur (obsolète)
 {: #va_reviewing_container}
+
+Container Scanner est obsolète.
+{: deprecated}
 
 Dans votre tableau de bord, vous pouvez examiner le statut d'un conteneur pour déterminer si sa sécurité est conforme aux règles de votre organisation. Vous pouvez également examiner le rapport de sécurité d'un conteneur, qui décrit en détail les packages vulnérables et les paramètres de conteneur ou d'application non sécurisés et spécifie si le conteneur est conforme aux règles de l'organisation.
 {:shortdesc}
 
 Vérifiez en examinant la zone **Statut de la règle** que les conteneurs s'exécutant dans votre espace de nom continuent à se conformer à la règle de l'organisation. Le statut affiche l'une des situations suivantes :
 
-- **Conforme à la règle :** aucun problème de configuration ou de sécurité n'a été détecté.
-- **Non conforme à la règle :** Vulnerability Advisor a détecté des problèmes de configuration ou de sécurité potentiels qui entraînent la non-conformité du conteneur avec la règle. Si la règle de votre organisation autorise le déploiement d'images vulnérables, l'image peut être déployée avec l'état `A déployer avec précaution` et un avertissement est envoyé à l'utilisateur qui l'a déployée.
-- **Evaluation incomplète :** l'analyse n'est pas terminée. Il se peut que l'analyse soit encore en cours ou que le système d'exploitation pour cette instance de conteneur ne soit pas compatible.
+- `Conforme à la règle :` aucun problème de configuration ou de sécurité n'a été détecté.
+- `Non conforme à la règle :` Vulnerability Advisor a détecté des problèmes de configuration ou de sécurité potentiels qui entraînent la non-conformité du conteneur avec la règle. Si la règle de votre organisation autorise le déploiement d'images vulnérables, l'image peut être déployée avec l'état `A déployer avec précaution` et un avertissement est envoyé à l'utilisateur qui l'a déployée.
+- `Evaluation incomplète :` l'analyse n'est pas terminée. Il se peut que l'analyse soit encore en cours ou que le système d'exploitation pour cette instance de conteneur ne soit pas compatible.
 
 Assurez-vous que votre conteneur est aussi sécurisé que possible en consultant son rapport de sécurité et remédiez aux problèmes de sécurité ou de configuration signalés en procédant comme suit :
 
@@ -386,13 +404,14 @@ Assurez-vous que votre conteneur est aussi sécurisé que possible en consultant
 
 3. Passez en revue le statut de règle pour chaque problème de sécurité. Le statut de règle indique si ce problème est exempté.
 
-    - **Actif :** vous avez un problème qui n'est pas exempté et qui affecte votre statut de sécurité.
-    - **Exempté :** ce problème est exempté par vos paramètres de règle.
-    - **Exempté partiellement :** ce problème est associé à plusieurs avis de sécurité. Les avis de sécurité ne sont pas tous exemptés.
+    - `Actif :` vous avez un problème qui n'est pas exempté et qui affecte votre statut de sécurité.
+    - `Exempté :` ce problème est exempté par vos paramètres de règle.
+    - `Exempté partiellement :` ce problème est associé à plusieurs avis de sécurité. Les avis de sécurité ne sont pas tous exemptés.
 
 4. Décidez comment mettre à jour le conteneur en vue de résoudre les problèmes.
 
-    **Important :** pour corriger les problèmes liés à l'image de conteneur, vous devez supprimer l'ancienne instance et redéployer, ce qui signifie que vous allez perdre les données du conteneur existant. Vous devez avoir une connaissance satisfaisante de l'architecture de votre conteneur pour pouvoir choisir la méthode appropriée pour le redéployer.
+    Pour résoudre les problèmes liés à l'image de conteneur, vous devez supprimer l'ancienne instance et redéployer, ce qui signifie que vous allez perdre les données du conteneur existant. Vous devez avoir une connaissance satisfaisante de l'architecture de votre conteneur pour pouvoir choisir la méthode appropriée pour le redéployer.
+    {: important}
 
     **Exemple**
 

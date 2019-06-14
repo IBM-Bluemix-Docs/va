@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-01"
+lastupdated: "2019-06-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -22,10 +22,11 @@ subcollection: va
 {:deprecated: .deprecated}
 {:download: .download}
 
+
 # Imagesicherheit mit Vulnerability Advisor verwalten
 {: #va_index}
 
-Vulnerability Advisor überprüft den Sicherheitsstatus von Container-Images, die von {{site.data.keyword.IBM}} oder anderen Anbietern bereitgestellt oder die zum Registrynamensbereich Ihrer Organisation hinzugefügt werden. Wenn Container Scanner in jedem Cluster installiert ist, überprüft Vulnerability Advisor auch den Status von aktiven Containern.
+Vulnerability Advisor überprüft den Sicherheitsstatus von Container-Images, die von {{site.data.keyword.IBM}} oder anderen Anbietern bereitgestellt oder die zum Registrynamensbereich Ihrer Organisation hinzugefügt werden. Wenn Container Scanner (veraltet) in jedem Cluster installiert ist, überprüft Vulnerability Advisor auch den Status von aktiven Containern.
 {:shortdesc}
 
 Wenn Sie ein Image zu einem Namensbereich hinzufügen, wird das Image automatisch von Vulnerability Advisor auf Sicherheitsprobleme und potenzielle Sicherheitslücken überprüft. Wenn Sicherheitsprobleme gefunden werden, werden Anweisungen zur Verfügung gestellt, um die gemeldete Sicherheitslücke zu beheben.
@@ -45,17 +46,17 @@ Vulnerability Advisor stellt Funktionen für den Schutz von Images bereit.
 Die folgenden Funktionen sind verfügbar:
 
 - Scannen von Images auf Probleme
-- Scans, die ausgeführt werden und Probleme in Containern ermitteln, wenn [Container Scanner](#va_install_container_scanner) in jedem Cluster installiert ist.
+- Scans, die ausgeführt werden und Probleme in Containern ermitteln, wenn [Container Scanner](#va_install_container_scanner) in jedem Cluster installiert ist (veraltet).
 - Bereitstellen eines Bewertungsberichts auf der Basis von Sicherheitsverfahren, die für {{site.data.keyword.containerlong_notm}} spezifisch sind
 - Bereitstellen von Empfehlungen zur Sicherung von Konfigurationsdateien für eine Untergruppe von Anwendungstypen
 - Bereitstellen von Anweisungen zum Korrigieren eines gemeldeten [Pakets mit potenziellen Sicherheitslücken](#packages) oder zum Beheben von [Konfigurationsproblemen](#app_configurations) auf der Basis des entsprechenden Berichts
 - Bereitstellen von Urteilen für [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - Anwenden von Ausnahmen für Berichte auf Konto-, Namensbereichs-, Repository- oder Tagebene, um anzugeben, wann entsprechend gekennzeichnete Probleme für einen bestimmten Anwendungsfall nicht zutreffen
-- Bereitstellen von Links zu zugehörigen Containern in der Ansicht **Tag** der grafischen Benutzerschnittstelle von {{site.data.keyword.registrylong_notm}}. Die aktiven Container, die das betreffende Image verwenden, können in einem Cluster, in dem Container Scanner installiert ist, aufgelistet werden.
+- Bereitstellen von Links zu zugehörigen Containern in der Ansicht **Tag** der grafischen Benutzerschnittstelle von {{site.data.keyword.registrylong_notm}}. Die aktiven Container, die das betreffende Image verwenden, können in einem Cluster, in dem Container Scanner (veraltet) installiert ist, aufgelistet werden.
 
 Im Registry-Dashboard wird in der Spalte **Richtlinienstatus** der Status Ihrer Repositorys angezeigt. Im Bericht mit dem entsprechenden Link werden Maßnahmen empfohlen, mit denen die Cloudsicherheit für Ihre Images erhöht werden kann.
 
-Das Vulnerability Advisor-Dashboard enthält eine Übersicht und eine Beurteilung zu der Sicherheit eines Images. Wenn Container Scanner installiert ist, stehen auch Links zu aktiven Containern zur Verfügung. Weitere Informationen zu Vulnerability Advisor finden Sie im Abschnitt [Sicherheitslückenbericht für Ihr Image überprüfen](#va_reviewing).
+Das Vulnerability Advisor-Dashboard enthält eine Übersicht und eine Beurteilung zu der Sicherheit eines Images. Wenn Container Scanner (veraltet) installiert ist, stehen auch Links zu aktiven Containern zur Verfügung. Weitere Informationen zu Vulnerability Advisor finden Sie im Abschnitt [Sicherheitslückenbericht für Ihr Image überprüfen](#va_reviewing).
 
 **Datenschutz**
 
@@ -86,11 +87,11 @@ Pakete, die bekannten Probleme im Hinblick auf Sicherheitslücken aufweisen, wer
 
   |Docker-Basisimage|Quelle der Sicherheitshinweise|
   |-----------------|--------------------------|
-  |Alpine|[Git - Alpine Linux ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://git.alpinelinux.org/) und [CIRCL CVE Search ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://cve.circl.lu/)|
-  |CentOS| [CentOS-announce-Archive ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.centos.org/pipermail/centos-announce/) und [CentOS CR-announce-Archive ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.centos.org/pipermail/centos-cr-announce/)|
-  |Debian|[Debian-Sicherheitshinweise ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.debian.org/debian-security-announce/)|
-  |Red Hat Enterprise Linux (RHEL)|[Korrekturliste für Red Hat-Produkte ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://access.redhat.com/errata/#/)|
-  |Ubuntu|[Ubuntu-Sicherheitshinweise ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://usn.ubuntu.com/)|
+  |Alpine|[Git - Alpine Linux ![Symbol für externen Link](../../icons/launch-glyph.svg "External link icon")](https://git.alpinelinux.org/) und [CIRCL CVE Search ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://cve.circl.lu/).|
+  |CentOS| [CentOS-announce-Archive ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.centos.org/pipermail/centos-announce/) und [CentOS CR-announce-Archive ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |Debian|[Debian-Sicherheitshinweise ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.debian.org/debian-security-announce/).|
+  |Red Hat Enterprise Linux (RHEL)|[Korrekturliste für Red Hat-Produkte ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://access.redhat.com/errata/#/).|
+  |Ubuntu|[Ubuntu-Sicherheitshinweise ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://usn.ubuntu.com/).|
   {: caption="Tabelle 1. Unterstützte Docker-Basisimages, die von Vulnerability Advisor auf Pakete mit potenziellen Sicherheitslücken überprüft werden" caption-side="top"}
 
 ### Konfigurationsprobleme
@@ -119,7 +120,7 @@ Informationen zum Konfigurieren des Umsetzungsrahmens im Zusammenhang mit Vulner
 Wenn das Image nicht den Anforderungen entspricht, die durch die Richtlinie Ihrer Organisation festgelegt sind, müssen Sie das Image so konfigurieren, dass diese Anforderungen erfüllt sind, bevor Sie es bereitstellen können. Weitere Informationen zum Anzeigen und Ändern der Organisationsrichtlinie finden Sie in [Ausnahmen für Richtlinien für Organisationen festlegen](#va_managing_policy).
 {:tip}
 
-Falls Container Scanner bereitgestellt ist, sucht Vulnerability Advisor nach der Bereitstellung des Images weiter nach Sicherheits- und Konfigurationsproblemen im Container. Festgestellte Probleme können Sie anhand der Schritte beheben, die in [Containerbericht überprüfen](#va_reviewing_container) beschrieben sind.
+Falls Container Scanner (veraltet) bereitgestellt ist, sucht Vulnerability Advisor nach der Bereitstellung des Images weiter nach Sicherheits- und Konfigurationsproblemen im Container. Festgestellte Probleme können Sie anhand der Schritte beheben, die in [Containerbericht überprüfen](#va_reviewing_container) beschrieben sind.
 
 ### Sicherheitslückenbericht über die grafische Benutzerschnittstelle überprüfen
 {: #va_reviewing_gui}
@@ -133,11 +134,11 @@ Sie können die Sicherheit von Docker-Images, die in Ihren Namensbereichen in {{
 4. Zeigen Sie den Bericht für das aktuelle Image (mit dem Tag `latest` markiert) an, indem Sie auf die Zeile für das betreffende Image klicken. Die Registerkarte mit den **Imagedetails** wird geöffnet und enthält die Daten für dieses Image. Enthält das Repository kein Image mit dem Tag `latest`, wird das neueste Image verwendet.
 5. Wenn der Sicherheitsstatus Probleme aufweist, klicken Sie auf die Registerkarte **Probleme nach Typ**, um Informationen zu den Problemen anzuzeigen. Die Tabellen **Sicherheitslücken** und **Konfigurationsprobleme** werden geöffnet.
 
-   - **Sicherheitslücken**: Diese Tabelle enthält die Sicherheitslücken-ID für die einzelnen Probleme, den Richtlinienstatus für das jeweilige Problem, die betroffenen Pakete und Maßnahmen zur Behebung des Problems. Erweitern Sie die Zeile, um weitere Informationen zum jeweiligen Problem anzuzeigen. Eine Zusammenfassung dieses Problems wird angezeigt, die einen Link zum Sicherheitshinweis des Anbieters für das betreffende Problem enthält. Pakete, die bekannten Probleme im Hinblick auf Sicherheitslücken aufweisen, werden aufgeführt.
+   - Tabelle mit **Sicherheitslücken**. Diese Tabelle enthält die Sicherheitslücken-ID für die einzelnen Probleme, den Richtlinienstatus für das jeweilige Problem, die betroffenen Pakete und Maßnahmen zur Behebung des Problems. Erweitern Sie die Zeile, um weitere Informationen zum jeweiligen Problem anzuzeigen. Eine Zusammenfassung dieses Problems wird angezeigt, die einen Link zum Sicherheitshinweis des Anbieters für das betreffende Problem enthält. Pakete, die bekannten Probleme im Hinblick auf Sicherheitslücken aufweisen, werden aufgeführt.
   
      Die Liste wird täglich anhand der veröffentlichten Sicherheitshinweise für die unter [Typen von Sicherheitslücken](#types) aufgelisteten Docker-Imagetypen aktualisiert. In der Regel wird zum Bestehen der Sicherheitsprüfung bei einem potenziell gefährdeten Paket eine neue Version des Pakets benötigt, die eine Korrektur für die Sicherheitslücke enthält. Für ein Paket können mehrere Sicherheitslücken aufgelistet werden. In diesem Fall können durch ein einzelnes Upgrade für das Paket unter Umständen auch mehrere Probleme behoben werden. Klicken Sie auf den Code des Sicherheitshinweises, um weitere Informationen zum Paket und Schritte zur Aktualisierung des Pakets anzuzeigen.
 
-   - **Konfigurationsprobleme**: Diese Tabelle enthält die Konfigurationsproblem-ID für die einzelnen Probleme, den Richtlinienstatus für das jeweilige Problem sowie das entsprechende Sicherheitsverfahren. Erweitern Sie die Zeile, um weitere Informationen zum jeweiligen Problem anzuzeigen. Eine Zusammenfassung dieses Problems wird angezeigt, die einen Link zum Sicherheitshinweis für das betreffende Problem enthält.
+   - Tabelle mit **Konfigurationsproblen**. Diese Tabelle enthält die Konfigurationsproblem-ID für die einzelnen Probleme, den Richtlinienstatus für das jeweilige Problem sowie das entsprechende Sicherheitsverfahren. Erweitern Sie die Zeile, um weitere Informationen zum jeweiligen Problem anzuzeigen. Eine Zusammenfassung dieses Problems wird angezeigt, die einen Link zum Sicherheitshinweis für das betreffende Problem enthält.
   
      Die Liste enthält Vorschläge für Aktionen, mit denen Sie die Sicherheit des Containers und aller nicht sicheren Anwendungseinstellungen des Containers erhöhen können. Erweitern Sie die Zeile, um den Lösungsvorschlag für das jeweilige Problem anzuzeigen.
 
@@ -157,9 +158,9 @@ Sie können die Sicherheit von Docker-Images, die in Ihren Namensbereichen in {{
    {: pre}
 
 2. Überprüfen Sie den Status in der Spalte **Sicherheitsstatus**.
-    - **Keine Probleme**: Es wurden keine Sicherheitsprobleme gefunden.
-    - **`<X>` Probleme** `<X>` Es wurden potenzielle Sicherheitsprobleme oder Sicherheitslücken gefunden. `<X>` gibt die Anzahl der Probleme an. 
-    - **Scan wird durchgeführt**: Das Image wird zurzeit gescannt und der abschließende Sicherheitslückenstatus liegt noch nicht vor.
+    - `Keine Probleme`: Es wurden keine Sicherheitsprobleme gefunden.
+    - `<X> Probleme` Die Anzahl der gefundenen potenziellen Sicherheitsprobleme oder Sicherheitslücken. `<X>` gibt die Anzahl der Probleme an. 
+    - `Scan wird durchgeführt`: Das Image wird zurzeit gescannt und der abschließende Sicherheitslückenstatus liegt nicht vor.
 
 3. Über Details zum Status können Sie sich im Vulnerability Advisor-Bericht informieren:
 
@@ -169,8 +170,8 @@ Sie können die Sicherheit von Docker-Images, die in Ihren Namensbereichen in {{
    {: pre}
 
    In der Ausgabe der Befehlszeilenschnittstelle können Sie die folgenden Informationen zu den Konfigurationsproblemen anzeigen.
-      - **Sicherheitsverfahren**: Beschreibung der gefundenen Sicherheitslücke.
-      - **Fehlerbehebungsmaßnahme**: Details zur Vorgehensweise zur Behebung der Sicherheitslücke.
+      - `Sicherheitsverfahren`: Beschreibung der gefundenen Sicherheitslücke.
+      - `Fehlerbehebungsmaßnahme`: Details zur Vorgehensweise zur Behebung der Sicherheitslücke.
 
 ## Ausnahmen für Richtlinien für Organisationen festlegen
 {: #va_managing_policy}
@@ -214,8 +215,11 @@ Führen Sie die folgenden Befehle aus, um Ausnahmen für die Richtlinie über di
 
 Wenn Sie weitere Informationen zu Befehlen aufrufen möchten, können Sie das Flag `--help` bei der Ausführung des jeweiligen Befehls verwenden.
 
-## Container Scanner installieren
+## Container Scanner (veraltet) installieren
 {: #va_install_container_scanner}
+
+Container Scanner wird nicht mehr verwendet.
+{: deprecated}
 
 Container Scanner ermöglicht es Vulnerability Advisor, in aktiven Containern festgestellte Probleme zu melden, die im Basisimage des Containers nicht vorhanden sind. Wenn Sie keine Laufzeitänderungen am Container vornehmen, ist Container Scanner nicht erforderlich, da im Imagebericht dieselben Probleme aufgeführt sind.
 {:shortdesc}
@@ -226,8 +230,11 @@ Sie können Container Scanner so einrichten, dass die Container, die Pods in all
 
 Zur Verwendung von Container Scanner müssen Sie Berechtigungen einrichten. Anschließend müssen Sie ein [Helm-Diagramm ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://docs.helm.sh/developing_charts) einrichten und es dem Cluster zuordnen, in dem es verwendet werden soll.
 
-### Serviceberechtigungen für Container Scanner einrichten
+### Serviceberechtigungen für Container Scanner (veraltet) einrichten
 {: #va_install_container_scanner_permissions}
+
+Container Scanner wird nicht mehr verwendet.
+{: deprecated}
 
 Container Scanner erfordert das Einrichten von Berechtigungen für die Ausführung des Service.
 {:shortdesc}
@@ -244,7 +251,7 @@ Führen Sie die folgenden Schritte aus, um Serviceberechtigungen einzurichten:
        ```
        {: codeblock}
 
-    2. Erstellen Sie eine API-Schlüssel für den Service. Dabei ist `<scanner_serviceID>` die Service-ID, die Sie im vorherigen Schritt erstellt haben, und `<scanner_APIkey_name>` ist ein von Ihnen ausgewählter Name für den Scanner-API-Schlüssel. 
+    2. Erstellen Sie eine API-Schlüssel für den Service. Dabei ist `<scanner_serviceID>` die Service-ID, die Sie im vorherigen Schritt erstellt haben, und `<scanner_APIkey_name>` ist ein von Ihnen ausgewählter Name für den Scanner-API-Schlüssel.
 
        ```
        ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
@@ -262,8 +269,11 @@ Führen Sie die folgenden Schritte aus, um Serviceberechtigungen einzurichten:
        ```
        {: codeblock}
 
-### Helm-Diagramm konfigurieren
+### Helm-Diagramm konfigurieren (veraltet)
 {: #va_install_container_scanner_helm}
+
+Container Scanner wird nicht mehr verwendet.
+{: deprecated}
 
 Konfigurieren Sie ein Helm-Diagramm und ordnen Sie es dem Cluster zu, in dem es verwendet werden soll.
 {:shortdesc}
@@ -351,23 +361,31 @@ Führe Sie die folgenden Schritte aus, um ein Helm-Diagramm zu konfigurieren:
 
 Container Scanner ist nun installiert und der Agent ist als [Dämongruppe ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) im Cluster bereitgestellt. Container Scanner wird zwar im Namensbereich `kube-system` bereitgestellt, scannt jedoch alle Container, die Pods in allen Ihren Kubernetes-Namensbereichen zugewiesen sind, wie z. B. `default`.
 
-## Container Scanner hinter einer Firewall ausführen
+## Container Scanner hinter einer Firewall ausführen (veraltet)
 {: #va_firewall}
 
-Wenn Ihre Firewall abgehende Verbindungen blockiert, müssen Sie sie so konfigurieren, dass Workerknoten auf den Container Scanner am TCP-Port `443` über die entsprechenden IP-Adressen zugreifen können. Informationen hierzu finden Sie in Schritt 3 unter [Zugriff des Clusters auf Infrastrukturressourcen und andere Services über eine öffentliche Firewall zulassen](/docs/containers?topic=containers-firewall#firewall_outbound) in der {{site.data.keyword.containerlong_notm}}-Dokumentation.
+Container Scanner wird nicht mehr verwendet.
+{: deprecated}
+
+Wenn die Firewall abgehende Verbindungen blockiert, müssen Sie sie entsprechend konfigurieren.
 {:shortdesc}
 
-## Containerbericht überprüfen
+Wenn Sie die Firewall so konfigurieren möchten, dass Workerknoten auf den Container Scanner am TCP-Port `443` über die entsprechenden IP-Adressen zugreifen können, lesen Sie die Informationen in Schritt 3 unter [Zugriff des Clusters auf Infrastrukturressourcen und andere Services über eine öffentliche Firewall zulassen](/docs/containers?topic=containers-firewall#firewall_outbound). 
+
+## Containerbericht überprüfen (veraltet)
 {: #va_reviewing_container}
+
+Container Scanner wird nicht mehr verwendet.
+{: deprecated}
 
 Im Dashboard können Sie den Status eines Containers anzeigen, um festzustellen, ob seine Sicherheit den Richtlinien Ihrer Organisation entspricht. Darüber hinaus können Sie den Sicherheitsbericht eines Containers überprüfen, in dem alle gefährdeten Pakete und nicht sicheren Container- oder Anwendungseinstellungen aufgeführt sind und der angibt, ob der Container den Richtlinien Ihrer Organisation entspricht.
 {:shortdesc}
 
 Vergewissern Sie sich, dass in Ihrem Bereich ausgeführte Container weiterhin den Organisationsrichtlinien entsprechen, indem Sie das Feld **Richtlinienstatus** überprüfen. Der angezeigte Status entspricht einer der folgenden Bedingungen:
 
-- **Entspricht der Richtlinie** - Es wurden keine Sicherheits- oder Konfigurationsprobleme festgestellt.
-- **Entspricht der Richtlinie nicht** - Vulnerability Advisor hat potenzielle Sicherheits- oder Konfigurationsprobleme festgestellt, die dazu führen, dass der Container die Vorgaben der Richtlinie nicht erfüllt. Wenn Ihre Organisationsrichtlinie die Bereitstellung von Images mit Sicherheitslücken zulässt, kann das Image mit dem Status `Mit entsprechenden Vorsichtsmaßnahmen bereitstellen` bereitgestellt werden und an den Benutzer, der es bereitstellt, wird eine Warnung gesendet.
-- **Beurteilung unvollständig** - Der Scan wurde nicht abgeschlossen. Der Scan wird möglicherweise noch ausgeführt oder das Betriebssystem der betreffenden Containerinstanz ist möglicherweise nicht kompatibel.
+- `Entspricht der Richtlinie` - Es wurden keine Sicherheits- oder Konfigurationsprobleme festgestellt.
+- `Entspricht der Richtlinie nicht` - Vulnerability Advisor hat potenzielle Sicherheits- oder Konfigurationsprobleme festgestellt, die dazu führen, dass der Container die Vorgaben der Richtlinie nicht erfüllt. Wenn Ihre Organisationsrichtlinie die Bereitstellung von Images mit Sicherheitslücken zulässt, kann das Image mit dem Status `Mit entsprechenden Vorsichtsmaßnahmen bereitstellen` bereitgestellt werden und an den Benutzer, der es bereitstellt, wird eine Warnung gesendet.
+- `Beurteilung unvollständig` - Der Scan wurde nicht abgeschlossen. Der Scan wird möglicherweise noch ausgeführt oder das Betriebssystem der betreffenden Containerinstanz ist möglicherweise nicht kompatibel.
 
 Vergewissern Sie sich, dass der Container so sicher wie möglich ist, indem Sie den zugehörigen Sicherheitsbericht anzeigen und für alle gemeldeten Sicherheits- oder Konfigurationsprobleme die entsprechenden Maßnahmen durchführen. Führen Sie hierzu die folgenden Schritte aus:
 
@@ -386,13 +404,14 @@ Vergewissern Sie sich, dass der Container so sicher wie möglich ist, indem Sie 
 
 3. Überprüfen Sie den Richtlinienstatus für die einzelnen Sicherheitsprobleme. Der Richtlinienstatus gibt an, ob für dieses Problem eine Ausnahme gilt.
 
-    - **Aktiv**: Es liegt ein Problem vor, für das keine Ausnahme gilt und das sich auf den Sicherheitsstatus auswirkt.
-    - **Ausgenommen**: Für dieses Problem ist in den Richtlinieneinstellungen eine Ausnahme festgelegt.
-    - **Teilweise ausgenommen**: Dieses Problem ist mehreren Sicherheitshinweisen zugeordnet. Nicht für alle Sicherheitshinweise gilt eine Ausnahme.
+    - `Aktiv`: Es liegt ein Problem vor, für das keine Ausnahme gilt und das sich auf den Sicherheitsstatus auswirkt.
+    - `Ausgenommen`: Für dieses Problem ist in den Richtlinieneinstellungen eine Ausnahme festgelegt.
+    - `Teilweise ausgenommen`: Dieses Problem ist mehreren Sicherheitshinweisen zugeordnet. Nicht für alle Sicherheitshinweise gilt eine Ausnahme.
 
 4. Entscheiden Sie, wie der Container aktualisiert werden soll, damit die Probleme behoben werden können.
 
-    **Wichtig**: Um Probleme im Container-Image zu beheben, müssen Sie die alte Instanz löschen und eine erneute Bereitstellung durchführen, wodurch alle Daten im vorhandenen Container verloren gehen. Stellen Sie sicher, dass Sie mit der Containerarchitektur vertraut sind, damit Sie die geeignete Methode zur erneuten Bereitstellung des Containers auswählen können.
+    Um Probleme im Container-Image zu beheben, müssen Sie die alte Instanz löschen und eine erneute Bereitstellung durchführen, wodurch alle Daten im vorhandenen Container verloren gehen. Stellen Sie sicher, dass Sie mit der Containerarchitektur vertraut sind, damit Sie die geeignete Methode zur erneuten Bereitstellung des Containers auswählen können.
+    {: important}
 
     **Beispiel**
 

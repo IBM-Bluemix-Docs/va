@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-01"
+lastupdated: "2019-06-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -22,10 +22,11 @@ subcollection: va
 {:deprecated: .deprecated}
 {:download: .download}
 
+
 # 脆弱性アドバイザーを使用したイメージ・セキュリティーの管理
 {: #va_index}
 
-脆弱性アドバイザーは、{{site.data.keyword.IBM}} やサード・パーティーによって提供されるか、組織のレジストリー名前空間に追加された、コンテナー・イメージのセキュリティー状況を検査します。 Container Scanner が各クラスターにインストールされている場合、脆弱性アドバイザーは、実行中のコンテナーの状況も検査します。
+脆弱性アドバイザーは、{{site.data.keyword.IBM}} やサード・パーティーによって提供されるか、組織のレジストリー名前空間に追加された、コンテナー・イメージのセキュリティー状況を検査します。 Container Scanner (非推奨) が各クラスターにインストールされている場合、脆弱性アドバイザーは、実行中のコンテナーの状況も検査します。
 {:shortdesc}
 
 イメージを名前空間に追加すると、脆弱性アドバイザーによってイメージが自動的にスキャンされ、セキュリティー問題や潜在的な脆弱性が検出されます。 セキュリティー問題が検出された場合、報告された脆弱性を修正するための指示が出されます。
@@ -45,24 +46,24 @@ subcollection: va
 以下の機能を使用できます。
 
 - イメージをスキャンして問題がないか調べる
-- [Container Scanner](#va_install_container_scanner) が各クラスターにインストールされている場合に、実行中のコンテナー内の問題をスキャンする
+- [Container Scanner](#va_install_container_scanner) が各クラスターにインストールされている (非推奨) 場合に、実行中のコンテナー内の問題をスキャンする
 - {{site.data.keyword.containerlong_notm}} に固有のセキュリティー・プラクティスに基づく評価レポートを提供する
 - アプリケーション・タイプのサブセット用の構成ファイルをセキュアにするために推奨情報を提供する
 - レポートで報告された[脆弱なパッケージ](#packages)または[構成の問題](#app_configurations)を修正する方法について説明する
 - 判断を [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce) に提供する
 - アカウント・レベル、名前空間レベル、リポジトリー・レベル、またはタグ・レベルでレポートに適用除外項目を適用し、フラグが付いた問題をユース・ケースに適用しない場合にマークを付ける
-- {{site.data.keyword.registrylong_notm}} グラフィカル・ユーザー・インターフェースの**「タグ」**ビューで、関連付けられたコンテナーへのリンクを提供する。 Container Scanner がインストールされているクラスターで、実行中のコンテナーとそのイメージを使用しているコンテナーをリストできます。
+- {{site.data.keyword.registrylong_notm}} グラフィカル・ユーザー・インターフェースの**「タグ」**ビューで、関連付けられたコンテナーへのリンクを提供する。 Container Scanner (非推奨) がインストールされているクラスターで、実行中のコンテナーとそのイメージを使用しているコンテナーをリストできます。
 
 レジストリー・ダッシュボードの**「ポリシーの状況」**列にリポジトリーの状況が表示されます。 リンクされたレポートでは、イメージ用の有効なクラウド・セキュリティー・プラクティスが示されます。
 
-脆弱性アドバイザーのダッシュボードには、イメージのセキュリティーの概要と評価が示され、Container Scanner がインストールされている場合は、実行中のコンテナーへのリンクが示されます。 脆弱性アドバイザーのダッシュボードについて詳しくは、[脆弱性レポートの検討](#va_reviewing)を参照してください。
+脆弱性アドバイザーのダッシュボードには、イメージのセキュリティーの概要と評価が示され、Container Scanner (非推奨) がインストールされている場合は、実行中のコンテナーへのリンクが示されます。脆弱性アドバイザーのダッシュボードについて詳しくは、[脆弱性レポートの検討](#va_reviewing)を参照してください。
 
 **データ保護**
 
 アカウント内のイメージとコンテナーをスキャンしてセキュリティー問題を探すために、脆弱性アドバイザーは以下の情報を収集、保管、および処理します。
 
 - ID、説明、およびイメージ名 (レジストリー、名前空間、リポジトリー名、およびイメージ・タグ) が含まれたフリー・フォームのフィールド
-- Kubernetes メタデータ。Kubernetes リソースの名前 (ポッド名、ReplicaSet 名、デプロイメント名) など
+- Kubernetes メタデータ。Kubernetes リソースの名前 (ポッド名、ReplicaSet 名、デプロイメント名など) を含む
 - 構成ファイルのファイル・モードと作成タイム・スタンプに関するメタデータ
 - イメージおよびコンテナー内のシステムとアプリケーションの構成ファイルの内容
 - インストールされているパッケージとライブラリー (バージョンを含む)
@@ -86,11 +87,11 @@ subcollection: va
 
   |Docker 基本イメージ|セキュリティー上の注意事項のソース|
   |-----------------|--------------------------|
-  |Alpine|[Git - Alpine Linux ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://git.alpinelinux.org/) および [CIRCL CVE Search ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://cve.circl.lu/)|
-  |CentOS| [CentOS announce archives ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://lists.centos.org/pipermail/centos-announce/) および [CentOS CR announce archives ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://lists.centos.org/pipermail/centos-cr-announce/)|
-  |Debian|[Debian security announcements ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://lists.debian.org/debian-security-announce/)|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://access.redhat.com/errata/#/)|
-  |Ubuntu|[Ubuntu Security Notices ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://usn.ubuntu.com/)|
+  |Alpine|[Git - Alpine Linux ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://git.alpinelinux.org/) および [CIRCL CVE Search ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://cve.circl.lu/)。|
+  |CentOS| [CentOS announce archives ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://lists.centos.org/pipermail/centos-announce/) および [CentOS CR announce archives ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://lists.centos.org/pipermail/centos-cr-announce/)。|
+  |Debian|[Debian security announcements ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://lists.debian.org/debian-security-announce/)。|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://access.redhat.com/errata/#/)。|
+  |Ubuntu|[Ubuntu Security Notices ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://usn.ubuntu.com/)。|
   {: caption="表 1. 脆弱性アドバイザーが脆弱なパッケージについて検査する、サポートされている Docker 基本イメージ" caption-side="top"}
 
 ### 構成の問題
@@ -119,7 +120,7 @@ Container Image Security Enforcement で脆弱性アドバイザーの問題の�
 イメージが組織のポリシーによって設定されている要件を満たしていない場合は、イメージをデプロイする前に、その要件を満たすようにイメージを構成する必要があります。 組織のポリシーを表示および変更する方法について詳しくは、[組織の適用除外項目ポリシーの設定](#va_managing_policy)を参照してください。
 {:tip}
 
-Container Scanner がデプロイされている場合、イメージをデプロイした後、脆弱性アドバイザーは引き続き、コンテナー内のセキュリティーおよび構成の問題をスキャンします。 見つかった問題は、[コンテナー・レポートの検討](#va_reviewing_container)に記載されている手順に従うことによって解決できます。
+Container Scanner (非推奨) がデプロイされている場合、イメージをデプロイした後、脆弱性アドバイザーは引き続き、コンテナー内のセキュリティーおよび構成の問題をスキャンします。見つかった問題は、[コンテナー・レポートの検討](#va_reviewing_container)に記載されている手順に従うことによって解決できます。
 
 ### GUI の使用による、脆弱性レポートの検討
 {: #va_reviewing_gui}
@@ -133,11 +134,11 @@ GUI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
 4. `latest` タグが付いたイメージのレポートを表示するには、そのイメージの行をクリックします。 そのイメージのデータが表示された**「イメージの詳細 (Image Details)」**タブが開きます。 リポジトリー内に `latest` タグが存在しない場合、最新のイメージが使用されます。
 5. セキュリティー状況に問題が示される場合に、その問題について確認するには、**「タイプ別の問題 (Issues by Type)」**タブをクリックします。 **「脆弱性 (Vulnerabilities)」**表と**「構成の問題」**表が開きます。
 
-   - **脆弱性 (Vulnerabilities)**: この表には、各問題の脆弱性 ID、その問題のポリシー状況、影響を受けるパッケージ、および問題の解決方法が示されます。 その問題の詳細を表示するには、行を展開します。 その問題のベンダーによるセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。 既知の脆弱性問題が含まれているパッケージをリストします。
+   - **「脆弱性 (Vulnerabilities)」**表。各問題の脆弱性 ID、その問題のポリシーの状況、影響を受けるパッケージ、および問題の解決方法が示されます。その問題の詳細を表示するには、行を展開します。 その問題のベンダーによるセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。 既知の脆弱性問題が含まれているパッケージをリストします。
   
      [脆弱性のタイプ](#types)にリストされた Docker イメージ・タイプに対して公開されるセキュリティー上の注意事項を使用して、リストは毎日更新されます。 脆弱パッケージがスキャンに合格するようにするには通常、脆弱性の修正が反映された新しいバージョンのパッケージが必要です。 同じパッケージに複数の脆弱性がリストされることがあり、その場合は、1 回のパッケージのアップグレードで複数の問題を修正できます。 セキュリティー上の注意事項のコードをクリックして、パッケージに関する詳細情報と、パッケージを更新するための手順を表示してください。
 
-   - **構成の問題**: この表には、各問題の構成の問題 ID、その問題のポリシー状況、およびセキュリティー・プラクティスが示されます。 その問題の詳細を表示するには、行を展開します。 その問題のセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。
+   - **「構成の問題 (Configuration Issues)」**表。各問題の構成の問題 ID、その問題のポリシー状況、およびセキュリティー・プラクティスが示されます。その問題の詳細を表示するには、行を展開します。 その問題のセキュリティー上の注意事項へのリンクを含む、その問題の要約が表示されます。
   
      リストには、コンテナーのセキュリティーを向上させるために行うことができる処置の推奨事項と、非セキュアなコンテナーのアプリケーション設定が含まれています。 行を展開すると、問題の解決方法が表示されます。
 
@@ -157,9 +158,9 @@ CLI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
    {: pre}
 
 2. **SECURITY STATUS** 列で状況を確認します。
-    - **No Issues**: セキュリティー問題は見つかりませんでした。
-    - **`<X>` Issues**: `<X>` 個の潜在的なセキュリティー問題や脆弱性が見つかりました。`<X>` は問題の数です。
-    - **Scanning**: イメージはスキャン中であり、最終的な脆弱性の状況はまだ決定されていません。
+    - `No Issues`: セキュリティー問題は見つかりませんでした。
+    - `<X> Issues` 検出された潜在的なセキュリティー問題または脆弱性の数。`<X>` は問題の数です。
+    - `Scanning`: イメージはスキャン中で、最終的な脆弱性の状況は決定されていません。
 
 3. 状況の詳細を確認するには、脆弱性アドバイザーのレポートを検討します。
 
@@ -169,13 +170,13 @@ CLI を使用して、{{site.data.keyword.registrylong_notm}} で名前空間に
    {: pre}
 
    CLI 出力には、構成の問題に関する以下の情報が表示されています。
-      - **セキュリティー・プラクティス**: 検出された脆弱性の説明
-      - **修正処置**: この脆弱性の修正方法の詳細
+      - `セキュリティー・プラクティス`: 検出された脆弱性の説明
+      - `修正処置`: この脆弱性の修正方法の詳細
 
 ## 組織の適用除外項目ポリシーの設定
 {: #va_managing_policy}
 
-{{site.data.keyword.cloud_notm}} 組織のセキュリティーを管理する場合は、ポリシー設定を使用して、問題を適用除外するかどうかを決定できます。 Container Image Security Enforcement を使用して、ポリシーによって適用除外される問題と判断された後はセキュリティー問題が含まれないイメージからのみデプロイメントを許可するという選択もできます。
+{{site.data.keyword.cloud_notm}} 組織のセキュリティーを管理する場合は、ポリシー設定を使用して、問題を適用除外するかどうかを決定できます。 Container Image Security Enforcement を使用して、ポリシーによって適用除外されたすべての問題を考慮した後、セキュリティー問題が含まれないイメージからのみデプロイメントを許可するようにすることができます。
 {:shortdesc}
 
 Container Image Security Enforcement がクラスターにデプロイされていない限り、セキュリティー状況に関係なく、どのイメージからもコンテナーをデプロイできます。 Container Image Security Enforcement のデプロイ方法については、[セキュリティー機能のインストール](/docs/services/Registry?topic=registry-security_enforce#security_enforce)を参照してください。
@@ -214,10 +215,13 @@ CLI を使用してポリシーに適用除外項目を設定するには、以�
 
 コマンドを実行するときに `--help` フラグを使用すると、コマンドの詳細情報を表示できます。
 
-## Container Scanner のインストール
+## Container Scanner のインストール (非推奨)
 {: #va_install_container_scanner}
 
-Container Scanner を使用すると、脆弱性アドバイザーはコンテナーの基本イメージに存在しないコンテナーの実行中に見つかった問題を報告できます。 コンテナーに対しランタイムの変更を行わない場合、イメージ・レポートに同じ問題が表示されるため、Container Scanner は必要ありません。
+Container Scanner は推奨されません。
+{: deprecated}
+
+Container Scanner を使用すると、脆弱性アドバイザーはコンテナーの基本イメージに存在しないコンテナーの実行中に検出された問題を報告できます。コンテナーに対してランタイムの変更を行わない場合、イメージ・レポートに同じ問題が表示されるため、Container Scanner は必要ありません。
 {:shortdesc}
 
 クラスターで実行されている稼働中のコンテナーのセキュリティー状況を確認するために、Container Scanner をインストールできます。 アプリを保護するために、Container Scanner は定期的に実行中のコンテナーをスキャンし、新たに検出された脆弱性を検出して修正できるようにします。
@@ -226,8 +230,11 @@ Container Scanner を使用すると、脆弱性アドバイザーはコンテ�
 
 Container Scanner を使用するには、許可をセットアップしてから [Helm チャート ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://docs.helm.sh/developing_charts) をセットアップし、それを、使用するクラスターに関連付ける必要があります。
 
-### Container Scanner のサービス許可のセットアップ
+### Container Scanner (非推奨) のサービス許可のセットアップ
 {: #va_install_container_scanner_permissions}
+
+Container Scanner は推奨されません。
+{: deprecated}
 
 Container Scanner では、サービスが動作できるように許可が設定されている必要があります。
 {:shortdesc}
@@ -262,15 +269,18 @@ Container Scanner では、サービスが動作できるように許可が設�
        ```
        {: codeblock}
 
-### Helm チャートの構成
+### Helm チャートの構成 (非推奨)
 {: #va_install_container_scanner_helm}
+
+Container Scanner は推奨されません。
+{: deprecated}
 
 Helm チャートを構成し、それを使用するクラスターに、関連付けます。
 {:shortdesc}
 
 Helm チャートを構成するには、以下の手順を実行します。
 
-1. [IBM Cloud Kubernetes サービスに Helm をセットアップします](/docs/containers?topic=containers-helm#helm)。役割ベースのアクセス制御 (RBAC) ポリシーを使用して Tiller へのアクセス権限を付与する場合は、Tiller 役割がすべての名前空間にアクセス可能であるようにしてください。 Tiller 役割にすべての名前空間に対するアクセス権限を付与すると、Container Scanner がすべての名前空間のコンテナーを監視できるようになります。
+1. [IBM Cloud Kubernetes サービスに Helm をセットアップします](/docs/containers?topic=containers-helm#helm)。 役割ベースのアクセス制御 (RBAC) ポリシーを使用して Tiller へのアクセス権限を付与する場合は、Tiller 役割がすべての名前空間にアクセス可能であるようにしてください。 Tiller 役割にすべての名前空間に対するアクセス権限を付与すると、Container Scanner がすべての名前空間のコンテナーを監視できるようになります。
 
 2. IBM チャート・リポジトリー (`ibm` など) を Helm に追加します。
 
@@ -308,7 +318,7 @@ Helm チャートを構成するには、以下の手順を実行します。
    <tbody>
    <tr>
    <td><code>EmitURL</code></td>
-   <td><code>&lt;regional_emit_URL&gt;</code> を、脆弱性アドバイザーの地域エンドポイント URL に置き換えます。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://us.</span>icr.io</code>。 <code>/va</code> をこのアドレスの最後に追加します。 例: <code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>。詳細については、[ローカル・リージョン](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local) を参照してください。</td>
+   <td><code>&lt;regional_emit_URL&gt;</code> を、脆弱性アドバイザーの地域エンドポイント URL に置き換えます。 URL を取得するには、<code>ibmcloud cr info</code> を実行し、<strong>コンテナー・レジストリー</strong>のアドレスを取得します。 例: <code>https<span comment="make the link not a link">://us.</span>icr.io</code>。 <code>/va</code> をこのアドレスの最後に追加します。 例: <code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>。 詳細については、[ローカル・リージョン](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local) を参照してください。</td>
    </tr>
    <tr>
    <td><code>AccountID</code></td>
@@ -351,23 +361,31 @@ Helm チャートを構成するには、以下の手順を実行します。
 
 Container Scanner がインストールされ、エージェントがクラスターに [DaemonSet ![外部リンク・アイコン](../../icons/launch-glyph.svg "外部リンク・アイコン")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) としてデプロイされました。 Container Scanner は `kube-system` 名前空間にデプロイされますが、`default` など、すべての Kubernetes 名前空間でポッドに割り当てられているすべてのコンテナーをスキャンします。
 
-## ファイアウォールの内側からの Container Scanner の実行
+## ファイアウォールの内側からの Container Scanner の実行 (非推奨)
 {: #va_firewall}
 
-ファイアウォールで発信接続がブロックされている場合は、次の表の IP アドレスに対して、ワーカーノードが TCP ポート `443` の Container Scanner にアクセスできるようにファイアウォールを構成する必要があります。{{site.data.keyword.containerlong_notm}} 資料の ステップ 3 [パブリック・ファイアウォールからのクラスターからインフラストラクチャー・リソースや他のサービスへのアクセスの許可 ](/docs/containers?topic=containers-firewall#firewall_outbound) を参照してください。
+Container Scanner は推奨されません。
+{: deprecated}
+
+ファイアウォールで発信接続がブロックされている場合は、そのファイアウォールを構成する必要があります。
 {:shortdesc}
 
-## コンテナー・レポートの検討
+ワーカーノードが IP アドレスの TCP ポート `443` の Container Scanner にアクセスすることを許可するように、ファイアウォールを構成するには、[クラスターがパブリック・ファイアウォールを超えてインフラストラクチャー・リソースや他のサービスへアクセスすることを許可する](/docs/containers?topic=containers-firewall#firewall_outbound)のステップ 3 を参照してください。
+
+## コンテナー・レポートの確認 (非推奨)
 {: #va_reviewing_container}
+
+Container Scanner は推奨されません。
+{: deprecated}
 
 ダッシュボードでコンテナーの状況を調べて、そのセキュリティーが組織のポリシーに準拠しているかどうかを判別できます。 コンテナーのセキュリティー・レポートを検討することもできます。レポートには、脆弱なパッケージと非セキュアなコンテナーやアプリケーションの設定に関する詳細、およびコンテナーが組織ポリシーに準拠しているかどうかが示されます。
 {:shortdesc}
 
 **「ポリシーの状況」**フィールドを調べて、スペース内で実行されているコンテナーが、引き続き組織ポリシーに準拠していることを確認します。 状況は、以下のいずれかの条件で示されます。
 
-- **ポリシーに準拠している (Compliant with Policy)**: セキュリティーの点でも構成の点でも問題は検出されませんでした。
-- **ポリシーに準拠していない (Not Compliant with Policy)**: 脆弱性アドバイザーによってセキュリティーまたは構成の潜在的な問題が検出されたため、このコンテナーはポリシーに準拠していません。 脆弱イメージのデプロイメントが組織ポリシーで許可されている場合、イメージは「`デプロイに注意が必要`」状態でデプロイされている可能性があり、それをデプロイしたユーザーに警告が送信されます。
-- **評価不完全 (Incomplete Assessment)**: スキャンは完了していません。 スキャンはまだ実行中である可能性があります。または、そのコンテナー・インスタンスのオペレーティング・システムが非互換である可能性があります。
+- `ポリシーに準拠している (Compliant with Policy)`: セキュリティーの点でも構成の点でも問題は検出されませんでした。
+- `ポリシーに準拠していない (Not Compliant with Policy)`: 脆弱性アドバイザーによってセキュリティーまたは構成の潜在的な問題が検出されたため、このコンテナーはポリシーに準拠していません。 脆弱イメージのデプロイメントが組織ポリシーで許可されている場合、イメージは「`デプロイに注意が必要`」状態でデプロイされている可能性があり、それをデプロイしたユーザーに警告が送信されます。
+- `評価不完全 (Incomplete Assessment)`: スキャンは完了していません。 スキャンはまだ実行中である可能性があります。または、そのコンテナー・インスタンスのオペレーティング・システムが非互換である可能性があります。
 
 コンテナーが可能な限りセキュアであることをセキュリティー・レポートを表示して確認し、報告されたセキュリティーまたは構成の問題に対処します。それには、次の手順に従います。
 
@@ -386,13 +404,14 @@ Container Scanner がインストールされ、エージェントがクラス�
 
 3. 各セキュリティー問題のポリシーの状況を検討します。 ポリシーの状況は、この問題が適用除外されているかどうかを示します。
 
-    - **アクティブ**: 適用除外されていない問題があり、その問題がセキュリティーの状況に影響を及ぼしています。
-    - **適用除外**: この問題は、ポリシー設定によって適用除外されています。
-    - **部分的に適用除外**: この問題は、複数のセキュリティー上の注意事項に関連付けられています。 セキュリティー上の注意事項がすべて適用除外されているわけではありません。
+    - `アクティブ`: 適用除外されていない問題があり、その問題がセキュリティーの状況に影響を及ぼしています。
+    - `適用除外`: この問題は、ポリシー設定によって適用除外されています。
+    - `部分的に適用除外`: この問題は、複数のセキュリティー上の注意事項に関連付けられています。 セキュリティー上の注意事項がすべて適用除外されているわけではありません。
 
 4. 問題を解決するためのコンテナーの更新方法を決定します。
 
-    **重要:** コンテナー・イメージの問題を修正するには、古いインスタンスを削除して再デプロイする必要があります。これは、既存のコンテナー内にあるデータはすべて失われることを意味します。 コンテナーを再デプロイするための適切な方法を選択するには、コンテナーのアーキテクチャーを十分理解しておく必要があります。
+    コンテナー・イメージの問題を修正するには、古いインスタンスを削除して再デプロイする必要があります。これは、既存のコンテナー内にあるデータはすべて失われることを意味します。コンテナーを再デプロイするための適切な方法を選択するには、コンテナーのアーキテクチャーについて十分に理解しておいてください。
+    {: important}
 
     **例**
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-05-01"
+lastupdated: "2019-06-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -22,10 +22,11 @@ subcollection: va
 {:deprecated: .deprecated}
 {:download: .download}
 
+
 # 使用 Vulnerability Advisor 管理映像檔安全
 {: #va_index}
 
-Vulnerability Advisor 會針對由 {{site.data.keyword.IBM}}、協力廠商所提供的容器映像檔，或者新增至您組織登錄名稱空間的容器映像檔，檢查其安全狀態。如果您已在每個叢集安裝容器掃描器，則 Vulnerability Advisor 也會檢查執行中容器的狀態。
+Vulnerability Advisor 會針對由 {{site.data.keyword.IBM}}、協力廠商所提供的容器映像檔，或者新增至您組織登錄名稱空間的容器映像檔，檢查其安全狀態。如果您已在每個叢集安裝容器掃描器（已淘汰），則 Vulnerability Advisor 也會檢查執行中容器的狀態。
 {:shortdesc}
 
 當您將映像檔新增至名稱空間時，Vulnerability Advisor 會自動掃描映像檔，以偵測安全問題及潛在漏洞。如果找到安全問題，會提供指示以協助修正報告的漏洞。
@@ -46,17 +47,17 @@ Vulnerability Advisor 提供功能來協助保護映像檔。
 可用的功能如下：
 
 - 掃描映像檔是否有問題
-- 掃描執行中的容器是否有問題，如果已在每個叢集安裝[容器掃描器](#va_install_container_scanner)的話
+- 掃描執行中的容器是否有問題，如果已在每個叢集安裝[容器掃描器](#va_install_container_scanner)的話（已淘汰）
 - 提供評估報告，該報告根據 {{site.data.keyword.containerlong_notm}} 特定的安全作法。
 - 提供建議以保護部分應用程式類型的配置檔
 - 提供指示，告知如何修正已報告的[有漏洞套件](#packages)，或其報告中的[配置問題](#app_configurations)
 - 提供裁決給 [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - 在帳戶、名稱空間、儲存庫或標籤層次套用報告的豁免，以註記所標示的問題在何時不適用於您的使用案例
-- 在 {{site.data.keyword.registrylong_notm}} 圖形使用者介面的**標籤**視圖提供相關聯容器的鏈結。您可以列出正在執行並且在已安裝容器掃描器的叢集內使用該映像檔的容器。
+- 在 {{site.data.keyword.registrylong_notm}} 圖形使用者介面的**標籤**視圖提供相關聯容器的鏈結。您可以列出正在執行並且在已安裝容器掃描器（已淘汰）的叢集內使用該映像檔的容器。
 
 在「登錄」儀表板中，**原則狀態**直欄會顯示儲存庫的狀態。鏈結的報告會識別映像檔的良好雲端安全作法。
 
-Vulnerability Advisor 儀表板提供映像檔的安全概觀與評量，以及執行中容器的鏈結（如果已安裝容器掃描器的話）。如果您想要找出 Vulnerability Advisor 儀表板的相關資訊，請參閱[檢閱漏洞報告](#va_reviewing)。
+Vulnerability Advisor 儀表板提供映像檔的安全概觀與評量，以及執行中容器的鏈結，如果已安裝容器掃描器（已淘汰）的話。如果您想要找出 Vulnerability Advisor 儀表板的相關資訊，請參閱[檢閱漏洞報告](#va_reviewing)。
 
 **資料保護**
 
@@ -87,11 +88,11 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
   |Docker 基礎映像檔|安全注意事項的來源|
   |-----------------|--------------------------|
-  |Alpine|[Git - Alpine Linux ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://git.alpinelinux.org/) 及 [CIRCL CVE Search ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://cve.circl.lu/)|
-  |CentOS|[CentOS 公告保存 ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.centos.org/pipermail/centos-announce/) 及 [CentOS CR 公告保存 ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.centos.org/pipermail/centos-cr-announce/)|
-  |Debian|[Debian 安全公告 ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.debian.org/debian-security-announce/)|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://access.redhat.com/errata/#/)|
-  |Ubuntu|[Ubuntu Security Notices ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://usn.ubuntu.com/)|
+  |Alpine|[Git - Alpine Linux ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://git.alpinelinux.org/) 及 [CIRCL CVE Search ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://cve.circl.lu/)。|
+  |CentOS| [CentOS announce archives ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.centos.org/pipermail/centos-announce/) 及 [CentOS CR announce archives ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.centos.org/pipermail/centos-cr-announce/)。|
+  |Debian|[Debian security announcements ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.debian.org/debian-security-announce/)。|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://access.redhat.com/errata/#/)。|
+  |Ubuntu|[Ubuntu Security Notices ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://usn.ubuntu.com/)。|
   {: caption="表 1. Vulnerability Advisor 檢查套件是否有漏洞的受支援 Docker 基礎映像檔" caption-side="top"}
 
 ### 配置問題
@@ -120,7 +121,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 如果您的映像檔不符合組織原則所設定的需求，您必須配置映像檔以符合那些需求，然後才能部署它。如需如何檢視及變更組織原則的相關資訊，請參閱[設定組織豁免原則](#va_managing_policy)。
 {:tip}
 
-部署映像檔之後，如果已部署容器掃描器，Vulnerability Advisor 會繼續掃描容器中是否有安全與配置問題。您可以藉由遵循[檢閱容器報告](#va_reviewing_container)中所述的步驟來解決找到的任何問題。
+部署映像檔之後，如果已部署容器掃描器（已淘汰），Vulnerability Advisor 會繼續掃描容器中是否有安全與配置問題。您可以藉由遵循[檢閱容器報告](#va_reviewing_container)中所述的步驟來解決找到的任何問題。
 
 ### 使用 GUI 檢閱漏洞報告
 {: #va_reviewing_gui}
@@ -134,11 +135,11 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 4. 若要查看以 `latest` 標記之映像檔的報告，請按一下該映像檔的列。**映像檔詳細資料**標籤會開啟，顯示該映像檔的資料。如果儲存庫中沒有任何 `latest` 標籤存在，則會使用最新的映像檔。
 5. 如果安全狀態有顯示任何問題，若要進一步了解問題，請按一下**依類型排列的問題**標籤。隨即開啟**漏洞**及**配置問題**表格。
 
-   - **漏洞** 此表格顯示每個問題的「漏洞 ID」、該問題的原則狀態、受影響的套件，以及如何解決問題。若要查看該問題的相關資訊，請展開該列。隨即顯示該問題的摘要，其中包含該問題之供應商安全注意事項的鏈結。會列出包含已知漏洞問題的套件。
+   - **漏洞**表格。顯示每個問題的「漏洞 ID」、該問題的原則狀態、受影響的套件，以及如何解決問題。若要查看該問題的相關資訊，請展開該列。隨即顯示該問題的摘要，其中包含該問題之供應商安全注意事項的鏈結。會列出包含已知漏洞問題的套件。
   
      清單會使用[漏洞類型](#types)所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件升級可能會更正多個問題。按一下安全注意事項代碼，以檢視套件的相關資訊，以及更新套件的步驟。
 
-   - **配置問題** 此表格顯示每個問題的「配置問題 ID」、該問題的原則狀態，以及安全作法。若要查看該問題的相關資訊，請展開該列。隨即顯示該問題的摘要，其中包含該問題之安全注意事項的鏈結。
+   - **配置問題**表格。顯示每個問題的「配置問題 ID」、該問題的原則狀態，以及安全作法。若要查看該問題的相關資訊，請展開該列。隨即顯示該問題的摘要，其中包含該問題之安全注意事項的鏈結。
   
      清單會包含動作的建議，以便您可以採取動作來提高容器安全和任何未受保護之應用程式設定的安全。展開某一列即可檢視如何解決問題。
 
@@ -158,9 +159,9 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
    {: pre}
 
 2. 檢查**安全狀態**直欄中的狀態。
-    - **沒有問題**：找不到任何安全問題。
-    - **`<X>` 個問題** `<X>` 個潛在的安全問題或漏洞，其中 `<X>` 是問題的數目。
-    - **掃描中**：正在掃描映像檔，尚未判斷最後的漏洞狀態。
+    - `沒有問題`：找不到任何安全問題。
+    - `<X> 個問題` 找到的潛在安全問題或漏洞數，其中 `<X>` 是問題的數目。
+    - `掃描中`：正在掃描映像檔，尚未判斷最後的漏洞狀態。
 
 3. 若要檢視狀態的詳細資料，請檢閱 Vulnerability Advisor 報告：
 
@@ -170,13 +171,13 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
    {: pre}
 
    在 CLI 輸出中，您可以檢閱下列有關配置問題的資訊。
-      - **安全作法**：所找到之漏洞的說明
-      - **更正動作**：有關如何修正漏洞的詳細資料
+      - `安全作法`：所找到之漏洞的說明
+      - `更正動作`：有關如何修正漏洞的詳細資料
 
 ## 設定組織豁免原則
 {: #va_managing_policy}
 
-如果您想要管理 {{site.data.keyword.cloud_notm}} 組織的安全，可以使用您的原則設定來決定是否豁免問題。您可以選擇使用 Container Image Security Enforcement，確保在為您的原則豁免的問題負責之後，只允許來自不包含任何安全問題之映像檔的部署。
+如果您想要管理 {{site.data.keyword.cloud_notm}} 組織的安全，可以使用您的原則設定來決定是否豁免問題。您可以使用 Container Image Security Enforcement，確保在為您的原則豁免的問題負責之後，只允許來自不包含任何安全問題之映像檔的部署。
 {:shortdesc}
 
 您可以從任何映像檔部署容器，而不論安全狀態為何，除非已在您的叢集部署 Container Image Security Enforcement。若要找出如何部署 Container Image Security Enforcement，請參閱[安裝安全強制執行](/docs/services/Registry?topic=registry-security_enforce#security_enforce)。
@@ -215,8 +216,11 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
 如需指令的相關資訊，您可以在執行指令時使用 `--help` 旗標。
 
-## 安裝容器掃描器
+## 安裝容器掃描器（已淘汰）
 {: #va_install_container_scanner}
+
+容器掃描器已淘汰。
+{: deprecated}
 
 容器掃描器讓 Vulnerability Advisor 能回報執行中容器裡，所發現且不存在於容器基礎映像檔的任何問題。如果您沒有對容器進行執行時的修改，則不需要容器掃描器，因為映像檔報告會顯示相同的問題。
 {:shortdesc}
@@ -227,8 +231,11 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
 若要使用容器掃描器，您必須設定許可權，然後設定 [Helm 圖表 ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://docs.helm.sh/developing_charts)，並將它與您要用於的叢集相關聯。
 
-### 設定容器掃描器的服務許可權
+### 設定容器掃描器（已淘汰）的服務許可權
 {: #va_install_container_scanner_permissions}
+
+容器掃描器已淘汰。
+{: deprecated}
 
 容器掃描器需要設定許可權，服務才能運作。
 {:shortdesc}
@@ -253,19 +260,21 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
        {: codeblock}
        此時會傳回掃描器 API 金鑰。
 
-       請確定安全儲存您的掃描器 API 金鑰，因為稍後無法再擷取該金鑰。
-	    同時也請確定您針對安裝掃描器的每個叢集，都有個別的服務 API 金鑰。
+       請確定安全儲存您的掃描器 API 金鑰，因為稍後無法再擷取該金鑰。同時也請確定您針對安裝掃描器的每個叢集，都有個別的服務 API 金鑰。
        {: important}
 
-    3. 建立授予 `Writer` 角色的服務原則。
+    3. 建立授與 `Writer` 角色的服務原則。
 
        ```
        ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
        ```
        {: codeblock}
 
-### 配置 Helm 圖表
+### 配置 Helm 圖表（已淘汰）
 {: #va_install_container_scanner_helm}
+
+容器掃描器已淘汰。
+{: deprecated}
 
 配置 Helm 圖表，並將它與您要用於的叢集相關聯。
 {:shortdesc}
@@ -353,23 +362,31 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
 現在，已安裝容器掃描器，且代理程式已部署為您叢集中的 [DaemonSet ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)。雖然容器掃描器已部署至 `kube-system` 名稱空間，但是它仍會掃描指派至所有 Kubernetes 名稱空間中 Pod 的所有容器，例如，`default`。
 
-## 從防火牆背後執行容器掃描器
+## 從防火牆背後執行容器掃描器（已淘汰）
 {: #va_firewall}
 
-如果您的防火牆會封鎖送出的連線，您必須配置防火牆，以容許工作者節點存取 IP 位址的 TCP 埠 `443` 上的容器掃描器。請參閱 {{site.data.keyword.containerlong_notm}} 文件[容許叢集透過公用防火牆存取基礎架構資源和其他服務](/docs/containers?topic=containers-firewall#firewall_outbound)中的步驟 3。
+容器掃描器已淘汰。
+{: deprecated}
+
+如果您的防火牆會封鎖送出的連線，您必須配置防火牆。
 {:shortdesc}
 
-## 檢閱容器報告
+若要配置防火牆，以容許工作者節點存取 IP 位址的 TCP 埠 `443` 上的容器掃描器，請參閱[容許叢集透過公用防火牆存取基礎架構資源和其他服務](/docs/containers?topic=containers-firewall#firewall_outbound)中的步驟 3。
+
+## 檢閱容器報告（已淘汰）
 {: #va_reviewing_container}
+
+容器掃描器已淘汰。
+{: deprecated}
 
 在儀表板中，您可以查看容器的狀態，來判斷其安全是否符合組織的原則。您也可以檢閱容器的安全報告，其中會詳述任何有漏洞的套件及未受保護的容器或應用程式設定，以及容器是否遵循組織原則。
 {:shortdesc}
 
 確認在您空間中執行的容器能繼續遵守組織原則，方法是檢閱**原則狀態**欄位。即會以下列其中一種狀況顯示狀態：
 
-- **遵循原則**：找不到任何安全或配置問題。
-- **未遵循原則**：Vulnerability Advisor 找到潛在的安全或配置問題，這些問題導致容器未遵循原則。如果您的組織原則允許部署有漏洞的映像檔，映像檔可能會以 `Deploy with Caution` 狀態部署，並且傳送警告給部署它的使用者。
-- **不完整的評量**：掃描未完成。掃描可能仍在執行中，或該容器實例的作業系統可能不相容。
+- `遵循原則`：找不到任何安全或配置問題。
+- `未遵循原則`：Vulnerability Advisor 找到潛在的安全或配置問題，這些問題導致容器未遵循原則。如果您的組織原則允許部署有漏洞的映像檔，映像檔可能會以 `Deploy with Caution` 狀態部署，並且傳送警告給部署它的使用者。
+- `不完整的評量`：掃描未完成。掃描可能仍在執行中，或該容器實例的作業系統可能不相容。
 
 確認您的容器盡可能安全，方法是完成下列步驟以檢視其安全報告，並處理任何已報告的安全或配置問題：
 
@@ -388,13 +405,14 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
 3. 檢閱每個安全問題的原則狀態。原則狀態指出此問題是否得到豁免。
 
-    - **作用中**：您的問題未得到豁免，問題會影響您的安全狀態。
-    - **豁免**：此問題已由原則設定豁免。
-    - **局部豁免**：此問題與多個安全注意事項相關聯。安全注意事項未全部得到豁免。
+    - `作用中`：您的問題未得到豁免，問題會影響您的安全狀態。
+    - `豁免`：此問題已由原則設定豁免。
+    - `局部豁免`：此問題與多個安全注意事項相關聯。安全注意事項未全部得到豁免。
 
 4. 決定如何更新容器，以解決問題。
 
-    **重要事項**：若要修正容器映像檔的問題，您必須刪除舊實例然後重新部署，這表示會遺失現有容器內的任何資料。請確定您已充份瞭解容器架構，以選擇適當的容器重新部署方法。
+    若要修正容器映像檔的問題，您必須刪除舊實例然後重新部署，這表示會遺失現有容器內的任何資料。請確定您已充份瞭解容器架構，以選擇適當的容器重新部署方法。
+    {: important}
 
     **範例**
 
