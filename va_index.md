@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-11"
+lastupdated: "2019-06-27"
 
-keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -226,6 +226,7 @@ If you want to set exemptions to the policy by using the CLI, you can run the fo
 - To delete an exemption for a security issue, run the [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) command.
 
 For more information about the commands, you can use the `--help` flag when you run the command.
+
 
 ## Installing the Container Scanner (deprecated)
 {: #va_install_container_scanner}
