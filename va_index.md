@@ -25,7 +25,7 @@ subcollection: va
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
-Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace. If the Container Scanner (deprecated) is installed in each cluster, Vulnerability Advisor also checks the status of containers that are running.
+Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace.
 {:shortdesc}
 
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability.
@@ -45,17 +45,15 @@ Vulnerability Advisor provides functions to help you to secure your images.
 The following functions are available:
 
 - Scans images for issues
-- Scans for issues in containers that are running if a [Container Scanner](#va_install_container_scanner) is installed in each cluster (deprecated)
 - Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 - Provides recommendations to secure configuration files for a subset of application types
 - Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
 - Provides verdicts to [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce)
 - Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
-- Provides links to associated containers in the **Tag** view of the {{site.data.keyword.registrylong_notm}} graphical user interface. You can list the containers that are running and that are using that image in a cluster that has the Container Scanner (deprecated) installed.
 
 In the Registry dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images.
 
-The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image and, if the Container Scanner (deprecated) is installed, links to containers that are running. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
+The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 
 **Data protection**
 
@@ -118,8 +116,6 @@ To configure the scope of enforcement of Vulnerability Advisor issues in Contain
 
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
 {:tip}
-
-If Container Scanner (deprecated) is deployed, after you deploy your image Vulnerability Advisor continues to scan for security and configuration issues in the container. You can resolve any problems that are found by following the steps that are described in [Reviewing a container report](#va_reviewing_container).
 
 ### Reviewing a vulnerability report by using the GUI
 {: #va_reviewing_gui}
@@ -226,212 +222,3 @@ If you want to set exemptions to the policy by using the CLI, you can run the fo
 - To delete an exemption for a security issue, run the [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) command.
 
 For more information about the commands, you can use the `--help` flag when you run the command.
-
-
-## Installing the Container Scanner (deprecated)
-{: #va_install_container_scanner}
-
-Container Scanner is deprecated.
-{: deprecated}
-
-Container Scanner enables Vulnerability Advisor to report any problems that are found in running containers that are not present in the container's base image. If you do not make runtime modifications to your container, then you do not require Container Scanner because the image report shows the same issues.
-{:shortdesc}
-
-To check the security status of live containers that are running in your cluster, you can install the Container Scanner. To protect your app, Container Scanner regularly scans your running containers so that you can detect and rectify any newly detected vulnerabilities.
-
-You can set up the Container Scanner to monitor for vulnerabilities in the containers that are assigned to pods in all your Kubernetes namespaces. When vulnerabilities are found, you must rectify any problems with the image and then redeploy your app. Container Scanner supports containers that are created from images that are stored in {{site.data.keyword.registrylong_notm}} only.
-
-To use the Container Scanner, you must set up permissions and then set up a [Helm Chart ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/developing_charts) and associate it with the cluster in which you want to use it.
-
-### Set up service permissions for Container Scanner (deprecated)
-{: #va_install_container_scanner_permissions}
-
-Container Scanner is deprecated.
-{: deprecated}
-
-Container Scanner requires that permissions are set up so that the service can operate.
-{:shortdesc}
-
-To set up service permissions, complete the following steps:
-
-1. Log in to the {{site.data.keyword.cloud_notm}} CLI client. If you have a federated account, use `--sso`.
-2. [Target your `kubectl` CLI](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) to the cluster where you want to use a Helm chart.
-3. Create a service ID and API key for the Container Scanner and give it a name:
-    1. To create a service ID, run the following command, where `<scanner_serviceID>` is a name of your choice for the service ID. Note its **CRN**.
-
-       ```
-       ibmcloud iam service-id-create <scanner_serviceID>
-       ```
-       {: codeblock}
-
-    2. Create a service API key, where `<scanner_serviceID>` is the service ID that you created in the previous step and  `<scanner_APIkey_name>` is a name of your choice for the scanner API key.
-
-       ```
-       ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
-       ```
-       {: codeblock}
-       The scanner API key is returned.
-
-       Ensure that you store your scanner API key safely because it cannot be retrieved later. Also, ensure that you have a separate service API key for each cluster that the scanner is installed in.
-       {: important}
-
-    3. Create a service policy that grants the `Writer` role.
-
-       ```
-       ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
-       ```
-       {: codeblock}
-
-### Configure the Helm Chart (deprecated)
-{: #va_install_container_scanner_helm}
-
-Container Scanner is deprecated.
-{: deprecated}
-
-Configure a Helm Chart and associate it with the cluster in which you want to use it.
-{:shortdesc}
-
-To configure a Helm chart, complete the following steps:
-
-1. [Set up Helm in IBM Cloud Kubernetes Service](/docs/containers?topic=containers-helm#helm). If you use a role-based access control (RBAC) policy to grant access to Tiller, ensure that the Tiller role has access to all namespaces. Giving the Tiller role access to all namespaces ensures that the Container Scanner can watch containers in all namespaces.
-
-2. Add the IBM chart repository to your Helm, such as `ibm`.
-
-   ```
-   helm repo add ibm https://icr.io/helm/ibm
-   ```
-   {: pre}
-
-3. Save the default configuration settings for the Container Scanner Helm chart in a local YAML file. Include the chart repository, such as `ibm`, in the Helm chart path.
-
-   ```
-   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
-   ```
-   {: pre}
-
-4. Edit the `config.yaml` file.
-
-   ```yaml
-   EmitURL: <regional_emit_URL>
-   AccountID: <IBM_Cloud_account_ID>
-   ClusterID: <cluster_ID>
-   APIKey: <scanner_APIkey>
-   ...
-   ```
-   {: pre}
-
-   <table>
-   <col width="22%">
-   <col width="78%">
-   <caption>Table 2. Understanding the YAML file components</caption>
-   <thead>
-   <th>Field</th>
-   <th>Value</th>
-   </thead>
-   <tbody>
-   <tr>
-   <td><code>EmitURL</code></td>
-   <td>Replace <code>&lt;regional_emit_URL&gt;</code> with the Vulnerability Advisor regional endpoint URL. To get the URL, run <code>ibmcloud cr info</code> and retrieve the <strong>Container Registry</strong> address. For example, <code>https<span comment="make the link not a link">://us.</span>icr.io</code>. Add <code>/va</code> to the end of this address. For example, <code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>. For more information about regions, see [Local regions](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local).</td>
-   </tr>
-   <tr>
-   <td><code>AccountID</code></td>
-   <td>Replace <code>&lt;IBM_Cloud_account_ID&gt;</code> with the {{site.data.keyword.cloud_notm}} account ID that your cluster is in. To get the account ID, run <code>ibmcloud account list</code>.</td>
-   </tr>
-   <tr>
-   <td><code>ClusterID</code></td>
-   <td>Replace <code>&lt;cluster_ID&gt;</code> with the Kubernetes cluster that you want to install the Container Scanner in. To list cluster IDs, run <code>ibmcloud ks clusters</code>. <br> **Tip**: Use the ID of the cluster, not the name.
-   </td>
-   </tr>
-   <tr>
-   <td><code>APIKey</code></td>
-   <td>Replace <code>&lt;scanner_APIkey&gt;</code> with the scanner API key that you created earlier.</td>
-   </tr>
-   </tbody></table>
-
-5. Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a ConfigMap for your chart. Replace `<myscanner>` with a name of your choice for your Helm chart. Include the chart repository, such as `ibm`, in the Helm chart path.
-
-   ```
-   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
-   ```
-   {: pre}
-
-   The Container Scanner is installed into the `kube-system` namespace, but scans containers from all namespaces.
-   {:tip}
-
-6. Check the chart deployment status. When the chart is ready, the **STATUS** field has a value of `DEPLOYED`.
-
-   ```
-   helm status <myscanner>
-   ```
-   {: pre}
-
-7. After the chart is deployed, verify that the updated settings in the `config.yaml` file were used.
-
-   ```
-   helm get values <myscanner>
-   ```
-   {: pre}
-
-The Container Scanner is now installed, and the agent is deployed as a [DaemonSet ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) in your cluster. Although the Container Scanner is deployed to the `kube-system` namespace, it scans all containers that are assigned to pods in all your Kubernetes namespaces, such as `default`.
-
-## Running the Container Scanner from behind a firewall (deprecated)
-{: #va_firewall}
-
-Container Scanner is deprecated.
-{: deprecated}
-
-If your firewall blocks outgoing connections, you must configure your firewall.
-{:shortdesc}
-
-To configure your firewall to allow worker nodes to access the Container Scanner on TCP port `443` on the IP addresses, see Step 3 in [Allowing the cluster to access infrastructure resources and other services over a public firewall](/docs/containers?topic=containers-firewall#firewall_outbound).
-
-## Reviewing a container report (deprecated)
-{: #va_reviewing_container}
-
-Container Scanner is deprecated.
-{: deprecated}
-
-In your dashboard, you can see the status of a container to determine whether its security complies with your organization's policy. You can also review a container's security report, which details any vulnerable packages and nonsecure container or application settings, and whether the container is compliant with organizational policies.
-{:shortdesc}
-
-Check that containers that are running in your space continue to be compliant with organizational policy by reviewing the **Policy Status** field. The status is displayed as one of the following conditions:
-
-- `Compliant with Policy` No security or configuration issues were found.
-- `Not Compliant with Policy` Vulnerability Advisor found potential security or configuration issues that caused the container to not be compliant with policy. If your organizational policy permits the deployment of vulnerable images, the image might be deployed in the state `Deploy with Caution`, and a warning is sent to the user that deployed it.
-- `Incomplete Assessment` The scan is not complete. The scan might still be running, or the operating system for that container instance might not be compatible.
-
-Check that your container is as secure as possible by viewing its security report and act on any reported security or configuration issues, by completing the following steps:
-
-1. Select the container that you want to view a report for:
-    1. Click the **Navigation Menu** icon, and then click **Kubernetes**.
-    2. Click **Registry** and then click the **Repositories** tile, then expand the row for the repository that you want.
-    3. Select the row for the image that you want.
-    4. Select the **Associated Containers** tab and then select the row for the container that you want. The security report opens.
-2. Review the sections to see the potential security and configuration issues for each package in the image:
-
-    - **Vulnerabilities** Lists packages that contain known vulnerability issues. The list is updated daily by using published security notices for the Docker image types that are listed in [Types of vulnerabilities](#types). Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package update can correct multiple issues. Click the security notice code to view more information about the package and for steps to update the package.
-
-    - **Configuration Issues** Lists suggestions that you can take to increase the security of the container and any application settings for the container that are nonsecure. Expand the row to view how to resolve the issue.
-
-   Corrective actions or suggestions are provided for each item that is listed.
-
-3. Review the policy status for each security issue. The policy status indicates whether this issue is exempt.
-
-    - `Active` You have an issue that is not exempted and the issue is affecting your security status.
-    - `Exempt` This issue is exempted by your policy settings.
-    - `Partially exempt` This issue is associated with more than one security notice. The security notices are not all exempt.
-
-4. Decide how to update the container so that you can resolve the problems.
-
-    To fix problems with the container image, you must delete the old instance and redeploy, which means losing any data within the existing container. Ensure that you have a good understanding of your container architecture to choose the appropriate method of redeploying the container.
-    {: important}
-
-    **Example**
-
-    - If your container is decoupled from data that it computes, you can stop the container and delete it, make the required changes to the image, and redeploy, with no data loss.
-    - You can use an {{site.data.keyword.cloud_notm}} service, such as [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about), to assist with updating the vulnerable container instance.
-    - In a microservices architecture, you can route traffic to another container instance while you fix security or configuration issues, and push the new image in a red-black deployment.
-
-5. If you can't fix the issue now, you can exempt the issue in your policy settings, which prevents the issue from blocking the deployment of the container. To exempt the issue, click the **open and close list of options** icon and click **Create Exemption**, see [Setting organizational exemption policies](#va_managing_policy).
-
-6. Fix the problems that are described in the **Security** report, and rebuild the image or redeploy the container according to the method you chose.
