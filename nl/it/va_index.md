@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -83,14 +83,14 @@ I risultati della scansione vengono eliminati 30 giorni dopo essere stati genera
 Il Controllo vulnerabilità verifica i pacchetti vulnerabili nelle immagini che stanno utilizzando i sistemi operativi supportati e fornisce un link per tutte le informazioni particolari sulla sicurezza rilevanti sulla vulnerabilità.
 {:shortdesc}
 
-I pacchetti che contengono problemi di vulnerabilità noti vengono visualizzati nei risultati della scansione. Le vulnerabilità possibili vengono aggiornate dagli avvisi di sicurezza pubblicati giornalmente per i tipi di immagine Docker elencati nella seguente tabella. Di norma, per fare in modo che un pacchetto vulnerabile superi con esito positivo la scansione, è necessaria una sua versione più recente che includa una correzione per la vulnerabilità in questione. Lo stesso pacchetto può elencare più vulnerabilità e in questo caso, un solo upgrade del pacchetto può risolvere più vulnerabilità.
+I pacchetti che contengono problemi di vulnerabilità noti vengono visualizzati nei risultati della scansione. Le vulnerabilità possibili vengono aggiornate dagli avvisi di sicurezza pubblicati giornalmente per i tipi di immagine Docker elencati nella seguente tabella. Di norma, per fare in modo che un pacchetto vulnerabile superi con esito positivo la scansione, è necessaria una sua versione più recente che includa una correzione per la vulnerabilità in questione. Lo stesso pacchetto può elencare più vulnerabilità e in questo caso, un solo aggiornamento del pacchetto può risolvere più vulnerabilità.
 
   |Immagine di base Docker|Origine delle informazioni particolari di sicurezza|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://git.alpinelinux.org/) e [CIRCL CVE Search ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://cve.circl.lu/).|
-  |CentOS| [CentOS announce archives ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://lists.centos.org/pipermail/centos-announce/) e [CentOS CR announce archives ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |CentOS| [CentOS announce archives ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://lists.centos.org/pipermail/centos-announce/) e [CentOS CR announce archives ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://lists.centos.org/pipermail/centos-cr-announce/). Per ulteriori informazioni sulle vulnerabilità, vedi [Vulnerabilità nei pacchetti su CentOS](#va_centos).|
   |Debian|[Debian security announcements ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://lists.debian.org/debian-security-announce/).|
-  |RHEL (Red Hat Enterprise Linux)|[Red Hat Product Errata ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://access.redhat.com/errata/#/).|
+  |RHEL (Red Hat Enterprise Linux)|[Red Hat Security Data API ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://access.redhat.com/labsinfo/securitydataapi).|
   |Ubuntu|[Ubuntu Security Notices ![Icona link esterno](../../icons/launch-glyph.svg "Icona link esterno")](https://usn.ubuntu.com/).|
   {: caption="Tabella 1. Immagini di base Docker supportate verificate dal Controllo vulnerabilità per rilevare eventuali pacchetti vulnerabili" caption-side="top"}
 
@@ -136,7 +136,7 @@ Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi d
 
    - Tabella **Vulnerabilities**. Mostra l'ID di vulnerabilità di ogni problema, lo stato della politica di tale problema, i pacchetti interessati e come risolvere il problema. Per visualizzare ulteriori informazioni su tale problema, espandi la riga. Viene visualizzato un riepilogo di tale problema, che contiene un link all'avviso di sicurezza del fornitore per tale problema. Elenca i pacchetti che contengono problemi di vulnerabilità noti.
   
-     L'elenco viene aggiornato giornalmente utilizzando gli avvisi di sicurezza pubblicati per i tipi di immagine Docker elencati in [Tipi di vulnerabilità](#types). Di norma, per fare in modo che un pacchetto vulnerabile superi con esito positivo la scansione, è necessaria una sua versione più recente che includa una correzione per la vulnerabilità in questione. Lo stesso pacchetto può elencare più vulnerabilità e in questo caso, un solo upgrade del pacchetto può risolvere più problemi. Fai clic sul codice dell'avviso di sicurezza per visualizzare maggiori informazioni sul pacchetto e i passi per aggiornare il pacchetto.
+     L'elenco viene aggiornato giornalmente utilizzando gli avvisi di sicurezza pubblicati per i tipi di immagine Docker elencati in [Tipi di vulnerabilità](#types). Di norma, per fare in modo che un pacchetto vulnerabile superi con esito positivo la scansione, è necessaria una sua versione più recente che includa una correzione per la vulnerabilità in questione. Lo stesso pacchetto può elencare più vulnerabilità e in questo caso, un solo aggiornamento del pacchetto può risolvere più problemi. Fai clic sul codice dell'avviso di sicurezza per visualizzare maggiori informazioni sul pacchetto e i passi per aggiornare il pacchetto.
 
    - Tabella **Configuration Issues**. Mostra l'ID del problema di configurazione di ogni problema, lo stato della politica per tale problema e la prassi di sicurezza. Per visualizzare ulteriori informazioni su tale problema, espandi la riga. Viene visualizzato un riepilogo di tale problema, che contiene un link all'avviso di sicurezza per tale problema.
   
@@ -172,6 +172,19 @@ Puoi riesaminare la sicurezza delle immagini Docker memorizzate nei tuoi spazi d
    Nell'output della CLI, puoi visualizzare le seguenti informazioni sui problemi di sicurezza.
       - `Security practice` una descrizione della vulnerabilità che è stata rilevata
       - `Corrective action` i dettagli su come correggere la vulnerabilità
+
+### Vulnerabilità nei pacchetti su CentOS
+{: #va_centos}
+
+Se stai utilizzando CentOS, potresti ottenere dei falsi positivi nel tuo report, ossia, il report potrebbe segnalare una vulnerabilità quando non è così. Questa situazione si verifica quando un avviso di sicurezza viene rilasciato da Red Hat ma non è applicabile a CentOS, oppure la correzione non è ancora stata riportata in CentOS.
+{:shortdesc}
+
+Se ricevi un report che indica che il tuo pacchetto ha delle vulnerabilità, completa la seguente procedura:
+
+1. Visualizza la procedura per l'aggiornamento del pacchetto facendo clic sul codice dell'avviso di sicurezza.
+2. Aggiorna il pacchetto completando la procedura per aggiornare il pacchetto.
+3. Se il pacchetto viene aggiornato, il risultato non era un falso positivo e l'azione richiesta è stata completata.
+4. Se il pacchetto non viene aggiornato perché non sono disponibili delle versioni più recenti per l'installazione, il risultato era un falso positivo. Puoi aggiungere una politica di esenzione per questo avviso di sicurezza, vedi [Impostazione delle politiche di esenzione organizzative](#va_managing_policy).
 
 ## Impostazione delle politiche di esenzione organizzative
 {: #va_managing_policy}
@@ -396,7 +409,7 @@ Controlla che il tuo contenitore sia il più sicuro possibile visualizzando il r
     4. Seleziona la scheda **Associated Containers** e seleziona quindi la riga per il contenitore che desideri. Il report di sicurezza viene aperto.
 2. Riesamina le sezioni per vedere i potenziali problemi di sicurezza e configurazione per ogni pacchetto nell'immagine.
 
-    - **Vulnerabilities** elenca i pacchetti che contengono problemi di vulnerabilità noti. L'elenco viene aggiornato giornalmente utilizzando gli avvisi di sicurezza pubblicati per i tipi di immagine Docker elencati in [Tipi di vulnerabilità](#types). Di norma, per fare in modo che un pacchetto vulnerabile superi con esito positivo la scansione, è necessaria una sua versione più recente che includa una correzione per la vulnerabilità in questione. Lo stesso pacchetto può elencare più vulnerabilità e in questo caso, un solo upgrade del pacchetto può risolvere più problemi. Fai clic sul codice dell'avviso di sicurezza per visualizzare maggiori informazioni sul pacchetto e i passi per aggiornare il pacchetto.
+    - **Vulnerabilities** elenca i pacchetti che contengono problemi di vulnerabilità noti. L'elenco viene aggiornato giornalmente utilizzando gli avvisi di sicurezza pubblicati per i tipi di immagine Docker elencati in [Tipi di vulnerabilità](#types). Di norma, per fare in modo che un pacchetto vulnerabile superi con esito positivo la scansione, è necessaria una sua versione più recente che includa una correzione per la vulnerabilità in questione. Lo stesso pacchetto può elencare più vulnerabilità e in questo caso, un solo aggiornamento del pacchetto può risolvere più problemi. Fai clic sul codice dell'avviso di sicurezza per visualizzare maggiori informazioni sul pacchetto e i passi per aggiornare il pacchetto.
 
     - **Configuration Issues** elenca i consigli che puoi applicare per aumentare la sicurezza del contenitore e le eventuali impostazioni dell'applicazione per il contenitore che non sono sicure. Espandi la riga per vedere come risolvere il problema.
 

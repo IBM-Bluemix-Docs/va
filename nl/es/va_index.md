@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -88,9 +88,9 @@ Se muestran los paquetes que contienen problemas de vulnerabilidad conocidos en 
   |Imagen base de Docker|Origen de los avisos de seguridad|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://git.alpinelinux.org/) y [CIRCL CVE Search ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://cve.circl.lu/).|
-  |CentOS| [Archivos de anuncios de CentOS ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://lists.centos.org/pipermail/centos-announce/) y [Archivos de anuncios de CentOS CR ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |CentOS| [Archivos de anuncios de CentOS ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://lists.centos.org/pipermail/centos-announce/) y [Archivos de anuncios de CentOS CR ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://lists.centos.org/pipermail/centos-cr-announce/). Para obtener más información sobre vulnerabilidades, consulte [Vulnerabilidades en paquetes en CentOS](#va_centos).|
   |Debian|[Anuncios de seguridad de Debian ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://lists.debian.org/debian-security-announce/).|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://access.redhat.com/errata/#/).|
+  |Red Hat Enterprise Linux (RHEL)|[API de datos de seguridad de Red Hat ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://access.redhat.com/labsinfo/securitydataapi).|
   |Ubuntu|[Avisos de seguridad de Ubuntu ![Icono de enlace externo](../../icons/launch-glyph.svg "Icono de enlace externo")](https://usn.ubuntu.com/).|
   {: caption="Tabla 1. Imágenes base de Docker soportadas que Vulnerability Advisor comprueba en busca de paquetes vulnerables" caption-side="top"}
 
@@ -136,8 +136,7 @@ Puede revisar la seguridad de imágenes de Docker que se han almacenado en sus e
 
    - Tabla **Vulnerabilidades**: Muestra el ID de vulnerabilidad de cada problema, el estado de la política para dicho problema, los paquetes afectados y cómo solucionar el problema. Para ver más información para este problema, amplíe la fila. Se muestra un resumen del problema, que contiene un enlace con el aviso de seguridad del proveedor correspondiente a dicho problema. Muestra una lista de los paquetes que contienen problemas de vulnerabilidad conocidos.
   
-     La lista se actualiza a diario utilizando los avisos de seguridad publicados para los tipos de imagen de Docker que se listan en [Tipos de vulnerabilidades](#types). Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades. Pulse el código de aviso de seguridad para ver más información sobre el paquete y para ver los pasos para
-actualizar el paquete.
+     La lista se actualiza a diario utilizando los avisos de seguridad publicados para los tipos de imagen de Docker que se listan en [Tipos de vulnerabilidades](#types). Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades. Pulse el código de aviso de seguridad para ver más información sobre el paquete y para ver los pasos para actualizar el paquete.
 
    - Tabla **Problemas de configuración**: Muestra el ID de cada problema de configuración, el estado de la política correspondiente a dicho problema y la práctica de seguridad. Para ver más información para este problema, amplíe la fila. Se muestra un resumen del problema, que contiene un enlace con el aviso de seguridad correspondiente a dicho problema.
   
@@ -173,6 +172,19 @@ Puede revisar la seguridad de imágenes de Docker que se han almacenado en sus e
    En la salida de la CLI, puede ver la siguiente información sobre los problemas de configuración.
       - `Práctica de seguridad` Una descripción de la vulnerabilidad que se ha encontrado
       - `Acción de corrección` Detalles sobre cómo solucionar la vulnerabilidad
+
+### Vulnerabilidades en paquetes en CentOS
+{: #va_centos}
+
+Si utiliza CentOS, es posible que obtenga falsos positivos en el informe, es decir, el informe podría advertir sobre una vulnerabilidad que no es tal. Esta situación se produce cuando Red Hat publica un aviso de seguridad pero el aviso de seguridad no se aplica a CentOS o el arreglo todavía no se ha portado a CentOS.
+{:shortdesc}
+
+Si recibe un informe que indica que su paquete tiene vulnerabilidades, siga los siguientes pasos:
+
+1. Consulte los datos para actualizar el paquete pulsando el código del aviso de seguridad.
+2. Actualice el paquete siguiendo los pasos para actualizar el paquete.
+3. Si el paquete se actualiza, el resultado no era un falso positivo y ha finalizado la acción necesaria.
+4. Si el paquete no se actualiza porque no hay disponible ninguna versión nueva para instalar, el resultado era un falso positivo. Puede añadir una política de exención para el aviso de seguridad; para ello, consulte [Establecimiento de políticas de exención organizativas](#va_managing_policy).
 
 ## Establecimiento de políticas de exención organizativas
 {: #va_managing_policy}
@@ -301,10 +313,10 @@ Para configurar una gráfica de Helm, realice los pasos siguientes:
 
    ```yaml
    EmitURL: <regional_emit_URL>
-    AccountID: <IBM_Cloud_account_ID>
-    ClusterID: <cluster_ID>
-    APIKey: <scanner_APIkey>
-    ...
+   AccountID: <IBM_Cloud_account_ID>
+   ClusterID: <cluster_ID>
+   APIKey: <scanner_APIkey>
+   ...
    ```
    {: pre}
 
@@ -385,10 +397,8 @@ En el panel de control, puede ver el estado de un contenedor para determinar si 
 Compruebe que los contenedores que están en ejecución en el espacio sigan cumpliendo con la política de la organización revisando el campo **Estado de política**. El estado se muestra como una de las siguientes condiciones:
 
 - `Conforme con política` No se han encontrado problemas de seguridad ni de configuración.
-- `No conforme con política` Vulnerability Advisor ha encontrado problemas potenciales de seguridad o de configuración
-que han provocado que el contenedor no cumpla con la política. Si la política de la organización permite el despliegue de imágenes vulnerables, la imagen podría desplegarse en el estado `Desplegar con cuidado`, y se enviará un aviso al usuario que la despliega.
-- `Evaluación incompleta` La exploración no se ha completado. La exploración puede seguir en ejecución, o
-el sistema operativo de la instancia del contenedor puede no ser compatible.
+- `No conforme con política` Vulnerability Advisor ha encontrado problemas potenciales de seguridad o de configuración que han provocado que el contenedor no cumpla con la política. Si la política de la organización permite el despliegue de imágenes vulnerables, la imagen podría desplegarse en el estado `Desplegar con cuidado`, y se enviará un aviso al usuario que la despliega.
+- `Evaluación incompleta` La exploración no se ha completado. La exploración puede seguir en ejecución, o el sistema operativo de la instancia del contenedor puede no ser compatible.
 
 Compruebe si el contenedor está protegido todo lo posible visualizando su informe de seguridad y actúe de acuerdo con los problemas de configuración o seguridad de los que se le informa siguiendo los siguientes pasos:
 
@@ -399,8 +409,7 @@ Compruebe si el contenedor está protegido todo lo posible visualizando su infor
     4. Seleccione el separador **Contenedores asociados** y, a continuación, seleccione la fila del contenedor que desee. Se abre el informe de seguridad.
 2. Revise las secciones para ver los problemas potenciales de seguridad y de configuración para cada paquete en la imagen:
 
-    - **Vulnerabilidades** Muestra una lista de los paquetes que contienen problemas de vulnerabilidad conocidos. La lista se actualiza a diario utilizando los avisos de seguridad publicados para los tipos de imagen de Docker que se listan en [Tipos de vulnerabilidades](#types). Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades. Pulse el código de aviso de seguridad para ver más información sobre el paquete y para ver los pasos para
-actualizar el paquete.
+    - **Vulnerabilidades** Muestra una lista de los paquetes que contienen problemas de vulnerabilidad conocidos. La lista se actualiza a diario utilizando los avisos de seguridad publicados para los tipos de imagen de Docker que se listan en [Tipos de vulnerabilidades](#types). Por lo general, para que un paquete vulnerable pase la exploración, se necesita una versión posterior del paquete que incluya una corrección para la vulnerabilidad en cuestión. El mismo paquete puede tener varias vulnerabilidades; en tal caso, una única actualización del paquete puede corregir varias vulnerabilidades. Pulse el código de aviso de seguridad para ver más información sobre el paquete y para ver los pasos para actualizar el paquete.
 
     - **Problemas de configuración** Muestra una lista de sugerencias de acciones que puede emprender para aumentar la seguridad del contenedor y de cualquier valor de aplicación en el contenedor que se consideren no seguros. Amplíe la fila para ver cómo resolver el problema.
 

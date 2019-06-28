@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -85,14 +85,14 @@ subcollection: va
 漏洞顾问程序会在使用受支持操作系统的映像中检查是否存在有漏洞的包，如有，将提供任何漏洞相关安全通知的链接。
 {:shortdesc}
 
-扫描结果中会显示包含已知漏洞问题的包。对于下表中所列的 Docker 映像类型，将使用已发布的安全通知，每天更新可能的漏洞。通常，要使有漏洞的包能够通过扫描，需要该包的更高版本，其中包含对该漏洞的修订。相同的包可能列出多个漏洞，在此情况下，对包进行一次升级可解决多个漏洞。
+扫描结果中会显示包含已知漏洞问题的包。对于下表中所列的 Docker 映像类型，将使用已发布的安全通知，每天更新可能的漏洞。通常，要使有漏洞的包能够通过扫描，需要该包的更高版本，其中包含对该漏洞的修订。相同的包可能列出多个漏洞，在此情况下，对包进行一次更新可解决多个漏洞。
 
   |Docker 基本映像|安全通知的源|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://git.alpinelinux.org/) 和 [CIRCL CVE Search ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://cve.circl.lu/)。|
-  |CentOS| [CentOS announce archives ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.centos.org/pipermail/centos-announce/) 和 [CentOS CR announce archives ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.centos.org/pipermail/centos-cr-announce/)。|
+  |CentOS| [CentOS announce archives ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.centos.org/pipermail/centos-announce/) 和 [CentOS CR announce archives ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.centos.org/pipermail/centos-cr-announce/)。有关漏洞的更多信息，请参阅 [CentOS 包中的漏洞](#va_centos)。|
   |Debian|[Debian security announcements ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://lists.debian.org/debian-security-announce/)。|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://access.redhat.com/errata/#/)。|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://access.redhat.com/labsinfo/securitydataapi)。|
   |Ubuntu|[Ubuntu Security Notices ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://usn.ubuntu.com/)。|
   {: caption="表 1. 支持漏洞顾问程序检查其是否存在有漏洞包的 Docker 基本映像" caption-side="top"}
 
@@ -138,7 +138,7 @@ subcollection: va
 
    - **漏洞**表。显示了每个问题的漏洞标识、该问题的策略状态、受影响的包以及解决问题的方法。要查看有关该问题的更多信息，请展开该行。将显示问题的摘要，其中包含该问题的供应商安全通知的链接。并列出包含已知漏洞问题的包。
   
-     对于[漏洞类型](#types)中所列的 Docker 映像类型，将使用已发布的安全通知，每天更新列表。通常，要使有漏洞的包能够通过扫描，需要该包的更高版本，其中包含对该漏洞的修订。相同的包可能列出多个漏洞，在此情况下，对包进行一次升级可更正多个问题。单击安全通知代码，以查看包的更多信息以及更新包的步骤。
+     对于[漏洞类型](#types)中所列的 Docker 映像类型，将使用已发布的安全通知，每天更新列表。通常，要使有漏洞的包能够通过扫描，需要该包的更高版本，其中包含对该漏洞的修订。相同的包可能列出多个漏洞，在此情况下，对包进行一次更新可更正多个问题。单击安全通知代码，以查看包的更多信息以及更新包的步骤。
 
    - **配置问题**表。显示了每个问题的配置问题标识、该问题的策略状态以及安全实践。要查看有关该问题的更多信息，请展开该行。将显示问题的摘要，其中包含该问题的安全通知的链接。
   
@@ -174,6 +174,19 @@ subcollection: va
    在 CLI 输出中，可以查看有关配置问题的以下信息。
       - `安全实践`：发现的漏洞的描述
       - `更正操作`：有关如何修复漏洞的详细信息
+
+### CentOS 包中的漏洞
+{: #va_centos}
+
+如果您正在使用 CentOS，报告中可能会出现误报，也就是说，即使没有漏洞，报告也可能会报告漏洞。当 Red Hat 发布了安全通知，但该安全通知不适用于 CentOS 或修复程序尚未移植到 CentOS 时，就会出现此情况。
+{:shortdesc}
+
+如果您收到报告说您的包有漏洞，请完成以下步骤：
+
+1. 通过单击安全通知代码来查看更新包的步骤。
+2. 通过完成更新包的步骤来更新包。
+3. 如果更新了包，那么结果不是误报，并且所需操作已完成。
+4. 如果由于没有更新的版本可供安装而无法更新包，那么结果是误报。您可以为此安全通知添加豁免策略，请参阅[设置组织豁免策略](#va_managing_policy)。
 
 ## 设置组织豁免策略
 {: #va_managing_policy}
@@ -400,7 +413,7 @@ helm get values <myscanner>
     4. 选择**关联的容器**选项卡，然后选择所需容器所在的行。这将打开安全报告。
 2. 复查各部分以了解映像中每个包的潜在安全和配置问题：
 
-    - **漏洞**：列出包含已知漏洞问题的包。对于[漏洞类型](#types)中所列的 Docker 映像类型，将使用已发布的安全通知，每天更新列表。通常，要使有漏洞的包能够通过扫描，需要该包的更高版本，其中包含对该漏洞的修订。相同的包可能列出多个漏洞，在此情况下，对包进行一次升级可更正多个问题。单击安全通知代码，以查看包的更多信息以及更新包的步骤。
+    - **漏洞**：列出包含已知漏洞问题的包。对于[漏洞类型](#types)中所列的 Docker 映像类型，将使用已发布的安全通知，每天更新列表。通常，要使有漏洞的包能够通过扫描，需要该包的更高版本，其中包含对该漏洞的修订。相同的包可能列出多个漏洞，在此情况下，对包进行一次更新可更正多个问题。单击安全通知代码，以查看包的更多信息以及更新包的步骤。
 
     - **配置问题**：列出为提高容器安全性可采用的建议，以及容器任何不安全的应用程序设置。展开相应行可查看问题的解决方法。
 

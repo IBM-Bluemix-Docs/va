@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -83,14 +83,14 @@ Scanergebnisse werden 30 Tage nach ihrer Generierung gelöscht.
 Vulnerability Advisor überprüft Images, die unterstützte Betriebssysteme verwenden, auf Pakete mit potenziellen Sicherheitslücken und stellt einen Link bereit, über den relevante Sicherheitshinweise zur jeweiligen Sicherheitslücke aufgerufen werden können.
 {:shortdesc}
 
-Pakete, die bekannten Probleme im Hinblick auf Sicherheitslücken aufweisen, werden in den Scanergebnissen angezeigt. Die Liste der potenziellen Sicherheitslücken wird täglich anhand der veröffentlichten Sicherheitshinweise für die Docker-Imagetypen in der nachfolgenden Tabelle aktualisiert. In der Regel wird zum Bestehen der Sicherheitsprüfung bei einem potenziell gefährdeten Paket eine neue Version des Pakets benötigt, die eine Korrektur für die Sicherheitslücke enthält. Für ein Paket können mehrere Sicherheitslücken aufgelistet werden. In diesem Fall können durch ein einzelnes Upgrade für das Paket unter Umständen auch mehrere Probleme behoben werden.
+Pakete, die bekannten Probleme im Hinblick auf Sicherheitslücken aufweisen, werden in den Scanergebnissen angezeigt. Die Liste der potenziellen Sicherheitslücken wird täglich anhand der veröffentlichten Sicherheitshinweise für die Docker-Imagetypen in der nachfolgenden Tabelle aktualisiert. In der Regel wird zum Bestehen der Sicherheitsprüfung bei einem potenziell gefährdeten Paket eine neue Version des Pakets benötigt, die eine Korrektur für die Sicherheitslücke enthält. Für ein Paket können mehrere Sicherheitslücken aufgelistet werden. In diesem Fall können durch ein einzelnes Update für das Paket unter Umständen auch mehrere Probleme behoben werden.
 
   |Docker-Basisimage|Quelle der Sicherheitshinweise|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![Symbol für externen Link](../../icons/launch-glyph.svg "External link icon")](https://git.alpinelinux.org/) und [CIRCL CVE Search ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://cve.circl.lu/).|
-  |CentOS| [CentOS-announce-Archive ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.centos.org/pipermail/centos-announce/) und [CentOS CR-announce-Archive ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |CentOS| [CentOS-announce-Archive ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.centos.org/pipermail/centos-announce/) und [CentOS CR-announce-Archive ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.centos.org/pipermail/centos-cr-announce/). Weitere Informationen zu Sicherheitslücken finden Sie im Abschnitt [Sicherheitslücken in Paketen in CentOS](#va_centos).|
   |Debian|[Debian-Sicherheitshinweise ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://lists.debian.org/debian-security-announce/).|
-  |Red Hat Enterprise Linux (RHEL)|[Korrekturliste für Red Hat-Produkte ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://access.redhat.com/errata/#/).|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat-Sicherheitsdaten-API ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://access.redhat.com/labsinfo/securitydataapi).|
   |Ubuntu|[Ubuntu-Sicherheitshinweise ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://usn.ubuntu.com/).|
   {: caption="Tabelle 1. Unterstützte Docker-Basisimages, die von Vulnerability Advisor auf Pakete mit potenziellen Sicherheitslücken überprüft werden" caption-side="top"}
 
@@ -136,7 +136,7 @@ Sie können die Sicherheit von Docker-Images, die in Ihren Namensbereichen in {{
 
    - Tabelle mit **Sicherheitslücken**. Diese Tabelle enthält die Sicherheitslücken-ID für die einzelnen Probleme, den Richtlinienstatus für das jeweilige Problem, die betroffenen Pakete und Maßnahmen zur Behebung des Problems. Erweitern Sie die Zeile, um weitere Informationen zum jeweiligen Problem anzuzeigen. Eine Zusammenfassung dieses Problems wird angezeigt, die einen Link zum Sicherheitshinweis des Anbieters für das betreffende Problem enthält. Pakete, die bekannten Probleme im Hinblick auf Sicherheitslücken aufweisen, werden aufgeführt.
   
-     Die Liste wird täglich anhand der veröffentlichten Sicherheitshinweise für die unter [Typen von Sicherheitslücken](#types) aufgelisteten Docker-Imagetypen aktualisiert. In der Regel wird zum Bestehen der Sicherheitsprüfung bei einem potenziell gefährdeten Paket eine neue Version des Pakets benötigt, die eine Korrektur für die Sicherheitslücke enthält. Für ein Paket können mehrere Sicherheitslücken aufgelistet werden. In diesem Fall können durch ein einzelnes Upgrade für das Paket unter Umständen auch mehrere Probleme behoben werden. Klicken Sie auf den Code des Sicherheitshinweises, um weitere Informationen zum Paket und Schritte zur Aktualisierung des Pakets anzuzeigen.
+     Die Liste wird täglich anhand der veröffentlichten Sicherheitshinweise für die unter [Typen von Sicherheitslücken](#types) aufgelisteten Docker-Imagetypen aktualisiert. In der Regel wird zum Bestehen der Sicherheitsprüfung bei einem potenziell gefährdeten Paket eine neue Version des Pakets benötigt, die eine Korrektur für die Sicherheitslücke enthält. Für ein Paket können mehrere Sicherheitslücken aufgelistet werden. In diesem Fall können durch ein einzelnes Update für das Paket unter Umständen auch mehrere Probleme behoben werden. Klicken Sie auf den Code des Sicherheitshinweises, um weitere Informationen zum Paket und Schritte zur Aktualisierung des Pakets anzuzeigen.
 
    - Tabelle mit **Konfigurationsproblen**. Diese Tabelle enthält die Konfigurationsproblem-ID für die einzelnen Probleme, den Richtlinienstatus für das jeweilige Problem sowie das entsprechende Sicherheitsverfahren. Erweitern Sie die Zeile, um weitere Informationen zum jeweiligen Problem anzuzeigen. Eine Zusammenfassung dieses Problems wird angezeigt, die einen Link zum Sicherheitshinweis für das betreffende Problem enthält.
   
@@ -159,7 +159,7 @@ Sie können die Sicherheit von Docker-Images, die in Ihren Namensbereichen in {{
 
 2. Überprüfen Sie den Status in der Spalte **Sicherheitsstatus**.
     - `Keine Probleme`: Es wurden keine Sicherheitsprobleme gefunden.
-    - `<X> Probleme` Die Anzahl der gefundenen potenziellen Sicherheitsprobleme oder Sicherheitslücken. `<X>` gibt die Anzahl der Probleme an. 
+    - `<X> Probleme` Die Anzahl der gefundenen potenziellen Sicherheitsprobleme oder Sicherheitslücken. `<X>` gibt die Anzahl der Probleme an.
     - `Scan wird durchgeführt`: Das Image wird zurzeit gescannt und der abschließende Sicherheitslückenstatus liegt nicht vor.
 
 3. Über Details zum Status können Sie sich im Vulnerability Advisor-Bericht informieren:
@@ -172,6 +172,19 @@ Sie können die Sicherheit von Docker-Images, die in Ihren Namensbereichen in {{
    In der Ausgabe der Befehlszeilenschnittstelle können Sie die folgenden Informationen zu den Konfigurationsproblemen anzeigen.
       - `Sicherheitsverfahren`: Beschreibung der gefundenen Sicherheitslücke.
       - `Fehlerbehebungsmaßnahme`: Details zur Vorgehensweise zur Behebung der Sicherheitslücke.
+
+### Sicherheitslücken in Paketen in CentOS
+{: #va_centos}
+
+Wenn Sie CentOS verwenden, kann Ihr Bericht möglicherweise Fehlalarme enthalten, das bedeutet, dass Sicherheitslücken gemeldet werden, die nicht vorhanden sind. Dieser Fall tritt ein, wenn von Red Hat ein Sicherheitshinweis veröffentlicht wird, dieser aber nicht für CentOS gilt oder der Fix noch nicht in CentOS portiert wurde.
+{:shortdesc}
+
+Wenn Sie einen Bericht empfangen, laut dem Ihr Paket Sicherheitslücken aufweist, führen Sie die folgenden Schritte aus:
+
+1. Klicken Sie auf den Code des Sicherheitshinweises, um die Schritte zum Aktualisieren des Pakets anzuzeigen.
+2. Aktualisieren Sie das Paket, indem Sie die entsprechenden Schritte ausführen.
+3. Wenn das Paket aktualisiert wird, war das Ergebnis kein Fehlalarm und die erforderliche Aktion ist abgeschlossen.
+4. Wenn das Paket nicht aktualisiert wird, da keine neueren Versionen für die Installation verfügbar waren, war das Ergebnis ein Fehlalarm. Sie können für diesen Sicherheitshinweis eine Ausnahme für eine Richtlinie hinzufügen. Siehe hierzu [Ausnahmen für Richtlinien für Organisationen festlegen](#va_managing_policy).
 
 ## Ausnahmen für Richtlinien für Organisationen festlegen
 {: #va_managing_policy}
@@ -370,7 +383,7 @@ Container Scanner wird nicht mehr verwendet.
 Wenn die Firewall abgehende Verbindungen blockiert, müssen Sie sie entsprechend konfigurieren.
 {:shortdesc}
 
-Wenn Sie die Firewall so konfigurieren möchten, dass Workerknoten auf den Container Scanner am TCP-Port `443` über die entsprechenden IP-Adressen zugreifen können, lesen Sie die Informationen in Schritt 3 unter [Zugriff des Clusters auf Infrastrukturressourcen und andere Services über eine öffentliche Firewall zulassen](/docs/containers?topic=containers-firewall#firewall_outbound). 
+Wenn Sie die Firewall so konfigurieren möchten, dass Workerknoten auf den Container Scanner am TCP-Port `443` über die entsprechenden IP-Adressen zugreifen können, lesen Sie die Informationen in Schritt 3 unter [Zugriff des Clusters auf Infrastrukturressourcen und andere Services über eine öffentliche Firewall zulassen](/docs/containers?topic=containers-firewall#firewall_outbound).
 
 ## Containerbericht überprüfen (veraltet)
 {: #va_reviewing_container}
@@ -396,7 +409,7 @@ Vergewissern Sie sich, dass der Container so sicher wie möglich ist, indem Sie 
     4. Wählen Sie die Registerkarte **Zugehörige Container** und anschließend die Zeile für den gewünschten Container aus. Der Sicherheitsbericht wird geöffnet.
 2. Überprüfen Sie die jeweiligen Abschnitte, um die potenziellen Sicherheits- und Konfigurationsprobleme für die einzelnen Pakete im Image anzuzeigen:
 
-    - **Sicherheitslücken**: Listet die Pakete auf, die bekannten Probleme im Hinblick auf Sicherheitslücken aufweisen. Die Liste wird täglich anhand der veröffentlichten Sicherheitshinweise für die unter [Typen von Sicherheitslücken](#types) aufgelisteten Docker-Imagetypen aktualisiert. In der Regel wird zum Bestehen der Sicherheitsprüfung bei einem potenziell gefährdeten Paket eine neue Version des Pakets benötigt, die eine Korrektur für die Sicherheitslücke enthält. Für ein Paket können mehrere Sicherheitslücken aufgelistet werden. In diesem Fall können durch ein einzelnes Upgrade für das Paket unter Umständen auch mehrere Probleme behoben werden. Klicken Sie auf den Code des Sicherheitshinweises, um weitere Informationen zum Paket und Schritte zur Aktualisierung des Pakets anzuzeigen.
+    - **Sicherheitslücken**: Listet die Pakete auf, die bekannten Probleme im Hinblick auf Sicherheitslücken aufweisen. Die Liste wird täglich anhand der veröffentlichten Sicherheitshinweise für die unter [Typen von Sicherheitslücken](#types) aufgelisteten Docker-Imagetypen aktualisiert. In der Regel wird zum Bestehen der Sicherheitsprüfung bei einem potenziell gefährdeten Paket eine neue Version des Pakets benötigt, die eine Korrektur für die Sicherheitslücke enthält. Für ein Paket können mehrere Sicherheitslücken aufgelistet werden. In diesem Fall können durch ein einzelnes Update für das Paket unter Umständen auch mehrere Probleme behoben werden. Klicken Sie auf den Code des Sicherheitshinweises, um weitere Informationen zum Paket und Schritte zur Aktualisierung des Pakets anzuzeigen.
 
     - **Konfigurationsprobleme**: Listet Vorschläge auf, mit denen Sie die Sicherheit des Containers und aller nicht sicheren Anwendungseinstellungen des Containers erhöhen können. Erweitern Sie die Zeile, um den Lösungsvorschlag für das jeweilige Problem anzuzeigen.
 

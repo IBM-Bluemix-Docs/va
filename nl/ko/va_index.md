@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -83,14 +83,14 @@ Vulnerability Advisor 대시보드는 이미지에 대한 보안의 개요 및 �
 Vulnerability Advisor에서는 지원되는 운영 체제를 사용 중인 이미지에서 취약한 패키지를 확인하고 취약성에 관한 보안 공지사항과 연결된 링크를 제공합니다.
 {:shortdesc}
 
-알려진 취약성 문제가 있는 패키지가 스캔 결과에 표시됩니다. 가능한 취약성은 다음 표에 나열된 Docker 이미지 유형에 대해 공개된 보안 공지사항을 사용하여 매일 업데이트됩니다. 일반적으로 취약한 패키지의 스캔을 통과하려면 취약성에 대한 수정사항을 포함한 이후 버전의 패키지가 필요합니다. 동일한 패키지에 다중 취약성이 나열될 수 있습니다. 이 경우 단일 패키지 업그레이드 시 다중 취약성이 해결될 수 있습니다.
+알려진 취약성 문제가 있는 패키지가 스캔 결과에 표시됩니다. 가능한 취약성은 다음 표에 나열된 Docker 이미지 유형에 대해 공개된 보안 공지사항을 사용하여 매일 업데이트됩니다. 일반적으로 취약한 패키지의 스캔을 통과하려면 취약성에 대한 수정사항을 포함한 이후 버전의 패키지가 필요합니다. 동일한 패키지에 다중 취약성이 나열될 수 있습니다. 이 경우 단일 패키지 업데이트 시 다중 취약성이 해결될 수 있습니다.
 
   |Docker 기본 이미지|보안 공지사항 소스|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://git.alpinelinux.org/) 및 [CIRCL CVE Search ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://cve.circl.lu/)|
-  |CentOS| [CentOS announce archives ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://lists.centos.org/pipermail/centos-announce/) 및 [CentOS CR announce archives ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://lists.centos.org/pipermail/centos-cr-announce/)|
+  |CentOS| [CentOS announce archives ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://lists.centos.org/pipermail/centos-announce/) 및 [CentOS CR announce archives ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://lists.centos.org/pipermail/centos-cr-announce/) 취약성에 대한 자세한 정보는 [CentOS의 패키지 취약성](#va_centos)을 참조하십시오.|
   |Debian|[Debian security announcements ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://lists.debian.org/debian-security-announce/)|
-  |Red Hat Enterprise Linux(RHEL)|[Red Hat Product Errata ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://access.redhat.com/errata/#/)|
+  |Red Hat Enterprise Linux(RHEL)|[Red Hat Security Data API ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://access.redhat.com/labsinfo/securitydataapi)|
   |Ubuntu|[Ubuntu Security Notices ![외부 링크 아이콘](../../icons/launch-glyph.svg "외부 링크 아이콘")](https://usn.ubuntu.com/)|
   {: caption="표 1. Vulnerability Advisor에서 취약한 패키지를 검사하는 지원되는 Docker 기본 이미지" caption-side="top"}
 
@@ -136,7 +136,7 @@ GUI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
 
    - **취약성** 테이블. 각 문제에 대한 취약성 ID, 해당 문제에 대한 정책 상태, 영향을 받는 패키지 및 문제 해결 방법이 표시됩니다. 해당 문제에 대한 자세한 정보를 보려면 행을 펼치십시오. 문제의 요약 정보가 표시되며 해당 문제와 관련된 벤더 보안 공지사항에 대한 링크가 포함되어 있습니다. 알려진 취약성 문제가 포함된 패키지를 나열합니다.
   
-     목록은 [취약성 유형](#types)에 나열된 Docker 이미지 유형에 대해 공개된 보안 공지사항을 사용하여 매일 업데이트됩니다. 일반적으로 취약한 패키지의 스캔을 통과하려면 취약성에 대한 수정사항을 포함한 이후 버전의 패키지가 필요합니다. 동일한 패키지에 다중 취약성이 나열될 수 있습니다. 이 경우 단일 패키지 업그레이드 시 여러 문제가 정정될 수 있습니다. 패키지에 대한 자세한 정보와 패키지를 업데이트하는 단계를 보려면 보안 공지사항 코드를 클릭하십시오.
+     목록은 [취약성 유형](#types)에 나열된 Docker 이미지 유형에 대해 공개된 보안 공지사항을 사용하여 매일 업데이트됩니다. 일반적으로 취약한 패키지의 스캔을 통과하려면 취약성에 대한 수정사항을 포함한 이후 버전의 패키지가 필요합니다. 동일한 패키지에 다중 취약성이 나열될 수 있습니다. 이 경우 단일 패키지 업데이트 시 여러 문제가 정정될 수 있습니다. 패키지에 대한 자세한 정보와 패키지를 업데이트하는 단계를 보려면 보안 공지사항 코드를 클릭하십시오.
 
    - **구성 문제** 테이블. 각 문제에 대한 구성 문제 ID, 해당 문제에 대한 정책 상태 및 보안 사례가 표시됩니다. 해당 문제에 대한 자세한 정보를 보려면 행을 펼치십시오. 문제의 요약 정보가 표시되며 해당 문제와 관련된 보안 공지사항에 대한 링크가 포함되어 있습니다.
   
@@ -172,6 +172,19 @@ CLI를 사용하여 {{site.data.keyword.registrylong_notm}}의 네임스페이�
    CLI 출력에서 구성 문제에 대해 다음 정보를 볼 수 있습니다.
       - `보안 사례` 발견된 취약성에 대한 설명
       - `정정 조치` 취약성 수정 방법에 대한 세부사항
+
+### CentOS의 패키지 취약성
+{: #va_centos}
+
+CentOS를 사용 중인 경우 보고서에 거짓 긍정(false positive)이 발생할 수 있습니다. 즉, 취약성이 없는 경우 보고서에 취약성이 보고될 수 있습니다. 이 상황은 Red Hat에서 보안 공지사항을 릴리스했지만 보안 공지사항이 CentOS에 적용될 수 없거나 수정사항이 아직 CentOS에 포팅되지 않은 경우에 발생합니다.
+{:shortdesc}
+
+패키지에 취약성이 있음을 나타내는 보고서를 수신하는 경우 다음 단계를 완료하십시오.
+
+1. 보안 공지사항 코드를 클릭하여 패키지를 업데이트하는 단계를 보십시오.
+2. 패키지를 업데이트하는 단계를 완료하여 패키지를 업데이트하십시오.
+3. 패키지가 업데이트되면 결과가 거짓 긍정(false positive)이 아니며 필요한 조치가 완료됩니다.
+4. 설치할 수 없는 새 버전이 없으므로 패키지가 업데이트되지 않은 경우 결과가 거짓 긍정(false positive)입니다. 이 보안 공지사항에 대한 면제 정책을 설정할 수 있습니다. [조직 면제 정책 설정](#va_managing_policy)을 참조하십시오.
 
 ## 조직 면제 정책 설정
 {: #va_managing_policy}
@@ -396,7 +409,7 @@ helm get values <myscanner>
     4. **연관된 컨테이너** 탭을 선택한 후 원하는 컨테이너의 행을 선택하십시오. 보안 보고서가 열립니다.
 2. 이미지에서 각 패키지에 대해 잠재적 보안 및 구성 문제를 보기 위한 섹션을 검토하십시오.
 
-    - **취약성** 알려진 취약성 문제가 있는 패키지를 나열합니다. 목록은 [취약성 유형](#types)에 나열된 Docker 이미지 유형에 대해 공개된 보안 공지사항을 사용하여 매일 업데이트됩니다. 일반적으로 취약한 패키지의 스캔을 통과하려면 취약성에 대한 수정사항을 포함한 이후 버전의 패키지가 필요합니다. 동일한 패키지에 다중 취약성이 나열될 수 있습니다. 이 경우 단일 패키지 업그레이드 시 여러 문제가 정정될 수 있습니다. 패키지에 대한 자세한 정보와 패키지를 업데이트하는 단계를 보려면 보안 공지사항 코드를 클릭하십시오.
+    - **취약성** 알려진 취약성 문제가 있는 패키지를 나열합니다. 목록은 [취약성 유형](#types)에 나열된 Docker 이미지 유형에 대해 공개된 보안 공지사항을 사용하여 매일 업데이트됩니다. 일반적으로 취약한 패키지의 스캔을 통과하려면 취약성에 대한 수정사항을 포함한 이후 버전의 패키지가 필요합니다. 동일한 패키지에 다중 취약성이 나열될 수 있습니다. 이 경우 단일 패키지 업데이트 시 여러 문제가 정정될 수 있습니다. 패키지에 대한 자세한 정보와 패키지를 업데이트하는 단계를 보려면 보안 공지사항 코드를 클릭하십시오.
 
     - **구성 문제** 비보안 컨테이너에 대한 애플리케이션 설정 및 컨테이너의 보안을 강화하기 위해 수행할 수 있는 제안사항을 나열합니다. 문제를 해결하는 방법을 보려면 행을 펼치십시오.
 

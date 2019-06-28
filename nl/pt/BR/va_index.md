@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -83,14 +83,14 @@ Os resultados de varredura são excluídos 30 dias após serem gerados.
 O Vulnerability Advisor verifica pacotes vulneráveis em imagens que estão usando sistemas operacionais suportados e fornece um link para qualquer aviso de segurança relevante sobre a vulnerabilidade.
 {:shortdesc}
 
-Os pacotes que contêm problemas de vulnerabilidade conhecidos são exibidos nos resultados da varredura. As possíveis vulnerabilidades são atualizadas diariamente usando os avisos de segurança publicados para os tipos de imagem do Docker listados na tabela a seguir. Geralmente, para que um pacote vulnerável passe pela varredura, é necessário uma versão mais recente do pacote que inclua uma correção para a vulnerabilidade. O mesmo pacote pode listar múltiplas vulnerabilidades e, nesse caso, o upgrade de um único pacote pode abordar várias vulnerabilidades.
+Os pacotes que contêm problemas de vulnerabilidade conhecidos são exibidos nos resultados da varredura. As possíveis vulnerabilidades são atualizadas diariamente usando os avisos de segurança publicados para os tipos de imagem do Docker listados na tabela a seguir. Geralmente, para que um pacote vulnerável passe pela varredura, é necessário uma versão mais recente do pacote que inclua uma correção para a vulnerabilidade. O mesmo pacote pode listar várias vulnerabilidades e, neste caso, uma única atualização de pacote pode tratar várias vulnerabilidades.
 
   |Imagem base Docker|Origem dos avisos de segurança|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://git.alpinelinux.org/) e [CIRCL CVE Search ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://cve.circl.lu/).|
-  |CentOS| [Archives de anúncio CentOS ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://lists.centos.org/pipermail/centos-announce/) e [Archives de anúncio CentOS CR ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |CentOS| [Archives de anúncio CentOS ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://lists.centos.org/pipermail/centos-announce/) e [Archives de anúncio CentOS CR ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://lists.centos.org/pipermail/centos-cr-announce/). Para obter mais informações sobre vulnerabilidades, consulte [Vulnerabilidades em pacotes no CentOS](#va_centos).|
   |Debian|[Anúncios de segurança Debian ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://lists.debian.org/debian-security-announce/).|
-  |Red Hat Enterprise Linux (RHEL)|[Errata do produto Red Hat ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://access.redhat.com/errata/#/).|
+  |Red Hat Enterprise Linux (RHEL)|[API de dados de segurança do Red Hat ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://access.redhat.com/labsinfo/securitydataapi).|
   |Ubuntu|[Avisos de segurança do Ubuntu ![Ícone de link externo](../../icons/launch-glyph.svg "Ícone de link externo")](https://usn.ubuntu.com/).|
   {: caption="Tabela 1. Imagens base do Docker suportadas que o Vulnerability Advisor verifica para pacotes vulneráveis" caption-side="top"}
 
@@ -143,7 +143,7 @@ na guia **Problemas por tipo**. As tabelas **Vulnerabilidades** e **Problemas de
 ver mais informações sobre esse problema, expanda a linha. É exibido um resumo desse problema, com
 um link para o aviso de segurança do fornecedor desse problema. Lista os pacotes que contêm problemas de vulnerabilidade conhecidos.
   
-     A lista é atualizada diariamente usando avisos de segurança publicados para os tipos de imagem do Docker listados em [Tipos de vulnerabilidades](#types). Geralmente, para que um pacote vulnerável passe pela varredura, é necessário uma versão mais recente do pacote que inclua uma correção para a vulnerabilidade. O mesmo pacote pode listar várias vulnerabilidades. Nesse caso, o upgrade de um único pacote pode corrigir vários problemas. Clique no código de aviso de segurança para visualizar mais informações sobre o pacote e as etapas para atualizá-lo.
+     A lista é atualizada diariamente usando avisos de segurança publicados para os tipos de imagem do Docker listados em [Tipos de vulnerabilidades](#types). Geralmente, para que um pacote vulnerável passe pela varredura, é necessário uma versão mais recente do pacote que inclua uma correção para a vulnerabilidade. O mesmo pacote pode listar várias vulnerabilidades e, neste caso, uma única atualização de pacote pode corrigir vários problemas. Clique no código de aviso de segurança para visualizar mais informações sobre o pacote e as etapas para atualizá-lo.
 
    - Tabela **Problemas de configuração**. Mostra o ID do problema de configuração para cada problema, o status da política para esse problema e a prática de segurança. Para
 ver mais informações sobre esse problema, expanda a linha. É exibido um resumo desse problema com um link para o aviso de segurança dele.
@@ -181,6 +181,19 @@ contêiner e quaisquer configurações de aplicativo para o contêiner que não 
    Na saída da CLI, é possível visualizar as informações a seguir sobre os problemas de configuração.
       - `Prática de segurança` Uma descrição da vulnerabilidade que foi localizada
       - `Ação corretiva` Detalhes sobre como corrigir a vulnerabilidade
+
+### Vulnerabilidades em pacotes no CentOS
+{: #va_centos}
+
+Se você estiver usando o CentOS, poderá obter falsos positivos em seu relatório, ou seja, o relatório pode relatar uma vulnerabilidade quando não há uma. Essa situação ocorre quando um aviso de segurança é liberado pelo Red Hat, mas o aviso de segurança não é aplicável ou a correção ainda não foi portada para o CentOS.
+{:shortdesc}
+
+Se você receber um relatório que diga que seu pacote tem vulnerabilidades, conclua as etapas a seguir:
+
+1. Visualize as etapas para atualizar o pacote clicando no código de aviso de segurança.
+2. Atualize o pacote concluindo as etapas para atualizar o pacote.
+3. Se o pacote estiver atualizado, o resultado não era um falso positivo e a ação necessária está concluída.
+4. Se o pacote não for atualizado porque nenhuma versão mais nova está disponível para instalação, o resultado era um falso positivo. É possível incluir uma política de isenção para esse aviso de segurança, consulte [Configurando políticas de isenção organizacional](#va_managing_policy).
 
 ## Configurando políticas de isenção organizacional
 {: #va_managing_policy}
@@ -414,7 +427,7 @@ linha para o repositório desejado.
 2. Revise as seções para ver os problemas potenciais de segurança e de configuração de cada pacote na imagem:
 
     - **Vulnerabilidades** Lista pacotes que contêm problemas conhecidos
-de vulnerabilidade. A lista é atualizada diariamente usando avisos de segurança publicados para os tipos de imagem do Docker listados em [Tipos de vulnerabilidades](#types). Geralmente, para que um pacote vulnerável passe pela varredura, é necessário uma versão mais recente do pacote que inclua uma correção para a vulnerabilidade. O mesmo pacote pode listar várias vulnerabilidades. Nesse caso, o upgrade de um único pacote pode corrigir vários problemas. Clique no código de aviso de segurança para visualizar mais informações sobre o pacote e as etapas para atualizá-lo.
+de vulnerabilidade. A lista é atualizada diariamente usando avisos de segurança publicados para os tipos de imagem do Docker listados em [Tipos de vulnerabilidades](#types). Geralmente, para que um pacote vulnerável passe pela varredura, é necessário uma versão mais recente do pacote que inclua uma correção para a vulnerabilidade. O mesmo pacote pode listar várias vulnerabilidades e, neste caso, uma única atualização de pacote pode corrigir vários problemas. Clique no código de aviso de segurança para visualizar mais informações sobre o pacote e as etapas para atualizá-lo.
 
     - **Problemas de configuração** Lista as sugestões que podem ser tomadas
 para aumentar a segurança do contêiner e quaisquer configurações de aplicativo para o contêiner que

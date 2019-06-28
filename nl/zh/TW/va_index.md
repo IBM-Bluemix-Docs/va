@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -84,14 +84,14 @@ Vulnerability Advisor 儀表板提供映像檔的安全概觀與評量，以及�
 Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有具有漏洞的套件，並提供關於漏洞之任何相關安全注意事項的鏈結。
 {:shortdesc}
 
-掃描結果中會顯示包含已知漏洞問題的套件。潛在漏洞會使用下表所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件升級可能會解決多個漏洞。
+掃描結果中會顯示包含已知漏洞問題的套件。潛在漏洞會使用下表所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件更新可能會解決多個漏洞。
 
   |Docker 基礎映像檔|安全注意事項的來源|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://git.alpinelinux.org/) 及 [CIRCL CVE Search ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://cve.circl.lu/)。|
-  |CentOS| [CentOS announce archives ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.centos.org/pipermail/centos-announce/) 及 [CentOS CR announce archives ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.centos.org/pipermail/centos-cr-announce/)。|
+  |CentOS| [CentOS announce archives ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.centos.org/pipermail/centos-announce/) 及 [CentOS CR announce archives ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.centos.org/pipermail/centos-cr-announce/)。如需漏洞的相關資訊，請參閱 [CentOS 上的套件漏洞](#va_centos)。|
   |Debian|[Debian security announcements ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://lists.debian.org/debian-security-announce/)。|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://access.redhat.com/errata/#/)。|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://access.redhat.com/labsinfo/securitydataapi)。|
   |Ubuntu|[Ubuntu Security Notices ![外部鏈結圖示](../../icons/launch-glyph.svg "外部鏈結圖示")](https://usn.ubuntu.com/)。|
   {: caption="表 1. Vulnerability Advisor 檢查套件是否有漏洞的受支援 Docker 基礎映像檔" caption-side="top"}
 
@@ -137,7 +137,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
 
    - **漏洞**表格。顯示每個問題的「漏洞 ID」、該問題的原則狀態、受影響的套件，以及如何解決問題。若要查看該問題的相關資訊，請展開該列。隨即顯示該問題的摘要，其中包含該問題之供應商安全注意事項的鏈結。會列出包含已知漏洞問題的套件。
   
-     清單會使用[漏洞類型](#types)所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件升級可能會更正多個問題。按一下安全注意事項代碼，以檢視套件的相關資訊，以及更新套件的步驟。
+     清單會使用[漏洞類型](#types)所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件更新可能會更正多個問題。按一下安全注意事項代碼，以檢視套件的相關資訊，以及更新套件的步驟。
 
    - **配置問題**表格。顯示每個問題的「配置問題 ID」、該問題的原則狀態，以及安全作法。若要查看該問題的相關資訊，請展開該列。隨即顯示該問題的摘要，其中包含該問題之安全注意事項的鏈結。
   
@@ -173,6 +173,19 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
    在 CLI 輸出中，您可以檢閱下列有關配置問題的資訊。
       - `安全作法`：所找到之漏洞的說明
       - `更正動作`：有關如何修正漏洞的詳細資料
+
+### CentOS 上的套件漏洞
+{: #va_centos}
+
+如果您使用 CentOS，可能會在報告中得到誤肯定，亦即，報告可能會在沒有漏洞時回報有漏洞。這個狀況發生在 Red Hat 發表安全注意事項，但安全注意事項不適用於 CentOS，或是修正程式尚未移植到 CentOS 時。
+{:shortdesc}
+
+如果您收到的報告指出您的套件有漏洞，請完成下列步驟：
+
+1. 按一下安全注意事項代碼，以檢視更新套件的步驟。
+2. 藉由完成套件更新步驟來更新套件。
+3. 如果已更新套件，則結果不是誤肯定，且必要的動作已完成。
+4. 如果套件因為沒有較新的版本可供安裝而未更新，則結果是誤肯定。您可以為這個安全注意事項新增豁免原則，請參閱[設定組織豁免原則](#va_managing_policy)。
 
 ## 設定組織豁免原則
 {: #va_managing_policy}
@@ -397,7 +410,7 @@ Vulnerability Advisor 會檢查使用支援作業系統的映像檔中是否有�
     4. 選取**相關聯的容器**標籤，然後選取您要的容器列。安全報告會開啟。
 2. 檢閱各區段以查看映像檔中每個套件的可能安全及配置問題：
 
-    - **漏洞**：列出包含已知漏洞問題的套件。清單會使用[漏洞類型](#types)所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件升級可能會更正多個問題。按一下安全注意事項代碼，以檢視套件的相關資訊，以及更新套件的步驟。
+    - **漏洞**：列出包含已知漏洞問題的套件。清單會使用[漏洞類型](#types)所列 Docker 映像檔類型的已發佈安全注意事項每天進行更新。一般而言，為了讓有漏洞的套件通過掃描，需要有包含漏洞修正程式的更新版本套件。相同的套件可能會列出多個漏洞，而在此情況下，單一套件更新可能會更正多個問題。按一下安全注意事項代碼，以檢視套件的相關資訊，以及更新套件的步驟。
 
     - **配置問題**：列出建議，以便您可以採用以提高容器安全和任何未受保護之應用程式設定的安全。展開某一列即可檢視如何解決問題。
 

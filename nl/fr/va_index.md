@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-05"
+lastupdated: "2019-06-11"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
 
@@ -88,9 +88,9 @@ Les packages comportant des problèmes de vulnérabilité connus sont affichés 
   |Image de base Docker|Source des avis de sécurité|
   |-----------------|--------------------------|
   |Alpine|[Git - Alpine Linux ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://git.alpinelinux.org/) rt [CIRCL CVE Search ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://cve.circl.lu/).|
-  |CentOS| [CentOS announce archives ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.centos.org/pipermail/centos-announce/) et [CentOS CR announce archives ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.centos.org/pipermail/centos-cr-announce/).|
+  |CentOS| [CentOS announce archives ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.centos.org/pipermail/centos-announce/) et [CentOS CR announce archives ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.centos.org/pipermail/centos-cr-announce/). Pour plus d'informations sur les vulnérabilités, voir [Vulnérabilités dans les packages sur CentOS](#va_centos).|
   |Debian|[Debian security announcements ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://lists.debian.org/debian-security-announce/).|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Product Errata ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://access.redhat.com/errata/#/).|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://access.redhat.com/labsinfo/securitydataapi).|
   |Ubuntu|[Ubuntu Security Notices ![Icône de lien externe](../../icons/launch-glyph.svg "Icône de lien externe")](https://usn.ubuntu.com/).|
   {: caption="Tableau 1. Images de base Docker prises en charge et pour lesquelles Vulnerability Advisor recherche les packages vulnérables" caption-side="top"}
 
@@ -136,7 +136,7 @@ Vous pouvez examiner à l'aide de l'interface graphique la sécurité des images
 
    - Tableau **Vulnérabilités**. Affiche l'ID de vulnérabilité de chaque problème, le statut de règle de ce problème ainsi que les packages affectés et indique comment résoudre le problème. Pour afficher plus d'informations sur ce problème, développez la ligne. Ceci affichera un récapitulatif du problème ainsi qu'un lien vers l'avis de sécurité correspondant du fournisseur. Une liste des packages s'affiche avec les problèmes de vulnérabilité connus.
   
-     La liste est mise à jour quotidiennement d'après les avis de sécurité publiés pour les images Docker répertoriées dans [Types de vulnérabilité](#types). Généralement, pour qu'un package vulnérable réussisse l'examen, une version plus récente de ce package incluant un correctif pour la vulnérabilité est requise. Un même package peut recenser plusieurs vulnérabilités et, dans ce cas, une seule mise à niveau du package peut résoudre plusieurs problèmes. Cliquez sur le code de l'avis de sécurité pour afficher plus d'informations sur le package et sur la procédure à suivre pour le mettre à jour.
+     La liste est mise à jour quotidiennement d'après les avis de sécurité publiés pour les images Docker répertoriées dans [Types de vulnérabilité](#types). Généralement, pour qu'un package vulnérable réussisse l'examen, une version plus récente de ce package incluant un correctif pour la vulnérabilité est requise. Un même package peut recenser plusieurs vulnérabilités et, dans ce cas, une seule mise à jour du package peut résoudre plusieurs problèmes. Cliquez sur le code de l'avis de sécurité pour afficher plus d'informations sur le package et sur la procédure à suivre pour le mettre à jour.
 
    - Tableau **Problèmes de configuration**. Affiche l'ID de problème de configuration de chaque problème, le statut de règle de ce problème ainsi que la pratique de sécurité. Pour afficher plus d'informations sur ce problème, développez la ligne. Ceci affichera un récapitulatif de ce problème ainsi qu'un lien vers l'avis de sécurité correspondant.
   
@@ -172,6 +172,19 @@ Vous pouvez examiner à l'aide de l'interface CLI la sécurité des images Docke
    Dans la sortie de l'interface CLI, vous pouvez consulter les informations suivantes relatives aux problèmes de configuration.
       - `Pratique de sécurité :` description de la vulnérabilité détectée
       - `Action corrective :` informations expliquant comment corriger la vulnérabilité
+
+### Vulnérabilités dans les packages sur CentOS
+{: #va_centos}
+
+Si vous utilisez CentOS, vous pouvez obtenir des faux positifs dans votre rapport, c'est-à-dire que le rapport peut signaler une vulnérabilité qui n'en est pas une. Cette situation se produit lorsqu'un avis de sécurité est publié par Red Hat mais qu'il n'est pas applicable à Centos ou que le correctif n'a pas encore été appliqué à CentOS.
+{:shortdesc}
+
+Si vous recevez un rapport signalant que votre package comporte des vulnérabilités, procédez comme suit :
+
+1. Affichez les étapes pour mettre à jour le package en cliquant sur le code de l'avis de sécurité.
+2. Mettez à jour le package en effectuant les étapes appropriées.
+3. Si le package est mis à jour, le résultat n'était pas un faux positif et l'action requise est terminée.
+4. Si le package n'est pas mis à jour car aucune nouvelle version n'est disponible à l'installation, le résultat était un faux positif. Vous pouvez ajouter une règle d'exemption pour cet avis de sécurité (voir [Définition de règles d'exemption de l'organisation](#va_managing_policy)).
 
 ## Définition de règles d'exemption de l'organisation
 {: #va_managing_policy}
@@ -396,7 +409,7 @@ Assurez-vous que votre conteneur est aussi sécurisé que possible en consultant
     4. Sélectionnez l'onglet **Conteneurs associés**, puis sélectionnez la ligne correspondant au conteneur souhaité. Le rapport de sécurité s'ouvre.
 2. Passez en revue les différentes sections pour identifier les problèmes de sécurité et de configuration potentiels pour chaque package de l'image :
 
-    - **Vulnérabilités :** répertorie les packages contenant les problèmes de vulnérabilité connus. La liste est mise à jour quotidiennement d'après les avis de sécurité publiés pour les images Docker répertoriées dans [Types de vulnérabilité](#types). Généralement, pour qu'un package vulnérable réussisse l'examen, une version plus récente de ce package incluant un correctif pour la vulnérabilité est requise. Un même package peut recenser plusieurs vulnérabilités et, dans ce cas, une seule mise à niveau du package peut résoudre plusieurs problèmes. Cliquez sur le code de l'avis de sécurité pour afficher plus d'informations sur le package et sur la procédure à suivre pour le mettre à jour.
+    - **Vulnérabilités :** répertorie les packages contenant les problèmes de vulnérabilité connus. La liste est mise à jour quotidiennement d'après les avis de sécurité publiés pour les images Docker répertoriées dans [Types de vulnérabilité](#types). Généralement, pour qu'un package vulnérable réussisse l'examen, une version plus récente de ce package incluant un correctif pour la vulnérabilité est requise. Un même package peut recenser plusieurs vulnérabilités et, dans ce cas, une seule mise à jour du package peut résoudre plusieurs problèmes. Cliquez sur le code de l'avis de sécurité pour afficher plus d'informations sur le package et sur la procédure à suivre pour le mettre à jour.
 
     - **Problèmes de configuration :** énumère des mesures que vous pouvez prendre pour augmenter la sécurité du conteneur et répertorie les paramètres d'application du conteneur qui ne sont pas sécurisés. Développez la ligne pour savoir comment résoudre le problème.
 
