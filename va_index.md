@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-27"
+lastupdated: "2019-07-03"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -60,7 +60,6 @@ The Vulnerability Advisor dashboard provides an overview and assessment of the s
 To scan images and containers in your account for security issues, Vulnerability Advisor collects, stores, and processes the following information:
 
 - Free-form fields, including IDs, descriptions, and image names (registry, namespace, repository name, and image tag)
-- Kubernetes metadata, which includes the names of Kubernetes resources such as pod, ReplicaSet, and deployment names
 - Metadata about the file modes and creation timestamps of the configuration files
 - The content of system and application configuration files in images and containers
 - Installed packages and libraries (including their versions)
