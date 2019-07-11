@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-06-11"
+lastupdated: "2019-07-03"
 
-keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, container scanner, containers, security issues, configuration issues,
+keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
 subcollection: va
 
@@ -27,7 +27,6 @@ subcollection: va
 {: #va_index}
 
 漏洞顾问程序用于检查 {{site.data.keyword.IBM}} 或第三方提供的容器映像的安全状态，或者检查添加到组织的注册表名称空间的容器映像的安全状态。
-如果在每个集群中安装了容器扫描程序（不推荐），那么漏洞顾问程序也会检查正在运行的容器的状态。
 {:shortdesc}
 
 将映像添加到名称空间时，漏洞顾问程序会自动对该映像进行扫描，以检测安全问题和潜在漏洞。如果发现安全问题，系统会提供指示信息，以帮助修复所报告的漏洞。
@@ -48,24 +47,21 @@ subcollection: va
 提供了以下功能：
 
 - 扫描映像以查看是否存在问题
-- 在每个集群中安装了[容器扫描程序](#va_install_container_scanner)（不推荐）时扫描正在运行的容器中的问题
 - 提供基于安全实践（特定于 {{site.data.keyword.containerlong_notm}}）的评估报告
 - 提供建议来确保一部分应用程序类型的配置文件安全
 - 提供有关如何修复其报告中所报告的[有漏洞包](#packages)或[配置问题](#app_configurations)的指示信息
 - 针对 [Container Image Security Enforcement](/docs/services/Registry?topic=registry-security_enforce#security_enforce) 提供判定
 - 对帐户、名称空间、存储库或标记级别的报告应用豁免，以标记所标记问题不适用于您的用例
-- 在 {{site.data.keyword.registrylong_notm}} 图形用户界面的**标记**视图中，提供关联容器的链接。您可以列出在安装了容器扫描程序（不推荐）的集群中正在运行的容器以及正在使用该映像的容器。
 
 在“注册表”仪表板中，**策略状态**列显示存储库的状态。链接的报告可识别映像的良好云安全实践。
 
-漏洞顾问程序仪表板提供映像安全性的概述和评估，如果安装了容器扫描程序（不推荐），那么还将提供正在运行的容器的链接。如果要了解漏洞顾问程序仪表板的更多信息，请参阅[复查漏洞报告](#va_reviewing)。
+漏洞顾问程序仪表板提供映像安全性的概述和评估。如果要了解漏洞顾问程序仪表板的更多信息，请参阅[复查漏洞报告](#va_reviewing)。
 
 **数据保护**
 
 为了扫描帐户中的映像和容器以查找安全问题，漏洞顾问程序会收集、存储和处理以下信息：
 
 - 自由格式字段，包括标识、描述和映像名称（注册表、名称空间、存储库名称和映像标记）
-- Kubernetes 元数据，包括 Kubernetes 资源的名称，例如 pod、ReplicaSet 和部署名称
 - 有关配置文件的文件方式和创建时间戳记的元数据
 - 映像和容器中系统和应用程序配置文件的内容
 - 已安装的包和库（包括其版本）
@@ -121,8 +117,6 @@ subcollection: va
 
 如果映像不满足组织策略所设置的需求，那么必须配置映像以满足这些需求，然后才能进行部署。有关如何查看和更改组织策略的更多信息，请参阅[设置组织豁免策略](#va_managing_policy)。
 {:tip}
-
-如果部署了容器扫描程序（不推荐），那么在部署映像后，漏洞顾问程序会继续扫描容器中的安全和配置问题。您可以按照[检查容器报告](#va_reviewing_container)中描述的步骤来解决发现的任何问题。
 
 ### 使用 GUI 复查漏洞报告
 {: #va_reviewing_gui}
@@ -229,213 +223,3 @@ subcollection: va
 - 要删除安全问题的豁免，请运行 [`ibmcloud cr exemption-rm`](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) 命令。
 
 有关命令的更多信息，可在运行命令时使用 `--help` 标志。
-
-## 安装容器扫描程序（不推荐）
-{: #va_install_container_scanner}
-
-不推荐使用容器扫描程序。
-{: deprecated}
-
-容器扫描程序支持漏洞顾问程序报告正在运行的容器中所发现，而在容器的基本映像中不存在的任何问题。如果不对容器进行运行时修改，那么将不需要运行容器扫描程序，因为映像报告会显示相同的问题。
-{:shortdesc}
-
-要检查在集群中运行的实时容器的安全状态，可以安装容器扫描程序。为了保护您的应用程序，容器扫描程序会定期扫描正在运行的容器，以便您可以检测和纠正任何新检测到的漏洞。
-
-您可以设置容器扫描程序，以监视分配给所有 Kubernetes 空间名称中的 pod 的容器中的漏洞。在发现漏洞时，您必须纠正映像的任何问题，然后重新部署应用程序。容器扫描程序仅支持从存储在 {{site.data.keyword.registrylong_notm}} 中的映像创建的容器。
-
-要使用容器扫描程序，必须设置许可权，然后设置 [Helm Chart ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://docs.helm.sh/developing_charts) 并将其与要使用它的集群相关联。
-
-### 为容器扫描程序（不推荐）设置服务许可权
-{: #va_install_container_scanner_permissions}
-
-不推荐使用容器扫描程序。
-{: deprecated}
-
-容器扫描程序需要设置许可权，以便服务可以运行。
-{:shortdesc}
-
-要设置服务许可权，请完成以下步骤：
-
-1. 登录到 {{site.data.keyword.cloud_notm}} CLI 客户机。如果您具有联合帐户，请使用 `--sso`。
-2. [设定 `kubectl` CLI 的目标](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure)为要使用 Helm chart 的集群。
-3. 为容器扫描程序创建服务标识和 API 密钥并为其指定名称：
-    1. 要创建服务标识，请运行以下命令，其中 `<scanner_serviceID>` 是针对服务标识选择的名称。记下其 **CRN**。
-
-       ```
-ibmcloud iam service-id-create <scanner_serviceID>
-    	```
-       {: codeblock}
-
-    2. 创建服务 API 密钥，其中 `<scanner_serviceID>` 是在上一步中创建的服务标识，且 `<scanner_APIkey_name>` 是针对扫描程序 API 密钥选择的名称。
-
-       ```
-ibmcloud iam service-api-key-create <scanner_APIkey_name> <scanner_serviceID>
-    	```
-       {: codeblock}
-这将返回扫描程序 API 密钥。
-
-       确保安全地存储扫描程序 API 密钥，因为日后无法对其进行检索。
-	    此外，还要确保安装了扫描程序的每个集群有独立的服务 API 密钥。
-       {: important}
-
-    3. 创建用于授予 `Writer` 角色的服务策略。
-
-       ```
-       ibmcloud iam service-policy-create --resource-type scaningress --service-name container-registry --roles Writer <scanner_serviceID>
-       ```
-       {: codeblock}
-
-### 配置 Helm Chart（不推荐）
-{: #va_install_container_scanner_helm}
-
-不推荐使用容器扫描程序。
-{: deprecated}
-
-配置 Helm chart，并将其与要使用它的集群相关联。
-{:shortdesc}
-
-要配置 Helm chart，请完成以下步骤：
-
-1. [在 IBM Cloud Kubernetes Service 中设置 Helm](/docs/containers?topic=containers-helm#helm)。如果使用基于角色的访问控制 (RBAC) 策略向 Tiller 授予访问权，请确保 Tiller 角色有权访问所有名称空间。向 Tiller 角色授予对所有名称空间的访问权，可确保容器扫描程序可以查看所有名称空间中的容器。
-
-2. 向 Helm 添加 IBM 图表存储库，例如 `ibm`。
-
-   ```
-   helm repo add ibm https://icr.io/helm/ibm
-   ```
-   {: pre}
-
-3. 在本地 YAML 文件中保存容器扫描程序 Helm chart 的缺省配置设置。在 Helm chart 路径中包含图表存储库，例如 `ibm`。
-
-   ```
-   helm inspect values ibm/ibmcloud-container-scanner > config.yaml
-   ```
-   {: pre}
-
-4. 编辑 `config.yaml` 文件。
-
-   ```yaml
-    EmitURL: <regional_emit_URL>
-    AccountID: <IBM_Cloud_account_ID>
-    ClusterID: <cluster_ID>
-    APIKey: <scanner_APIkey>
-    ...
-   ```
-   {: pre}
-
-   <table>
-   <col width="22%">
-   <col width="78%">
-   <caption>表 2. 了解 YAML 文件的组成部分</caption>
-   <thead>
-   <th>字段</th>
-   <th>值</th>
-   </thead>
-   <tbody>
-   <tr>
-   <td><code>EmitURL</code></td>
-   <td>将 <code>&lt;regional_emit_URL&gt;</code> 替换为漏洞顾问程序区域端点 URL。要获取该 URL，请运行 <code>ibmcloud cr info</code> 并检索 <strong>Container Registry</strong> 地址。例如，<code>https<span comment="make the link not a link">://us.</span>icr.io</code>。将 <code>/va</code> 添加到此地址的结尾处。例如，<code>https<span comment="make the link not a link">://us.</span>icr.io/va</code>。有关区域的更多信息，请参阅[本地区域](/docs/services/Registry?topic=registry-registry_overview#registry_regions_local)。</td>
-   </tr>
-   <tr>
-   <td><code>AccountID</code></td>
-   <td>将 <code>&lt;IBM_Cloud_account_ID&gt;</code> 替换为集群所在的 {{site.data.keyword.cloud_notm}} 帐户标识。要获取帐户标识，请运行 <code>ibmcloud account list</code>。</td>
-   </tr>
-   <tr>
-   <td><code>ClusterID</code></td>
-   <td>将 <code>&lt;cluster_ID&gt;</code> 替换为要在其中安装容器扫描程序的 Kubernetes 集群。要列出集群标识，请运行 <code>ibmcloud ks clusters</code>。<br> **提示**：使用集群的标识，而不是集群的名称。
-   </td>
-   </tr>
-   <tr>
-   <td><code>APIKey</code></td>
-   <td>将 <code>&lt;scanner_APIkey&gt;</code> 替换为先前创建的扫描程序 API 密钥。</td>
-   </tr>
-   </tbody></table>
-
-5. 使用更新后的 `config.yaml` 文件将 Helm chart 安装到集群。更新的属性会存储在图表的配置映射中。将 `<myscanner>` 替换为针对 Helm chart 选择的名称。在 Helm chart 路径中包含图表存储库，例如 `ibm`。
-
-   ```
-   helm install -f config.yaml --name=<myscanner> ibm/ibmcloud-container-scanner
-   ```
-   {: pre}
-
-   容器扫描程序安装在 `kube-system` 名称空间中，但是会扫描所有名称空间中的容器。
-    {:tip}
-
-6. 检查图表部署状态。图表就绪时，**STATUS** 字段的值为 `DEPLOYED`。
-
-   ```
-helm status <myscanner>
-    ```
-   {: pre}
-
-7. 部署图表后，验证是否使用了 `config.yaml` 文件中更新的设置。
-
-   ```
-helm get values <myscanner>
-    ```
-   {: pre}
-
-现在容器扫描程序已安装，并且该代理程序已部署为集群中的 [DaemonSet ![外部链接图标](../../icons/launch-glyph.svg "外部链接图标")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)。容器扫描程序虽然是部署到 `kube-system` 名称空间，但是可扫描分配给所有 Kubernetes 名称空间（例如，`default`）中 pod 的所有容器。
-
-## 从防火墙后面运行容器扫描程序（不推荐）
-{: #va_firewall}
-
-不推荐使用容器扫描程序。
-{: deprecated}
-
-如果防火墙阻止出局连接，那么必须配置防火墙。
-{:shortdesc}
-
-要配置防火墙以允许工作程序节点访问 IP 地址上的 TCP 端口 `443` 上的容器扫描程序，请参阅 [ 允许集群访问公共防火墙上的基础架构资源和其他服务](/docs/containers?topic=containers-firewall#firewall_outbound)中的步骤 3。
-
-## 复查容器报告（不推荐）
-{: #va_reviewing_container}
-
-不推荐使用容器扫描程序。
-{: deprecated}
-
-在仪表板中，可以查看容器的状态，以确定其安全性是否符合组织策略。还可以复查容器的安全报告，其中详细描述了任何有漏洞的包和不安全的容器或应用程序设置，以及容器是否符合组织策略。
-{:shortdesc}
-
-通过复查**策略状态**字段，检查正在空间中运行的容器是否依然符合组织策略。状态显示为以下某个条件：
-
-
-- `符合策略`：未发现安全或配置问题。
-- `不符合策略`：漏洞顾问程序发现可能的安全或配置问题，导致容器不符合策略。如果组织策略允许部署有漏洞的映像，那么可使用`小心部署`状态部署映像，并且会向部署的用户发送警告。
-- `评估不完整`：扫描未完成。扫描可能仍在运行，或该容器实例的操作系统可能不兼容。
-
-通过完成以下步骤，查看容器安全报告并对任何报告的安全或配置问题采取措施，以确保容器尽可能安全：
-
-1. 选择要查看其报告的容器：
-    1. 单击**导航菜单**图标，然后单击 **Kubernetes**。
-    2. 依次单击**注册表**和**存储库**磁贴，然后展开所需存储库所在的行。
-    3. 选择所需映像所在的行。
-    4. 选择**关联的容器**选项卡，然后选择所需容器所在的行。这将打开安全报告。
-2. 复查各部分以了解映像中每个包的潜在安全和配置问题：
-
-    - **漏洞**：列出包含已知漏洞问题的包。对于[漏洞类型](#types)中所列的 Docker 映像类型，将使用已发布的安全通知，每天更新列表。通常，要使有漏洞的包能够通过扫描，需要该包的更高版本，其中包含对该漏洞的修订。相同的包可能列出多个漏洞，在此情况下，对包进行一次更新可更正多个问题。单击安全通知代码，以查看包的更多信息以及更新包的步骤。
-
-    - **配置问题**：列出为提高容器安全性可采用的建议，以及容器任何不安全的应用程序设置。展开相应行可查看问题的解决方法。
-
-   针对列出的每项都提供了更正操作或建议。
-
-3. 复查每个安全问题的策略状态。策略状态指示此问题是否已豁免。
-
-    - `活动`：您有未豁免的问题，该问题正在影响安全状态。
-    - `豁免`：您的策略设置已豁免此问题。
-    - `部分豁免`：此问题与多个安全通知相关联。并非所有安全通知都已豁免。
-
-4. 决定如何更新容器以便您能够解决问题。
-
-    要修复容器映像的问题，必须删除旧实例并重新部署，这意味着会丢失现有容器中的所有数据。请确保对容器体系结构有充分的了解，以选择相应的容器重新部署方法。
-    {: important}
-
-    **示例**
-
-    - 如果容器与其计算的数据相分离，那么可以停止容器并将其删除，对映像进行必需的更改，然后重新部署，而不会丢失数据。
-    - 可以使用 {{site.data.keyword.cloud_notm}} 服务（例如 [Delivery Pipeline](/docs/services/ContinuousDelivery?topic=ContinuousDelivery-deliverypipeline_about#deliverypipeline_about)）来帮助更新有漏洞的容器实例。
-    - 在微服务体系结构中，可在修复安全或配置问题时，将流量路由到其他容器实例，然后在红黑部署中推送新的映像。
-
-5. 如果目前无法解决问题，那么可以在策略设置中豁免该问题，从而避免该问题阻止容器部署。要豁免问题，请单击**打开和关闭选项列表**图标，然后单击**创建豁免**，参阅[设置组织豁免策略](#va_managing_policy)。
-
-6. 修复**安全**报告中描述的问题，然后根据您选择的方法重建映像或重新部署容器。
