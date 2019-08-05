@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -55,7 +55,8 @@ In the Registry dashboard, the **Policy Status** column displays the status of y
 
 The Vulnerability Advisor dashboard provides an overview and assessment of the security for an image. If you want to find out more about the Vulnerability Advisor dashboard, see [Reviewing a vulnerability report](#va_reviewing).
 
-**Data protection**
+### Data protection
+{: #about_data_protection}
 
 To scan images and containers in your account for security issues, Vulnerability Advisor collects, stores, and processes the following information:
 
