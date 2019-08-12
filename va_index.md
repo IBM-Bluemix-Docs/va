@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-08-05"
+lastupdated: "2019-08-12"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -84,7 +84,7 @@ Packages that contain known vulnerability issues are displayed in the scan resul
 
   |Docker base image|Source of security notices|
   |-----------------|--------------------------|
-  |Alpine|[Git - Alpine Linux ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://git.alpinelinux.org/) and [CIRCL CVE Search ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://cve.circl.lu/).|
+  |Alpine|[Git - Alpine Linux ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://git.alpinelinux.org/) and [CVE ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://cve.mitre.org/data/downloads/index.html).|
   |CentOS| [CentOS announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-announce/) and [CentOS CR announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-cr-announce/). For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos).|
   |Debian|[Debian security announcements ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.debian.org/debian-security-announce/).|
   |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/labsinfo/securitydataapi).|
