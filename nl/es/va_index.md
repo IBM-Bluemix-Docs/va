@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -56,7 +56,8 @@ En el panel de control Registro, la columna **Estado de política** muestra el e
 
 El panel de control de Vulnerability Advisor muestra una visión general y una evaluación de la seguridad para una imagen. Si desea obtener más información sobre el panel de control de Vulnerability Advisor, consulte [Revisión de un informe de vulnerabilidad](#va_reviewing).
 
-**Protección de los datos**
+### Protección de los datos
+{: #about_data_protection}
 
 Para explorar imágenes y contenedores en su cuenta por motivos de seguridad, Vulnerability Advisor recopila, almacena y procesa la información siguiente:
 

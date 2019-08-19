@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -57,7 +57,8 @@ subcollection: va
 
 漏洞顾问程序仪表板提供映像安全性的概述和评估。如果要了解漏洞顾问程序仪表板的更多信息，请参阅[复查漏洞报告](#va_reviewing)。
 
-**数据保护**
+### 数据保护
+{: #about_data_protection}
 
 为了扫描帐户中的映像和容器以查找安全问题，漏洞顾问程序会收集、存储和处理以下信息：
 

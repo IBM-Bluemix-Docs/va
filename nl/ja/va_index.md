@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -54,9 +54,10 @@ subcollection: va
 
 レジストリー・ダッシュボードの**「ポリシーの状況」**列にリポジトリーの状況が表示されます。 リンクされたレポートでは、イメージ用の有効なクラウド・セキュリティー・プラクティスが示されます。
 
-脆弱性アドバイザーのダッシュボードには、イメージのセキュリティーの概要と評価が示されます。脆弱性アドバイザーのダッシュボードについて詳しくは、[脆弱性レポートの検討](#va_reviewing)を参照してください。
+脆弱性アドバイザーのダッシュボードには、イメージのセキュリティーの概要と評価が示されます。 脆弱性アドバイザーのダッシュボードについて詳しくは、[脆弱性レポートの検討](#va_reviewing)を参照してください。
 
-**データ保護**
+### データ保護
+{: #about_data_protection}
 
 アカウント内のイメージとコンテナーをスキャンしてセキュリティー問題を探すために、脆弱性アドバイザーは以下の情報を収集、保管、および処理します。
 

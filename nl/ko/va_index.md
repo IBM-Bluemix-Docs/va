@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -56,7 +56,8 @@ Vulnerability Advisor는 이미지를 보호할 수 있는 기능을 제공합�
 
 취약성 어드바이저 대시보드는 이미지에 대한 보안의 개요 및 평가를 제공합니다. Vulnerability Advisor 대시보드에 대한 자세한 정보는 [취약성 보고서 검토](#va_reviewing)를 참조하십시오.
 
-**데이터 보호**
+### 데이터 보호
+{: #about_data_protection}
 
 보안 문제에 대한 계정에서 이미지 및 컨테이너를 스캔하면 Vulnerability Advisor가 다음 정보를 수집하고 저장하고 처리합니다.
 

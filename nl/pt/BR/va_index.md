@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -56,7 +56,8 @@ No painel Registro, a coluna **Status da política** exibe o status de seus repo
 
 O painel do Vulnerability Advisor fornece uma visão geral e avaliação da segurança para uma imagem. Se desejar saber mais sobre o painel do Vulnerability Advisor, consulte [Revisando um relatório de vulnerabilidade](#va_reviewing).
 
-**Proteção de Dados**
+### Proteção de dados
+{: #about_data_protection}
 
 Para varrer imagens e contêineres em sua conta para buscar problemas de segurança, o Vulnerability Advisor coleta, armazena e processa as informações a seguir:
 

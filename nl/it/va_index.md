@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -56,7 +56,8 @@ Nel dashboard Registro, la colonna **Stato politica** visualizza lo stato dei tu
 
 Il dashboard del Controllo vulnerabilità fornisce una panoramica e una valutazione della sicurezza di un'immagine. Se desideri ulteriori informazioni sul dashboard Controllo vulnerabilità, consulta [Riesame di un report di vulnerabilità](#va_reviewing).
 
-**Protezione dei dati**
+### Protezione dei dati
+{: #about_data_protection}
 
 Per eseguire la scansione di immagini e contenitori nel tuo account per rilevare eventuali problemi di sicurezza, il Controllo vulnerabilità raccoglie, memorizza ed elabora le seguenti informazioni:
 

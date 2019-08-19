@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -56,7 +56,8 @@ Dans le tableau de bord Registre, la colonne **Statut de règle** indique le sta
 
 Le tableau de bord Vulnerability Advisor fournit une présentation et une évaluation de la sécurité d'une image. Pour plus d'informations sur le tableau de bord Vulnerability Advisor, voir [Examen d'un rapport de vulnérabilité](#va_reviewing).
 
-**Protection des données**
+### Protection des données
+{: #about_data_protection}
 
 Pour analyser des images et des conteneurs de votre compte afin de détecter les problèmes de sécurité, Vulnerability Advisor collecte, stocke et traite les informations suivantes :
 

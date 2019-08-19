@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-07-03"
+lastupdated: "2019-08-05"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -54,9 +54,10 @@ Vulnerability Advisor 提供功能來協助保護映像檔。
 
 在「登錄」儀表板中，**原則狀態**直欄會顯示儲存庫的狀態。鏈結的報告會識別映像檔的良好雲端安全作法。
 
-「漏洞警告器」儀表板提供映像檔的安全概觀與評量。如果您想要找出 Vulnerability Advisor 儀表板的相關資訊，請參閱[檢閱漏洞報告](#va_reviewing)。
+Vulnerability Advisor 儀表板提供映像檔的安全概觀與評量。如果您想要找出 Vulnerability Advisor 儀表板的相關資訊，請參閱[檢閱漏洞報告](#va_reviewing)。
 
-**資料保護**
+### 資料保護
+{: #about_data_protection}
 
 為了掃描您帳戶中映像檔與容器的安全問題，Vulnerability Advisor 會收集、儲存及處理下列資訊：
 
