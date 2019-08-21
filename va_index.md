@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-08-12"
+lastupdated: "2019-08-21"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -198,9 +198,9 @@ When you use Container Image Security Enforcement, any security issue that is de
 If you want to set exemptions to the policy by using the GUI, complete the following steps:
 
 1. Log in to {{site.data.keyword.cloud_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
-2. Click the **Navigation Menu** icon, and then click **Kubernetes**.
-3. Under **Vulnerability Advisor**, click **Policy Settings**.
-4. Click **Create Exemption**.
+2. Click the **Navigation Menu** icon, then click **Kubernetes**.
+3. Click **Registry**, then click the **Settings** icon.
+4. Click **Create exemption**.
 5. Select the issue type.
 6. Enter the issue ID.
 
