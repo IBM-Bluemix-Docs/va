@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2019
-lastupdated: "2019-08-21"
+lastupdated: "2019-09-19"
 
 keywords: IBM Cloud Kubernetes Service, IBM Cloud Container Registry, security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues,
 
@@ -21,7 +21,6 @@ subcollection: va
 {:important: .important}
 {:deprecated: .deprecated}
 {:download: .download}
-
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
