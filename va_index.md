@@ -1,8 +1,8 @@
 ---
 
 copyright:
-  years: 2017, 2019
-lastupdated: "2019-12-19"
+  years: 2017, 2020
+lastupdated: "2020-01-22"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -22,6 +22,7 @@ subcollection: va
 {:deprecated: .deprecated}
 {:download: .download}
 {:term: .term}
+{:external: target="_blank" .external}
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
@@ -85,11 +86,11 @@ Packages that contain known vulnerability issues are displayed in the scan resul
 
   |Docker base image|Source of security notices|
   |-----------------|--------------------------|
-  |Alpine|[Git - Alpine Linux ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://git.alpinelinux.org/) and [CVE ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://cve.mitre.org/data/downloads/index.html).|
-  |CentOS| [CentOS announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-announce/) and [CentOS CR announce archives ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.centos.org/pipermail/centos-cr-announce/). For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos).|
-  |Debian|[Debian security announcements ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://lists.debian.org/debian-security-announce/).|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://access.redhat.com/labsinfo/securitydataapi).|
-  |Ubuntu|[Ubuntu Security Notices ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://usn.ubuntu.com/).|
+  |Alpine|[Git - Alpine Linux](https://git.alpinelinux.org/){: external} and [CVE](https://cve.mitre.org/data/downloads/index.html){: external}.|
+  |CentOS| [CentOS announce archives](https://lists.centos.org/pipermail/centos-announce/){: external} and [CentOS CR announce archives](https://lists.centos.org/pipermail/centos-cr-announce/){: external}. For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos).|
+  |Debian|[Debian security announcements](https://lists.debian.org/debian-security-announce/){: external}.|
+  |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API](https://access.redhat.com/labsinfo/securitydataapi){: external}.|
+  |Ubuntu|[Ubuntu Security Notices](https://usn.ubuntu.com/){: external}.|
   {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
 ### Configuration issues
