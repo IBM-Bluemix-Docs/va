@@ -1,7 +1,7 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="va" category="containers" audience="service" href="/docs/services/Registry?topic=va-va_index" path="services/va"}
+{: .toc subcollection="va" category="containers" audience="service" href="/docs/Registry?topic=va-va_index" path="va"}
 Managing image security with Vulnerability Advisor
 
     {: .navgroup id="howto"}
