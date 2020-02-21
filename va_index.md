@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2020
-lastupdated: "2020-01-30"
+lastupdated: "2020-02-21"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -224,3 +224,4 @@ If you want to set exemptions to the policy by using the CLI, you can run the fo
 - To delete an exemption for a security issue, run the [`ibmcloud cr exemption-rm`](/docs/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) command.
 
 For more information about the commands, you can use the `--help` flag when you run the command.
+
