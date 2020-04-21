@@ -90,6 +90,8 @@ The scanning of an image is triggered in one of the following ways:
 - When a new security notice is released for a package that is installed in the image, the image is queued for rescanning, which might take some time to complete.
 - While an image is tagged in the registry, it is rescanned every week.
 
+The following table shows the supported Docker base images that Vulnerability Advisor checks for vulnerable packages.
+
 | Docker base image | Source of security notices |
 |-----------------|--------------------------|
 | Alpine | [Git - Alpine Linux](https://git.alpinelinux.org/){: external} and [CVE](https://cve.mitr.org/data/downloads/index.html){: external}. |
