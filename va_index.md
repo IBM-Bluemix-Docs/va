@@ -84,14 +84,20 @@ Vulnerability Advisor checks for vulnerable packages in images that are using su
 
 Packages that contain known vulnerability issues are displayed in the scan results. The possible vulnerabilities are updated daily by using the published security notices for the Docker image types that are listed in the following table. Typically, for a vulnerable package to pass the scan, a later version of the package is required that includes a fix for the vulnerability. The same package can list multiple vulnerabilities, and in this case, a single package update can address multiple vulnerabilities.
 
-  |Docker base image|Source of security notices|
-  |-----------------|--------------------------|
-  |Alpine|[Git - Alpine Linux](https://git.alpinelinux.org/){: external} and [CVE](https://cve.mitre.org/data/downloads/index.html){: external}.|
-  |CentOS| [CentOS announce archives](https://lists.centos.org/pipermail/centos-announce/){: external} and [CentOS CR announce archives](https://lists.centos.org/pipermail/centos-cr-announce/){: external}. For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos).|
-  |Debian|[Debian security announcements](https://lists.debian.org/debian-security-announce/){: external}.|
-  |Red Hat Enterprise Linux (RHEL)|[Red Hat Security Data API](https://access.redhat.com/labsinfo/securitydataapi){: external}.|
-  |Ubuntu|[Ubuntu Security Notices](https://usn.ubuntu.com/){: external}.|
-  {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
+The scanning of an image is triggered in one of the following ways:
+
+- When a new image is pushed to the registry.
+- When a new security notice is released for a package that is installed in the image, the image is queued for rescanning, which might take some time to complete.
+- While an image is tagged in the registry, it is rescanned every week.
+
+| Docker base image | Source of security notices |
+|-----------------|--------------------------|
+| Alpine | [Git - Alpine Linux](https://git.alpinelinux.org/){: external} and [CVE](https://cve.mitr.org/data/downloads/index.html){: external}. |
+| CentOS | [CentOS announce archives](https://lists.centos.org/pipermail/centos-announce/){: external} and [CentOS CR announce archives](https://lists.centos.org/pipermail/centos-cr-announce/){: external}. For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos). |
+| Debian | [Debian security announcements](https://lists.debian.org/debian-security-announce/){: external}. |
+| Red Hat Enterprise Linux (RHEL) | [Red Hat Security Data API](https://access.redhat.com/labsinfo/securitydataapi){: external}. |
+| Ubuntu | [Ubuntu Security Notices](https://usn.ubuntu.com/){: external}. |
+{: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
 ### Configuration issues
 {: #app_configurations}
