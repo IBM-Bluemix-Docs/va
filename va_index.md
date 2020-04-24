@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2020
-lastupdated: "2020-04-21"
+lastupdated: "2020-04-24"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -166,6 +166,7 @@ You can review the security of Docker images that are stored in your namespaces 
     - `No Issues` No security issues were found.
     - `<X> Issues` The number of potential security issues or vulnerabilities that are found, where `<X>` is the number of issues.
     - `Scanning` The image is being scanned and the final vulnerability status is not determined.
+    - `Unsupported OS` The scan found no supported operating system (OS) distribution and no active configuration issues.
 
 3. To view the details for the status, review the Vulnerability Advisor report:
 
