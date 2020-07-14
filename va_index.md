@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2020
-lastupdated: "2020-05-20"
+lastupdated: "2020-07-14"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -98,7 +98,7 @@ The following table shows the supported Docker base images that Vulnerability Ad
 | CentOS | [CentOS announce archives](https://lists.centos.org/pipermail/centos-announce/){: external} and [CentOS CR announce archives](https://lists.centos.org/pipermail/centos-cr-announce/){: external}. For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos). |
 | Debian | [Debian security announcements](https://lists.debian.org/debian-security-announce/){: external}. |
 | Red Hat Enterprise Linux (RHEL) | [Red Hat Security Data API](https://access.redhat.com/labsinfo/securitydataapi){: external}. |
-| Ubuntu | [Ubuntu Security Notices](https://usn.ubuntu.com/){: external}. |
+| Ubuntu | [Ubuntu Security Notices](https://ubuntu.com/security/notices){: external}. |
 {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
 ### Configuration issues
