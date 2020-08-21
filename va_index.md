@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2020
-lastupdated: "2020-07-30"
+lastupdated: "2020-08-21"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -23,6 +23,7 @@ subcollection: va
 {:download: .download}
 {:term: .term}
 {:external: target="_blank" .external}
+
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
