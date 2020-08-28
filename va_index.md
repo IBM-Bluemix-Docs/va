@@ -235,4 +235,4 @@ If you want to set exemptions to the policy by using the CLI, you can run the fo
 - To list the types of security issues that you can exempt, run the [`ibmcloud cr exemption-types`](/docs/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_types) command.
 - To delete an exemption for a security issue, run the [`ibmcloud cr exemption-rm`](/docs/Registry?topic=container-registry-cli-plugin-containerregcli#bx_cr_exemption_rm) command.
 
-For more information about the commands, you can use the `--help` flag when you run the command.
+For more information about the commands, you can use the `--help` option when you run the command.
