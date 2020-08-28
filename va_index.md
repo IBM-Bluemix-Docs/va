@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2020
-lastupdated: "2020-08-21"
+lastupdated: "2020-08-28"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -172,7 +172,7 @@ You can review the security of Docker images that are stored in your namespaces 
 3. To view the details for the status, review the Vulnerability Advisor report:
 
    ```
-   ibmcloud cr va registry.<region>/<my_namespace>/<my_image>:<tag>
+   ibmcloud cr va <region>.icr.io/<my_namespace>/<my_image>:<tag>
    ```
    {: pre}
 
