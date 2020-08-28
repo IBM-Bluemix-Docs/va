@@ -24,7 +24,6 @@ subcollection: va
 {:term: .term}
 {:external: target="_blank" .external}
 
-
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
