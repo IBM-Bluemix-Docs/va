@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2020
-lastupdated: "2020-08-28"
+lastupdated: "2020-09-04"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -207,6 +207,9 @@ To find out about the required permissions for working with exemptions, see [Acc
 ### Setting organizational exemption policies by using the GUI
 {: #va_managing_policy_gui}
 
+If you are using the GUI, you can set a namespace, repository, or tag as the scope of the exemption policy. If you want to use the digest as the scope, you must use the CLI, see [Setting organizational exemption policies by using the CLI](#va_managing_policy_cli).
+{: note}
+
 If you want to set exemptions to the policy by using the GUI, complete the following steps:
 
 1. Log in to {{site.data.keyword.cloud_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
@@ -226,6 +229,9 @@ You can also edit and remove exemptions by hovering over the relevant row and cl
 
 ### Setting organizational exemption policies by using the CLI
 {: #va_managing_policy_cli}
+
+If you are using the CLI, you can set a namespace, repository, digest, or tag as the scope of the exemption policy.
+{: note}
 
 If you want to set exemptions to the policy by using the CLI, you can run the following commands:
 
