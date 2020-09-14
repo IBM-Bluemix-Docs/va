@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2020
-lastupdated: "2020-09-04"
+lastupdated: "2020-09-14"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -87,8 +87,8 @@ Packages that contain known vulnerability issues are displayed in the scan resul
 The scanning of an image is triggered in one of the following ways:
 
 - When a new image is pushed to the registry.
-- When a new security notice is released for a package that is installed in the image, the image is queued for rescanning, which might take some time to complete.
-- While an image is tagged in the registry, it is rescanned every week.
+- When a new security notice is released for a package that is installed in the image, the image is queued for scanning, which might take some time to complete.
+- While an image is tagged in the registry, it is scanned every week.
 
 The following table shows the supported Docker base images that Vulnerability Advisor checks for vulnerable packages.
 
