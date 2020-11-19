@@ -124,11 +124,11 @@ Before you deploy an image, you can review its Vulnerability Advisor report for 
 
 If you do not address any discovered issues, those issues can impact the security of containers that are built by using that image. If Container Image Security Enforcement is not deployed, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues that are discovered must be exempt by your policy for containers to be deployable from this image.
 
-To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/Registry?topic=Registry-security_enforce#customize_policies).
-{:tip}
-
 With effect from 19 November 2020, Container Image Security Enforcement is deprecated. To enforce container image security use [Portieris](https://github.com/IBM/portieris){: external}.
 {: deprecated}
+
+To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/Registry?topic=Registry-security_enforce#customize_policies).
+{:tip}
 
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
 {:tip}
