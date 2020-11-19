@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2020
-lastupdated: "2020-09-14"
+lastupdated: "2020-11-19"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -36,6 +36,9 @@ When you add an image to a namespace, the image is automatically scanned by Vuln
 
 Any issues that are found by Vulnerability Advisor result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict is adjusted based on any exemptions that you specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong}}.
 
+With effect from 19 November 2020, Container Image Security Enforcement is deprecated. To enforce container image security use [Portieris](https://github.com/IBM/portieris){: external}.
+{: deprecated}
+
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
 ## About Vulnerability Advisor
@@ -50,7 +53,7 @@ The following functions are available:
 - Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
 - Provides recommendations to secure configuration files for a subset of application types
 - Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
-- Provides verdicts to [Container Image Security Enforcement](/docs/Registry?topic=Registry-security_enforce#security_enforce)
+- Provides verdicts to [Container Image Security Enforcement - deprecated](/docs/Registry?topic=Registry-security_enforce#security_enforce)
 - Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
 
 In the {{site.data.keyword.registrylong_notm}} dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images.
@@ -123,6 +126,9 @@ If you do not address any discovered issues, those issues can impact the securit
 
 To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/Registry?topic=Registry-security_enforce#customize_policies).
 {:tip}
+
+With effect from 19 November 2020, Container Image Security Enforcement is deprecated. To enforce container image security use [Portieris](https://github.com/IBM/portieris){: external}.
+{: deprecated}
 
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
 {:tip}
@@ -197,6 +203,9 @@ If you receive a report that says your package has vulnerabilities, complete the
 
 If you want to manage the security of an {{site.data.keyword.cloud_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after accounting for any issues that are exempted by your policy.
 {:shortdesc}
+
+With effect from 19 November 2020, Container Image Security Enforcement is deprecated. To enforce container image security use [Portieris](https://github.com/IBM/portieris){: external}.
+{: deprecated}
 
 You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/Registry?topic=Registry-security_enforce#security_enforce).
 
