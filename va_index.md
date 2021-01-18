@@ -1,8 +1,8 @@
 ---
 
 copyright:
-  years: 2017, 2020
-lastupdated: "2020-11-19"
+  years: 2017, 2021
+lastupdated: "2021-01-18"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -23,6 +23,8 @@ subcollection: va
 {:download: .download}
 {:term: .term}
 {:external: target="_blank" .external}
+{:help: data-hd-content-type='help'}
+{:support: data-reuse='support'}
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
@@ -135,6 +137,8 @@ If your image does not meet the requirements that are set by your organization's
 
 ### Reviewing a vulnerability report by using the GUI
 {: #va_reviewing_gui}
+{: help}
+{: support}
 
 You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the GUI.
 {:shortdesc}
@@ -157,6 +161,8 @@ You can review the security of Docker images that are stored in your namespaces 
 
 ### Reviewing a vulnerability report by using the CLI
 {: #va_registry_cli}
+{: help}
+{: support}
 
 You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the CLI.
 {:shortdesc}
@@ -187,6 +193,8 @@ You can review the security of Docker images that are stored in your namespaces 
 
 ### Vulnerabilities in packages on CentOS
 {: #va_centos}
+{: help}
+{: support}
 
 If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by {{site.data.keyword.redhat_full}} but the security notice is not applicable to, or the fix has not yet been ported to, CentOS.
 {:shortdesc}
@@ -215,6 +223,8 @@ To find out about the required permissions for working with exemptions, see [Acc
 
 ### Setting organizational exemption policies by using the GUI
 {: #va_managing_policy_gui}
+{: help}
+{: support}
 
 If you are using the GUI, you can set a namespace, repository, or tag as the scope of the exemption policy. If you want to use the digest as the scope, you must use the CLI, see [Setting organizational exemption policies by using the CLI](#va_managing_policy_cli).
 {: note}
@@ -238,6 +248,8 @@ You can also edit and remove exemptions by hovering over the relevant row and cl
 
 ### Setting organizational exemption policies by using the CLI
 {: #va_managing_policy_cli}
+{: help}
+{: support}
 
 If you are using the CLI, you can set a namespace, repository, digest, or tag as the scope of the exemption policy.
 {: note}
