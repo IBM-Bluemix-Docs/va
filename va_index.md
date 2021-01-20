@@ -215,7 +215,7 @@ If you want to manage the security of an {{site.data.keyword.cloud_notm}} organi
 With effect from 19 November 2020, Container Image Security Enforcement is deprecated. To enforce container image security use [Portieris](https://github.com/IBM/portieris){: external}.
 {: deprecated}
 
-You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster.
+You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/Registry?topic=Registry-security_enforce#security_enforce).
 
 When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container from being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
 
