@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-01-20"
+lastupdated: "2021-02-03"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
 
@@ -28,6 +28,7 @@ subcollection: va
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
+
 
 Vulnerability Advisor checks the security status of container images that are provided by {{site.data.keyword.IBM}}, third parties, or added to your organization's registry namespace.
 {:shortdesc}
