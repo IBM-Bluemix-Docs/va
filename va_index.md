@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-01-19"
+lastupdated: "2021-02-04"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, security issues, configuration issues, registry, container registry, kubernetes,
+keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
 subcollection: va
 
@@ -26,7 +26,6 @@ subcollection: va
 {:help: data-hd-content-type='help'}
 {:support: data-reuse='support'}
 
-
 # Managing image security with Vulnerability Advisor
 {: #va_index}
 
@@ -37,10 +36,7 @@ Vulnerability Advisor provides security management for [{{site.data.keyword.regi
 
 When you add an image to a namespace, the image is automatically scanned by Vulnerability Advisor to detect security issues and potential vulnerabilities. If security issues are found, instructions are provided to help fix the reported vulnerability.
 
-Any issues that are found by Vulnerability Advisor result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict is adjusted based on any exemptions that you specified. This verdict can be used by Container Image Security Enforcement to prevent the deployment of nonsecure images in {{site.data.keyword.containerlong}}.
-
-With effect from 19 November 2020, Container Image Security Enforcement is deprecated. To enforce container image security use [Portieris](https://github.com/IBM/portieris){: external}.
-{: deprecated}
+Any issues that are found by Vulnerability Advisor result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict is adjusted based on any exemptions that you specified. This verdict can be used by Portieris to prevent the deployment of nonsecure images in [{{site.data.keyword.containerlong}}](/docs/containers?topic=containers-getting-started). [Portieris](https://github.com/IBM/portieris){: external} is a Kubernetes admission controller for the enforcement of image security policies. You can create image security policies for each Kubernetes namespace, or at the cluster level, and enforce different rules for different images.
 
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
 
@@ -53,10 +49,9 @@ Vulnerability Advisor provides functions to help you to secure your images.
 The following functions are available:
 
 - Scans images for issues
-- Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}
+- Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}, which can be used by admission controllers such as Portieris
 - Provides recommendations to secure configuration files for a subset of application types
 - Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
-- Provides verdicts to [Container Image Security Enforcement - deprecated](/docs/Registry?topic=Registry-security_enforce#security_enforce)
 - Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
 
 In the {{site.data.keyword.registrylong_notm}} dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images.
@@ -125,12 +120,9 @@ Images are scanned only if they are using an operating system that is supported 
 Before you deploy an image, you can review its Vulnerability Advisor report for details about any vulnerable packages and nonsecure container or app settings. You can also check whether the image is compliant with organizational policies.
 {:shortdesc}
 
-If you do not address any discovered issues, those issues can impact the security of containers that are built by using that image. If Container Image Security Enforcement is not deployed, you can continue to use an image that has security and configuration issues in a container. If Container Image Security Enforcement is deployed and active for the image, all issues that are discovered must be exempt by your policy for containers to be deployable from this image.
+If you do not address any discovered issues, those issues can impact the security of containers that are using that image. If enforcement is used in your container runtime environment, such as by using the [Portieris](https://github.com/IBM/portieris){: external} admission controller in {{site.data.keyword.containerlong_notm}}, you might be prevented from deploying that image, unless all issues that are discovered are exempted by your policy.
 
-With effect from 19 November 2020, Container Image Security Enforcement is deprecated. To enforce container image security use [Portieris](https://github.com/IBM/portieris){: external}.
-{: deprecated}
-
-To configure the scope of enforcement of Vulnerability Advisor issues in Container Image Security Enforcement, see [Customizing policies](/docs/Registry?topic=Registry-security_enforce#customize_policies).
+To configure the scope of enforcement of Vulnerability Advisor issues in Portieris, see [Portieris policies](https://github.com/IBM/portieris/blob/master/POLICIES.md){: external}.
 {:tip}
 
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
@@ -210,15 +202,14 @@ If you receive a report that says your package has vulnerabilities, complete the
 ## Setting organizational exemption policies
 {: #va_managing_policy}
 
-If you want to manage the security of an {{site.data.keyword.cloud_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not. You can use Container Image Security Enforcement to ensure that deployment is allowed only from images that contain no security issues after accounting for any issues that are exempted by your policy.
+If you want to manage the security of an {{site.data.keyword.cloud_notm}} organization, you can use your policy setting to determine whether an issue is exempt or not.
 {:shortdesc}
 
-With effect from 19 November 2020, Container Image Security Enforcement is deprecated. To enforce container image security use [Portieris](https://github.com/IBM/portieris){: external}.
-{: deprecated}
+You can use [Portieris policies](https://github.com/IBM/portieris/blob/master/POLICIES.md){: external} to ensure that deployment is allowed only from images that contain no security issues after accounting for any issues that are exempted by your policy.
 
-You can deploy containers from any image regardless of security status unless Container Image Security Enforcement is deployed in your cluster. To find out how to deploy Container Image Security Enforcement, see [Installing security enforcement](/docs/Registry?topic=Registry-security_enforce#security_enforce).
+You can deploy containers from any image regardless of security status unless Portieris is deployed in your cluster.
 
-When you use Container Image Security Enforcement, any security issue that is detected by Vulnerability Advisor prevents a container from being deployed from the image. To allow an image with detected issues to be deployed, exemptions must be added to your policy.
+When you use Portieris, any security issue that is detected by Vulnerability Advisor prevents a container from being deployed from the image. If you want to allow an image with detected issues to be deployed, you must add exemptions to your policy, see [Vulnerability policies](https://github.com/IBM/portieris/blob/master/POLICIES.md#vulnerability){: external}.
 
 To find out about the required permissions for working with exemptions, see [Access roles for configuring {{site.data.keyword.registrylong_notm}}](/docs/Registry?topic=Registry-iam#access_roles_configure).
 
