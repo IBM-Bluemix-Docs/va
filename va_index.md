@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-02-04"
+lastupdated: "2021-02-05"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
@@ -128,12 +128,12 @@ To configure the scope of enforcement of Vulnerability Advisor issues in Portier
 If your image does not meet the requirements that are set by your organization's policy, you must configure the image to meet those requirements before you can deploy it. For more information about how to view and change the organization policy, see [Setting organizational exemption policies](#va_managing_policy).
 {:tip}
 
-### Reviewing a vulnerability report by using the GUI
+### Reviewing a vulnerability report by using the {{site.data.keyword.cloud_notm}} console
 {: #va_reviewing_gui}
 {: help}
 {: support}
 
-You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the GUI.
+You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the {{site.data.keyword.cloud_notm}} console.
 {:shortdesc}
 
 1. Log in to {{site.data.keyword.cloud_notm}}.
@@ -213,17 +213,17 @@ When you use Portieris, any security issue that is detected by Vulnerability Adv
 
 To find out about the required permissions for working with exemptions, see [Access roles for configuring {{site.data.keyword.registrylong_notm}}](/docs/Registry?topic=Registry-iam#access_roles_configure).
 
-### Setting organizational exemption policies by using the GUI
+### Setting organizational exemption policies by using the {{site.data.keyword.cloud_notm}} console
 {: #va_managing_policy_gui}
 {: help}
 {: support}
 
-If you are using the GUI, you can set a namespace, repository, or tag as the scope of the exemption policy. If you want to use the digest as the scope, you must use the CLI, see [Setting organizational exemption policies by using the CLI](#va_managing_policy_cli).
+If you are using the {{site.data.keyword.cloud_notm}} console, you can set a namespace, repository, or tag as the scope of the exemption policy. If you want to use the digest as the scope, you must use the CLI, see [Setting organizational exemption policies by using the CLI](#va_managing_policy_cli).
 {: note}
 
-If you want to set exemptions to the policy by using the GUI, complete the following steps:
+If you want to set exemptions to the policy by using the {{site.data.keyword.cloud_notm}} console, complete the following steps:
 
-1. Log in to {{site.data.keyword.cloud_notm}}. You must be logged in to see Vulnerability Advisor in the GUI.
+1. Log in to {{site.data.keyword.cloud_notm}}. You must be logged in to see Vulnerability Advisor in the {{site.data.keyword.cloud_notm}} console.
 2. Click the **Navigation Menu** icon, then click **Kubernetes**.
 3. Click **Registry**, then click the **Settings** icon.
 4. Click **Create exemption**.
