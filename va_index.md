@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-02-05"
+lastupdated: "2021-02-08"
 
 keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
@@ -48,11 +48,11 @@ Vulnerability Advisor provides functions to help you to secure your images.
 
 The following functions are available:
 
-- Scans images for issues
-- Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}, which can be used by admission controllers such as Portieris
-- Provides recommendations to secure configuration files for a subset of application types
-- Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports
-- Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case
+- Scans images for issues.
+- Provides an evaluation report that is based on security practices that are specific to {{site.data.keyword.containerlong_notm}}, which can be used by admission controllers such as Portieris.
+- Provides recommendations to secure configuration files for a subset of application types.
+- Provides instructions about how to fix a reported [vulnerable package](#packages) or [configuration issue](#app_configurations) in its reports.
+- Applies exemptions to reports at an account, namespace, repository, or tag level to mark when issues that are flagged do not apply to your use case.
 
 In the {{site.data.keyword.registrylong_notm}} dashboard, the **Policy Status** column displays the status of your repositories. The linked report identifies good cloud security practices for your images.
 
@@ -189,7 +189,7 @@ You can review the security of Docker images that are stored in your namespaces 
 {: help}
 {: support}
 
-If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by {{site.data.keyword.redhat_full}} but the security notice is not applicable to, or the fix has not yet been ported to, CentOS.
+If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by {{site.data.keyword.redhat_full}} but the security notice is not applicable to, or the fix has not been ported to, CentOS.
 {:shortdesc}
 
 If you receive a report that says your package has vulnerabilities, complete the following steps:
