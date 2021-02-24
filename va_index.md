@@ -2,9 +2,9 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-02-08"
+lastupdated: "2021-02-24"
 
-keywords: security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
+keywords: Security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
 subcollection: va
 
@@ -181,15 +181,15 @@ You can review the security of Docker images that are stored in your namespaces 
    {: pre}
 
    In the CLI output, you can view the following information about the configuration issues.
-      - `Security practice` A description of the vulnerability that was found
-      - `Corrective action` Details about how to fix the vulnerability
+      - `Security practice` A description of the vulnerability.
+      - `Corrective action` Details about how to fix the vulnerability.
 
 ### Vulnerabilities in packages on CentOS
 {: #va_centos}
 {: help}
 {: support}
 
-If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by {{site.data.keyword.redhat_full}} but the security notice is not applicable to, or the fix has not been ported to, CentOS.
+If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by {{site.data.keyword.redhat_full}} but the security notice is not applicable to, or the fix isn't ported to, CentOS.
 {:shortdesc}
 
 If you receive a report that says your package has vulnerabilities, complete the following steps:
