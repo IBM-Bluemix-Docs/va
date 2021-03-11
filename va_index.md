@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-02-24"
+lastupdated: "2021-03-11"
 
 keywords: Security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
@@ -98,7 +98,7 @@ The following table shows the supported Docker base images that Vulnerability Ad
 | Alpine | [Git - Alpine Linux](https://git.alpinelinux.org/){: external} and [CVE](https://cve.mitr.org/data/downloads/index.html){: external}. |
 | CentOS | [CentOS announce archives](https://lists.centos.org/pipermail/centos-announce/){: external} and [CentOS CR announce archives](https://lists.centos.org/pipermail/centos-cr-announce/){: external}. For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos). |
 | Debian | [Debian security announcements](https://lists.debian.org/debian-security-announce/){: external}. |
-| {{site.data.keyword.redhat_notm}} Enterprise Linux (RHEL) | [{{site.data.keyword.redhat_notm}} Security Data API](https://access.redhat.com/labsinfo/securitydataapi){: external}. |
+| {{site.data.keyword.redhat_full}} Enterprise Linux&reg; (RHEL) | [{{site.data.keyword.redhat_notm}} Security Data API](https://access.redhat.com/labsinfo/securitydataapi){: external}. |
 | Ubuntu | [Ubuntu Security Notices](https://ubuntu.com/security/notices){: external}. |
 {: caption="Table 1. Supported Docker base images that Vulnerability Advisor checks for vulnerable packages" caption-side="top"}
 
@@ -189,7 +189,7 @@ You can review the security of Docker images that are stored in your namespaces 
 {: help}
 {: support}
 
-If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by {{site.data.keyword.redhat_full}} but the security notice is not applicable to, or the fix isn't ported to, CentOS.
+If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by {{site.data.keyword.redhat_notm}} but the security notice is not applicable to, or the fix isn't ported to, CentOS.
 {:shortdesc}
 
 If you receive a report that says your package has vulnerabilities, complete the following steps:
