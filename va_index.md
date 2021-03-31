@@ -137,8 +137,8 @@ You can review the security of Docker images that are stored in your namespaces 
 {:shortdesc}
 
 1. Log in to {{site.data.keyword.cloud_notm}}.
-2. Click the **Navigation Menu** icon, and then click **Kubernetes**.
-3. Click **Registry**, and then click the **Images** tile. A list of your images and the security status of each image is displayed in the **Images** table.
+2. Click the **Navigation Menu** icon, then click **Container Registry**.
+3. Click **Images**. A list of your images and the security status of each image is displayed in the **Images** table.
 4. To see the report for the image that is tagged `latest`, click the row for that image. The **Image Details** tab opens showing the data for that image. If no `latest` tag exists in the repository, the most recent image is used.
 5. If the security status shows any issues, to find out about the issues, click the **Issues by Type** tab. The **Vulnerabilities** and **Configuration Issues** tables open.
 
