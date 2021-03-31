@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-03-11"
+lastupdated: "2021-03-31"
 
 keywords: Security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
@@ -224,17 +224,17 @@ If you are using the {{site.data.keyword.cloud_notm}} console, you can set a nam
 If you want to set exemptions to the policy by using the {{site.data.keyword.cloud_notm}} console, complete the following steps:
 
 1. Log in to {{site.data.keyword.cloud_notm}}. You must be logged in to see Vulnerability Advisor in the {{site.data.keyword.cloud_notm}} console.
-2. Click the **Navigation Menu** icon, then click **Kubernetes**.
-3. Click **Registry**, then click the **Settings** icon.
-4. Click **Create exemption**.
+2. Click the **Navigation Menu** icon, then click **Container Registry**.
+3. Click **Settings**.
+4. In the **Security policy exemptions** section, click **Create**.
 5. Select the issue type.
 6. Enter the issue ID.
 
    You can find this information in your [vulnerability report](#va_reviewing). The **Vulnerability ID** column contains the ID to use for CVE or security notice issues; the **Configuration Issue ID** column contains the ID to use for configuration issues.
    {: tip}
 
-7. Select the registry namespace, repository, and tag that you want the exemption to apply to.
-8. Click **Save**.
+7. Select the registry namespace, repository, image, and tag that you want the exemption to apply to.
+8. Click **Create**.
 
 You can also edit and remove exemptions by hovering over the relevant row and clicking the **open and close list of options** icon.
 
