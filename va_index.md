@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-03-31"
+lastupdated: "2021-04-16"
 
 keywords: Security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
@@ -96,7 +96,7 @@ The following table shows the supported Docker base images that Vulnerability Ad
 | Docker base image | Source of security notices |
 |-----------------|--------------------------|
 | Alpine | [Git - Alpine Linux](https://git.alpinelinux.org/){: external} and [CVE](https://cve.mitr.org/data/downloads/index.html){: external}. |
-| CentOS | [CentOS announce archives](https://lists.centos.org/pipermail/centos-announce/){: external} and [CentOS CR announce archives](https://lists.centos.org/pipermail/centos-cr-announce/){: external}. For more information about vulnerabilities, see [Vulnerabilities in packages on CentOS](#va_centos). |
+| CentOS 6 and CentOS 7 | [CentOS announce archives](https://lists.centos.org/pipermail/centos-announce/){: external} and [CentOS CR announce archives](https://lists.centos.org/pipermail/centos-cr-announce/){: external}. |
 | Debian | [Debian security announcements](https://lists.debian.org/debian-security-announce/){: external}. |
 | {{site.data.keyword.redhat_full}} Enterprise Linux&reg; (RHEL) | [{{site.data.keyword.redhat_notm}} Security Data API](https://access.redhat.com/labsinfo/securitydataapi){: external}. |
 | Ubuntu | [Ubuntu Security Notices](https://ubuntu.com/security/notices){: external}. |
@@ -183,21 +183,6 @@ You can review the security of Docker images that are stored in your namespaces 
    In the CLI output, you can view the following information about the configuration issues.
       - `Security practice` A description of the vulnerability.
       - `Corrective action` Details about how to fix the vulnerability.
-
-### Vulnerabilities in packages on CentOS
-{: #va_centos}
-{: help}
-{: support}
-
-If you are using CentOS, you might get false positives in your report, that is, the report might report a vulnerability when there isn't one. This situation occurs when a security notice is released by {{site.data.keyword.redhat_notm}} but the security notice is not applicable to, or the fix isn't ported to, CentOS.
-{:shortdesc}
-
-If you receive a report that says your package has vulnerabilities, complete the following steps:
-
-1. View the steps for updating the package by clicking the security notice code.
-2. Update the package by completing the steps to update the package.
-3. If the package is updated, the result was not a false positive and the required action is complete.
-4. If the package does not update because no newer versions are available to install, the result was a false positive. You can add an exemption policy for this security notice, see [Setting organizational exemption policies](#va_managing_policy).
 
 ## Setting organizational exemption policies
 {: #va_managing_policy}
