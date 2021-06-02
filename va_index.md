@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-04-27"
+lastupdated: "2021-06-02"
 
 keywords: Security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
@@ -25,6 +25,11 @@ subcollection: va
 {:external: target="_blank" .external}
 {:help: data-hd-content-type='help'}
 {:support: data-reuse='support'}
+{:ui: .ph data-hd-interface='ui'}
+{:cli: .ph data-hd-interface='cli'}
+{:api: .ph data-hd-interface='api'}
+{:terraform: .ph data-hd-interface='terraform'}
+
 
 # Managing image security with Vulnerability Advisor
 {: #va_index}
@@ -132,6 +137,7 @@ If your image does not meet the requirements that are set by your organization's
 {: #va_reviewing_gui}
 {: help}
 {: support}
+{: ui}
 
 You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the {{site.data.keyword.cloud_notm}} console.
 {:shortdesc}
@@ -156,6 +162,7 @@ You can review the security of Docker images that are stored in your namespaces 
 {: #va_registry_cli}
 {: help}
 {: support}
+{: cli}
 
 You can review the security of Docker images that are stored in your namespaces in {{site.data.keyword.registrylong_notm}} by using the CLI.
 {:shortdesc}
@@ -202,6 +209,7 @@ To find out about the required permissions for working with exemptions, see [Acc
 {: #va_managing_policy_gui}
 {: help}
 {: support}
+{: ui}
 
 If you are using the {{site.data.keyword.cloud_notm}} console, you can set a namespace, repository, or tag as the scope of the exemption policy. If you want to use the digest as the scope, you must use the CLI, see [Setting organizational exemption policies by using the CLI](#va_managing_policy_cli).
 {: note}
@@ -227,6 +235,7 @@ You can also edit and remove exemptions by hovering over the relevant row and cl
 {: #va_managing_policy_cli}
 {: help}
 {: support}
+{: cli}
 
 If you are using the CLI, you can set a namespace, repository, digest, or tag as the scope of the exemption policy.
 {: note}
