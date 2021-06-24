@@ -43,6 +43,7 @@ When you add an image to a namespace, the image is automatically scanned by Vuln
 Any issues that are found by Vulnerability Advisor result in a verdict that indicates that it is not advisable to deploy this image. If you choose to deploy the image, any containers that are deployed from the image include known issues that might be used to attack or otherwise compromise the container. The verdict is adjusted based on any exemptions that you specified. This verdict can be used by Portieris to prevent the deployment of nonsecure images in [{{site.data.keyword.containerlong_notm}}](/docs/containers?topic=containers-getting-started). [Portieris](https://github.com/IBM/portieris){: external} is a Kubernetes admission controller for the enforcement of image security policies. You can create image security policies for each Kubernetes namespace, or at the cluster level, and enforce different rules for different images.
 
 Fixing the security and configuration issues that are reported by Vulnerability Advisor can help you to secure your {{site.data.keyword.cloud_notm}} infrastructure.
+
 ## About Vulnerability Advisor
 {: #about}
 
