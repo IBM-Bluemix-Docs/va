@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017, 2021
-lastupdated: "2021-06-25"
+lastupdated: "2021-07-07"
 
 keywords: Security status of container images, image security, Vulnerability Advisor, security, registry, vulnerabilities, containers, configuration issues, registry, container registry, portieris
 
@@ -101,7 +101,7 @@ The following table shows the supported Docker base images that Vulnerability Ad
 
 | Docker base image | Source of security notices |
 |-----------------|--------------------------|
-| Alpine | [Git - Alpine Linux](https://git.alpinelinux.org/){: external} and [CVE](https://cve.mitre.org/data/downloads/index.html){: external}. |
+| Alpine | [Git - Alpine Linux](https://gitlab.alpinelinux.org/){: external} and [CVE](https://cve.mitre.org/data/downloads/index.html){: external}. |
 | CentOS 7 | [CentOS announce archives](https://lists.centos.org/pipermail/centos-announce/){: external} and [CentOS CR announce archives](https://lists.centos.org/pipermail/centos-cr-announce/){: external}. |
 | Debian | [Debian security announcements](https://lists.debian.org/debian-security-announce/){: external}. |
 | {{site.data.keyword.redhat_full}} Enterprise Linux&reg; (RHEL) | [{{site.data.keyword.redhat_notm}} Security Data API](https://access.redhat.com/labsinfo/securitydataapi){: external}. |
